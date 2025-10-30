@@ -175,7 +175,13 @@ export default function RegisterPage() {
             <option value="" disabled>Selecciona una mesa</option>
             {existing.map((t) => (
               <option key={t.id} value={t.code}>
-                {t.tableNumber ? `Mesa ${t.tableNumber}` : (t.tableName || 'Mesa')} - Código: {t.code}
+                {(() => {
+                  const base = t.tableNumber ? `Mesa ${t.tableNumber}` : 'Mesa';
+                  const named = (t.tableName && String(t.tableName).trim().length > 0)
+                    ? `${base} - ${t.tableName}`
+                    : base;
+                  return `${named} - Código: ${t.code}`;
+                })()}
               </option>
             ))}
           </select>

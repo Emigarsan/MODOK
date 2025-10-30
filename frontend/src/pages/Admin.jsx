@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+﻿import { useCallback, useEffect, useState } from 'react';
 
 const API_BASE = '/api/counter';
 
@@ -17,19 +17,19 @@ export default function AdminPage() {
   const [tables, setTables] = useState({ register: [], freegame: [] });
   const [tab, setTab] = useState('mod');
 
-  // Campos de fijación permanecen vacíos hasta que el usuario escriba.
+  // Campos de fijaciÃ³n permanecen vacÃ­os hasta que el usuario escriba.
   const syncFromState = () => {};
 
   const fetchState = useCallback(() => {
     fetch(API_BASE)
-      .then((r) => r.ok ? r.json() : Promise.reject(new Error('Respuesta inválida')))
+      .then((r) => r.ok ? r.json() : Promise.reject(new Error('Respuesta invÃ¡lida')))
       .then((data) => { setState(data); setError(null); syncFromState(data); })
       .catch((e) => setError(e.message));
   }, []);
 
   useEffect(() => { fetchState(); const id = setInterval(fetchState, 3000); return () => clearInterval(id); }, [fetchState]);
 
-  // No auto-login: siempre pedimos contraseña hasta pulsar "Entrar".
+  // No auto-login: siempre pedimos contraseÃ±a hasta pulsar "Entrar".
 
   const fetchTables = useCallback(() => {
     if (!isAuthed) return;
@@ -114,7 +114,7 @@ export default function AdminPage() {
         <h2>Admin</h2>
         <form className="form" onSubmit={tryAuth}>
           <label>
-            Contraseña
+            ContraseÃ±a
             <input type="password" value={adminKey} onChange={(e) => setAdminKey(e.target.value)} />
           </label>
           <button type="submit">Entrar</button>
@@ -128,17 +128,17 @@ export default function AdminPage() {
       <h2>Admin</h2>
       {isAuthed && (
         <div className="form" style={{ alignSelf: 'flex-end' }}>
-          <button onClick={logout}>Cerrar sesión</button>
+          <button onClick={logout}>Cerrar sesiÃ³n</button>
         </div>
       )}
       {error && <p className="error">{error}</p>}
       {!state ? (
-        <p>Cargando…</p>
+        <p>Cargandoâ€¦</p>
       ) : (
         <>
           {false && (<div className="form">
             <label>
-              Cantidad (±)
+              Cantidad (Â±)
               <input type="number" value={amount} min={0} onChange={(e) => setAmount(Number(e.target.value))} />
             </label>
           </div>)}
@@ -153,7 +153,7 @@ export default function AdminPage() {
               <div className="counter-value">{state.primary}</div>
               <div className="form">
                 <label>
-                  Cantidad (±)
+                  Cantidad (Â±)
                   <input type="number" min={0} value={amountPrimary} onChange={(e) => setAmountPrimary(Number(e.target.value))} />
                 </label>
               </div>
@@ -171,11 +171,11 @@ export default function AdminPage() {
             </section>
 
             <section className="counter-card">
-              <h3>Celdas de Contención</h3>
+              <h3>Celdas de ContenciÃ³n</h3>
               <div className="counter-value">{state.secondary}</div>
               <div className="form">
                 <label>
-                  Cantidad (±)
+                  Cantidad (Â±)
                   <input type="number" min={0} value={amountSecondary} onChange={(e) => setAmountSecondary(Number(e.target.value))} />
                 </label>
               </div>
@@ -204,7 +204,7 @@ export default function AdminPage() {
               <div className="counter-value">{state.tertiary}</div>
               <div className="form">
                 <label>
-                  Cantidad (±)
+                  Cantidad (Â±)
                   <input type="number" min={0} value={amountTertiary} onChange={(e) => setAmountTertiary(Number(e.target.value))} />
                 </label>
               </div>
@@ -224,12 +224,78 @@ export default function AdminPage() {
 
           {tab === 'tables' && (<>
           <h3>Mesas (vivo)</h3>
+          <div className="admin-grid" style={{ marginBottom: 12 }}>
+            <section className="counter-card" style={{ overflowX: 'auto' }}>
+              <h3>Event</h3>
+              <table className="data-table">
+                <thead>
+                  <tr>
+                    <th>Mesa</th>
+                    <th>Nombre</th>
+                    <th>Dificultad</th>
+                    <th>Jugadores</th>
+                    <th>Detalle jugadores</th>
+                    <th>Código</th>
+                    <th>Creada</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {(tables.register || []).map((t) => {
+                    const mesa = t.tableNumber ?? '';
+                    const nombre = t.tableName ?? '';
+                    const dif = t.difficulty ?? '';
+                    const players = t.players ?? '';
+                    const detalle = Array.isArray(t.playersInfo)
+                      ? t.playersInfo.map((p) => `${p.character}${p.aspect ? ` (${p.aspect})` : ''}`).join(', ')
+                      : '';
+                    const created = t.createdAt ?? '';
+                    return (
+                      <tr key={t.id}>
+                        <td>{mesa}</td>
+                        <td>{nombre}</td>
+                        <td>{dif}</td>
+                        <td>{players}</td>
+                        <td>{detalle}</td>
+                        <td>{t.code}</td>
+                        <td>{created}</td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </section>
+            <section className="counter-card" style={{ overflowX: 'auto' }}>
+              <h3>Freegame</h3>
+              <table className="data-table">
+                <thead>
+                  <tr>
+                    <th>Nombre</th>
+                    <th>Jugadores</th>
+                    <th>Notas</th>
+                    <th>Código</th>
+                    <th>Creada</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {(tables.freegame || []).map((t) => (
+                    <tr key={t.id}>
+                      <td>{t.name}</td>
+                      <td>{t.players}</td>
+                      <td>{t.notes}</td>
+                      <td>{t.code}</td>
+                      <td>{t.createdAt}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </section>
+          </div>
           <div className="admin-grid">
             <section className="counter-card">
               <h3>Register</h3>
               <ul>
                 {tables.register.map((t) => (
-                  <li key={t.id}>{t.name} — Código: {t.code}</li>
+                  <li key={t.id}>{t.name} â€” CÃ³digo: {t.code}</li>
                 ))}
               </ul>
             </section>
@@ -237,7 +303,7 @@ export default function AdminPage() {
               <h3>Freegame</h3>
               <ul>
                 {tables.freegame.map((t) => (
-                  <li key={t.id}>{t.name} — Jugadores: {t.players} — Código: {t.code}</li>
+                  <li key={t.id}>{t.name} â€” Jugadores: {t.players} â€” CÃ³digo: {t.code}</li>
                 ))}
               </ul>
             </section>
@@ -252,3 +318,4 @@ export default function AdminPage() {
     </div>
   );
 }
+

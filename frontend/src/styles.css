@@ -150,6 +150,24 @@ header p {
   gap: 1rem;
 }
 
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+.data-table th, .data-table td {
+  border: 1px solid var(--color-divider);
+  padding: 0.5rem 0.6rem;
+  text-align: left;
+}
+.data-table thead th {
+  background: var(--color-surface-2);
+  color: var(--color-text-primary);
+}
+.data-table tbody tr:nth-child(even) td {
+  background: rgba(255,255,255,0.02);
+}
+
 @media (min-width: 900px) {
   .admin-grid {
     grid-template-columns: repeat(3, minmax(280px, 1fr));
