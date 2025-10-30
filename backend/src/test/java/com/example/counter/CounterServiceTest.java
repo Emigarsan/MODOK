@@ -19,10 +19,10 @@ class CounterServiceTest {
     @Test
     void primaryCounterCanIncreaseAndDecrease() {
         CounterState afterIncrement = counterService.incrementPrimary(5);
-        assertThat(afterIncrement.primary()).isEqualTo(105);
+        assertThat(afterIncrement.primary()).isEqualTo(1769);
 
         CounterState afterDecrement = counterService.decrementPrimary(8);
-        assertThat(afterDecrement.primary()).isEqualTo(97);
+        assertThat(afterDecrement.primary()).isEqualTo(1761);
 
         CounterState afterLargeDecrement = counterService.decrementPrimary(500);
         assertThat(afterLargeDecrement.primary()).isZero();
@@ -32,9 +32,9 @@ class CounterServiceTest {
     void initialValuesMatchConfiguredDefaults() {
         CounterState initial = counterService.getState();
 
-        assertThat(initial.primary()).isEqualTo(100);
-        assertThat(initial.secondary()).isEqualTo(28);
-        assertThat(initial.tertiary()).isEqualTo(120);
+        assertThat(initial.primary()).isEqualTo(1764);
+        assertThat(initial.secondary()).isEqualTo(128);
+        assertThat(initial.tertiary()).isEqualTo(640);
     }
 
     @Test
@@ -55,7 +55,7 @@ class CounterServiceTest {
 
         CounterState updated = counterService.decrementSecondary(1);
 
-        assertThat(updated.secondary()).isEqualTo(28);
+        assertThat(updated.secondary()).isEqualTo(128);
         assertThat(updated.secondaryImageIndex()).isEqualTo(1);
         assertThat(updated.tertiary()).isEqualTo(9);
     }
@@ -76,7 +76,7 @@ class CounterServiceTest {
 
         CounterState updated = counterService.decrementSecondary(5);
 
-        assertThat(updated.secondary()).isEqualTo(28);
+        assertThat(updated.secondary()).isEqualTo(128);
         assertThat(updated.tertiary()).isEqualTo(8);
         assertThat(updated.secondaryImageIndex()).isEqualTo(1);
     }
