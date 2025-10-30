@@ -25,7 +25,7 @@ public class CounterService {
     }
 
     public synchronized CounterState decrementPrimary(int amount) {
-        primary -= sanitize(amount);
+        primary = Math.max(0, primary - sanitize(amount));
         return snapshot();
     }
 

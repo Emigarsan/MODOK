@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import centralImage from './assets/central-image.svg';
 import frame1 from './assets/secondary/frame-1.svg';
 import frame2 from './assets/secondary/frame-2.svg';
@@ -45,6 +45,7 @@ export default function App() {
   const [state, setState] = useState(initialState);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [modalMessage, setModalMessage] = useState(null);
 
   const secondaryImages = useMemo(
     () => [frame1, frame2, frame3, frame4, frame5, frame6, frame7],
@@ -60,14 +61,19 @@ export default function App() {
       const withFallback = (value, fallback) =>
         typeof value === 'number' && Number.isFinite(value) ? value : fallback;
 
+      const sanitizeCounter = (value, fallback) => {
+        const normalized = withFallback(value, fallback);
+        return Math.max(0, Math.trunc(normalized));
+      };
+
       const rawIndex = withFallback(data.secondaryImageIndex, initialState.secondaryImageIndex);
       const normalizedIndex =
         ((Math.trunc(rawIndex) % secondaryImages.length) + secondaryImages.length) % secondaryImages.length;
 
       return {
-        primary: withFallback(data.primary, initialState.primary),
-        secondary: withFallback(data.secondary, initialState.secondary),
-        tertiary: withFallback(data.tertiary, initialState.tertiary),
+        primary: sanitizeCounter(data.primary, initialState.primary),
+        secondary: sanitizeCounter(data.secondary, initialState.secondary),
+        tertiary: sanitizeCounter(data.tertiary, initialState.tertiary),
         secondaryImageIndex: normalizedIndex
       };
     },
@@ -97,6 +103,29 @@ export default function App() {
   useEffect(() => {
     fetchState();
   }, [fetchState]);
+
+  const previousSecondaryIndex = useRef(initialState.secondaryImageIndex);
+  const previousTertiary = useRef(initialState.tertiary);
+
+  useEffect(() => {
+    if (previousSecondaryIndex.current !== state.secondaryImageIndex) {
+      if (state.secondaryImageIndex === secondaryImages.length - 1) {
+        setModalMessage('Alto, escucha las instrucciones de los coordinadores');
+      }
+      previousSecondaryIndex.current = state.secondaryImageIndex;
+    }
+  }, [secondaryImages.length, state.secondaryImageIndex]);
+
+  useEffect(() => {
+    if (previousTertiary.current !== state.tertiary) {
+      if (state.tertiary === 0) {
+        setModalMessage('Alto, escucha las instrucciones de los coordinadores');
+      }
+      previousTertiary.current = state.tertiary;
+    }
+  }, [state.tertiary]);
+
+  const closeModal = useCallback(() => setModalMessage(null), []);
 
   const updateCounter = useCallback((segment, delta) => {
     if (delta === 0) {
@@ -146,7 +175,7 @@ export default function App() {
         <section className="counter-card">
           <img src={centralImage} alt="M.O.D.O.K" className="counter-art" />
           <h2>Control Principal</h2>
-          <div className="counter-value">{loading ? '…' : state.primary}</div>
+          <div className="counter-value">{state.primary}</div>
           <div className="button-grid primary-controls">
             {primaryButtons.map(({ label, delta }) => (
               <button key={`primary-${label}`} onClick={() => updateCounter('primary', delta)}>
@@ -163,7 +192,7 @@ export default function App() {
             className="counter-art"
           />
           <h2>Fases Dinámicas</h2>
-          <div className="counter-value">{loading ? '…' : state.secondary}</div>
+          <div className="counter-value">{state.secondary}</div>
           <p className="counter-meta">7 imágenes secuenciadas para cada llegada a cero.</p>
           <div className="button-grid">
             {secondaryButtons.map(({ label, delta }) => (
@@ -177,7 +206,7 @@ export default function App() {
         <section className="counter-card">
           <img src={tertiaryCore} alt="Reserva auxiliar" className="counter-art" />
           <h2>Reserva Vinculada</h2>
-          <div className="counter-value">{loading ? '…' : state.tertiary}</div>
+          <div className="counter-value">{state.tertiary}</div>
           <p className="counter-meta">Se reduce automáticamente con cada decremento secundario.</p>
           <div className="button-grid">
             {tertiaryButtons.map(({ label, delta }) => (
@@ -188,6 +217,17 @@ export default function App() {
           </div>
         </section>
       </div>
+
+      {modalMessage && (
+        <div className="modal-backdrop" role="dialog" aria-modal="true">
+          <div className="modal">
+            <p>{modalMessage}</p>
+            <button type="button" onClick={closeModal}>
+              Cerrar
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -23,6 +23,9 @@ class CounterServiceTest {
 
         CounterState afterDecrement = counterService.decrementPrimary(8);
         assertThat(afterDecrement.primary()).isEqualTo(97);
+
+        CounterState afterLargeDecrement = counterService.decrementPrimary(500);
+        assertThat(afterLargeDecrement.primary()).isZero();
     }
 
     @Test
