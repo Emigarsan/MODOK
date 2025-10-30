@@ -38,11 +38,21 @@ docker run -p 8080:8080 railway-counter
 Esto compilará el frontend, lo incluirá como recursos estáticos dentro del JAR de Spring Boot y expondrá la aplicación desde el contenedor en el puerto 8080.
 
 ## Scripts útiles durante el desarrollo
+Aplicación full-stack sencilla pensada para desplegarse en Railway. El backend usa Spring Boot y expone un contador en memoria que puede incrementarse o decrementarse. El frontend está construido con React (Vite) y consume la API para mostrar un número central acompañado de una imagen y controles para modificar su valor.
+
+## Estructura del proyecto
+
+- `backend/`: servicio Spring Boot con los endpoints REST `GET /api/counter`, `POST /api/counter/increment` y `POST /api/counter/decrement`.
+- `frontend/`: interfaz React con Vite que muestra la imagen central, el valor actual y botones para sumar o restar 1, 5 y 10.
+
+## Scripts útiles
 
 ### Backend
 
 ```bash
 cd backend
+./mvnw spring-boot:run # si el wrapper está disponible
+# o usando Maven instalado
 mvn spring-boot:run
 ```
 

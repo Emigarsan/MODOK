@@ -85,5 +85,21 @@ class CounterServiceTest {
 
         assertThat(updated.secondary()).isZero();
         assertThat(updated.tertiary()).isEqualTo(10);
+        counterService.reset(0);
+    }
+
+    @Test
+    void incrementIncreasesValue() {
+        int updated = counterService.increment(5);
+        assertThat(updated).isEqualTo(5);
+        assertThat(counterService.getCurrentValue()).isEqualTo(5);
+    }
+
+    @Test
+    void decrementDecreasesValue() {
+        counterService.increment(10);
+        int updated = counterService.decrement(3);
+        assertThat(updated).isEqualTo(7);
+        assertThat(counterService.getCurrentValue()).isEqualTo(7);
     }
 }
