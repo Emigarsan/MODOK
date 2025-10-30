@@ -46,6 +46,8 @@ export default function App() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [modalMessage, setModalMessage] = useState(null);
+  const [modalSource, setModalSource] = useState(null); // 'secondaryFinal' | 'tertiaryZero' | null
+  const [secondaryLocked, setSecondaryLocked] = useState(false);
 
   const secondaryImages = useMemo(
     () => [frame1, frame2, frame3, frame4, frame5, frame6, frame7],
@@ -111,6 +113,7 @@ export default function App() {
     if (previousSecondaryIndex.current !== state.secondaryImageIndex) {
       if (state.secondaryImageIndex === secondaryImages.length - 1) {
         setModalMessage('Alto, escucha las instrucciones de los coordinadores');
+        setModalSource('secondaryFinal');
       }
       previousSecondaryIndex.current = state.secondaryImageIndex;
     }
@@ -120,15 +123,27 @@ export default function App() {
     if (previousTertiary.current !== state.tertiary) {
       if (state.tertiary === 0) {
         setModalMessage('Alto, escucha las instrucciones de los coordinadores');
+        setModalSource('tertiaryZero');
       }
       previousTertiary.current = state.tertiary;
     }
   }, [state.tertiary]);
 
-  const closeModal = useCallback(() => setModalMessage(null), []);
+  const closeModal = useCallback(() => {
+    // Lock secondary counter only if the modal was triggered by the 7th image event
+    if (modalSource === 'secondaryFinal') {
+      setSecondaryLocked(true);
+    }
+    setModalMessage(null);
+    setModalSource(null);
+  }, [modalSource]);
 
   const updateCounter = useCallback((segment, delta) => {
     if (delta === 0) {
+      return;
+    }
+    // Prevent modifications to secondary when locked
+    if (segment === 'secondary' && secondaryLocked) {
       return;
     }
     const endpoint = delta > 0 ? 'increment' : 'decrement';
@@ -153,7 +168,7 @@ export default function App() {
         setError('No se pudo actualizar el contador.');
       })
       .finally(() => setLoading(false));
-  }, [normalizeState]);
+  }, [normalizeState, secondaryLocked]);
 
   const currentSecondaryImage =
     secondaryImages[state.secondaryImageIndex] ?? secondaryImages[initialState.secondaryImageIndex];
@@ -196,7 +211,13 @@ export default function App() {
           <p className="counter-meta">7 imágenes secuenciadas para cada llegada a cero.</p>
           <div className="button-grid">
             {secondaryButtons.map(({ label, delta }) => (
-              <button key={`secondary-${label}`} onClick={() => updateCounter('secondary', delta)}>
+              <button
+                key={`secondary-${label}`}
+                onClick={() => updateCounter('secondary', delta)}
+                disabled={secondaryLocked}
+                aria-disabled={secondaryLocked}
+                title={secondaryLocked ? 'Bloqueado tras la séptima imagen' : undefined}
+              >
                 {label}
               </button>
             ))}
