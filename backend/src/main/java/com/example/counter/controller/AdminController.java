@@ -60,27 +60,41 @@ public class AdminController {
 
     private String buildRegisterCsv(List<RegisterTable> reg) {
         StringJoiner sj = new StringJoiner("\n");
-        sj.add("id,tableNumber,tableName,difficulty,players,playersInfo,code,createdAt");
+        // One row per player; repeat table info
+        sj.add("id,tableNumber,tableName,difficulty,players,code,createdAt,playerIndex,character,aspect");
         DateTimeFormatter fmt = DateTimeFormatter.ISO_INSTANT;
         for (RegisterTable t : reg) {
-            String playersInfo = "";
-            if (t.playersInfo() != null && !t.playersInfo().isEmpty()) {
-                StringJoiner pj = new StringJoiner(";");
-                for (var pi : t.playersInfo()) {
-                    pj.add(escape(pi.character()) + ":" + escape(pi.aspect()));
-                }
-                playersInfo = pj.toString();
+            List<com.example.counter.service.model.PlayerInfo> list = t.playersInfo();
+            if (list == null || list.isEmpty()) {
+                sj.add(String.join(",",
+                        escape(t.id()),
+                        String.valueOf(t.tableNumber()),
+                        escape(t.tableName()),
+                        escape(t.difficulty()),
+                        String.valueOf(t.players()),
+                        escape(t.code()),
+                        escape(fmt.format(t.createdAt())),
+                        "",
+                        "",
+                        ""
+                ));
+                continue;
             }
-            sj.add(String.join(",",
-                    escape(t.id()),
-                    String.valueOf(t.tableNumber()),
-                    escape(t.tableName()),
-                    escape(t.difficulty()),
-                    String.valueOf(t.players()),
-                    escape(playersInfo),
-                    escape(t.code()),
-                    escape(fmt.format(t.createdAt()))
-            ));
+            for (int i = 0; i < list.size(); i++) {
+                var pi = list.get(i);
+                sj.add(String.join(",",
+                        escape(t.id()),
+                        String.valueOf(t.tableNumber()),
+                        escape(t.tableName()),
+                        escape(t.difficulty()),
+                        String.valueOf(t.players()),
+                        escape(t.code()),
+                        escape(fmt.format(t.createdAt())),
+                        String.valueOf(i + 1),
+                        escape(pi.character()),
+                        escape(pi.aspect())
+                ));
+            }
         }
         return sj.toString() + "\n";
     }

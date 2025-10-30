@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+﻿import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 export default function RegisterPage() {
@@ -11,6 +11,41 @@ export default function RegisterPage() {
   const [joinCode, setJoinCode] = useState('');
   const [existing, setExisting] = useState([]);
   const navigate = useNavigate();
+
+  // Normalización acentos para búsqueda (ignora tildes y mayúsculas)
+  const normalize = (s) => (s || '').normalize('NFD').replace(/\p{Diacritic}+/gu, '').toLowerCase();
+  const [characters, setCharacters] = useState([]);
+  const [aspects, setAspects] = useState([]);
+  const [swAspects, setSwAspects] = useState([]);
+  const charMap = useMemo(() => {
+    const m = new Map();
+    characters.forEach((c) => m.set(normalize(c), c));
+    return m;
+  }, [characters]);
+
+  const handleCharacterChange = (idx, raw) => {
+    let v = raw;
+    const canon = charMap.get(normalize(v));
+    if (canon) v = canon;
+    setPlayers(prev => prev.map((row, i) => {
+      if (i !== idx) return row;
+      if (v === 'Adam Warlock') return { ...row, character: v, aspect: '' };
+      if (v === 'Spider-woman') {
+        return (swAspects.includes(row.aspect)) ? { ...row, character: v } : { ...row, character: v, aspect: '' };
+      }
+      return (aspects.includes(row.aspect)) ? { ...row, character: v } : { ...row, character: v, aspect: '' };
+    }));
+  };
+
+  const handleCharacterBlur = (idx, raw) => {
+    const n = normalize(raw);
+    if (charMap.get(n)) return;
+    const hits = characters.filter((c) => normalize(c).includes(n));
+    if (hits.length === 1) {
+      const v = hits[0];
+      setPlayers(prev => prev.map((row, i) => i===idx ? { ...row, character: v } : row));
+    }
+  };
 
   useEffect(() => {
     fetch('/api/tables/register/list')
@@ -32,9 +67,6 @@ export default function RegisterPage() {
     });
   }, [playersCount]);
 
-  const [characters, setCharacters] = useState([]);
-  const [aspects, setAspects] = useState([]);
-  const [swAspects, setSwAspects] = useState([]);
   useEffect(() => {
     fetch('/api/tables/register/characters')
       .then((r) => r.ok ? r.json() : [])
@@ -55,7 +87,7 @@ export default function RegisterPage() {
     try {
       if (mode === 'create') {
         if (!mesaNumber || !difficulty || !playersCount) {
-          alert('Rellena nÃƒÂºmero de mesa, dificultad y nÃƒÂºmero de jugadores');
+          alert('Rellena número de mesa, dificultad y número de jugadores');
           return;
         }
         const body = {
@@ -72,7 +104,7 @@ export default function RegisterPage() {
       } else {
         const res = await fetch('/api/tables/register/join', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ code: joinCode }) });
         const data = await res.json();
-        if (data.ok) navigate('/event'); else alert('CÃƒÂ³digo no encontrado');
+        if (data.ok) navigate('/event'); else alert('Código no encontrado');
       }
     } catch (e) {
       alert(e.message);
@@ -88,7 +120,7 @@ export default function RegisterPage() {
       </div>
       <form onSubmit={handleSubmit} className="form" style={{ display: mode === 'create' ? 'grid' : 'none', gap: '0.75rem' }}>
         <label>
-          NÃƒÂºmero de mesa
+          Número de mesa
           <input type="number" min={1} value={mesaNumber} onChange={(e) => setMesaNumber(e.target.value)} placeholder="Ej. 12" required />
         </label>
         <label>
@@ -99,14 +131,12 @@ export default function RegisterPage() {
           Dificultad
           <select value={difficulty} onChange={(e) => setDifficulty(e.target.value)} required>
             <option value="" disabled>Selecciona dificultad</option>
-            <option value="FÃƒÂ¡cil">FÃƒÂ¡cil</option>
             <option value="Normal">Normal</option>
-            <option value="DifÃƒÂ­cil">DifÃƒÂ­cil</option>
             <option value="Experto">Experto</option>
           </select>
         </label>
         <label>
-          NÃƒÂºmero de jugadores
+          Número de jugadores
           <input type="number" min={1} max={8} value={playersCount} onChange={(e) => setPlayersCount(e.target.value)} required />
         </label>
 
@@ -114,17 +144,10 @@ export default function RegisterPage() {
           <div key={idx} className="player-row" style={{ display: 'grid', gap: '0.5rem' }}>
             <label>
               Personaje
-              <input list="character-list" value={p.character} onChange={(e) => {
-                const v = e.target.value;
-                setPlayers(prev => prev.map((row, i) => {
-                  if (i !== idx) return row;
-                  if (v === 'Adam Warlock') return { ...row, character: v, aspect: '' };
-                  if (v === 'Spider-woman') {
-                    return (swAspects.includes(row.aspect)) ? { ...row, character: v } : { ...row, character: v, aspect: '' };
-                  }
-                  return (aspects.includes(row.aspect)) ? { ...row, character: v } : { ...row, character: v, aspect: '' };
-                }));
-              }} placeholder="Busca personaje" />
+              <input list="character-list" value={p.character}
+                     onChange={(e) => handleCharacterChange(idx, e.target.value)}
+                     onBlur={(e) => handleCharacterBlur(idx, e.target.value)}
+                     placeholder="Busca personaje" />
               <datalist id="character-list">
                 {characters.map(c => (<option key={c} value={c} />))}
               </datalist>
@@ -158,7 +181,7 @@ export default function RegisterPage() {
             <option value="" disabled>Selecciona una mesa</option>
             {existing.map((t) => (
               <option key={t.id} value={t.code}>
-                {t.tableNumber ? `Mesa ${t.tableNumber}` : (t.tableName || 'Mesa')} Ã¢â‚¬â€ CÃƒÂ³digo: {t.code}
+                {t.tableNumber ? `Mesa ${t.tableNumber}` : (t.tableName || 'Mesa')} Código: {t.code}
               </option>
             ))}
           </select>
@@ -168,6 +191,7 @@ export default function RegisterPage() {
     </div>
   );
 }
+
 
 
 
