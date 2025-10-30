@@ -98,6 +98,30 @@ header p {
   gap: 1.75rem;
 }
 
+/* Player row layout for Register page */
+.player-row {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  align-items: end;
+}
+.player-row label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+.player-row input,
+.player-row select {
+  width: 100%;
+}
+
+@media (max-width: 600px) {
+  .player-row {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* Admin enhancements */
 .admin-tabs {
   width: 100%;

@@ -28,11 +28,8 @@ export default function RegisterPage() {
     let v = raw;
     const n = normalize(v);
     const canon = charMap.get(n);
-    if (!canon) {
-      // Si no hay match exacto ignorando tildes, intenta autocompletar si hay un único include
-      const hits = characters.filter((c) => normalize(c).includes(n));
-      if (hits.length === 1) v = hits[0];
-    } else {
+    if (canon) {
+      // Mapear a nombre canónico si coincide exactamente ignorando tildes
       v = canon;
     }
     setPlayers(prev => prev.map((row, i) => {
@@ -43,16 +40,6 @@ export default function RegisterPage() {
       }
       return (aspects.includes(row.aspect)) ? { ...row, character: v } : { ...row, character: v, aspect: '' };
     }));
-  };
-
-  const handleCharacterBlur = (idx, raw) => {
-    const n = normalize(raw);
-    if (charMap.get(n)) return;
-    const hits = characters.filter((c) => normalize(c).includes(n));
-    if (hits.length === 1) {
-      const v = hits[0];
-      setPlayers(prev => prev.map((row, i) => i===idx ? { ...row, character: v } : row));
-    }
   };
 
   useEffect(() => {
@@ -149,12 +136,11 @@ export default function RegisterPage() {
         </label>
 
         {players.map((p, idx) => (
-          <div key={idx} className="player-row" style={{ display: 'grid', gap: '0.5rem' }}>
+          <div key={idx} className="player-row">
             <label>
               Personaje
               <input list="character-list" value={p.character}
                      onChange={(e) => handleCharacterChange(idx, e.target.value)}
-                     onBlur={(e) => handleCharacterBlur(idx, e.target.value)}
                      placeholder="Busca personaje" />
               <datalist id="character-list">
                 {characters.map(c => (<option key={c} value={c} />))}
