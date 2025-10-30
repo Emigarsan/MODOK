@@ -7,13 +7,21 @@ export default function FreeGamePage() {
   const [notes, setNotes] = useState('');
   const [joinCode, setJoinCode] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (mode === 'create') {
-      // TODO: enviar datos de freegame al backend
-      alert(`Registrada mesa libre: ${mesaName} (${players} jugadores)`);
-    } else {
-      alert(`Unirse a mesa libre: ${joinCode}`);
+    try {
+      if (mode === 'create') {
+        const res = await fetch('/api/tables/freegame/create', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name: mesaName, players, notes }) });
+        if (!res.ok) throw new Error('No se pudo registrar la mesa');
+        const data = await res.json();
+        alert(`Mesa libre registrada. Código: ${data.code}`);
+      } else {
+        const res = await fetch('/api/tables/freegame/join', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ code: joinCode }) });
+        const data = await res.json();
+        alert(data.ok ? 'Unido correctamente' : 'Código no encontrado');
+      }
+    } catch (e) {
+      alert(e.message);
     }
   };
 
@@ -51,4 +59,3 @@ export default function FreeGamePage() {
     </div>
   );
 }
-

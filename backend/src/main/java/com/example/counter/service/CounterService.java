@@ -82,6 +82,28 @@ public class CounterService {
         return snapshot();
     }
 
+    // New setters for exact values (used by Admin)
+    public synchronized CounterState setPrimary(int value) {
+        primary = Math.max(0, value);
+        return snapshot();
+    }
+
+    public synchronized CounterState setSecondary(int value) {
+        secondary = Math.max(0, value);
+        return snapshot();
+    }
+
+    public synchronized CounterState setTertiary(int value) {
+        tertiary = Math.max(0, value);
+        return snapshot();
+    }
+
+    public synchronized CounterState setSecondaryImageIndex(int index) {
+        int normalized = ((index % SECONDARY_IMAGE_COUNT) + SECONDARY_IMAGE_COUNT) % SECONDARY_IMAGE_COUNT;
+        secondaryImageIndex = normalized;
+        return snapshot();
+    }
+
     private void advanceSecondaryImage() {
         secondaryImageIndex = (secondaryImageIndex + 1) % SECONDARY_IMAGE_COUNT;
     }

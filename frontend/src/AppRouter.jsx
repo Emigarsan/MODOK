@@ -16,7 +16,6 @@ export default function AppRouter() {
             <Link to="/freegame">Freegame</Link>
             <Link to="/event">Event</Link>
             <Link to="/display">Display</Link>
-            <Link to="/admin">Admin</Link>
           </nav>
         </header>
         <Routes>
@@ -32,4 +31,3 @@ export default function AppRouter() {
     </BrowserRouter>
   );
 }
-

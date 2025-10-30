@@ -5,14 +5,21 @@ export default function RegisterPage() {
   const [mesaName, setMesaName] = useState('');
   const [joinCode, setJoinCode] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (mode === 'create') {
-      // TODO: implementar creación de mesa (backend)
-      alert(`Mesa creada: ${mesaName}`);
-    } else {
-      // TODO: implementar unión a mesa existente (backend)
-      alert(`Unirse a mesa: ${joinCode}`);
+    try {
+      if (mode === 'create') {
+        const res = await fetch('/api/tables/register/create', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name: mesaName }) });
+        if (!res.ok) throw new Error('No se pudo crear la mesa');
+        const data = await res.json();
+        alert(`Mesa creada. Código: ${data.code}`);
+      } else {
+        const res = await fetch('/api/tables/register/join', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ code: joinCode }) });
+        const data = await res.json();
+        alert(data.ok ? 'Unido correctamente' : 'Código no encontrado');
+      }
+    } catch (e) {
+      alert(e.message);
     }
   };
 
@@ -40,4 +47,3 @@ export default function RegisterPage() {
     </div>
   );
 }
-
