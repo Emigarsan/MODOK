@@ -1,5 +1,5 @@
 ﻿import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import centralImage from './assets/50103a.png';
+import centralImage from './assets/central-image.svg';
 import celda1 from './assets/secondary/5A Entorno Celda 1.jpg';
 import celda2 from './assets/secondary/6A Entorno Celda 2.jpg';
 import celda3 from './assets/secondary/7A Entorno Celda 3.jpg';
@@ -7,7 +7,6 @@ import celda4 from './assets/secondary/8A Entorno Celda 4.jpg';
 import celda5 from './assets/secondary/9A Entorno Celda 5.jpg';
 import celda6 from './assets/secondary/10A Entorno Celda 6.jpg';
 import celda7 from './assets/secondary/11A Entorno Celda 7.jpg';
-import celda7Accesorio from './assets/secondary/11B Accesorio Masivo.jpg';
 import tertiaryCore from './assets/43021.png';
 
 const API_BASE = '/api/counter';
@@ -36,7 +35,7 @@ const tertiaryButtons = [
 ];
 
 const initialState = {
-  primary: 1792,
+  primary: 100,
   secondary: 28,
   tertiary: 120,
   secondaryImageIndex: 0
@@ -51,8 +50,6 @@ export default function App() {
   const [modalSource, setModalSource] = useState(null); // 'secondaryFinal' | 'tertiaryZero' | null
   const [secondaryLocked, setSecondaryLocked] = useState(false);
   const [tertiaryLocked, setTertiaryLocked] = useState(false);
-  const [secondaryFinalized, setSecondaryFinalized] = useState(false);
-  const [primaryRevealed, setPrimaryRevealed] = useState(false);
 
   const secondaryImages = useMemo(
     () => [celda1, celda2, celda3, celda4, celda5, celda6, celda7],
@@ -148,8 +145,6 @@ export default function App() {
       ) {
         // Lock immediately when opening the modal on the final image
         setSecondaryLocked(true);
-        setSecondaryFinalized(true);
-        setPrimaryRevealed(true);
         setModalMessage('Alto, habeis liberado a todos los reclusos, escucha las instrucciones de los coordinadores');
         setModalSource('secondaryFinal');
       }
@@ -179,7 +174,7 @@ export default function App() {
       return;
     }
     // Prevent modifications to secondary when locked
-    if (segment === 'secondary' && (secondaryLocked || secondaryFinalized)) {
+    if (segment === 'secondary' && secondaryLocked) {
       return;
     }
     // Prevent modifications to tertiary when locked
@@ -219,26 +214,20 @@ export default function App() {
       .finally(() => {
         // Do not toggle global loading indicator on counter updates.
       });
-  }, [normalizeState, secondaryLocked, secondaryFinalized, tertiaryLocked, state.secondary]);
+  }, [normalizeState, secondaryLocked, tertiaryLocked, state.secondary]);
 
   const currentSecondaryImage =
     secondaryImages[state.secondaryImageIndex] ?? secondaryImages[initialState.secondaryImageIndex];
-  const displayedSecondaryImage = secondaryFinalized ? celda7Accesorio : currentSecondaryImage;
 
   return (
     <div className="page">
       <header>
         <h1>M.O.D.O.K</h1>
-        <p>
-          Control central de contadores con apoyo visual. El segundo contador cambia de fase al llegar a
-          cero y cada decremento reduce tambiÃ©n el tercer contador.
-        </p>
       </header>
 
       {error && <p className="error">{error}</p>}
 
       <div className="dashboard">
-        {primaryRevealed && (
         <section className="counter-card">
           <img src={centralImage} alt="M.O.D.O.K" className="counter-art" />
           <h2>M.O.D.O.K.</h2>
@@ -252,17 +241,15 @@ export default function App() {
           </div>
         </section>
 
-        )}
         <section className="counter-card">
           <img
-            src={displayedSecondaryImage}
+            src={currentSecondaryImage}
             alt={`Celda ${state.secondaryImageIndex + 1}`}
             className="counter-art"
           />
-          <h2>Accesorio M.Y.T.H.O.S.</h2>
+          <h2>Celdas de Contención</h2>
           <div className="counter-value">{state.secondary}</div>
-          {!secondaryFinalized && (
-            <div className="button-grid">
+          <div className="button-grid">
             {secondaryButtons.map(({ label, delta }) => (
               <button
                 key={`secondary-${label}`}
@@ -306,7 +293,7 @@ export default function App() {
             </button>
           </div>
         </div>
+      )}
     </div>
   );
 }
-
