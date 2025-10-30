@@ -137,6 +137,18 @@ button:active {
   box-shadow: none;
 }
 
+/* Greyed-out style for disabled buttons */
+button:disabled,
+button[aria-disabled="true"] {
+  background: #64748b;
+  color: #e2e8f0;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+  filter: none;
+  opacity: 0.8;
+}
+
 .status-text {
   color: #facc15;
   font-weight: 600;

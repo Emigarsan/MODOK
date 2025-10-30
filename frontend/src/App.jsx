@@ -147,11 +147,21 @@ export default function App() {
       return;
     }
     const endpoint = delta > 0 ? 'increment' : 'decrement';
+    // Ensure secondary never overshoots below 0: cap decrement to current value
+    let effectiveAmount = Math.abs(delta);
+    if (segment === 'secondary' && delta < 0) {
+      const available = state.secondary;
+      effectiveAmount = Math.min(effectiveAmount, available);
+      if (effectiveAmount === 0) {
+        // Already at 0 → no-op; modal will already have been handled previously
+        return;
+      }
+    }
     setLoading(true);
     fetch(`${API_BASE}/${segment}/${endpoint}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ amount: Math.abs(delta) })
+      body: JSON.stringify({ amount: effectiveAmount })
     })
       .then((response) => {
         if (!response.ok) {
@@ -168,7 +178,7 @@ export default function App() {
         setError('No se pudo actualizar el contador.');
       })
       .finally(() => setLoading(false));
-  }, [normalizeState, secondaryLocked]);
+  }, [normalizeState, secondaryLocked, state.secondary]);
 
   const currentSecondaryImage =
     secondaryImages[state.secondaryImageIndex] ?? secondaryImages[initialState.secondaryImageIndex];
