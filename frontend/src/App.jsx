@@ -227,7 +227,7 @@ export default function App() {
   return (
     <div className="page">
       <header>
-        <h1>M.O.D.O.K</h1>
+        <h1>InevitableCON 2025 Sevilla</h1>
       </header>
 
       {error && <p className="error">{error}</p>}
