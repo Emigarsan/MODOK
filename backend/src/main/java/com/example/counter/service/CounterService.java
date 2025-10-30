@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class CounterService {
     public static final int SECONDARY_IMAGE_COUNT = 7;
-    private static final int PRIMARY_DEFAULT_VALUE = 1764;
+    private static final int PRIMARY_DEFAULT_VALUE = 1792;
     private static final int SECONDARY_DEFAULT_VALUE = 128;
     private static final int TERTIARY_DEFAULT_VALUE = 640;
 

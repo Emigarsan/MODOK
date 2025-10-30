@@ -36,7 +36,7 @@ const tertiaryButtons = [
 ];
 
 const initialState = {
-  primary: 1764,
+  primary: 1792,
   secondary: 128,
   tertiary: 640,
   secondaryImageIndex: 0
@@ -273,24 +273,24 @@ export default function App() {
         </section>
 
         {!tertiaryLocked && (
-        <section className="counter-card">
-          <img src={tertiaryCore} alt="Entrenamiento Especializado" className="counter-art" />
-          <h2>Entrenamiento Especializado</h2>
-          <div className="counter-value">{state.tertiary}</div>
-          <div className="button-grid">
-            {tertiaryButtons.map(({ label, delta }) => (
-              <button
-                key={`tertiary-${label}`}
-                onClick={() => updateCounter('tertiary', delta)}
-                disabled={tertiaryLocked}
-                aria-disabled={tertiaryLocked}
-                title={tertiaryLocked ? 'Bloqueado al alcanzar 0' : undefined}
-              >
-                {label}
-              </button>
-            ))}
-          </div>
-        </section>
+          <section className="counter-card">
+            <img src={tertiaryCore} alt="Entrenamiento Especializado" className="counter-art" />
+            <h2>Entrenamiento Especializado</h2>
+            <div className="counter-value">{state.tertiary}</div>
+            <div className="button-grid">
+              {tertiaryButtons.map(({ label, delta }) => (
+                <button
+                  key={`tertiary-${label}`}
+                  onClick={() => updateCounter('tertiary', delta)}
+                  disabled={tertiaryLocked}
+                  aria-disabled={tertiaryLocked}
+                  title={tertiaryLocked ? 'Bloqueado al alcanzar 0' : undefined}
+                >
+                  {label}
+                </button>
+              ))}
+            </div>
+          </section>
         )}
       </div>
 
