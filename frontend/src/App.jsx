@@ -7,6 +7,7 @@ import celda4 from './assets/secondary/8A Entorno Celda 4.jpg';
 import celda5 from './assets/secondary/9A Entorno Celda 5.jpg';
 import celda6 from './assets/secondary/10A Entorno Celda 6.jpg';
 import celda7 from './assets/secondary/11A Entorno Celda 7.jpg';
+import celda7Accesorio from './assets/secondary/11B Accesorio Masivo.jpg';
 import tertiaryCore from './assets/43021.png';
 
 const API_BASE = '/api/counter';
@@ -220,6 +221,8 @@ export default function App() {
 
   const currentSecondaryImage =
     secondaryImages[state.secondaryImageIndex] ?? secondaryImages[initialState.secondaryImageIndex];
+  const displayedSecondaryImage = secondaryLocked ? celda7Accesorio : currentSecondaryImage;
+  const secondaryTitle = secondaryLocked ? 'Accesorio M.Y.T.H.O.S.' : 'Celdas de Contención';
 
   return (
     <div className="page">
@@ -247,13 +250,13 @@ export default function App() {
 
         <section className="counter-card">
           <img
-            src={currentSecondaryImage}
+            src={displayedSecondaryImage}
             alt={`Celda ${state.secondaryImageIndex + 1}`}
             className="counter-art"
           />
-          <h2>Celdas de Contención</h2>
+          <h2>{secondaryTitle}</h2>
           <div className="counter-value">{state.secondary}</div>
-          <div className="button-grid">
+          {!secondaryLocked && (<div className="button-grid">
             {secondaryButtons.map(({ label, delta }) => (
               <button
                 key={`secondary-${label}`}
@@ -266,13 +269,14 @@ export default function App() {
               </button>
             ))}
           </div>
+          )}
         </section>
 
         <section className="counter-card">
           <img src={tertiaryCore} alt="Entrenamiento Especializado" className="counter-art" />
           <h2>Entrenamiento Especializado</h2>
           <div className="counter-value">{state.tertiary}</div>
-          <div className="button-grid">
+          {!secondaryLocked && (<div className="button-grid">
             {tertiaryButtons.map(({ label, delta }) => (
               <button
                 key={`tertiary-${label}`}
@@ -301,3 +305,4 @@ export default function App() {
     </div>
   );
 }
+
