@@ -1,4 +1,4 @@
-﻿import { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 export default function RegisterPage() {
@@ -49,16 +49,13 @@ export default function RegisterPage() {
       .then((data) => setSwAspects(Array.isArray(data) ? data : []))
       .catch(() => setSwAspects([]));
   }, []);
-  const aspects = useMemo(() => [
-    'Agresividad', 'Justicia', 'Liderazgo', 'ProtecciÃ³n', 'Masacrismo'
-  ], []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       if (mode === 'create') {
         if (!mesaNumber || !difficulty || !playersCount) {
-          alert('Rellena nÃºmero de mesa, dificultad y nÃºmero de jugadores');
+          alert('Rellena nÃƒÂºmero de mesa, dificultad y nÃƒÂºmero de jugadores');
           return;
         }
         const body = {
@@ -75,7 +72,7 @@ export default function RegisterPage() {
       } else {
         const res = await fetch('/api/tables/register/join', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ code: joinCode }) });
         const data = await res.json();
-        if (data.ok) navigate('/event'); else alert('CÃ³digo no encontrado');
+        if (data.ok) navigate('/event'); else alert('CÃƒÂ³digo no encontrado');
       }
     } catch (e) {
       alert(e.message);
@@ -91,7 +88,7 @@ export default function RegisterPage() {
       </div>
       <form onSubmit={handleSubmit} className="form" style={{ display: mode === 'create' ? 'grid' : 'none', gap: '0.75rem' }}>
         <label>
-          NÃºmero de mesa
+          NÃƒÂºmero de mesa
           <input type="number" min={1} value={mesaNumber} onChange={(e) => setMesaNumber(e.target.value)} placeholder="Ej. 12" required />
         </label>
         <label>
@@ -102,14 +99,14 @@ export default function RegisterPage() {
           Dificultad
           <select value={difficulty} onChange={(e) => setDifficulty(e.target.value)} required>
             <option value="" disabled>Selecciona dificultad</option>
-            <option value="FÃ¡cil">FÃ¡cil</option>
+            <option value="FÃƒÂ¡cil">FÃƒÂ¡cil</option>
             <option value="Normal">Normal</option>
-            <option value="DifÃ­cil">DifÃ­cil</option>
+            <option value="DifÃƒÂ­cil">DifÃƒÂ­cil</option>
             <option value="Experto">Experto</option>
           </select>
         </label>
         <label>
-          NÃºmero de jugadores
+          NÃƒÂºmero de jugadores
           <input type="number" min={1} max={8} value={playersCount} onChange={(e) => setPlayersCount(e.target.value)} required />
         </label>
 
@@ -161,7 +158,7 @@ export default function RegisterPage() {
             <option value="" disabled>Selecciona una mesa</option>
             {existing.map((t) => (
               <option key={t.id} value={t.code}>
-                {t.tableNumber ? `Mesa ${t.tableNumber}` : (t.tableName || 'Mesa')} â€” CÃ³digo: {t.code}
+                {t.tableNumber ? `Mesa ${t.tableNumber}` : (t.tableName || 'Mesa')} Ã¢â‚¬â€ CÃƒÂ³digo: {t.code}
               </option>
             ))}
           </select>
@@ -171,6 +168,7 @@ export default function RegisterPage() {
     </div>
   );
 }
+
 
 
 

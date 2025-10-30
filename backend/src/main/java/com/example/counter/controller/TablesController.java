@@ -21,6 +21,7 @@ public class TablesController {
         this.tablesService = tablesService;
     }
 
+    @SuppressWarnings("unchecked")
     @PostMapping("/register/create")
     public ResponseEntity<RegisterTable> createRegister(@RequestBody Map<String, Object> payload) {
         int tableNumber = ((Number) payload.getOrDefault("tableNumber", 0)).intValue();
