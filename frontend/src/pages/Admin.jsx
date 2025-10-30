@@ -5,7 +5,9 @@ const API_BASE = '/api/counter';
 export default function AdminPage() {
   const [state, setState] = useState(null);
   const [error, setError] = useState(null);
-  const [amount, setAmount] = useState(1);
+  const [amountPrimary, setAmountPrimary] = useState(1);
+  const [amountSecondary, setAmountSecondary] = useState(1);
+  const [amountTertiary, setAmountTertiary] = useState(1);
   const [pVal, setPVal] = useState('');
   const [sVal, setSVal] = useState('');
   const [tVal, setTVal] = useState('');
@@ -47,10 +49,15 @@ export default function AdminPage() {
 
   const update = (segment, sign) => () => {
     const endpoint = sign > 0 ? 'increment' : 'decrement';
+    const amt = (() => {
+      if (segment === 'primary') return Math.max(0, Number(amountPrimary) || 1);
+      if (segment === 'secondary') return Math.max(0, Number(amountSecondary) || 1);
+      return Math.max(0, Number(amountTertiary) || 1);
+    })();
     fetch(`${API_BASE}/${segment}/${endpoint}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ amount: Math.max(0, amount|0) || 1 })
+      body: JSON.stringify({ amount: amt })
     }).then(fetchState);
   };
 
@@ -125,12 +132,12 @@ export default function AdminPage() {
         <p>Cargando…</p>
       ) : (
         <>
-          <div className="form">
+          {false && (<div className="form">
             <label>
               Cantidad (±)
               <input type="number" value={amount} min={0} onChange={(e) => setAmount(Number(e.target.value))} />
             </label>
-          </div>
+          </div>)}
           <div className="admin-tabs">
             <button className={tab === 'mod' ? 'active' : ''} onClick={() => setTab('mod')}>Modificar valores</button>
             <button className={tab === 'tables' ? 'active' : ''} onClick={() => setTab('tables')}>Ver mesas</button>
@@ -138,8 +145,14 @@ export default function AdminPage() {
 
           <div className="admin-grid" style={{ display: tab === 'mod' ? 'grid' : 'none' }}>
             <section className="counter-card">
-              <h3>Primary</h3>
+              <h3>Vida M.O.D.O.K.</h3>
               <div className="counter-value">{state.primary}</div>
+              <div className="form">
+                <label>
+                  Cantidad (±)
+                  <input type="number" min={0} value={amountPrimary} onChange={(e) => setAmountPrimary(Number(e.target.value))} />
+                </label>
+              </div>
               <div className="form">
                 <label>
                   Fijar a
@@ -154,8 +167,14 @@ export default function AdminPage() {
             </section>
 
             <section className="counter-card">
-              <h3>Secondary</h3>
+              <h3>Celdas de Contención</h3>
               <div className="counter-value">{state.secondary}</div>
+              <div className="form">
+                <label>
+                  Cantidad (±)
+                  <input type="number" min={0} value={amountSecondary} onChange={(e) => setAmountSecondary(Number(e.target.value))} />
+                </label>
+              </div>
               <div className="form">
                 <label>
                   Fijar a
@@ -177,8 +196,14 @@ export default function AdminPage() {
             </section>
 
             <section className="counter-card">
-              <h3>Tertiary</h3>
+              <h3>Entrenamiento especializado</h3>
               <div className="counter-value">{state.tertiary}</div>
+              <div className="form">
+                <label>
+                  Cantidad (±)
+                  <input type="number" min={0} value={amountTertiary} onChange={(e) => setAmountTertiary(Number(e.target.value))} />
+                </label>
+              </div>
               <div className="form">
                 <label>
                   Fijar a
@@ -214,8 +239,8 @@ export default function AdminPage() {
             </section>
           </div>
           <div className="form" style={{ marginTop: 16, gap: 8, display: 'flex', flexWrap: 'wrap' }}>
-            <button onClick={() => download('/api/admin/export/tables.csv', 'tables.csv')}>Exportar CSV (mesas)</button>
-            <button onClick={() => download('/api/admin/export/counters.csv', 'counters.csv')}>Exportar CSV (contadores)</button>
+            <button onClick={() => download('/api/admin/export/event.csv', 'event.csv')}>Exportar CSV (Event)</button>
+            <button onClick={() => download('/api/admin/export/freegame.csv', 'freegame.csv')}>Exportar CSV (Freegame)</button>
           </div>
           </>)}
         </>

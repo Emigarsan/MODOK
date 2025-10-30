@@ -93,7 +93,7 @@ export default function DisplayPage() {
       {primaryRevealed && (
         <section className="counter-card">
           <img src={centralImage} alt="M.O.D.O.K" className="counter-art" />
-          <h2>M.O.D.O.K.</h2>
+          <h2>Vida M.O.D.O.K.</h2>
           <div className="counter-value">{state.primary}</div>
         </section>
       )}
@@ -111,7 +111,7 @@ export default function DisplayPage() {
       {state.tertiary > 0 && (
         <section className="counter-card">
           <img src={tertiaryCore} alt="Entrenamiento Especializado" className="counter-art" />
-          <h2>Entrenamiento Especializado</h2>
+          <h2>Entrenamiento especializado</h2>
           <div className="counter-value">{state.tertiary}</div>
         </section>
       )}
@@ -126,4 +126,3 @@ export default function DisplayPage() {
     </div>
   );
 }
-
