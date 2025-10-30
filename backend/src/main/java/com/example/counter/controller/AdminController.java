@@ -95,7 +95,7 @@ public class AdminController {
 
     private String escape(String v) {
         if (v == null) return "";
-        String needsQuote = v.contains(",") || v.contains("\n") || v.contains("\"");
+        boolean needsQuote = v.contains(",") || v.contains("\n") || v.contains("\"");
         String out = v.replace("\"", "\"\"");
         return needsQuote ? ("\"" + out + "\"") : out;
     }
@@ -103,9 +103,8 @@ public class AdminController {
     private ResponseEntity<byte[]> csvResponse(String csv, String filename) {
         byte[] bytes = csv.getBytes(StandardCharsets.UTF_8);
         HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(new MediaType("text", "csv", StandardCharsets.UTF_8));
+        headers.setContentType(MediaType.valueOf("text/csv"));
         headers.set(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\""+filename+"\"");
         return new ResponseEntity<>(bytes, headers, HttpStatus.OK);
     }
 }
-
