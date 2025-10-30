@@ -18,7 +18,7 @@ export default function AdminPage() {
   const [tab, setTab] = useState('mod');
   const [tablesTab, setTablesTab] = useState('event');
 
-  // Campos de fijaciÃ³n permanecen vacÃƒÂ­os hasta que el usuario escriba.
+  // Campos de fijación permanecen vacÃƒ­os hasta que el usuario escriba.
   const syncFromState = () => {};
 
   const fetchState = useCallback(() => {
@@ -30,7 +30,7 @@ export default function AdminPage() {
 
   useEffect(() => { fetchState(); const id = setInterval(fetchState, 3000); return () => clearInterval(id); }, [fetchState]);
 
-  // No auto-login: siempre pedimos contraseÃƒÂ±a hasta pulsar "Entrar".
+  // No auto-login: siempre pedimos Contraseña hasta pulsar "Entrar".
 
   const fetchTables = useCallback(() => {
     if (!isAuthed) return;
@@ -115,7 +115,7 @@ export default function AdminPage() {
         <h2>Admin</h2>
         <form className="form" onSubmit={tryAuth}>
           <label>
-            ContraseÃƒÂ±a
+            Contraseña
             <input type="password" value={adminKey} onChange={(e) => setAdminKey(e.target.value)} />
           </label>
           <button type="submit">Entrar</button>
@@ -129,7 +129,7 @@ export default function AdminPage() {
       <h2>Admin</h2>
       {isAuthed && (
         <div className="form" style={{ alignSelf: 'flex-end' }}>
-          <button onClick={logout}>Cerrar sesiÃ³n</button>
+          <button onClick={logout}>Cerrar sesión</button>
         </div>
       )}
       {error && <p className="error">{error}</p>}
@@ -139,7 +139,7 @@ export default function AdminPage() {
         <>
           {false && (<div className="form">
             <label>
-              Cantidad (Â±)
+              Cantidad (±)
               <input type="number" value={amount} min={0} onChange={(e) => setAmount(Number(e.target.value))} />
             </label>
           </div>)}
@@ -154,7 +154,7 @@ export default function AdminPage() {
               <div className="counter-value">{state.primary}</div>
               <div className="form">
                 <label>
-                  Cantidad (Â±)
+                  Cantidad (±)
                   <input type="number" min={0} value={amountPrimary} onChange={(e) => setAmountPrimary(Number(e.target.value))} />
                 </label>
               </div>
@@ -172,11 +172,11 @@ export default function AdminPage() {
             </section>
 
             <section className="counter-card">
-              <h3>Celdas de ContenciÃ³n</h3>
+              <h3>Celdas de Contención</h3>
               <div className="counter-value">{state.secondary}</div>
               <div className="form">
                 <label>
-                  Cantidad (Â±)
+                  Cantidad (±)
                   <input type="number" min={0} value={amountSecondary} onChange={(e) => setAmountSecondary(Number(e.target.value))} />
                 </label>
               </div>
@@ -205,7 +205,7 @@ export default function AdminPage() {
               <div className="counter-value">{state.tertiary}</div>
               <div className="form">
                 <label>
-                  Cantidad (Â±)
+                  Cantidad (±)
                   <input type="number" min={0} value={amountTertiary} onChange={(e) => setAmountTertiary(Number(e.target.value))} />
                 </label>
               </div>
@@ -229,10 +229,10 @@ export default function AdminPage() {
             <button className={tablesTab === 'event' ? 'active' : ''} onClick={() => setTablesTab('event')}>Event</button>
             <button className={tablesTab === 'freegame' ? 'active' : ''} onClick={() => setTablesTab('freegame')}>Freegame</button>
           </div>
-          <div className="admin-grid" style={{ marginBottom: 12 }}>
+          <div className="admin-grid" style={{ marginBottom: 12, gridTemplateColumns: '1fr' }}>
             <section className="counter-card" style={{ overflowX: 'auto', display: tablesTab === 'event' ? 'block' : 'none' }}>
               <h3>Event</h3>
-              <table className="data-table">
+              <table className="data-table" style={{ width: '100%' }}>
                 <thead>
                   <tr>
                     <th>Mesa</th>
@@ -271,7 +271,7 @@ export default function AdminPage() {
             </section>
             <section className="counter-card" style={{ overflowX: 'auto', display: tablesTab === 'freegame' ? 'block' : 'none' }}>
               <h3>Freegame</h3>
-              <table className="data-table">
+              <table className="data-table" style={{ width: '100%' }}>
                 <thead>
                   <tr>
                     <th>Nombre</th>

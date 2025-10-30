@@ -1,14 +1,25 @@
-import { BrowserRouter, Routes, Route, Link, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Link, Navigate, useLocation } from 'react-router-dom';
 import RegisterPage from './pages/Register.jsx';
 import FreeGamePage from './pages/FreeGame.jsx';
 import EventPage from './pages/Event.jsx';
 import DisplayPage from './pages/Display.jsx';
 import AdminPage from './pages/Admin.jsx';
 
+function PageWrapper({ children }) {
+  const location = useLocation();
+  const isAdmin = location.pathname.startsWith('/admin');
+  const pageClass = isAdmin ? 'page page-wide' : 'page';
+  return (
+    <div className={pageClass}>
+      {children}
+    </div>
+  );
+}
+
 export default function AppRouter() {
   return (
     <BrowserRouter>
-      <div className="page">
+      <PageWrapper>
         <header>
           <h1>InevitableCON 2025 Sevilla</h1>
           <nav className="nav">
@@ -27,7 +38,7 @@ export default function AppRouter() {
           <Route path="/admin" element={<AdminPage />} />
           <Route path="*" element={<Navigate to="/register" replace />} />
         </Routes>
-      </div>
+      </PageWrapper>
     </BrowserRouter>
   );
 }
