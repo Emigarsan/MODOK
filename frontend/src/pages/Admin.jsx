@@ -12,7 +12,7 @@ export default function AdminPage() {
   const [sVal, setSVal] = useState('');
   const [tVal, setTVal] = useState('');
   const [imgIdx, setImgIdx] = useState(''); // 1..7 for UI
-  const [adminKey, setAdminKey] = useState(localStorage.getItem('adminKey') || '');
+  const [adminKey, setAdminKey] = useState('');
   const [isAuthed, setIsAuthed] = useState(false);
   const [tables, setTables] = useState({ register: [], freegame: [] });
   const [tab, setTab] = useState('mod');
@@ -29,13 +29,7 @@ export default function AdminPage() {
 
   useEffect(() => { fetchState(); const id = setInterval(fetchState, 3000); return () => clearInterval(id); }, [fetchState]);
 
-  useEffect(() => {
-    if (adminKey) {
-      fetch('/api/admin/tables', { headers: { 'X-Admin-Secret': adminKey }})
-        .then((r) => setIsAuthed(r.ok))
-        .catch(() => setIsAuthed(false));
-    }
-  }, []);
+  // No auto-login: siempre pedimos contraseña hasta pulsar "Entrar".
 
   const fetchTables = useCallback(() => {
     if (!isAuthed) return;
@@ -100,13 +94,18 @@ export default function AdminPage() {
     fetch('/api/admin/tables', { headers: { 'X-Admin-Secret': adminKey }})
       .then((r) => {
         if (r.ok) {
-          localStorage.setItem('adminKey', adminKey);
           setIsAuthed(true);
         } else {
           alert('Clave incorrecta');
         }
       })
       .catch(() => alert('Error de red'));
+  };
+
+  const logout = () => {
+    setIsAuthed(false);
+    setAdminKey('');
+    setTables({ register: [], freegame: [] });
   };
 
   if (!isAuthed) {
@@ -127,6 +126,11 @@ export default function AdminPage() {
   return (
     <div className="container">
       <h2>Admin</h2>
+      {isAuthed && (
+        <div className="form" style={{ alignSelf: 'flex-end' }}>
+          <button onClick={logout}>Cerrar sesión</button>
+        </div>
+      )}
       {error && <p className="error">{error}</p>}
       {!state ? (
         <p>Cargando…</p>
