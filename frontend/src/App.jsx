@@ -29,9 +29,9 @@ const secondaryButtons = [
 
 const tertiaryButtons = [
   { label: '+1', delta: 1 },
-  { label: '+3', delta: 3 },
+  { label: '+5', delta: 5 },
   { label: '-1', delta: -1 },
-  { label: '-3', delta: -3 }
+  { label: '-5', delta: -5 }
 ];
 
 const initialState = {
