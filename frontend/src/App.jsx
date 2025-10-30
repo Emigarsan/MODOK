@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+﻿import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import centralImage from './assets/central-image.svg';
 import celda1 from './assets/secondary/5A Entorno Celda 1.jpg';
 import celda2 from './assets/secondary/6A Entorno Celda 2.jpg';
@@ -7,7 +7,7 @@ import celda4 from './assets/secondary/8A Entorno Celda 4.jpg';
 import celda5 from './assets/secondary/9A Entorno Celda 5.jpg';
 import celda6 from './assets/secondary/10A Entorno Celda 6.jpg';
 import celda7 from './assets/secondary/11A Entorno Celda 7.jpg';
-import tertiaryCore from './assets/tertiary-core.svg';
+import tertiaryCore from './assets/43021.png';
 
 const API_BASE = '/api/counter';
 
@@ -43,11 +43,13 @@ const initialState = {
 
 export default function App() {
   const [state, setState] = useState(initialState);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [initialLoading, setInitialLoading] = useState(true);
   const [error, setError] = useState(null);
   const [modalMessage, setModalMessage] = useState(null);
   const [modalSource, setModalSource] = useState(null); // 'secondaryFinal' | 'tertiaryZero' | null
   const [secondaryLocked, setSecondaryLocked] = useState(false);
+  const [tertiaryLocked, setTertiaryLocked] = useState(false);
 
   const secondaryImages = useMemo(
     () => [celda1, celda2, celda3, celda4, celda5, celda6, celda7],
@@ -82,12 +84,11 @@ export default function App() {
     [secondaryImages]
   );
 
-  const fetchState = useCallback(() => {
-    setLoading(true);
+  const fetchState = useCallback((isInitial = false) => {
     fetch(API_BASE)
       .then((response) => {
         if (!response.ok) {
-          throw new Error('Respuesta inválida del servidor');
+          throw new Error('Respuesta invÃ¡lida del servidor');
         }
         return response.json();
       })
@@ -99,12 +100,27 @@ export default function App() {
         console.error(err);
         setError('No se pudo cargar el estado de los contadores.');
       })
-      .finally(() => setLoading(false));
+      .finally(() => {
+        if (isInitial) {
+          setInitialLoading(false);
+        }
+      });
   }, [normalizeState]);
 
+  // Initial load only once
   useEffect(() => {
-    fetchState();
+    fetchState(true);
   }, [fetchState]);
+
+  // Background refresh every 3s, paused when a modal is open
+  useEffect(() => {
+    const id = setInterval(() => {
+      if (!modalMessage) {
+        fetchState();
+      }
+    }, 3000);
+    return () => clearInterval(id);
+  }, [fetchState, modalMessage]);
 
   const previousSecondaryIndex = useRef(initialState.secondaryImageIndex);
   const previousSecondaryValue = useRef(initialState.secondary);
@@ -118,7 +134,7 @@ export default function App() {
     }
   }, [state.secondaryImageIndex]);
 
-  // When already on the last image (7ª) and secondary transitions to 0, show modal
+  // When already on the last image (7Âª) and secondary transitions to 0, show modal
   useEffect(() => {
     if (previousSecondaryValue.current !== state.secondary) {
       const reachedZeroNow = state.secondary === 0 && previousSecondaryValue.current > 0;
@@ -139,6 +155,8 @@ export default function App() {
   useEffect(() => {
     if (previousTertiary.current !== state.tertiary) {
       if (state.tertiary === 0) {
+        // Lock tertiary immediately when it reaches 0 and open modal
+        setTertiaryLocked(true);
         setModalMessage('Alto, escucha las instrucciones de los coordinadores');
         setModalSource('tertiaryZero');
       }
@@ -159,6 +177,10 @@ export default function App() {
     if (segment === 'secondary' && secondaryLocked) {
       return;
     }
+    // Prevent modifications to tertiary when locked
+    if (segment === 'tertiary' && tertiaryLocked) {
+      return;
+    }
     const endpoint = delta > 0 ? 'increment' : 'decrement';
     // Ensure secondary never overshoots below 0: cap decrement to current value
     let effectiveAmount = Math.abs(delta);
@@ -166,11 +188,10 @@ export default function App() {
       const available = state.secondary;
       effectiveAmount = Math.min(effectiveAmount, available);
       if (effectiveAmount === 0) {
-        // Already at 0 → no-op; modal will already have been handled previously
+        // Already at 0 â†’ no-op; modal will already have been handled previously
         return;
       }
     }
-    setLoading(true);
     fetch(`${API_BASE}/${segment}/${endpoint}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -190,8 +211,10 @@ export default function App() {
         console.error(err);
         setError('No se pudo actualizar el contador.');
       })
-      .finally(() => setLoading(false));
-  }, [normalizeState, secondaryLocked, state.secondary]);
+      .finally(() => {
+        // Do not toggle global loading indicator on counter updates.
+      });
+  }, [normalizeState, secondaryLocked, tertiaryLocked, state.secondary]);
 
   const currentSecondaryImage =
     secondaryImages[state.secondaryImageIndex] ?? secondaryImages[initialState.secondaryImageIndex];
@@ -202,9 +225,8 @@ export default function App() {
         <h1>M.O.D.O.K</h1>
         <p>
           Control central de contadores con apoyo visual. El segundo contador cambia de fase al llegar a
-          cero y cada decremento reduce también el tercer contador.
+          cero y cada decremento reduce tambiÃ©n el tercer contador.
         </p>
-        {loading && <span className="status-text">Sincronizando…</span>}
       </header>
 
       {error && <p className="error">{error}</p>}
@@ -229,9 +251,9 @@ export default function App() {
             alt={`Celda ${state.secondaryImageIndex + 1}`}
             className="counter-art"
           />
-          <h2>Fases Dinámicas</h2>
+          <h2>Fases DinÃ¡micas</h2>
           <div className="counter-value">{state.secondary}</div>
-          <p className="counter-meta">7 imágenes secuenciadas para cada llegada a cero.</p>
+          <p className="counter-meta">7 imÃ¡genes secuenciadas para cada llegada a cero.</p>
           <div className="button-grid">
             {secondaryButtons.map(({ label, delta }) => (
               <button
@@ -239,7 +261,7 @@ export default function App() {
                 onClick={() => updateCounter('secondary', delta)}
                 disabled={secondaryLocked}
                 aria-disabled={secondaryLocked}
-                title={secondaryLocked ? 'Bloqueado tras la séptima imagen' : undefined}
+                title={secondaryLocked ? 'Bloqueado tras la sÃ©ptima imagen' : undefined}
               >
                 {label}
               </button>
@@ -251,10 +273,16 @@ export default function App() {
           <img src={tertiaryCore} alt="Reserva auxiliar" className="counter-art" />
           <h2>Reserva Vinculada</h2>
           <div className="counter-value">{state.tertiary}</div>
-          <p className="counter-meta">Se reduce automáticamente con cada decremento secundario.</p>
+          <p className="counter-meta">Se reduce automÃ¡ticamente con cada decremento secundario.</p>
           <div className="button-grid">
             {tertiaryButtons.map(({ label, delta }) => (
-              <button key={`tertiary-${label}`} onClick={() => updateCounter('tertiary', delta)}>
+              <button
+                key={`tertiary-${label}`}
+                onClick={() => updateCounter('tertiary', delta)}
+                disabled={tertiaryLocked}
+                aria-disabled={tertiaryLocked}
+                title={tertiaryLocked ? 'Bloqueado al alcanzar 0' : undefined}
+              >
                 {label}
               </button>
             ))}

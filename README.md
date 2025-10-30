@@ -55,3 +55,9 @@ npm run dev
 ```
 
 Durante el desarrollo, la configuraciÃ³n de Vite redirige las peticiones a `/api` hacia el backend que corre en `http://localhost:8080`.
+## Cambios recientes de UI y assets
+
+- El contador terciario usa ahora la imagen `frontend/src/assets/43021.png` (se eliminó `tertiary-core.svg`).
+- Las imágenes del contador secundario son los JPG “Celda 1” a “Celda 7” en `frontend/src/assets/secondary/`.
+- El contador 2 se bloquea cuando, en la imagen 7, el valor llega a 0; el contador 3 se bloquea cuando su valor llega a 0.
+- Se eliminó el texto de sincronización del header y el refresco automático del estado ocurre cada 3 segundos, pausando cuando hay un modal abierto.
