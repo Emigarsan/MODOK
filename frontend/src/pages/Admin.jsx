@@ -16,8 +16,9 @@ export default function AdminPage() {
   const [isAuthed, setIsAuthed] = useState(false);
   const [tables, setTables] = useState({ register: [], freegame: [] });
   const [tab, setTab] = useState('mod');
+  const [tablesTab, setTablesTab] = useState('event');
 
-  // Campos de fijaciÃ³n permanecen vacÃ­os hasta que el usuario escriba.
+  // Campos de fijaciÃ³n permanecen vacÃƒÂ­os hasta que el usuario escriba.
   const syncFromState = () => {};
 
   const fetchState = useCallback(() => {
@@ -29,7 +30,7 @@ export default function AdminPage() {
 
   useEffect(() => { fetchState(); const id = setInterval(fetchState, 3000); return () => clearInterval(id); }, [fetchState]);
 
-  // No auto-login: siempre pedimos contraseÃ±a hasta pulsar "Entrar".
+  // No auto-login: siempre pedimos contraseÃƒÂ±a hasta pulsar "Entrar".
 
   const fetchTables = useCallback(() => {
     if (!isAuthed) return;
@@ -114,7 +115,7 @@ export default function AdminPage() {
         <h2>Admin</h2>
         <form className="form" onSubmit={tryAuth}>
           <label>
-            ContraseÃ±a
+            ContraseÃƒÂ±a
             <input type="password" value={adminKey} onChange={(e) => setAdminKey(e.target.value)} />
           </label>
           <button type="submit">Entrar</button>
@@ -133,7 +134,7 @@ export default function AdminPage() {
       )}
       {error && <p className="error">{error}</p>}
       {!state ? (
-        <p>Cargandoâ€¦</p>
+        <p>Cargando</p>
       ) : (
         <>
           {false && (<div className="form">
@@ -224,8 +225,12 @@ export default function AdminPage() {
 
           {tab === 'tables' && (<>
           <h3>Mesas (vivo)</h3>
+          <div className="admin-tabs" style={{ marginBottom: 8 }}>
+            <button className={tablesTab === 'event' ? 'active' : ''} onClick={() => setTablesTab('event')}>Event</button>
+            <button className={tablesTab === 'freegame' ? 'active' : ''} onClick={() => setTablesTab('freegame')}>Freegame</button>
+          </div>
           <div className="admin-grid" style={{ marginBottom: 12 }}>
-            <section className="counter-card" style={{ overflowX: 'auto' }}>
+            <section className="counter-card" style={{ overflowX: 'auto', display: tablesTab === 'event' ? 'block' : 'none' }}>
               <h3>Event</h3>
               <table className="data-table">
                 <thead>
@@ -264,7 +269,7 @@ export default function AdminPage() {
                 </tbody>
               </table>
             </section>
-            <section className="counter-card" style={{ overflowX: 'auto' }}>
+            <section className="counter-card" style={{ overflowX: 'auto', display: tablesTab === 'freegame' ? 'block' : 'none' }}>
               <h3>Freegame</h3>
               <table className="data-table">
                 <thead>
@@ -290,24 +295,6 @@ export default function AdminPage() {
               </table>
             </section>
           </div>
-          <div className="admin-grid">
-            <section className="counter-card">
-              <h3>Register</h3>
-              <ul>
-                {tables.register.map((t) => (
-                  <li key={t.id}>{t.name} â€” CÃ³digo: {t.code}</li>
-                ))}
-              </ul>
-            </section>
-            <section className="counter-card">
-              <h3>Freegame</h3>
-              <ul>
-                {tables.freegame.map((t) => (
-                  <li key={t.id}>{t.name} â€” Jugadores: {t.players} â€” CÃ³digo: {t.code}</li>
-                ))}
-              </ul>
-            </section>
-          </div>
           <div className="form" style={{ marginTop: 16, gap: 8, display: 'flex', flexWrap: 'wrap' }}>
             <button onClick={() => download('/api/admin/export/event.csv', 'event.csv')}>Exportar CSV (Event)</button>
             <button onClick={() => download('/api/admin/export/freegame.csv', 'freegame.csv')}>Exportar CSV (Freegame)</button>
@@ -318,4 +305,5 @@ export default function AdminPage() {
     </div>
   );
 }
+
 
