@@ -272,11 +272,12 @@ export default function App() {
           )}
         </section>
 
+        {!tertiaryLocked && (
         <section className="counter-card">
           <img src={tertiaryCore} alt="Entrenamiento Especializado" className="counter-art" />
           <h2>Entrenamiento Especializado</h2>
           <div className="counter-value">{state.tertiary}</div>
-          {!secondaryLocked && (<div className="button-grid">
+          <div className="button-grid">
             {tertiaryButtons.map(({ label, delta }) => (
               <button
                 key={`tertiary-${label}`}
@@ -290,6 +291,7 @@ export default function App() {
             ))}
           </div>
         </section>
+        )}
       </div>
 
       {modalMessage && (
@@ -305,4 +307,5 @@ export default function App() {
     </div>
   );
 }
+
 
