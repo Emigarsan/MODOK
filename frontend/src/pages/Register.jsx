@@ -13,7 +13,8 @@ export default function RegisterPage() {
   const navigate = useNavigate();
 
   // Normalización acentos para búsqueda (ignora tildes y mayúsculas)
-  const normalize = (s) => (s || '').normalize('NFD').replace(/\p{Diacritic}+/gu, '').toLowerCase();
+  // Usamos rango Unicode de diacríticos para compatibilidad amplia
+  const normalize = (s) => (s || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
   const [characters, setCharacters] = useState([]);
   const [aspects, setAspects] = useState([]);
   const [swAspects, setSwAspects] = useState([]);
@@ -25,8 +26,15 @@ export default function RegisterPage() {
 
   const handleCharacterChange = (idx, raw) => {
     let v = raw;
-    const canon = charMap.get(normalize(v));
-    if (canon) v = canon;
+    const n = normalize(v);
+    const canon = charMap.get(n);
+    if (!canon) {
+      // Si no hay match exacto ignorando tildes, intenta autocompletar si hay un único include
+      const hits = characters.filter((c) => normalize(c).includes(n));
+      if (hits.length === 1) v = hits[0];
+    } else {
+      v = canon;
+    }
     setPlayers(prev => prev.map((row, i) => {
       if (i !== idx) return row;
       if (v === 'Adam Warlock') return { ...row, character: v, aspect: '' };
@@ -87,7 +95,7 @@ export default function RegisterPage() {
     try {
       if (mode === 'create') {
         if (!mesaNumber || !difficulty || !playersCount) {
-          alert('Rellena número de mesa, dificultad y número de jugadores');
+          alert('Rellena número de mesa, dificultad y número de jugadores')
           return;
         }
         const body = {
@@ -181,7 +189,7 @@ export default function RegisterPage() {
             <option value="" disabled>Selecciona una mesa</option>
             {existing.map((t) => (
               <option key={t.id} value={t.code}>
-                {t.tableNumber ? `Mesa ${t.tableNumber}` : (t.tableName || 'Mesa')} Código: {t.code}
+                {t.tableNumber ? `Mesa ${t.tableNumber}` : (t.tableName || 'Mesa')} - Código: {t.code}
               </option>
             ))}
           </select>
@@ -191,6 +199,9 @@ export default function RegisterPage() {
     </div>
   );
 }
+
+
+
 
 
 
