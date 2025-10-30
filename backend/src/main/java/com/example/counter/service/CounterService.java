@@ -49,6 +49,8 @@ public class CounterService {
 
             if (secondary == 0) {
                 advanceSecondaryImage();
+                secondary = SECONDARY_DEFAULT_VALUE;
+                break;
             }
         }
         return snapshot();
@@ -84,28 +86,5 @@ public class CounterService {
 
     private int sanitize(int amount) {
         return Math.max(0, amount);
-import org.springframework.stereotype.Service;
-
-import java.util.concurrent.atomic.AtomicInteger;
-
-@Service
-public class CounterService {
-    private final AtomicInteger counter = new AtomicInteger();
-
-    public int getCurrentValue() {
-        return counter.get();
-    }
-
-    public int increment(int amount) {
-        return counter.addAndGet(amount);
-    }
-
-    public int decrement(int amount) {
-        return counter.addAndGet(-amount);
-    }
-
-    public int reset(int value) {
-        counter.set(value);
-        return counter.get();
     }
 }

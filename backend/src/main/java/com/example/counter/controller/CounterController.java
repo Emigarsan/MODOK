@@ -66,19 +66,5 @@ public class CounterController {
 
     private int sanitizeAmount(Map<String, Integer> payload) {
         return Math.max(0, payload.getOrDefault("amount", 1));
-    public ResponseEntity<Map<String, Integer>> getCurrentValue() {
-        return ResponseEntity.ok(Map.of("value", counterService.getCurrentValue()));
-    }
-
-    @PostMapping("/increment")
-    public ResponseEntity<Map<String, Integer>> increment(@RequestBody Map<String, Integer> payload) {
-        int amount = payload.getOrDefault("amount", 1);
-        return ResponseEntity.ok(Map.of("value", counterService.increment(amount)));
-    }
-
-    @PostMapping("/decrement")
-    public ResponseEntity<Map<String, Integer>> decrement(@RequestBody Map<String, Integer> payload) {
-        int amount = payload.getOrDefault("amount", 1);
-        return ResponseEntity.ok(Map.of("value", counterService.decrement(amount)));
     }
 }
