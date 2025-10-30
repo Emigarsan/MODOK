@@ -3,10 +3,13 @@ package com.example.counter.controller;
 import com.example.counter.service.TablesService;
 import com.example.counter.service.model.FreeGameTable;
 import com.example.counter.service.model.RegisterTable;
+import com.example.counter.service.model.PlayerInfo;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/tables")
@@ -20,8 +23,18 @@ public class TablesController {
 
     @PostMapping("/register/create")
     public ResponseEntity<RegisterTable> createRegister(@RequestBody Map<String, Object> payload) {
-        String name = String.valueOf(payload.getOrDefault("name", "Mesa"));
-        return ResponseEntity.ok(tablesService.createRegister(name));
+        int tableNumber = ((Number) payload.getOrDefault("tableNumber", 0)).intValue();
+        String tableName = (String) payload.getOrDefault("tableName", "");
+        String difficulty = (String) payload.getOrDefault("difficulty", "");
+        int players = ((Number) payload.getOrDefault("players", 0)).intValue();
+        List<Map<String, Object>> p = (List<Map<String, Object>>) payload.getOrDefault("playersInfo", List.of());
+        List<PlayerInfo> info = new ArrayList<>();
+        for (Map<String, Object> row : p) {
+            String character = String.valueOf(row.getOrDefault("character", ""));
+            String aspect = String.valueOf(row.getOrDefault("aspect", ""));
+            info.add(new PlayerInfo(character, aspect));
+        }
+        return ResponseEntity.ok(tablesService.createRegister(tableNumber, tableName, difficulty, players, info));
     }
 
     @PostMapping("/register/join")
@@ -29,6 +42,26 @@ public class TablesController {
         String code = String.valueOf(payload.getOrDefault("code", ""));
         boolean ok = tablesService.joinRegister(code);
         return ResponseEntity.ok(Map.of("ok", ok));
+    }
+
+    @GetMapping("/register/list")
+    public ResponseEntity<List<RegisterTable>> listRegister() {
+        return ResponseEntity.ok(tablesService.listRegister());
+    }
+
+    @GetMapping("/register/characters")
+    public ResponseEntity<List<String>> listRegisterCharacters() {
+        return ResponseEntity.ok(tablesService.getRegisterCharacters());
+    }
+
+    @GetMapping("/register/aspects")
+    public ResponseEntity<List<String>> listRegisterAspects() {
+        return ResponseEntity.ok(tablesService.getRegisterAspects());
+    }
+
+    @GetMapping("/register/spiderwoman-aspects")
+    public ResponseEntity<List<String>> listRegisterSpiderwomanAspects() {
+        return ResponseEntity.ok(tablesService.getRegisterSpiderwomanAspects());
     }
 
     @PostMapping("/freegame/create")
@@ -46,4 +79,3 @@ public class TablesController {
         return ResponseEntity.ok(Map.of("ok", ok));
     }
 }
-

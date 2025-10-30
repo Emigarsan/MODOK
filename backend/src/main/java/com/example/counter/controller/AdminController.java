@@ -60,12 +60,24 @@ public class AdminController {
 
     private String buildRegisterCsv(List<RegisterTable> reg) {
         StringJoiner sj = new StringJoiner("\n");
-        sj.add("id,name,code,createdAt");
+        sj.add("id,tableNumber,tableName,difficulty,players,playersInfo,code,createdAt");
         DateTimeFormatter fmt = DateTimeFormatter.ISO_INSTANT;
         for (RegisterTable t : reg) {
+            String playersInfo = "";
+            if (t.playersInfo() != null && !t.playersInfo().isEmpty()) {
+                StringJoiner pj = new StringJoiner(";");
+                for (var pi : t.playersInfo()) {
+                    pj.add(escape(pi.character()) + ":" + escape(pi.aspect()));
+                }
+                playersInfo = pj.toString();
+            }
             sj.add(String.join(",",
                     escape(t.id()),
-                    escape(t.name()),
+                    String.valueOf(t.tableNumber()),
+                    escape(t.tableName()),
+                    escape(t.difficulty()),
+                    String.valueOf(t.players()),
+                    escape(playersInfo),
                     escape(t.code()),
                     escape(fmt.format(t.createdAt()))
             ));
