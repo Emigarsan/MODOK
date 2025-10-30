@@ -241,7 +241,6 @@ export default function AdminPage() {
                     <th>Jugadores</th>
                     <th>Detalle jugadores</th>
                     <th>Código</th>
-                    <th>Creada</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -253,7 +252,6 @@ export default function AdminPage() {
                     const detalle = Array.isArray(t.playersInfo)
                       ? t.playersInfo.map((p) => `${p.character}${p.aspect ? ` (${p.aspect})` : ''}`).join(', ')
                       : '';
-                    const created = t.createdAt ?? '';
                     return (
                       <tr key={t.id}>
                         <td>{mesa}</td>
@@ -262,7 +260,6 @@ export default function AdminPage() {
                         <td>{players}</td>
                         <td>{detalle}</td>
                         <td>{t.code}</td>
-                        <td>{created}</td>
                       </tr>
                     );
                   })}
@@ -278,7 +275,6 @@ export default function AdminPage() {
                     <th>Jugadores</th>
                     <th>Notas</th>
                     <th>Código</th>
-                    <th>Creada</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -288,7 +284,6 @@ export default function AdminPage() {
                       <td>{t.players}</td>
                       <td>{t.notes}</td>
                       <td>{t.code}</td>
-                      <td>{t.createdAt}</td>
                     </tr>
                   ))}
                 </tbody>

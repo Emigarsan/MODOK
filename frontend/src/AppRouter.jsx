@@ -23,10 +23,7 @@ export default function AppRouter() {
         <header>
           <h1>InevitableCON 2025 Sevilla</h1>
           <nav className="nav">
-            <Link to="/register">Register</Link>
-            <Link to="/freegame">Freegame</Link>
-            <Link to="/event">Event</Link>
-            <Link to="/display">Display</Link>
+            <Link to="/register"><button>Inicio</button></Link>
           </nav>
         </header>
         <Routes>
