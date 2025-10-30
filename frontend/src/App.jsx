@@ -88,7 +88,7 @@ export default function App() {
     fetch(API_BASE)
       .then((response) => {
         if (!response.ok) {
-          throw new Error('Respuesta invÃ¡lida del servidor');
+          throw new Error('Respuesta inválida del servidor');
         }
         return response.json();
       })
@@ -145,7 +145,7 @@ export default function App() {
       ) {
         // Lock immediately when opening the modal on the final image
         setSecondaryLocked(true);
-        setModalMessage('Alto, escucha las instrucciones de los coordinadores');
+        setModalMessage('Alto, habeis liberado a todos los reclusos, escucha las instrucciones de los coordinadores');
         setModalSource('secondaryFinal');
       }
       previousSecondaryValue.current = state.secondary;
@@ -157,7 +157,7 @@ export default function App() {
       if (state.tertiary === 0) {
         // Lock tertiary immediately when it reaches 0 and open modal
         setTertiaryLocked(true);
-        setModalMessage('Alto, escucha las instrucciones de los coordinadores');
+        setModalMessage('Alto, habeis derrotado el Plan Secundario, escucha las instrucciones de los coordinadores');
         setModalSource('tertiaryZero');
       }
       previousTertiary.current = state.tertiary;
@@ -234,7 +234,7 @@ export default function App() {
       <div className="dashboard">
         <section className="counter-card">
           <img src={centralImage} alt="M.O.D.O.K" className="counter-art" />
-          <h2>Control Principal</h2>
+          <h2>M.O.D.O.K.</h2>
           <div className="counter-value">{state.primary}</div>
           <div className="button-grid primary-controls">
             {primaryButtons.map(({ label, delta }) => (
@@ -251,9 +251,8 @@ export default function App() {
             alt={`Celda ${state.secondaryImageIndex + 1}`}
             className="counter-art"
           />
-          <h2>Fases DinÃ¡micas</h2>
+          <h2>Celdas de Contención</h2>
           <div className="counter-value">{state.secondary}</div>
-          <p className="counter-meta">7 imÃ¡genes secuenciadas para cada llegada a cero.</p>
           <div className="button-grid">
             {secondaryButtons.map(({ label, delta }) => (
               <button
@@ -270,10 +269,9 @@ export default function App() {
         </section>
 
         <section className="counter-card">
-          <img src={tertiaryCore} alt="Reserva auxiliar" className="counter-art" />
-          <h2>Reserva Vinculada</h2>
+          <img src={tertiaryCore} alt="Entrenamiento Especializado" className="counter-art" />
+          <h2>Entrenamiento Especializado</h2>
           <div className="counter-value">{state.tertiary}</div>
-          <p className="counter-meta">Se reduce automÃ¡ticamente con cada decremento secundario.</p>
           <div className="button-grid">
             {tertiaryButtons.map(({ label, delta }) => (
               <button
