@@ -232,4 +232,10 @@ button[aria-disabled="true"] {
   .button-grid.primary-controls {
     grid-template-columns: repeat(2, minmax(110px, 1fr));
   }
+
+  /* Show the full background image on mobile without heavy cropping */
+  body::before {
+    background-size: contain;      /* reduce zoom; keep full image visible */
+    background-position: top center;
+  }
 }
