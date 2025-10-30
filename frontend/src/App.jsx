@@ -107,17 +107,32 @@ export default function App() {
   }, [fetchState]);
 
   const previousSecondaryIndex = useRef(initialState.secondaryImageIndex);
+  const previousSecondaryValue = useRef(initialState.secondary);
   const previousTertiary = useRef(initialState.tertiary);
 
+  // Track image index changes without triggering modal here; modal will trigger
+  // when on last image AND the secondary value reaches 0 (next effect).
   useEffect(() => {
     if (previousSecondaryIndex.current !== state.secondaryImageIndex) {
-      if (state.secondaryImageIndex === secondaryImages.length - 1) {
+      previousSecondaryIndex.current = state.secondaryImageIndex;
+    }
+  }, [state.secondaryImageIndex]);
+
+  // When already on the last image (7ª) and secondary transitions to 0, show modal
+  useEffect(() => {
+    if (previousSecondaryValue.current !== state.secondary) {
+      const reachedZeroNow = state.secondary === 0 && previousSecondaryValue.current > 0;
+      if (
+        reachedZeroNow &&
+        state.secondaryImageIndex === secondaryImages.length - 1 &&
+        !secondaryLocked
+      ) {
         setModalMessage('Alto, escucha las instrucciones de los coordinadores');
         setModalSource('secondaryFinal');
       }
-      previousSecondaryIndex.current = state.secondaryImageIndex;
+      previousSecondaryValue.current = state.secondary;
     }
-  }, [secondaryImages.length, state.secondaryImageIndex]);
+  }, [state.secondary, state.secondaryImageIndex, secondaryImages.length, secondaryLocked]);
 
   useEffect(() => {
     if (previousTertiary.current !== state.tertiary) {
