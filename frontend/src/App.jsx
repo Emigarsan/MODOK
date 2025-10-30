@@ -1,12 +1,12 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import centralImage from './assets/central-image.svg';
-import frame1 from './assets/secondary/frame-1.svg';
-import frame2 from './assets/secondary/frame-2.svg';
-import frame3 from './assets/secondary/frame-3.svg';
-import frame4 from './assets/secondary/frame-4.svg';
-import frame5 from './assets/secondary/frame-5.svg';
-import frame6 from './assets/secondary/frame-6.svg';
-import frame7 from './assets/secondary/frame-7.svg';
+import celda1 from './assets/secondary/5A Entorno Celda 1.jpg';
+import celda2 from './assets/secondary/6A Entorno Celda 2.jpg';
+import celda3 from './assets/secondary/7A Entorno Celda 3.jpg';
+import celda4 from './assets/secondary/8A Entorno Celda 4.jpg';
+import celda5 from './assets/secondary/9A Entorno Celda 5.jpg';
+import celda6 from './assets/secondary/10A Entorno Celda 6.jpg';
+import celda7 from './assets/secondary/11A Entorno Celda 7.jpg';
 import tertiaryCore from './assets/tertiary-core.svg';
 
 const API_BASE = '/api/counter';
@@ -50,7 +50,7 @@ export default function App() {
   const [secondaryLocked, setSecondaryLocked] = useState(false);
 
   const secondaryImages = useMemo(
-    () => [frame1, frame2, frame3, frame4, frame5, frame6, frame7],
+    () => [celda1, celda2, celda3, celda4, celda5, celda6, celda7],
     []
   );
 
@@ -127,6 +127,8 @@ export default function App() {
         state.secondaryImageIndex === secondaryImages.length - 1 &&
         !secondaryLocked
       ) {
+        // Lock immediately when opening the modal on the final image
+        setSecondaryLocked(true);
         setModalMessage('Alto, escucha las instrucciones de los coordinadores');
         setModalSource('secondaryFinal');
       }
@@ -145,10 +147,6 @@ export default function App() {
   }, [state.tertiary]);
 
   const closeModal = useCallback(() => {
-    // Lock secondary counter only if the modal was triggered by the 7th image event
-    if (modalSource === 'secondaryFinal') {
-      setSecondaryLocked(true);
-    }
     setModalMessage(null);
     setModalSource(null);
   }, [modalSource]);
@@ -228,7 +226,7 @@ export default function App() {
         <section className="counter-card">
           <img
             src={currentSecondaryImage}
-            alt={`Fase secundaria ${state.secondaryImageIndex + 1}`}
+            alt={`Celda ${state.secondaryImageIndex + 1}`}
             className="counter-art"
           />
           <h2>Fases Dinámicas</h2>

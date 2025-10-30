@@ -48,8 +48,14 @@ public class CounterService {
             }
 
             if (secondary == 0) {
-                advanceSecondaryImage();
-                secondary = SECONDARY_DEFAULT_VALUE;
+                // If we are not on the last image, advance and reset.
+                if (secondaryImageIndex < SECONDARY_IMAGE_COUNT - 1) {
+                    advanceSecondaryImage();
+                    secondary = SECONDARY_DEFAULT_VALUE;
+                } else {
+                    // On the last image (7th), stay at 0 and do not advance/reset.
+                    // This allows the frontend to lock and display the alert.
+                }
                 break;
             }
         }
