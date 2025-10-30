@@ -6,20 +6,17 @@ export default function AdminPage() {
   const [state, setState] = useState(null);
   const [error, setError] = useState(null);
   const [amount, setAmount] = useState(1);
-  const [pVal, setPVal] = useState(0);
-  const [sVal, setSVal] = useState(0);
-  const [tVal, setTVal] = useState(0);
-  const [imgIdx, setImgIdx] = useState(1); // 1..7 for UI
+  const [pVal, setPVal] = useState('');
+  const [sVal, setSVal] = useState('');
+  const [tVal, setTVal] = useState('');
+  const [imgIdx, setImgIdx] = useState(''); // 1..7 for UI
   const [adminKey, setAdminKey] = useState(localStorage.getItem('adminKey') || '');
   const [isAuthed, setIsAuthed] = useState(false);
   const [tables, setTables] = useState({ register: [], freegame: [] });
+  const [tab, setTab] = useState('mod');
 
-  const syncFromState = (data) => {
-    setPVal(data.primary);
-    setSVal(data.secondary);
-    setTVal(data.tertiary);
-    setImgIdx((data.secondaryImageIndex ?? 0) + 1);
-  };
+  // Campos de fijación permanecen vacíos hasta que el usuario escriba.
+  const syncFromState = () => {};
 
   const fetchState = useCallback(() => {
     fetch(API_BASE)
@@ -58,15 +55,17 @@ export default function AdminPage() {
   };
 
   const setExact = (segment, value) => () => {
+    const n = Math.max(0, parseInt(value, 10) || 0);
     fetch(`${API_BASE}/${segment}/set`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'X-Admin-Secret': adminKey },
-      body: JSON.stringify({ value: Math.max(0, value|0) })
+      body: JSON.stringify({ value: n })
     }).then(fetchState);
   };
 
   const setImageIndex = () => {
-    const index0 = Math.max(1, Math.min(7, imgIdx)) - 1;
+    const idx = Math.max(1, Math.min(7, parseInt(imgIdx, 10) || 1));
+    const index0 = idx - 1;
     fetch(`${API_BASE}/secondary/imageIndex`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'X-Admin-Secret': adminKey },
@@ -132,15 +131,19 @@ export default function AdminPage() {
               <input type="number" value={amount} min={0} onChange={(e) => setAmount(Number(e.target.value))} />
             </label>
           </div>
+          <div className="admin-tabs">
+            <button className={tab === 'mod' ? 'active' : ''} onClick={() => setTab('mod')}>Modificar valores</button>
+            <button className={tab === 'tables' ? 'active' : ''} onClick={() => setTab('tables')}>Ver mesas</button>
+          </div>
 
-          <div className="admin-grid">
+          <div className="admin-grid" style={{ display: tab === 'mod' ? 'grid' : 'none' }}>
             <section className="counter-card">
               <h3>Primary</h3>
               <div className="counter-value">{state.primary}</div>
               <div className="form">
                 <label>
                   Fijar a
-                  <input type="number" value={pVal} min={0} onChange={(e) => setPVal(Number(e.target.value))} />
+                  <input type="number" inputMode="numeric" placeholder="0" value={pVal} min={0} onChange={(e) => setPVal(e.target.value)} />
                 </label>
                 <button onClick={setExact('primary', pVal)}>Guardar</button>
               </div>
@@ -156,14 +159,14 @@ export default function AdminPage() {
               <div className="form">
                 <label>
                   Fijar a
-                  <input type="number" value={sVal} min={0} onChange={(e) => setSVal(Number(e.target.value))} />
+                  <input type="number" inputMode="numeric" placeholder="0" value={sVal} min={0} onChange={(e) => setSVal(e.target.value)} />
                 </label>
                 <button onClick={setExact('secondary', sVal)}>Guardar</button>
               </div>
               <div className="form">
                 <label>
                   Imagen secundaria (1..7)
-                  <input type="number" min={1} max={7} value={imgIdx} onChange={(e) => setImgIdx(Number(e.target.value))} />
+                  <input type="number" inputMode="numeric" placeholder="1..7" min={1} max={7} value={imgIdx} onChange={(e) => setImgIdx(e.target.value)} />
                 </label>
                 <button onClick={setImageIndex}>Guardar imagen</button>
               </div>
@@ -179,7 +182,7 @@ export default function AdminPage() {
               <div className="form">
                 <label>
                   Fijar a
-                  <input type="number" value={tVal} min={0} onChange={(e) => setTVal(Number(e.target.value))} />
+                  <input type="number" inputMode="numeric" placeholder="0" value={tVal} min={0} onChange={(e) => setTVal(e.target.value)} />
                 </label>
                 <button onClick={setExact('tertiary', tVal)}>Guardar</button>
               </div>
@@ -190,6 +193,7 @@ export default function AdminPage() {
             </section>
           </div>
 
+          {tab === 'tables' && (<>
           <h3>Mesas (vivo)</h3>
           <div className="admin-grid">
             <section className="counter-card">
@@ -209,11 +213,11 @@ export default function AdminPage() {
               </ul>
             </section>
           </div>
-
-          <div className="form" style={{ marginTop: 16, gap: 8, display: 'flex' }}>
+          <div className="form" style={{ marginTop: 16, gap: 8, display: 'flex', flexWrap: 'wrap' }}>
             <button onClick={() => download('/api/admin/export/tables.csv', 'tables.csv')}>Exportar CSV (mesas)</button>
             <button onClick={() => download('/api/admin/export/counters.csv', 'counters.csv')}>Exportar CSV (contadores)</button>
           </div>
+          </>)}
         </>
       )}
     </div>
