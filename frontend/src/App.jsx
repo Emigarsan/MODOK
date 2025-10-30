@@ -255,7 +255,7 @@ export default function App() {
             className="counter-art"
           />
           <h2>{secondaryTitle}</h2>
-          <div className="counter-value">{state.secondary}</div>
+          {!secondaryLocked && <div className="counter-value">{state.secondary}</div>}
           {!secondaryLocked && (<div className="button-grid">
             {secondaryButtons.map(({ label, delta }) => (
               <button
