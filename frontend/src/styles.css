@@ -112,6 +112,21 @@ header p {
   gap: 0.75rem;
   align-items: end;
 }
+.freegame-row {
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0.75rem;
+  border: 1px solid var(--color-divider);
+  border-radius: 12px;
+  padding: 0.75rem;
+  background: var(--color-surface-2);
+  margin: 0.5rem 0;
+}
+.freegame-row label { margin: 0; }
+
+@media (max-width: 600px) {
+  .freegame-row { grid-template-columns: 1fr; }
+}
+
 .player-row label {
   display: flex;
   flex-direction: column;
@@ -388,3 +403,4 @@ button[aria-disabled="true"] {
     }
   }
 }
+
