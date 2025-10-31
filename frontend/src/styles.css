@@ -145,6 +145,12 @@ header p {
   font-size: 0.9rem;
 }
 
+.cell-tracker {
+  margin: 0.25rem 0 0.5rem;
+  color: var(--color-text-secondary);
+  font-size: 0.95rem;
+}
+
 .button-grid {
   width: 100%;
   display: grid;

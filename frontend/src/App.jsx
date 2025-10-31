@@ -254,6 +254,7 @@ export default function App() {
             alt={`Celda ${state.secondaryImageIndex + 1}`}
             className="counter-art"
           />
+          <p className="cell-tracker">Celda {state.secondaryImageIndex + 1}</p>
           <h2>{secondaryTitle}</h2>
           {!secondaryLocked && <div className="counter-value">{state.secondary}</div>}
           {!secondaryLocked && (<div className="button-grid">
