@@ -264,7 +264,7 @@ export default function App() {
                 onClick={() => updateCounter('secondary', delta)}
                 disabled={secondaryLocked}
                 aria-disabled={secondaryLocked}
-                title={secondaryLocked ? 'Bloqueado tras la sÃ©ptima imagen' : undefined}
+                title={secondaryLocked ? 'Bloqueado tras la séptima imagen' : undefined}
               >
                 {label}
               </button>
