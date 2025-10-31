@@ -4,9 +4,8 @@ export default function FreeGamePage() {
   const [mode, setMode] = useState('create');
   const [mesaNumber, setMesaNumber] = useState('');
   const [mesaName, setMesaName] = useState('');
-  const [players, setPlayers] = useState(4);
+  const [players, setPlayers] = useState(0);
   const [playersInfo, setPlayersInfo] = useState([]);
-  const [notes, setNotes] = useState('');
   const [joinCode, setJoinCode] = useState('');
 
   const [existingRegister, setExistingRegister] = useState([]);
@@ -106,6 +105,10 @@ export default function FreeGamePage() {
           alert(`El número de mesa ${num} ya existe. Elige otro.`);
           return;
         }
+        if (!players || players <= 0) {
+          alert('Indica número de jugadores');
+          return;
+        }
         const res = await fetch('/api/tables/freegame/create', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -113,7 +116,6 @@ export default function FreeGamePage() {
             tableNumber: num,
             name: mesaName,
             players,
-            notes,
             playersInfo: playersInfo.map(p => ({ character: p.character || '', aspect: p.aspect || '', legacy: p.legacy || 'Ninguno' }))
           })
         });
@@ -192,10 +194,7 @@ export default function FreeGamePage() {
                 </label>
               </div>
             ))}
-            <label>
-              Datos adicionales
-              <textarea value={notes} onChange={(e) => setNotes(e.target.value)} placeholder="Cenit, dificultad, horario, etc." />
-            </label>
+            
           </>
         ) : (
           <label>
@@ -208,4 +207,3 @@ export default function FreeGamePage() {
     </div>
   );
 }
-
