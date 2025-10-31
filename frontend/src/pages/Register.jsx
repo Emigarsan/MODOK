@@ -11,6 +11,7 @@ export default function RegisterPage() {
   const [joinCode, setJoinCode] = useState('');
   const [existing, setExisting] = useState([]);
   const navigate = useNavigate();
+  const [freeExisting, setFreeExisting] = useState([]);
 
   // Normalización acentos para búsqueda (ignora tildes y mayúsculas)
   // Usamos rango Unicode de diacríticos para compatibilidad amplia
@@ -49,6 +50,14 @@ export default function RegisterPage() {
       .catch(() => setExisting([]));
   }, []);
 
+  // Cargar mesas de FreeGame para validar duplicados de número de mesa entre ambas listas
+  useEffect(() => {
+    fetch('/api/tables/freegame/list')
+      .then((r) => r.ok ? r.json() : [])
+      .then((data) => setFreeExisting(Array.isArray(data) ? data : []))
+      .catch(() => setFreeExisting([]));
+  }, []);
+
   useEffect(() => {
     const n = Math.max(0, parseInt(playersCount, 10) || 0);
     setPlayers((prev) => {
@@ -76,13 +85,20 @@ export default function RegisterPage() {
       .then((data) => setSwAspects(Array.isArray(data) ? data : []))
       .catch(() => setSwAspects([]));
   }, []);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       if (mode === 'create') {
         if (!mesaNumber || !difficulty || !playersCount) {
           alert('Rellena número de mesa, dificultad y número de jugadores')
+          return;
+        }
+        // Validación de número de mesa único entre Register y FreeGame
+        const num = parseInt(mesaNumber, 10) || 0;
+        const usedInRegister = (existing || []).some(t => Number(t.tableNumber) === num);
+        const usedInFree = (freeExisting || []).some(t => Number(t.tableNumber) === num);
+        if (usedInRegister || usedInFree) {
+          alert(`El número de mesa ${num} ya existe. Elige otro.`);
           return;
         }
         const body = {
