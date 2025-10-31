@@ -65,6 +65,12 @@ body::before {
   /* ensure content sits above background */
 }
 
+/* Full-width variant for Admin */
+.page-wide {
+  max-width: none;
+  width: 100%;
+}
+
 header {
   text-align: center;
   max-width: 760px;
@@ -96,6 +102,83 @@ header p {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 1.75rem;
+}
+
+/* Player row layout for Register page */
+.player-row {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  align-items: end;
+}
+.player-row label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+.player-row input,
+.player-row select {
+  width: 100%;
+}
+
+@media (max-width: 600px) {
+  .player-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Admin enhancements */
+.admin-tabs {
+  width: 100%;
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  border-bottom: 1px solid var(--color-divider);
+  padding-bottom: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+.admin-tabs button {
+  background: transparent;
+  color: var(--color-text-secondary);
+  border: 1px solid transparent;
+}
+.admin-tabs button.active {
+  background: var(--color-surface-2);
+  color: var(--color-text-primary);
+  border-color: var(--color-divider);
+}
+
+.admin-grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1rem;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+.data-table th, .data-table td {
+  border: 1px solid var(--color-divider);
+  padding: 0.5rem 0.6rem;
+  text-align: left;
+}
+.data-table thead th {
+  background: var(--color-surface-2);
+  color: var(--color-text-primary);
+}
+.data-table tbody tr:nth-child(even) td {
+  background: rgba(255,255,255,0.02);
+}
+
+@media (min-width: 900px) {
+  .admin-grid {
+    grid-template-columns: repeat(3, minmax(280px, 1fr));
+    gap: 1.25rem;
+  }
 }
 
 .counter-card {
