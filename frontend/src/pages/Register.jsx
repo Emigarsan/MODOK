@@ -109,7 +109,7 @@ export default function RegisterPage() {
           playersInfo: players.map(p => ({ character: p.character || '', aspect: p.aspect || '' }))
         };
         const res = await fetch('/api/tables/register/create', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
-        if (!res.ok) throw new Error('No se pudo crear la mesa');
+        if (res.status === 409) { alert(El número de mesa  ya existe. Elige otro.); return; }\n        if (!res.ok) throw new Error('No se pudo crear la mesa');
         await res.json();
         navigate('/event');
       } else {
@@ -207,6 +207,7 @@ export default function RegisterPage() {
     </div>
   );
 }
+
 
 
 

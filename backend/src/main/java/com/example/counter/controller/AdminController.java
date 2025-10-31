@@ -101,17 +101,41 @@ public class AdminController {
 
     private String buildFreeGameCsv(List<FreeGameTable> free) {
         StringJoiner sj = new StringJoiner("\n");
-        sj.add("id,name,players,notes,code,createdAt");
+        // One row per player; repeat table info
+        sj.add("id,tableNumber,name,players,code,createdAt,playerIndex,character,aspect,legacy");
         DateTimeFormatter fmt = DateTimeFormatter.ISO_INSTANT;
         for (FreeGameTable t : free) {
-            sj.add(String.join(",",
-                    escape(t.id()),
-                    escape(t.name()),
-                    String.valueOf(t.players()),
-                    escape(t.notes()),
-                    escape(t.code()),
-                    escape(fmt.format(t.createdAt()))
-            ));
+            var list = t.playersInfo();
+            if (list == null || list.isEmpty()) {
+                sj.add(String.join(",",
+                        escape(t.id()),
+                        String.valueOf(t.tableNumber()),
+                        escape(t.name()),
+                        String.valueOf(t.players()),
+                        escape(t.code()),
+                        escape(fmt.format(t.createdAt())),
+                        "",
+                        "",
+                        "",
+                        ""
+                ));
+                continue;
+            }
+            for (int i = 0; i < list.size(); i++) {
+                var pi = list.get(i);
+                sj.add(String.join(",",
+                        escape(t.id()),
+                        String.valueOf(t.tableNumber()),
+                        escape(t.name()),
+                        String.valueOf(t.players()),
+                        escape(t.code()),
+                        escape(fmt.format(t.createdAt())),
+                        String.valueOf(i + 1),
+                        escape(pi.character()),
+                        escape(pi.aspect()),
+                        escape(pi.legacy())
+                ));
+            }
         }
         return sj.toString() + "\n";
     }

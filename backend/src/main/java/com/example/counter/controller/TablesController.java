@@ -35,6 +35,9 @@ public class TablesController {
             String aspect = String.valueOf(row.getOrDefault("aspect", ""));
             info.add(new PlayerInfo(character, aspect));
         }
+        if (tablesService.isTableNumberUsed(tableNumber)) {
+            return ResponseEntity.status(409).build();
+        }
         return ResponseEntity.ok(tablesService.createRegister(tableNumber, tableName, difficulty, players, info));
     }
 
@@ -65,12 +68,24 @@ public class TablesController {
         return ResponseEntity.ok(tablesService.getRegisterSpiderwomanAspects());
     }
 
+    @SuppressWarnings("unchecked")
     @PostMapping("/freegame/create")
-    public ResponseEntity<FreeGameTable> createFreeGame(@RequestBody Map<String, Object> payload) {
+    public ResponseEntity<com.example.counter.service.model.FreeGameTable> createFreeGame(@RequestBody Map<String, Object> payload) {
+        int tableNumber = ((Number) payload.getOrDefault("tableNumber", 0)).intValue();
         String name = String.valueOf(payload.getOrDefault("name", "Mesa Libre"));
         int players = ((Number) payload.getOrDefault("players", 0)).intValue();
-        String notes = String.valueOf(payload.getOrDefault("notes", ""));
-        return ResponseEntity.ok(tablesService.createFreeGame(name, players, notes));
+        List<Map<String, Object>> p = (List<Map<String, Object>>) payload.getOrDefault("playersInfo", List.of());
+        List<com.example.counter.service.model.FreeGamePlayerInfo> info = new ArrayList<>();
+        for (Map<String, Object> row : p) {
+            String character = String.valueOf(row.getOrDefault("character", ""));
+            String aspect = String.valueOf(row.getOrDefault("aspect", ""));
+            String legacy = String.valueOf(row.getOrDefault("legacy", "Ninguno"));
+            info.add(new com.example.counter.service.model.FreeGamePlayerInfo(character, aspect, legacy));
+        }
+        if (tablesService.isTableNumberUsed(tableNumber)) {
+            return ResponseEntity.status(409).build();
+        }
+        return ResponseEntity.ok(tablesService.createFreeGame(tableNumber, name, players, info));
     }
 
     @PostMapping("/freegame/join")

@@ -271,10 +271,7 @@ export default function AdminPage() {
               <table className="data-table" style={{ width: '100%' }}>
                 <thead>
                   <tr>
-                    <th>Nombre</th>
-                    <th>Jugadores</th>
-                    <th>Notas</th>
-                    <th>Código</th>
+                    <th>Mesa</th>\n                    <th>Nombre</th>\n                    <th>Jugadores</th>\n                    <th>Detalle jugadores</th>\n                    <th>Código</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -300,5 +297,6 @@ export default function AdminPage() {
     </div>
   );
 }
+
 
 

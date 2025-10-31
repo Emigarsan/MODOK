@@ -109,7 +109,8 @@ public class TablesService {
         String code = shortCode();
         if (playersInfo == null) playersInfo = List.of();
         List<PlayerInfo> sanitized = sanitizeRegisterPlayers(playersInfo);
-        RegisterTable t = new RegisterTable(id, Math.max(0, tableNumber), tableName, difficulty, Math.max(0, players), sanitized, code, Instant.now());
+        int tn = Math.max(0, tableNumber);
+        RegisterTable t = new RegisterTable(id, tn, tableName, difficulty, Math.max(0, players), sanitized, code, Instant.now());
         registerTables.add(t);
         return t;
     }
@@ -118,10 +119,12 @@ public class TablesService {
         return registerTables.stream().anyMatch(t -> t.code().equalsIgnoreCase(code));
     }
 
-    public synchronized FreeGameTable createFreeGame(String name, int players, String notes) {
+    public synchronized com.example.counter.service.model.FreeGameTable createFreeGame(int tableNumber, String name, int players, List<com.example.counter.service.model.FreeGamePlayerInfo> playersInfo) {
         String id = UUID.randomUUID().toString();
         String code = shortCode();
-        FreeGameTable t = new FreeGameTable(id, name, Math.max(0, players), notes == null ? "" : notes, code, Instant.now());
+        int tn = Math.max(0, tableNumber);
+        List<com.example.counter.service.model.FreeGamePlayerInfo> info = playersInfo == null ? List.of() : new ArrayList<>(playersInfo);
+        com.example.counter.service.model.FreeGameTable t = new com.example.counter.service.model.FreeGameTable(id, tn, name, Math.max(0, players), info, code, Instant.now());
         freeGameTables.add(t);
         return t;
     }
@@ -136,6 +139,13 @@ public class TablesService {
 
     public synchronized List<FreeGameTable> listFreeGame() {
         return Collections.unmodifiableList(new ArrayList<>(freeGameTables));
+    }
+
+    public synchronized boolean isTableNumberUsed(int tableNumber) {
+        int tn = Math.max(0, tableNumber);
+        boolean inRegister = registerTables.stream().anyMatch(t -> t.tableNumber() == tn);
+        boolean inFree = freeGameTables.stream().anyMatch(t -> t.tableNumber() == tn);
+        return inRegister || inFree;
     }
 
     public synchronized List<String> getRegisterCharacters() {

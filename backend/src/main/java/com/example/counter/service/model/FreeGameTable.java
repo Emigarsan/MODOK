@@ -1,6 +1,15 @@
 package com.example.counter.service.model;
 
 import java.time.Instant;
+import java.util.List;
 
-public record FreeGameTable(String id, String name, int players, String notes, String code, Instant createdAt) {}
+public record FreeGameTable(
+        String id,
+        int tableNumber,
+        String name,
+        int players,
+        List<FreeGamePlayerInfo> playersInfo,
+        String code,
+        Instant createdAt
+) {}
 
