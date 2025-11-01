@@ -1,4 +1,4 @@
-﻿import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 export default function FreeGamePage() {
   const [mode, setMode] = useState('create');
@@ -17,12 +17,12 @@ export default function FreeGamePage() {
 
   const legacyOptions = useMemo(() => ([
     'Ninguno',
-    'Vástago de M',
-    'Mutante hí­brido',
+    'V�stago de M',
+    'Mutante h��brido',
     'Equipo de dos',
-    'Los más buscados',
+    'Los m�s buscados',
     'Equipado para lo peor',
-    'Guerreros araña',
+    'Guerreros ara�a',
     'Instruidas por Thanos',
     'Rabia irradiada',
     'Ronin',
@@ -95,18 +95,18 @@ export default function FreeGamePage() {
     try {
       if (mode === 'create') {
         if (!mesaNumber) {
-          alert('Indica un número de mesa');
+          alert('Indica un n�mero de mesa');
           return;
         }
         const num = parseInt(mesaNumber, 10) || 0;
         const usedInRegister = (existingRegister || []).some(t => Number(t.tableNumber) === num);
         const usedInFree = (existingFree || []).some(t => Number(t.tableNumber) === num);
         if (usedInRegister || usedInFree) {
-          alert(`El número de mesa ${num} ya existe. Elige otro.`);
+          alert(`El n�mero de mesa ${num} ya existe. Elige otro.`);
           return;
         }
         if (!players || players <= 0) {
-          alert('Indica número de jugadores');
+          alert('Indica n�mero de jugadores');
           return;
         }
         const res = await fetch('/api/tables/freegame/create', {
@@ -121,11 +121,11 @@ export default function FreeGamePage() {
         });
         if (!res.ok) throw new Error('No se pudo registrar la mesa');
         const data = await res.json();
-        alert(`Mesa libre registrada. Código: ${data.code}`);
+        alert(`Mesa libre registrada. C�digo: ${data.code}`);
       } else {
         const res = await fetch('/api/tables/freegame/join', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ code: joinCode }) });
         const data = await res.json();
-        alert(data.ok ? 'Unido correctamente' : 'Código no encontrado');
+        alert(data.ok ? 'Unido correctamente' : 'C�digo no encontrado');
       }
     } catch (e) {
       alert(e.message);
@@ -143,7 +143,7 @@ export default function FreeGamePage() {
         {mode === 'create' ? (
           <>
             <label>
-              Número de mesa
+              N�mero de mesa
               <input type="number" min={1} value={mesaNumber} onChange={(e) => setMesaNumber(e.target.value)} placeholder="Ej. 50" required />
             </label>
             <label>
@@ -151,7 +151,7 @@ export default function FreeGamePage() {
               <input value={mesaName} onChange={(e) => setMesaName(e.target.value)} placeholder="Ej. Mesa Libre 1" />
             </label>
             <label>
-              Número de jugadores
+              N�mero de jugadores
               <input type="number" min={1} max={8} value={players} onChange={(e) => setPlayers(Number(e.target.value))} />
             </label>
             {playersInfo.map((p, idx) => (
@@ -197,10 +197,29 @@ export default function FreeGamePage() {
 
           </>
         ) : (
+          <>
           <label>
-            Código de mesa libre
-            <input value={joinCode} onChange={(e) => setJoinCode(e.target.value)} placeholder="Código" />
+            Unirse a mesa existente
+            <select value={joinCode} onChange={(e) => setJoinCode(e.target.value)} required>
+              <option value="" disabled>Selecciona una mesa</option>
+              {existingFree.map((t) => (
+                <option key={t.id} value={t.code}>
+                  {(() => {
+                    const base = t.tableNumber ? `Mesa ${t.tableNumber}` : 'Mesa';
+                    const named = (t.name && String(t.name).trim().length > 0)
+                      ? `${base} - ${t.name}`
+                      : base;
+                    return `${named} - C�digo: ${t.code}`;
+                  })()}
+                </option>
+              ))}
+            </select>
           </label>
+          <label>
+            C�digo de mesa libre
+            <input value={joinCode} onChange={(e) => setJoinCode(e.target.value)} placeholder="C�digo" />
+          </label>
+          </>
         )}
         <button type="submit">Guardar</button>
       </form>
