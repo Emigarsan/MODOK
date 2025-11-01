@@ -139,7 +139,7 @@ export default function AdminPage() {
         <>
           {false && (<div className="form">
             <label>
-              Cantidad (±)
+                ntidad (±)
               <input type="number" value={amount} min={0} onChange={(e) => setAmount(Number(e.target.value))} />
             </label>
           </div>)}
