@@ -124,7 +124,7 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="container">
+    <div className="container overlay-card">
       <h2>Registro de Mesa</h2>
       <div className="tabs">
         <button className={mode === 'create' ? 'active' : ''} onClick={() => setMode('create')}>Crear mesa</button>

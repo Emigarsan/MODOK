@@ -133,7 +133,7 @@ export default function FreeGamePage() {
   };
 
   return (
-    <div className="container">
+    <div className="container overlay-card">
       <h2>Freegame</h2>
       <div className="tabs">
         <button className={mode === 'create' ? 'active' : ''} onClick={() => setMode('create')}>Registrar mesa</button>
