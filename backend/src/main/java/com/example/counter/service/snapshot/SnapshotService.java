@@ -83,6 +83,8 @@ public class SnapshotService {
     @EventListener(ApplicationReadyEvent.class)
     public void onReady() {
         ensureDir(backupDir);
+        log.info("Snapshot config -> backup.dir={}, backup.every.ms={}, backup.retention.min={}, drive.dir={}, drive.every.ms={}, drive.keep.copies={}, backup.initial={}, restore.onstart={}",
+                backupDir, backupEveryMs, backupRetentionMin, driveDir, driveEveryMs, driveKeepCopies, backupInitial, restoreOnStart);
         if (restoreOnStart) {
             restoreLatest();
         }
@@ -163,17 +165,37 @@ public class SnapshotService {
             Path latest = getLatestLocalSnapshot();
             if (latest == null) return;
             SnapshotData data = objectMapper.readValue(latest.toFile(), SnapshotData.class);
-            if (data == null) return;
-            if (data.counter != null) {
-                counterService.setPrimary(Math.max(0, data.counter.primary()));
-                counterService.setSecondary(Math.max(0, data.counter.secondary()));
-                counterService.setTertiary(Math.max(0, data.counter.tertiary()));
-                counterService.setSecondaryImageIndex(Math.max(0, data.counter.secondaryImageIndex()));
-            }
-            mesaService.restore(data.mesaTotals, data.mesaEvents);
-            tablesService.restore(data.registerTables, data.freeGameTables);
+            applySnapshot(data);
         } catch (Exception e) {
             log.warn("Restore failed: {}", e.getMessage());
+        }
+    }
+
+    private void applySnapshot(SnapshotData data) {
+        if (data == null) return;
+        if (data.counter != null) {
+            counterService.setPrimary(Math.max(0, data.counter.primary()));
+            counterService.setSecondary(Math.max(0, data.counter.secondary()));
+            counterService.setTertiary(Math.max(0, data.counter.tertiary()));
+            counterService.setSecondaryImageIndex(Math.max(0, data.counter.secondaryImageIndex()));
+        }
+        mesaService.restore(data.mesaTotals, data.mesaEvents);
+        tablesService.restore(data.registerTables, data.freeGameTables);
+    }
+
+    public synchronized boolean restoreFromFileName(String name) {
+        try {
+            if (name == null || name.isBlank()) return false;
+            if (!name.startsWith("app-") || !name.endsWith(".json")) return false;
+            Path file = backupDir.resolve(name).normalize();
+            if (!file.startsWith(backupDir.normalize()) || !Files.exists(file)) return false;
+            SnapshotData data = objectMapper.readValue(file.toFile(), SnapshotData.class);
+            applySnapshot(data);
+            lastSnapshotPath = file;
+            return true;
+        } catch (Exception e) {
+            log.warn("Manual restore failed: {}", e.getMessage());
+            return false;
         }
     }
 

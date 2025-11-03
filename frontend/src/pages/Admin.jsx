@@ -320,6 +320,13 @@ export default function AdminPage() {
                           <td>
                             <button onClick={() => download(`/api/admin/backup/download/${encodeURIComponent(name)}`, name)}>Descargar</button>
                             <button onClick={() => {
+                              if (!confirm(`Restaurar desde ${name}? Esto sobreescribirá el estado en memoria.`)) return;
+                              fetch(`/api/admin/backup/restore/${encodeURIComponent(name)}`, { method: 'POST', headers: { 'X-Admin-Secret': adminKey }})
+                                .then(r => r.ok ? r.json() : Promise.reject(new Error('No autorizado')))
+                                .then(() => alert('Restaurado'))
+                                .catch((e) => alert(e.message));
+                            }}>Restaurar</button>
+                            <button onClick={() => {
                               if (!confirm(`Eliminar ${name}?`)) return;
                               fetch(`/api/admin/backup/delete/${encodeURIComponent(name)}`, { method: 'DELETE', headers: { 'X-Admin-Secret': adminKey }})
                                 .then(r => r.ok ? r.json() : Promise.reject(new Error('No autorizado')))

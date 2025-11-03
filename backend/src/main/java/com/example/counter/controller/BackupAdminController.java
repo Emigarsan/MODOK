@@ -95,6 +95,18 @@ public class BackupAdminController {
         return new ResponseEntity<>(data, headers, HttpStatus.OK);
     }
 
+    @PostMapping("/restore/{name}")
+    public ResponseEntity<?> restore(@PathVariable("name") String name,
+                                     @RequestHeader(value = "X-Admin-Secret", required = false) String secret) {
+        if (!isAdmin(secret)) return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        if (name == null || !name.startsWith("app-") || !name.endsWith(".json")) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("ok", false, "error", "Nombre inválido"));
+        }
+        boolean ok = snapshotService.restoreFromFileName(name);
+        if (!ok) return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("ok", false));
+        return ResponseEntity.ok(Map.of("ok", true));
+    }
+
     @DeleteMapping("/delete/{name}")
     public ResponseEntity<?> deleteOne(@PathVariable("name") String name,
                                        @RequestHeader(value = "X-Admin-Secret", required = false) String secret) throws IOException {
