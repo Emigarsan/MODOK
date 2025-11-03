@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+ï»¿import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 export default function RegisterPage() {
@@ -13,8 +13,8 @@ export default function RegisterPage() {
   const navigate = useNavigate();
   const [freeExisting, setFreeExisting] = useState([]);
 
-  // Normalización acentos para búsqueda (ignora tildes y mayúsculas)
-  // Usamos rango Unicode de diacríticos para compatibilidad amplia
+  // NormalizaciÃ³n acentos para bÃºsqueda (ignora tildes y mayÃºsculas)
+  // Usamos rango Unicode de diacrÃ­ticos para compatibilidad amplia
   const normalize = (s) => (s || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
   const [characters, setCharacters] = useState([]);
   const [aspects, setAspects] = useState([]);
@@ -30,7 +30,7 @@ export default function RegisterPage() {
     const n = normalize(v);
     const canon = charMap.get(n);
     if (canon) {
-      // Mapear a nombre canónico si coincide exactamente ignorando tildes
+      // Mapear a nombre canÃ³nico si coincide exactamente ignorando tildes
       v = canon;
     }
     setPlayers(prev => prev.map((row, i) => {
@@ -50,7 +50,7 @@ export default function RegisterPage() {
       .catch(() => setExisting([]));
   }, []);
 
-  // Cargar mesas de FreeGame para validar duplicados de número de mesa entre ambas listas
+  // Cargar mesas de FreeGame para validar duplicados de NÃºmero de mesa entre ambas listas
   useEffect(() => {
     fetch('/api/tables/freegame/list')
       .then((r) => r.ok ? r.json() : [])
@@ -90,10 +90,10 @@ export default function RegisterPage() {
     try {
       if (mode === 'create') {
         if (!mesaNumber || !difficulty || !playersCount) {
-          alert('Rellena número de mesa, dificultad y número de jugadores')
+          alert('Rellena nÃºmero de mesa, dificultad y nÃºmero de jugadores')
           return;
         }
-        // Validación de número de mesa único entre Register y FreeGame
+        // ValidaciÃ³n de nÃºmero de mesa Ãºnico entre Register y FreeGame
         const num = parseInt(mesaNumber, 10) || 0;
         const usedInRegister = (existing || []).some(t => Number(t.tableNumber) === num);
         const usedInFree = (freeExisting || []).some(t => Number(t.tableNumber) === num);
@@ -111,14 +111,14 @@ export default function RegisterPage() {
           playersInfo: players.map(p => ({ character: p.character || '', aspect: p.aspect || '' }))
         };
         const res = await fetch('/api/tables/register/create', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
-        if (res.status === 409) { alert(`El número de mesa ${body.tableNumber} ya existe. Elige otro.`); return; }
+        if (res.status === 409) { alert(`El nÃºmero de mesa ${body.tableNumber} ya existe. Elige otro.`); return; }
         if (!res.ok) throw new Error("No se pudo crear la mesa");
         await res.json();
         navigate('/event');
       } else {
         const res = await fetch('/api/tables/register/join', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ code: joinCode }) });
         const data = await res.json();
-        if (data.ok) navigate('/event'); else alert('Código no encontrado');
+        if (data.ok) navigate('/event'); else alert('CÃ³digo no encontrado');
       }
     } catch (e) {
       alert(e.message);
@@ -134,7 +134,7 @@ export default function RegisterPage() {
       </div>
       <form onSubmit={handleSubmit} className="form" style={{ display: mode === 'create' ? 'grid' : 'none', gap: '0.75rem' }}>
         <label>
-          Número de mesa
+          NÃºmero de mesa
           <input type="number" min={1} value={mesaNumber} onChange={(e) => setMesaNumber(e.target.value)} placeholder="Ej. 12" required />
         </label>
         <label>
@@ -150,8 +150,16 @@ export default function RegisterPage() {
           </select>
         </label>
         <label>
-          Número de jugadores
-          <input type="number" min={1} max={4} value={playersCount} onChange={(e) => setPlayersCount(e.target.value)} required />
+          NÃºmero de jugadores
+          <input
+            type="text"
+            inputMode="numeric"
+            pattern="[0-9]*"
+            placeholder="Ej. 4"
+            value={playersCount}
+            onChange={(e) => { const v = e.target.value; if (/^\d*$/.test(v) && (v === '' || parseInt(v, 10) <= 4)) setPlayersCount(v); }}
+            required
+          />
         </label>
 
         {players.map((p, idx) => (
@@ -199,7 +207,7 @@ export default function RegisterPage() {
                   const named = (t.tableName && String(t.tableName).trim().length > 0)
                     ? `${base} - ${t.tableName}`
                     : base;
-                  return `${named} - Código: ${t.code}`;
+                  return `${named} - CÃ³digo: ${t.code}`;
                 })()}
               </option>
             ))}
