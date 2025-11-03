@@ -4,7 +4,7 @@ export default function FreeGamePage() {
   const [mode, setMode] = useState('create');
   const [mesaNumber, setMesaNumber] = useState('');
   const [mesaName, setMesaName] = useState('');
-  const [players, setPlayers] = useState(0);
+  const [players, setPlayers] = useState('');
   const [playersInfo, setPlayersInfo] = useState([]);
   const [joinCode, setJoinCode] = useState('');
 
@@ -17,12 +17,12 @@ export default function FreeGamePage() {
 
   const legacyOptions = useMemo(() => ([
     'Ninguno',
-    'V�stago de M',
-    'Mutante h��brido',
+    'Vástago de M',
+    'Mutante híbrido',
     'Equipo de dos',
-    'Los m�s buscados',
+    'Los más buscados',
     'Equipado para lo peor',
-    'Guerreros ara�a',
+    'Guerreros araña',
     'Instruidas por Thanos',
     'Rabia irradiada',
     'Ronin',
@@ -95,18 +95,18 @@ export default function FreeGamePage() {
     try {
       if (mode === 'create') {
         if (!mesaNumber) {
-          alert('Indica un n�mero de mesa');
+          alert('Indica un número de mesa');
           return;
         }
         const num = parseInt(mesaNumber, 10) || 0;
         const usedInRegister = (existingRegister || []).some(t => Number(t.tableNumber) === num);
         const usedInFree = (existingFree || []).some(t => Number(t.tableNumber) === num);
         if (usedInRegister || usedInFree) {
-          alert(`El n�mero de mesa ${num} ya existe. Elige otro.`);
+          alert(`El número de mesa ${num} ya existe. Elige otro.`);
           return;
         }
-        if (!players || players <= 0) {
-          alert('Indica n�mero de jugadores');
+        if (!players || (parseInt(players, 10) || 0) <= 0) {
+          alert('Indica número de jugadores');
           return;
         }
         const res = await fetch('/api/tables/freegame/create', {
@@ -115,17 +115,17 @@ export default function FreeGamePage() {
           body: JSON.stringify({
             tableNumber: num,
             name: mesaName,
-            players,
+            players: (parseInt(players, 10) || 0),
             playersInfo: playersInfo.map(p => ({ character: p.character || '', aspect: p.aspect || '', legacy: p.legacy || 'Ninguno' }))
           })
         });
         if (!res.ok) throw new Error('No se pudo registrar la mesa');
         const data = await res.json();
-        alert(`Mesa libre registrada. C�digo: ${data.code}`);
+        alert(`Mesa libre registrada. Código: ${data.code}`);
       } else {
         const res = await fetch('/api/tables/freegame/join', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ code: joinCode }) });
         const data = await res.json();
-        alert(data.ok ? 'Unido correctamente' : 'C�digo no encontrado');
+        alert(data.ok ? 'Unido correctamente' : 'Código no encontrado');
       }
     } catch (e) {
       alert(e.message);
@@ -143,7 +143,7 @@ export default function FreeGamePage() {
         {mode === 'create' ? (
           <>
             <label>
-              N�mero de mesa
+              Número de mesa
               <input type="number" min={1} value={mesaNumber} onChange={(e) => setMesaNumber(e.target.value)} placeholder="Ej. 50" required />
             </label>
             <label>
@@ -151,8 +151,8 @@ export default function FreeGamePage() {
               <input value={mesaName} onChange={(e) => setMesaName(e.target.value)} placeholder="Ej. Mesa Libre 1" />
             </label>
             <label>
-              N�mero de jugadores
-              <input type="number" min={1} max={8} value={players} onChange={(e) => setPlayers(Number(e.target.value))} />
+              Número de jugadores
+              <input type="text" inputMode="numeric" pattern="[0-9]*" placeholder="Ej. 4" value={players} onChange={(e) => { const v = e.target.value; if (/^\\d*$/.test(v)) setPlayers(v); }} />
             </label>
             {playersInfo.map((p, idx) => (
               <div key={idx} className="player-row freegame-row">
@@ -209,15 +209,15 @@ export default function FreeGamePage() {
                     const named = (t.name && String(t.name).trim().length > 0)
                       ? `${base} - ${t.name}`
                       : base;
-                    return `${named} - C�digo: ${t.code}`;
+                    return `${named} - Código: ${t.code}`;
                   })()}
                 </option>
               ))}
             </select>
           </label>
           <label>
-            C�digo de mesa libre
-            <input value={joinCode} onChange={(e) => setJoinCode(e.target.value)} placeholder="C�digo" />
+            Código de mesa libre
+            <input value={joinCode} onChange={(e) => setJoinCode(e.target.value)} placeholder="Código" />
           </label>
           </>
         )}
@@ -226,4 +226,3 @@ export default function FreeGamePage() {
     </div>
   );
 }
-
