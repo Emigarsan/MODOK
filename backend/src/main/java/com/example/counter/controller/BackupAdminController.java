@@ -42,15 +42,17 @@ public class BackupAdminController {
         List<Map<String, Object>> files;
         try (var s = Files.list(dir)) {
             files = s.filter(p -> {
-                        String name = p.getFileName().toString();
-                        return name.startsWith("app-") && name.endsWith(".json");
+                        String n = p.getFileName().toString();
+                        return n.startsWith("app-") && n.endsWith(".json");
                     })
                     .sorted(Comparator.comparingLong(this::mtimeSafe).reversed())
-                    .map(p -> Map.of(
-                            "name", p.getFileName().toString(),
-                            "size", sizeSafe(p),
-                            "modified", mtimeSafe(p)
-                    ))
+                    .map(p -> {
+                        Map<String, Object> m = new LinkedHashMap<>();
+                        m.put("name", p.getFileName().toString());
+                        m.put("size", Long.valueOf(sizeSafe(p)));
+                        m.put("modified", Long.valueOf(mtimeSafe(p)));
+                        return m;
+                    })
                     .collect(Collectors.toList());
         }
         return ResponseEntity.ok(Map.of("dir", dir.toString(), "files", files));
@@ -105,4 +107,3 @@ public class BackupAdminController {
         } catch (IOException e) { return 0L; }
     }
 }
-
