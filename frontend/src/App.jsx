@@ -42,7 +42,7 @@ const initialState = {
   secondaryImageIndex: 0
 };
 
-export default function App() {
+export function EventView({ onAction } = {}) {
   const [state, setState] = useState(initialState);
   const [loading, setLoading] = useState(false);
   const [initialLoading, setInitialLoading] = useState(true);
@@ -209,6 +209,13 @@ export default function App() {
       .then((data) => {
         setState(normalizeState(data));
         setError(null);
+        try {
+          if (typeof onAction === 'function') {
+            const idx = segment === 'primary' ? 1 : (segment === 'secondary' ? 2 : 3);
+            const signed = delta < 0 ? -Math.abs(effectiveAmount) : Math.abs(effectiveAmount);
+            onAction({ segment, contador: idx, delta: signed });
+          }
+        } catch (_) {}
       })
       .catch((err) => {
         console.error(err);
@@ -309,6 +316,10 @@ export default function App() {
       )}
     </div>
   );
+}
+
+export default function App() {
+  return <EventView />;
 }
 
 
