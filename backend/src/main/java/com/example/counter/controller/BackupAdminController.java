@@ -95,6 +95,72 @@ public class BackupAdminController {
         return new ResponseEntity<>(data, headers, HttpStatus.OK);
     }
 
+    @DeleteMapping("/delete/{name}")
+    public ResponseEntity<?> deleteOne(@PathVariable("name") String name,
+                                       @RequestHeader(value = "X-Admin-Secret", required = false) String secret) throws IOException {
+        if (!isAdmin(secret)) return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        if (name == null || !name.startsWith("app-") || !name.endsWith(".json")) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("ok", false, "error", "Nombre inválido"));
+        }
+        Path dir = snapshotService.getBackupDirPath();
+        if (dir == null) return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("ok", false));
+        Path file = dir.resolve(name).normalize();
+        if (!file.startsWith(dir.normalize()) || !Files.exists(file)) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("ok", false));
+        }
+        try {
+            Files.deleteIfExists(file);
+            return ResponseEntity.ok(Map.of("ok", true));
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("ok", false, "error", e.getMessage()));
+        }
+    }
+
+    @PostMapping("/purge-older-than")
+    public ResponseEntity<?> purgeOlderThan(@RequestParam("minutes") long minutes,
+                                            @RequestHeader(value = "X-Admin-Secret", required = false) String secret) throws IOException {
+        if (!isAdmin(secret)) return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        if (minutes < 0) return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("ok", false, "error", "minutes >= 0"));
+        Path dir = snapshotService.getBackupDirPath();
+        if (dir == null || !Files.exists(dir)) return ResponseEntity.ok(Map.of("ok", true, "deleted", 0));
+        long cutoff = System.currentTimeMillis() - (minutes * 60L * 1000L);
+        int deleted = 0;
+        try (var s = Files.list(dir)) {
+            for (Path p : s.filter(p -> {
+                String n = p.getFileName().toString();
+                return n.startsWith("app-") && n.endsWith(".json");
+            }).collect(Collectors.toList())) {
+                if (mtimeSafe(p) < cutoff) {
+                    try { Files.deleteIfExists(p); deleted++; } catch (IOException ignored) {}
+                }
+            }
+        }
+        return ResponseEntity.ok(Map.of("ok", true, "deleted", deleted));
+    }
+
+    @PostMapping("/purge-keep-latest")
+    public ResponseEntity<?> purgeKeepLatest(@RequestParam("keep") int keep,
+                                             @RequestHeader(value = "X-Admin-Secret", required = false) String secret) throws IOException {
+        if (!isAdmin(secret)) return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        if (keep < 0) return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("ok", false, "error", "keep >= 0"));
+        Path dir = snapshotService.getBackupDirPath();
+        if (dir == null || !Files.exists(dir)) return ResponseEntity.ok(Map.of("ok", true, "deleted", 0));
+        List<Path> files;
+        try (var s = Files.list(dir)) {
+            files = s.filter(p -> {
+                        String n = p.getFileName().toString();
+                        return n.startsWith("app-") && n.endsWith(".json");
+                    })
+                    .sorted(Comparator.comparingLong(this::mtimeSafe).reversed())
+                    .collect(Collectors.toList());
+        }
+        int deleted = 0;
+        for (int i = keep; i < files.size(); i++) {
+            try { Files.deleteIfExists(files.get(i)); deleted++; } catch (IOException ignored) {}
+        }
+        return ResponseEntity.ok(Map.of("ok", true, "deleted", deleted));
+    }
+
     private long mtimeSafe(Path p) {
         try {
             return Files.getLastModifiedTime(p).toMillis();

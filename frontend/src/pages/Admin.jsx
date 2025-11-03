@@ -20,6 +20,8 @@ export default function AdminPage() {
   const [tablesTab, setTablesTab] = useState('event');
   const [backups, setBackups] = useState({ dir: '', files: [] });
   const [backupsLoading, setBackupsLoading] = useState(false);
+  const [purgeMinutes, setPurgeMinutes] = useState('1440');
+  const [purgeKeep, setPurgeKeep] = useState('10');
 
   // Campos de fijación permanecen vacÃƒ­os hasta que el usuario escriba.
   const syncFromState = () => {};
@@ -270,6 +272,30 @@ export default function AdminPage() {
                   <span style={{ fontSize: 12, opacity: 0.8 }}>Dir: {backups.dir || '(desconocido)'}</span>
                   {backupsLoading && <span style={{ fontSize: 12 }}>Cargando...</span>}
                 </div>
+                <div className="form" style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginTop: 8 }}>
+                  <label>
+                    Borrar mayores a (min)
+                    <input type="number" min={0} value={purgeMinutes} onChange={(e) => setPurgeMinutes(e.target.value)} />
+                  </label>
+                  <button onClick={() => {
+                    const m = Math.max(0, parseInt(purgeMinutes, 10) || 0);
+                    fetch(`/api/admin/backup/purge-older-than?minutes=${m}`, { method: 'POST', headers: { 'X-Admin-Secret': adminKey }})
+                      .then(r => r.ok ? r.json() : Promise.reject(new Error('No autorizado')))
+                      .then(() => fetchBackups())
+                      .catch((e) => alert(e.message));
+                  }}>Purgar por antigüedad</button>
+                  <label>
+                    Conservar últimos
+                    <input type="number" min={0} value={purgeKeep} onChange={(e) => setPurgeKeep(e.target.value)} />
+                  </label>
+                  <button onClick={() => {
+                    const k = Math.max(0, parseInt(purgeKeep, 10) || 0);
+                    fetch(`/api/admin/backup/purge-keep-latest?keep=${k}`, { method: 'POST', headers: { 'X-Admin-Secret': adminKey }})
+                      .then(r => r.ok ? r.json() : Promise.reject(new Error('No autorizado')))
+                      .then(() => fetchBackups())
+                      .catch((e) => alert(e.message));
+                  }}>Purgar y conservar N</button>
+                </div>
                 <table className="data-table" style={{ width: '100%', marginTop: 8 }}>
                   <thead>
                     <tr>
@@ -293,6 +319,13 @@ export default function AdminPage() {
                           <td>{dt}</td>
                           <td>
                             <button onClick={() => download(`/api/admin/backup/download/${encodeURIComponent(name)}`, name)}>Descargar</button>
+                            <button onClick={() => {
+                              if (!confirm(`Eliminar ${name}?`)) return;
+                              fetch(`/api/admin/backup/delete/${encodeURIComponent(name)}`, { method: 'DELETE', headers: { 'X-Admin-Secret': adminKey }})
+                                .then(r => r.ok ? r.json() : Promise.reject(new Error('No autorizado')))
+                                .then(() => fetchBackups())
+                                .catch((e) => alert(e.message));
+                            }}>Eliminar</button>
                           </td>
                         </tr>
                       );
