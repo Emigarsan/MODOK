@@ -141,6 +141,13 @@ public class TablesService {
         return Collections.unmodifiableList(new ArrayList<>(freeGameTables));
     }
 
+    public synchronized void restore(List<RegisterTable> reg, List<FreeGameTable> free) {
+        registerTables.clear();
+        freeGameTables.clear();
+        if (reg != null) registerTables.addAll(reg);
+        if (free != null) freeGameTables.addAll(free);
+    }
+
     public synchronized boolean isTableNumberUsed(int tableNumber) {
         int tn = Math.max(0, tableNumber);
         boolean inRegister = registerTables.stream().anyMatch(t -> t.tableNumber() == tn);

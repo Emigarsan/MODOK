@@ -4,6 +4,7 @@ import FreeGamePage from './pages/FreeGame.jsx';
 import EventPage from './pages/Event.jsx';
 import DisplayPage from './pages/Display.jsx';
 import AdminPage from './pages/Admin.jsx';
+import MesaPage from './pages/Mesa.jsx';
 
 function PageWrapper({ children }) {
   const location = useLocation();
@@ -33,6 +34,7 @@ export default function AppRouter() {
           <Route path="/event" element={<EventPage />} />
           <Route path="/display" element={<DisplayPage />} />
           <Route path="/admin" element={<AdminPage />} />
+          <Route path="/mesa/:mesaId" element={<MesaPage />} />
           <Route path="*" element={<Navigate to="/register" replace />} />
         </Routes>
       </PageWrapper>

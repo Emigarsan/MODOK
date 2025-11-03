@@ -15,6 +15,7 @@ export default function AdminPage() {
   const [adminKey, setAdminKey] = useState('');
   const [isAuthed, setIsAuthed] = useState(false);
   const [tables, setTables] = useState({ register: [], freegame: [] });
+  const [mesaSummary, setMesaSummary] = useState({});
   const [tab, setTab] = useState('mod');
   const [tablesTab, setTablesTab] = useState('event');
 
@@ -41,6 +42,16 @@ export default function AdminPage() {
   }, [adminKey, isAuthed]);
 
   useEffect(() => { if (isAuthed) { fetchTables(); const id = setInterval(fetchTables, 3000); return () => clearInterval(id); }}, [isAuthed, fetchTables]);
+
+  useEffect(() => {
+    if (!isAuthed) return;
+    const load = () => {
+      fetch('/api/mesas/summary').then(r => r.ok ? r.json() : {}).then(setMesaSummary).catch(() => {});
+    };
+    load();
+    const id = setInterval(load, 3000);
+    return () => clearInterval(id);
+  }, [isAuthed]);
 
   const update = (segment, sign) => () => {
     const endpoint = sign > 0 ? 'increment' : 'decrement';
@@ -281,6 +292,29 @@ export default function AdminPage() {
                       <td>{t.players}</td>
                       <td>{t.notes}</td>
                       <td>{t.code}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </section>
+            <section className="counter-card" style={{ overflowX: 'auto' }}>
+              <h3>Mesas - Totales por contador</h3>
+              <table className="data-table" style={{ width: '100%' }}>
+                <thead>
+                  <tr>
+                    <th>Mesa</th>
+                    <th>Contador 1</th>
+                    <th>Contador 2</th>
+                    <th>Contador 3</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {Object.entries(mesaSummary || {}).sort((a,b) => Number(a[0]) - Number(b[0])).map(([mesa, t]) => (
+                    <tr key={mesa}>
+                      <td>{mesa}</td>
+                      <td>{t?.c1 ?? 0}</td>
+                      <td>{t?.c2 ?? 0}</td>
+                      <td>{t?.c3 ?? 0}</td>
                     </tr>
                   ))}
                 </tbody>
