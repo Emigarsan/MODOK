@@ -18,6 +18,8 @@ export default function AdminPage() {
   const [mesaSummary, setMesaSummary] = useState({});
   const [tab, setTab] = useState('mod');
   const [tablesTab, setTablesTab] = useState('event');
+  const [backups, setBackups] = useState({ dir: '', files: [] });
+  const [backupsLoading, setBackupsLoading] = useState(false);
 
   // Campos de fijación permanecen vacÃƒ­os hasta que el usuario escriba.
   const syncFromState = () => {};
@@ -52,6 +54,25 @@ export default function AdminPage() {
     const id = setInterval(load, 3000);
     return () => clearInterval(id);
   }, [isAuthed]);
+
+  const fetchBackups = useCallback(() => {
+    if (!isAuthed) return;
+    setBackupsLoading(true);
+    fetch('/api/admin/backup/list', { headers: { 'X-Admin-Secret': adminKey }})
+      .then((r) => r.ok ? r.json() : Promise.reject(new Error('No autorizado')))
+      .then((data) => setBackups({ dir: data.dir || '', files: Array.isArray(data.files) ? data.files : [] }))
+      .catch(() => {})
+      .finally(() => setBackupsLoading(false));
+  }, [adminKey, isAuthed]);
+
+  useEffect(() => {
+    if (!isAuthed) return;
+    if (tab === 'backup') {
+      fetchBackups();
+      const id = setInterval(fetchBackups, 10000);
+      return () => clearInterval(id);
+    }
+  }, [tab, isAuthed, fetchBackups]);
 
   const update = (segment, sign) => () => {
     const endpoint = sign > 0 ? 'increment' : 'decrement';
@@ -157,8 +178,9 @@ export default function AdminPage() {
           <div className="admin-tabs">
             <button className={tab === 'mod' ? 'active' : ''} onClick={() => setTab('mod')}>Modificar valores</button>
             <button className={tab === 'tables' ? 'active' : ''} onClick={() => setTab('tables')}>Ver mesas</button>
+            <button className={tab === 'backup' ? 'active' : ''} onClick={() => setTab('backup')}>Backups</button>
           </div>
-
+          
           <div className="admin-grid" style={{ display: tab === 'mod' ? 'grid' : 'none' }}>
             <section className="counter-card">
               <h3>Vida M.O.D.O.K.</h3>
@@ -233,6 +255,56 @@ export default function AdminPage() {
               </div>
             </section>
           </div>
+          {tab === 'backup' && (
+            <div className="admin-grid" style={{ gridTemplateColumns: '1fr' }}>
+              <section className="counter-card">
+                <h3>Snapshots</h3>
+                <div style={{ display: 'flex', gap: 8, alignItems: 'center', flexWrap: 'wrap' }}>
+                  <button onClick={() => {
+                    fetch('/api/admin/backup/snapshot-now', { method: 'POST', headers: { 'X-Admin-Secret': adminKey }})
+                      .then(r => r.ok ? r.json() : Promise.reject(new Error('No autorizado')))
+                      .then(() => fetchBackups())
+                      .catch((e) => alert(e.message));
+                  }}>Crear snapshot ahora</button>
+                  <button onClick={fetchBackups}>Refrescar</button>
+                  <span style={{ fontSize: 12, opacity: 0.8 }}>Dir: {backups.dir || '(desconocido)'}</span>
+                  {backupsLoading && <span style={{ fontSize: 12 }}>Cargando...</span>}
+                </div>
+                <table className="data-table" style={{ width: '100%', marginTop: 8 }}>
+                  <thead>
+                    <tr>
+                      <th>Archivo</th>
+                      <th>Tamaño</th>
+                      <th>Modificado</th>
+                      <th>Acciones</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {(backups.files || []).map((f) => {
+                      const name = f.name || '';
+                      const size = typeof f.size === 'number' ? f.size : Number(f.size || 0);
+                      const modified = typeof f.modified === 'number' ? f.modified : Number(f.modified || 0);
+                      const dt = modified ? new Date(modified).toLocaleString() : '';
+                      const sizeKb = size ? Math.round(size / 102.4) / 10 : 0;
+                      return (
+                        <tr key={name}>
+                          <td>{name}</td>
+                          <td>{sizeKb} KB</td>
+                          <td>{dt}</td>
+                          <td>
+                            <button onClick={() => download(`/api/admin/backup/download/${encodeURIComponent(name)}`, name)}>Descargar</button>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                    {(!backups.files || backups.files.length === 0) && (
+                      <tr><td colSpan={4} style={{ textAlign: 'center', opacity: 0.7 }}>Sin archivos</td></tr>
+                    )}
+                  </tbody>
+                </table>
+              </section>
+            </div>
+          )}
 
           {tab === 'tables' && (<>
           <h3>Mesas (vivo)</h3>
