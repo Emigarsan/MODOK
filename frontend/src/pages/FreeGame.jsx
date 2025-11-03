@@ -106,7 +106,11 @@ export default function FreeGamePage() {
           return;
         }
         if (!players || (parseInt(players, 10) || 0) <= 0) {
-          alert('Indica número de jugadores');
+          alert('Indica numero de jugadores');
+          return;
+        }
+        if ((parseInt(players, 10) || 0) > 4) {
+          alert('Maximo 4 jugadores');
           return;
         }
         const res = await fetch('/api/tables/freegame/create', {
@@ -152,7 +156,7 @@ export default function FreeGamePage() {
             </label>
             <label>
               Número de jugadores
-              <input type="text" inputMode="numeric" pattern="[0-9]*" placeholder="Ej. 4" value={players} onChange={(e) => { const v = e.target.value; if (/^\\d*$/.test(v)) setPlayers(v); }} />
+              <input type="text" inputMode="numeric" pattern="[0-9]*" placeholder="Ej. 4" value={players} onChange={(e) => { const v = e.target.value; if (/^\d*$/.test(v) && (v === '' || parseInt(v, 10) <= 4)) setPlayers(v); }} />
             </label>
             {playersInfo.map((p, idx) => (
               <div key={idx} className="player-row freegame-row">
@@ -214,10 +218,6 @@ export default function FreeGamePage() {
                 </option>
               ))}
             </select>
-          </label>
-          <label>
-            Código de mesa libre
-            <input value={joinCode} onChange={(e) => setJoinCode(e.target.value)} placeholder="Código" />
           </label>
           </>
         )}
