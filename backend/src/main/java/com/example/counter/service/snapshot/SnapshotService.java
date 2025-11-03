@@ -126,6 +126,24 @@ public class SnapshotService {
         lastSnapshotPath = out;
     }
 
+    // --- Public helpers for admin/ops use ---
+    public synchronized Path createSnapshotNow() throws IOException {
+        writeSnapshot();
+        return lastSnapshotPath;
+    }
+
+    public Path getBackupDirPath() {
+        return backupDir;
+    }
+
+    public Path getLatestSnapshotPathOrNull() {
+        try {
+            return getLatestLocalSnapshot();
+        } catch (IOException e) {
+            return null;
+        }
+    }
+
     private void restoreLatest() {
         try {
             Path latest = getLatestLocalSnapshot();
