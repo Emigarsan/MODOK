@@ -42,6 +42,8 @@ public class SnapshotService {
     private final Path driveDir;
     private final long driveEveryMs;
     private final int driveKeepCopies;
+    private final boolean backupInitial;
+    private final boolean restoreOnStart;
 
     private volatile Path lastSnapshotPath = null;
 
@@ -53,7 +55,9 @@ public class SnapshotService {
                            @Value("${backup.retention.min:60}") int backupRetentionMin,
                            @Value("${drive.backup.dir:}") String driveDir,
                            @Value("${drive.every.ms:600000}") long driveEveryMs,
-                           @Value("${drive.keep.copies:6}") int driveKeepCopies) {
+                           @Value("${drive.keep.copies:6}") int driveKeepCopies,
+                           @Value("${backup.initial:true}") boolean backupInitial,
+                           @Value("${restore.onstart:true}") boolean restoreOnStart) {
         this.counterService = counterService;
         this.tablesService = tablesService;
         this.mesaService = mesaService;
@@ -63,6 +67,8 @@ public class SnapshotService {
         this.driveDir = (driveDir == null || driveDir.isBlank()) ? null : Paths.get(driveDir);
         this.driveEveryMs = driveEveryMs;
         this.driveKeepCopies = driveKeepCopies;
+        this.backupInitial = backupInitial;
+        this.restoreOnStart = restoreOnStart;
     }
 
     public static class SnapshotData {
@@ -77,12 +83,20 @@ public class SnapshotService {
     @EventListener(ApplicationReadyEvent.class)
     public void onReady() {
         ensureDir(backupDir);
-        restoreLatest();
-        // Trigger an initial snapshot to have a base file
-        try {
-            writeSnapshot();
-        } catch (Exception e) {
-            log.warn("Initial snapshot failed: {}", e.getMessage());
+        if (restoreOnStart) {
+            restoreLatest();
+        }
+        // Trigger an initial snapshot to have a base file, but do it async to avoid blocking startup
+        if (backupInitial) {
+            Thread t = new Thread(() -> {
+                try {
+                    writeSnapshot();
+                } catch (Exception e) {
+                    log.warn("Initial snapshot failed: {}", e.getMessage());
+                }
+            }, "snapshot-initial-writer");
+            t.setDaemon(true);
+            t.start();
         }
     }
 
