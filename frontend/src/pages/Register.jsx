@@ -59,158 +59,157 @@ export default function RegisterPage() {
     }
     return next;
   });
-}, [playersCount]);
 
-useEffect(() => {
-  fetch('/api/tables/register/characters')
-    .then((r) => r.ok ? r.json() : [])
-    .then((data) => setCharacters(Array.isArray(data) ? data : []))
-    .catch(() => setCharacters([]));
-  fetch('/api/tables/register/aspects')
-    .then((r) => r.ok ? r.json() : [])
-    .then((data) => setAspects(Array.isArray(data) ? data : []))
-    .catch(() => setAspects([]));
-  fetch('/api/tables/register/spiderwoman-aspects')
-    .then((r) => r.ok ? r.json() : [])
-    .then((data) => setSwAspects(Array.isArray(data) ? data : []))
-    .catch(() => setSwAspects([]));
-}, []);
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  try {
-    if (mode === 'create') {
-      if (!mesaNumber || !difficulty || !playersCount) {
-        alert('Rellena número de mesa, dificultad y número de jugadores')
-        return;
-      }
-      // Validación de número de mesa único entre Register y FreeGame
-      const num = parseInt(mesaNumber, 10) || 0;
-      const usedInRegister = (existing || []).some(t => Number(t.tableNumber) === num);
+  useEffect(() => {
+    fetch('/api/tables/register/characters')
+      .then((r) => r.ok ? r.json() : [])
+      .then((data) => setCharacters(Array.isArray(data) ? data : []))
+      .catch(() => setCharacters([]));
+    fetch('/api/tables/register/aspects')
+      .then((r) => r.ok ? r.json() : [])
+      .then((data) => setAspects(Array.isArray(data) ? data : []))
+      .catch(() => setAspects([]));
+    fetch('/api/tables/register/spiderwoman-aspects')
+      .then((r) => r.ok ? r.json() : [])
+      .then((data) => setSwAspects(Array.isArray(data) ? data : []))
+      .catch(() => setSwAspects([]));
+  }, []);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      if (mode === 'create') {
+        if (!mesaNumber || !difficulty || !playersCount) {
+          alert('Rellena número de mesa, dificultad y número de jugadores')
+          return;
+        }
+        // Validación de número de mesa único entre Register y FreeGame
+        const num = parseInt(mesaNumber, 10) || 0;
+        const usedInRegister = (existing || []).some(t => Number(t.tableNumber) === num);
 
-      if (usedInRegister) {
-        alert('La mesa ya existe');
-        return;
+        if (usedInRegister) {
+          alert('La mesa ya existe');
+          return;
+        }
+        const pmax = parseInt(playersCount, 10) || 0;
+        if (pmax > 4) { alert('Maximo 4 jugadores'); return; }
+        const body = {
+          tableNumber: parseInt(mesaNumber, 10) || 0,
+          tableName: mesaName,
+          difficulty,
+          players: parseInt(playersCount, 10) || 0,
+          playersInfo: players.map(p => ({ character: p.character || '', aspect: p.aspect || '' }))
+        };
+        const res = await fetch('/api/tables/register/create', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+        if (res.status === 409) { alert(`El número de mesa ${body.tableNumber} ya existe. Elige otro.`); return; }
+        if (!res.ok) throw new Error("No se pudo crear la mesa");
+        await res.json();
+        navigate(`/mesa/${parseInt(mesaNumber, 10) || 0}`);
+      } else {
+        const res = await fetch('/api/tables/register/join', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ code: joinCode }) });
+        const data = await res.json();
+        if (data.ok) {
+          const sel = (existing || []).find(t => String(t.code) === String(joinCode));
+          const mesa = sel ? sel.tableNumber : '';
+          if (mesa !== '') navigate(`/mesa/${mesa}`); else navigate('/event');
+        } else alert('Codigo no encontrado');
       }
-      const pmax = parseInt(playersCount, 10) || 0;
-      if (pmax > 4) { alert('Maximo 4 jugadores'); return; }
-      const body = {
-        tableNumber: parseInt(mesaNumber, 10) || 0,
-        tableName: mesaName,
-        difficulty,
-        players: parseInt(playersCount, 10) || 0,
-        playersInfo: players.map(p => ({ character: p.character || '', aspect: p.aspect || '' }))
-      };
-      const res = await fetch('/api/tables/register/create', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
-      if (res.status === 409) { alert(`El número de mesa ${body.tableNumber} ya existe. Elige otro.`); return; }
-      if (!res.ok) throw new Error("No se pudo crear la mesa");
-      await res.json();
-      navigate(`/mesa/${parseInt(mesaNumber, 10) || 0}`);
-    } else {
-      const res = await fetch('/api/tables/register/join', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ code: joinCode }) });
-      const data = await res.json();
-      if (data.ok) {
-        const sel = (existing || []).find(t => String(t.code) === String(joinCode));
-        const mesa = sel ? sel.tableNumber : '';
-        if (mesa !== '') navigate(`/mesa/${mesa}`); else navigate('/event');
-      } else alert('Codigo no encontrado');
+    } catch (e) {
+      alert(e.message);
     }
-  } catch (e) {
-    alert(e.message);
-  }
-};
+  };
 
-return (
-  <div className="container overlay-card">
-    <h2>Registro de Mesa</h2>
-    <div className="tabs">
-      <button className={mode === 'create' ? 'active' : ''} onClick={() => setMode('create')}>Crear mesa</button>
-      <button className={mode === 'join' ? 'active' : ''} onClick={() => setMode('join')}>Unirse a mesa</button>
-    </div>
-    <form onSubmit={handleSubmit} className="form" style={{ display: mode === 'create' ? 'grid' : 'none', gap: '0.75rem' }}>
-      <label>
-        Número de mesa
-        <input type="number" min={1} value={mesaNumber} onChange={(e) => setMesaNumber(e.target.value)} placeholder="Ej. 12" required />
-      </label>
-      <label>
-        Nombre de mesa (opcional)
-        <input value={mesaName} onChange={(e) => setMesaName(e.target.value)} placeholder="Ej. Vengadores" />
-      </label>
-      <label>
-        Dificultad
-        <select value={difficulty} onChange={(e) => setDifficulty(e.target.value)} required>
-          <option value="" disabled>Selecciona dificultad</option>
-          <option value="Normal">Normal</option>
-          <option value="Experto">Experto</option>
-        </select>
-      </label>
-      <label>
-        Número de jugadores
-        <input
-          type="text"
-          inputMode="numeric"
-          pattern="[0-9]*"
-          placeholder="Ej. 4"
-          value={playersCount}
-          onChange={(e) => { const v = e.target.value; if (/^\d*$/.test(v) && (v === '' || parseInt(v, 10) <= 4)) setPlayersCount(v); }}
-          required
-        />
-      </label>
+  return (
+    <div className="container overlay-card">
+      <h2>Registro de Mesa</h2>
+      <div className="tabs">
+        <button className={mode === 'create' ? 'active' : ''} onClick={() => setMode('create')}>Crear mesa</button>
+        <button className={mode === 'join' ? 'active' : ''} onClick={() => setMode('join')}>Unirse a mesa</button>
+      </div>
+      <form onSubmit={handleSubmit} className="form" style={{ display: mode === 'create' ? 'grid' : 'none', gap: '0.75rem' }}>
+        <label>
+          Número de mesa
+          <input type="number" min={1} value={mesaNumber} onChange={(e) => setMesaNumber(e.target.value)} placeholder="Ej. 12" required />
+        </label>
+        <label>
+          Nombre de mesa (opcional)
+          <input value={mesaName} onChange={(e) => setMesaName(e.target.value)} placeholder="Ej. Vengadores" />
+        </label>
+        <label>
+          Dificultad
+          <select value={difficulty} onChange={(e) => setDifficulty(e.target.value)} required>
+            <option value="" disabled>Selecciona dificultad</option>
+            <option value="Normal">Normal</option>
+            <option value="Experto">Experto</option>
+          </select>
+        </label>
+        <label>
+          Número de jugadores
+          <input
+            type="text"
+            inputMode="numeric"
+            pattern="[0-9]*"
+            placeholder="Ej. 4"
+            value={playersCount}
+            onChange={(e) => { const v = e.target.value; if (/^\d*$/.test(v) && (v === '' || parseInt(v, 10) <= 4)) setPlayersCount(v); }}
+            required
+          />
+        </label>
 
-      {players.map((p, idx) => (
-        <div key={idx} className="player-row">
-          <label>
-            Personaje
-            <input list="character-list" value={p.character}
-              onChange={(e) => handleCharacterChange(idx, e.target.value)}
-              placeholder="Busca personaje" />
-            <datalist id="character-list">
-              {characters.map(c => (<option key={c} value={c} />))}
-            </datalist>
-          </label>
-          <label>
-            Aspecto
-            {(() => {
-              const isAdam = (p.character === 'Adam Warlock');
-              const isSW = (p.character === 'Spider-woman');
-              const opts = isSW ? swAspects : aspects;
-              return (
-                <select value={p.aspect} disabled={isAdam} onChange={(e) => {
-                  const v = e.target.value; setPlayers(prev => prev.map((row, i) => i === idx ? { ...row, aspect: v } : row));
-                }}>
-                  <option value="" disabled>{isAdam ? 'No aplica' : 'Selecciona aspecto'}</option>
-                  {opts.map(a => (<option key={a} value={a}>{a}</option>))}
-                </select>
-              );
-            })()}
-          </label>
-        </div>
-      ))}
-
-      <button type="submit">Crear y continuar</button>
-    </form>
-
-    <form onSubmit={handleSubmit} className="form" style={{ display: mode === 'join' ? 'grid' : 'none', gap: '0.75rem' }}>
-      <label>
-        Unirse a mesa existente
-        <select value={joinCode} onChange={(e) => setJoinCode(e.target.value)} required>
-          <option value="" disabled>Selecciona una mesa</option>
-          {existing.map((t) => (
-            <option key={t.id} value={t.code}>
+        {players.map((p, idx) => (
+          <div key={idx} className="player-row">
+            <label>
+              Personaje
+              <input list="character-list" value={p.character}
+                onChange={(e) => handleCharacterChange(idx, e.target.value)}
+                placeholder="Busca personaje" />
+              <datalist id="character-list">
+                {characters.map(c => (<option key={c} value={c} />))}
+              </datalist>
+            </label>
+            <label>
+              Aspecto
               {(() => {
-                const base = t.tableNumber ? `Mesa ${t.tableNumber}` : 'Mesa';
-                const named = (t.tableName && String(t.tableName).trim().length > 0)
-                  ? `${base} - ${t.tableName}`
-                  : base;
-                return `${named} - Código: ${t.code}`;
+                const isAdam = (p.character === 'Adam Warlock');
+                const isSW = (p.character === 'Spider-woman');
+                const opts = isSW ? swAspects : aspects;
+                return (
+                  <select value={p.aspect} disabled={isAdam} onChange={(e) => {
+                    const v = e.target.value; setPlayers(prev => prev.map((row, i) => i === idx ? { ...row, aspect: v } : row));
+                  }}>
+                    <option value="" disabled>{isAdam ? 'No aplica' : 'Selecciona aspecto'}</option>
+                    {opts.map(a => (<option key={a} value={a}>{a}</option>))}
+                  </select>
+                );
               })()}
-            </option>
-          ))}
-        </select>
-      </label>
-      <button type="submit">Unirse y continuar</button>
-    </form>
-  </div>
-);
+            </label>
+          </div>
+        ))}
+
+        <button type="submit">Crear y continuar</button>
+      </form>
+
+      <form onSubmit={handleSubmit} className="form" style={{ display: mode === 'join' ? 'grid' : 'none', gap: '0.75rem' }}>
+        <label>
+          Unirse a mesa existente
+          <select value={joinCode} onChange={(e) => setJoinCode(e.target.value)} required>
+            <option value="" disabled>Selecciona una mesa</option>
+            {existing.map((t) => (
+              <option key={t.id} value={t.code}>
+                {(() => {
+                  const base = t.tableNumber ? `Mesa ${t.tableNumber}` : 'Mesa';
+                  const named = (t.tableName && String(t.tableName).trim().length > 0)
+                    ? `${base} - ${t.tableName}`
+                    : base;
+                  return `${named} - Código: ${t.code}`;
+                })()}
+              </option>
+            ))}
+          </select>
+        </label>
+        <button type="submit">Unirse y continuar</button>
+      </form>
+    </div>
+  );
 }
 
 
