@@ -23,19 +23,19 @@ export default function AdminPage() {
   const [purgeMinutes, setPurgeMinutes] = useState('1440');
   const [purgeKeep, setPurgeKeep] = useState('10');
 
-  // Campos de fijación permanecen vacÃƒ­os hasta que el usuario escriba.
+  // Campos de fijaci�n permanecen vacÃ�os hasta que el usuario escriba.
   const syncFromState = () => {};
 
   const fetchState = useCallback(() => {
     fetch(API_BASE)
-      .then((r) => r.ok ? r.json() : Promise.reject(new Error('Respuesta invÃ¡lida')))
+      .then((r) => r.ok ? r.json() : Promise.reject(new Error('Respuesta inválida')))
       .then((data) => { setState(data); setError(null); syncFromState(data); })
       .catch((e) => setError(e.message));
   }, []);
 
   useEffect(() => { fetchState(); const id = setInterval(fetchState, 3000); return () => clearInterval(id); }, [fetchState]);
 
-  // No auto-login: siempre pedimos Contraseña hasta pulsar "Entrar".
+  // No auto-login: siempre pedimos Contrase�a hasta pulsar "Entrar".
 
   const fetchTables = useCallback(() => {
     if (!isAuthed) return;
@@ -149,7 +149,7 @@ export default function AdminPage() {
         <h2>Admin</h2>
         <form className="form" onSubmit={tryAuth}>
           <label>
-            Contraseña
+            Contrase�a
             <input type="password" value={adminKey} onChange={(e) => setAdminKey(e.target.value)} />
           </label>
           <button type="submit">Entrar</button>
@@ -163,7 +163,7 @@ export default function AdminPage() {
       <h2>Admin</h2>
       {isAuthed && (
         <div className="form" style={{ alignSelf: 'flex-end' }}>
-          <button onClick={logout}>Cerrar sesión</button>
+          <button onClick={logout}>Cerrar sesi�n</button>
         </div>
       )}
       {error && <p className="error">{error}</p>}
@@ -173,7 +173,7 @@ export default function AdminPage() {
         <>
           {false && (<div className="form">
             <label>
-                ntidad (±)
+                ntidad (�)
               <input type="number" value={amount} min={0} onChange={(e) => setAmount(Number(e.target.value))} />
             </label>
           </div>)}
@@ -189,7 +189,7 @@ export default function AdminPage() {
               <div className="counter-value">{state.primary}</div>
               <div className="form">
                 <label>
-                  Cantidad (±)
+                  Cantidad (�)
                   <input type="number" min={0} value={amountPrimary} onChange={(e) => setAmountPrimary(Number(e.target.value))} />
                 </label>
               </div>
@@ -207,11 +207,11 @@ export default function AdminPage() {
             </section>
 
             <section className="counter-card">
-              <h3>Celdas de Contención</h3>
+              <h3>Celdas de Contenci�n</h3>
               <div className="counter-value">{state.secondary}</div>
               <div className="form">
                 <label>
-                  Cantidad (±)
+                  Cantidad (�)
                   <input type="number" min={0} value={amountSecondary} onChange={(e) => setAmountSecondary(Number(e.target.value))} />
                 </label>
               </div>
@@ -240,7 +240,7 @@ export default function AdminPage() {
               <div className="counter-value">{state.tertiary}</div>
               <div className="form">
                 <label>
-                  Cantidad (±)
+                  Cantidad (�)
                   <input type="number" min={0} value={amountTertiary} onChange={(e) => setAmountTertiary(Number(e.target.value))} />
                 </label>
               </div>
@@ -283,9 +283,9 @@ export default function AdminPage() {
                       .then(r => r.ok ? r.json() : Promise.reject(new Error('No autorizado')))
                       .then(() => fetchBackups())
                       .catch((e) => alert(e.message));
-                  }}>Purgar por antigüedad</button>
+                  }}>Purgar por antig�edad</button>
                   <label>
-                    Conservar últimos
+                    Conservar �ltimos
                     <input type="number" min={0} value={purgeKeep} onChange={(e) => setPurgeKeep(e.target.value)} />
                   </label>
                   <button onClick={() => {
@@ -300,7 +300,7 @@ export default function AdminPage() {
                   <thead>
                     <tr>
                       <th>Archivo</th>
-                      <th>Tamaño</th>
+                      <th>Tama�o</th>
                       <th>Modificado</th>
                       <th>Acciones</th>
                     </tr>
@@ -320,7 +320,7 @@ export default function AdminPage() {
                           <td>
                             <button onClick={() => download(`/api/admin/backup/download/${encodeURIComponent(name)}`, name)}>Descargar</button>
                             <button onClick={() => {
-                              if (!confirm(`Restaurar desde ${name}? Esto sobreescribirá el estado en memoria.`)) return;
+                              if (!confirm(`Restaurar desde ${name}? Esto sobreescribir� el estado en memoria.`)) return;
                               fetch(`/api/admin/backup/restore/${encodeURIComponent(name)}`, { method: 'POST', headers: { 'X-Admin-Secret': adminKey }})
                                 .then(r => r.ok ? r.json() : Promise.reject(new Error('No autorizado')))
                                 .then(() => alert('Restaurado'))
@@ -360,7 +360,7 @@ export default function AdminPage() {
                   <tr>
                     <th>Mesa</th>
                     <th>Nombre</th>
-                    <th>Dificultad</th>
+                    <th>Dificultad</th><th>Reto inevitable</th>
                     <th>Jugadores</th>
                     <th>Detalle jugadores</th>
                     <th>Código</th>
@@ -376,13 +376,7 @@ export default function AdminPage() {
                       ? t.playersInfo.map((p) => `${p.character}${p.aspect ? ` (${p.aspect})` : ''}`).join(', ')
                       : '';
                     return (
-                      <tr key={t.id}>
-                        <td>{mesa}</td>
-                        <td>{nombre}</td>
-                        <td>{dif}</td>
-                        <td>{players}</td>
-                        <td>{detalle}</td>
-                        <td>{t.code}</td>
+                      <tr key={t.id}>\r\n                      <td>{mesa}</td>\r\n                      <td>{nombre}</td>\r\n                      <td>{dif}</td>\r\n                      <td>{players}</td>\r\n                      <td>{detalle}</td>\r\n                      <td>{t.code}</td>
                       </tr>
                     );
                   })}
@@ -394,18 +388,44 @@ export default function AdminPage() {
               <table className="data-table" style={{ width: '100%' }}>
                 <thead>
                   <tr>
-                    <th>Mesa</th>\n                    <th>Nombre</th>\n                    <th>Jugadores</th>\n                    <th>Detalle jugadores</th>\n                    <th>Código</th>
+                    <th>Mesa</th><th>Nombre</th><th>Reto inevitable</th><th>Jugadores</th><th>Detalle jugadores</th><th>Código</th>
                   </tr>
                 </thead>
                 <tbody>
                   {(tables.freegame || []).map((t) => (
-                    <tr key={t.id}>
-                      <td>{t.name}</td>
-                      <td>{t.players}</td>
-                      <td>{t.notes}</td>
-                      <td>{t.code}</td>
+                    <tr key={t.id}>\r\n                      <td>{t.tableNumber}</td>`r`n                      <td>{t.name}</td><td>{t.inevitableChallenge || '(Ninguno)'}</td>\r\n                      <td>{t.players}</td>\r\n                      <td>{Array.isArray(t.playersInfo) ? t.playersInfo.map((p) => p.character + (p.aspect ? ' (' + p.aspect + ')' : '') + (p.legacy ? ' [' + p.legacy + ']' : '')).join(', ') : ''}</td>\r\n                      <td>{t.code}</td>
                     </tr>
                   ))}
+                </tbody>
+              </table>              <h4 style={{ marginTop: 12 }}>Puntuación por mesa (desglose)</h4>
+              <table className=\"data-table\" style={{ width: '100%' }}>
+                <thead>
+                  <tr>
+                    <th>Mesa</th>
+                    <th>Dificultad</th><th>Reto inevitable</th>
+                    <th>Puntos base</th>
+                    <th>Legados</th>
+                    <th>Puntos de Victoria</th>
+                    <th>Total</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {(tables.freegame || []).map((t) => {
+                    const noCh = !t?.inevitableChallenge || t.inevitableChallenge === '(Ninguno)'; const base = noCh ? 0 : (t?.difficulty === 'Experto' ? 5 : 3);
+                    const legacyCount = noCh ? 0 : (Array.isArray(t?.playersInfo) ? t.playersInfo.filter(p => p.legacy && String(p.legacy) !== 'Ninguno').length : 0);
+                    const vp = noCh ? 0 : (typeof t?.victoryPoints === 'number' ? t.victoryPoints : 0);
+                    const total = noCh ? 0 : (base + legacyCount + vp);
+                    return (
+                      <tr key={t.id + '-score'}>
+                        <td>{t.tableNumber}</td>
+                        <td>{t.difficulty || 'Normal'}</td><td>{t.inevitableChallenge || '(Ninguno)'}</td>
+                        <td>{base}</td>
+                        <td>{legacyCount}</td>
+                        <td>{vp}</td>
+                        <td>{total}</td>
+                      </tr>
+                    );
+                  })}
                 </tbody>
               </table>
             </section>
@@ -422,11 +442,7 @@ export default function AdminPage() {
                 </thead>
                 <tbody>
                   {Object.entries(mesaSummary || {}).sort((a,b) => Number(a[0]) - Number(b[0])).map(([mesa, t]) => (
-                    <tr key={mesa}>
-                      <td>{mesa}</td>
-                      <td>{t?.c1 ?? 0}</td>
-                      <td>{t?.c2 ?? 0}</td>
-                      <td>{t?.c3 ?? 0}</td>
+                    <tr key={mesa}>\r\n                      <td>{mesa}</td>\r\n                      <td>{t?.c1 ?? 0}</td>\r\n                      <td>{t?.c2 ?? 0}</td>\r\n                      <td>{t?.c3 ?? 0}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -443,6 +459,7 @@ export default function AdminPage() {
     </div>
   );
 }
+
 
 
 

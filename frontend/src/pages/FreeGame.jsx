@@ -1,9 +1,12 @@
-import { useEffect, useMemo, useState } from 'react';
+﻿import { useEffect, useMemo, useState } from 'react';
 
 export default function FreeGamePage() {
   const [mode, setMode] = useState('create');
   const [mesaNumber, setMesaNumber] = useState('');
   const [mesaName, setMesaName] = useState('');
+  const [difficulty, setDifficulty] = useState('Normal');
+  const [created, setCreated] = useState(null);
+  const [vpInput, setVpInput] = useState('0');
   const [players, setPlayers] = useState('');
   const [playersInfo, setPlayersInfo] = useState([]);
   const [joinCode, setJoinCode] = useState('');
@@ -17,12 +20,12 @@ export default function FreeGamePage() {
 
   const legacyOptions = useMemo(() => ([
     'Ninguno',
-    'Vástago de M',
-    'Mutante híbrido',
+    'VÃ¡stago de M',
+    'Mutante hÃ­brido',
     'Equipo de dos',
-    'Los más buscados',
+    'Los mÃ¡s buscados',
     'Equipado para lo peor',
-    'Guerreros araña',
+    'Guerreros araÃ±a',
     'Instruidas por Thanos',
     'Rabia irradiada',
     'Ronin',
@@ -95,14 +98,14 @@ export default function FreeGamePage() {
     try {
       if (mode === 'create') {
         if (!mesaNumber) {
-          alert('Indica un número de mesa');
+          alert('Indica un nÃºmero de mesa');
           return;
         }
         const num = parseInt(mesaNumber, 10) || 0;
         const usedInRegister = (existingRegister || []).some(t => Number(t.tableNumber) === num);
         const usedInFree = (existingFree || []).some(t => Number(t.tableNumber) === num);
         if (usedInRegister || usedInFree) {
-          alert(`El número de mesa ${num} ya existe. Elige otro.`);
+          alert(`El nÃºmero de mesa ${num} ya existe. Elige otro.`);
           return;
         }
         if (!players || (parseInt(players, 10) || 0) <= 0) {
@@ -119,17 +122,19 @@ export default function FreeGamePage() {
           body: JSON.stringify({
             tableNumber: num,
             name: mesaName,
+            difficulty,
+            inevitableChallenge,
             players: (parseInt(players, 10) || 0),
             playersInfo: playersInfo.map(p => ({ character: p.character || '', aspect: p.aspect || '', legacy: p.legacy || 'Ninguno' }))
           })
         });
         if (!res.ok) throw new Error('No se pudo registrar la mesa');
         const data = await res.json();
-        alert(`Mesa libre registrada. Código: ${data.code}`);
+        setCreated(data); setVpInput(String((data && typeof data.victoryPoints === "number") ? data.victoryPoints : 0)); alert(`Mesa libre registrada. Código: ${data.code}`);
       } else {
         const res = await fetch('/api/tables/freegame/join', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ code: joinCode }) });
         const data = await res.json();
-        alert(data.ok ? 'Unido correctamente' : 'Código no encontrado');
+        alert(data.ok ? 'Unido correctamente' : 'CÃ³digo no encontrado');
       }
     } catch (e) {
       alert(e.message);
@@ -147,15 +152,33 @@ export default function FreeGamePage() {
         {mode === 'create' ? (
           <>
             <label>
-              Número de mesa
-              <input type="number" min={1} value={mesaNumber} onChange={(e) => setMesaNumber(e.target.value)} placeholder="Ej. 50" required />
+              NÃºmero de mesa
+              <input type="number" disabled={noChallenge} min={1} value={mesaNumber} onChange={(e) => setMesaNumber(e.target.value)} placeholder="Ej. 50" required />
             </label>
             <label>
               Nombre de mesa
               <input value={mesaName} onChange={(e) => setMesaName(e.target.value)} placeholder="Ej. Mesa Libre 1" />
             </label>
             <label>
-              Número de jugadores
+              Dificultad
+              <select value={difficulty} onChange={(e) => setDifficulty(e.target.value)}>
+                <option value="Normal">Normal</option>
+                <option value="Experto">Experto</option>
+              </select>
+            </label>
+            <label>
+              Reto inevitable
+              <select value={inevitableChallenge} onChange={(e) => setInevitableChallenge(e.target.value)}>
+                <option value="(Ninguno)">(Ninguno)</option>
+                <option value="Celdas falsas">Celdas falsas</option>
+                <option value="Hail H.Y.D.R.A.">Hail H.Y.D.R.A.</option>
+                <option value="La Sala Roja">La Sala Roja</option>
+                <option value="Thunder Force">Thunder Force</option>
+                <option value="Ultrón Infinito">Ultrón Infinito</option>
+              </select>
+            </label>
+            <label>
+              NÃºmero de jugadores
               <input type="text" inputMode="numeric" pattern="[0-9]*" placeholder="Ej. 4" value={players} onChange={(e) => { const v = e.target.value; if (/^\d*$/.test(v) && (v === '' || parseInt(v, 10) <= 4)) setPlayers(v); }} />
             </label>
             {playersInfo.map((p, idx) => (
@@ -213,7 +236,7 @@ export default function FreeGamePage() {
                     const named = (t.name && String(t.name).trim().length > 0)
                       ? `${base} - ${t.name}`
                       : base;
-                    return `${named} - Código: ${t.code}`;
+                    return `${named} - CÃ³digo: ${t.code}`;
                   })()}
                 </option>
               ))}
@@ -222,7 +245,57 @@ export default function FreeGamePage() {
           </>
         )}
         <button type="submit">Guardar</button>
-      </form>
+      </form>      {created && (
+        <div className="counter-card" style={{ marginTop: 16 }}>
+          <h3>Puntuación de la mesa</h3>
+          {(() => {
+            const noChallenge = !created.inevitableChallenge || created.inevitableChallenge === '(Ninguno)';
+            const base = noChallenge ? 0 : ((created.difficulty === 'Experto') ? 5 : 3);
+            const legacyCount = noChallenge ? 0 : (Array.isArray(created.playersInfo) ? created.playersInfo.filter(p => (p.legacy && String(p.legacy) !== 'Ninguno')).length : 0);
+            const vp = noChallenge ? 0 : (parseInt(vpInput, 10) || 0);
+            const total = base + legacyCount + vp;
+            return (
+              <>
+                <table className="data-table" style={{ width: '100%' }}>
+                  <thead>
+                    <tr>
+                      <th>Dificultad</th>
+                      <th>Puntos base</th>
+                      <th>Legados</th>
+                      <th>Puntos de Victoria</th>
+                      <th>Total</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>{created.difficulty}</td>
+                      <td>{base}</td>
+                      <td>{legacyCount}</td>
+                      <td>
+                        <input type="number" disabled={noChallenge} min={0} value={vpInput} onChange={async (e) => {
+                          const v = e.target.value; setVpInput(v);
+                          const n = Math.max(0, parseInt(v, 10) || 0);
+                          try {
+                            await fetch('/api/tables/freegame/victory-points', {
+                              method: 'POST',
+                              headers: { 'Content-Type': 'application/json' },
+                              body: JSON.stringify({ id: created.id, victoryPoints: n })
+                            });
+                          } catch (_) {}
+                        }} />
+                      </td>
+                      <td>{total}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </>
+            );
+          })()}
+        </div>
+      )}
     </div>
   );
 }
+
+
+

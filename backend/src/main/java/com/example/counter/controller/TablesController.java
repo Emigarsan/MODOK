@@ -73,6 +73,8 @@ public class TablesController {
     public ResponseEntity<com.example.counter.service.model.FreeGameTable> createFreeGame(@RequestBody Map<String, Object> payload) {
         int tableNumber = ((Number) payload.getOrDefault("tableNumber", 0)).intValue();
         String name = String.valueOf(payload.getOrDefault("name", "Mesa Libre"));
+        String difficulty = String.valueOf(payload.getOrDefault("difficulty", "Normal"));
+        String inevitableChallenge = String.valueOf(payload.getOrDefault("inevitableChallenge", "(Ninguno)"));
         int players = ((Number) payload.getOrDefault("players", 0)).intValue();
         List<Map<String, Object>> p = (List<Map<String, Object>>) payload.getOrDefault("playersInfo", List.of());
         List<com.example.counter.service.model.FreeGamePlayerInfo> info = new ArrayList<>();
@@ -85,13 +87,21 @@ public class TablesController {
         if (tablesService.isTableNumberUsed(tableNumber)) {
             return ResponseEntity.status(409).build();
         }
-        return ResponseEntity.ok(tablesService.createFreeGame(tableNumber, name, players, info));
+        return ResponseEntity.ok(tablesService.createFreeGame(tableNumber, name, difficulty, inevitableChallenge, players, info));
     }
 
     @PostMapping("/freegame/join")
     public ResponseEntity<Map<String, Object>> joinFreeGame(@RequestBody Map<String, Object> payload) {
         String code = String.valueOf(payload.getOrDefault("code", ""));
         boolean ok = tablesService.joinFreeGame(code);
+        return ResponseEntity.ok(Map.of("ok", ok));
+    }
+
+    @PostMapping("/freegame/victory-points")
+    public ResponseEntity<Map<String, Object>> setFreeGameVictoryPoints(@RequestBody Map<String, Object> payload) {
+        String id = String.valueOf(payload.getOrDefault("id", ""));
+        int vp = ((Number) payload.getOrDefault("victoryPoints", 0)).intValue();
+        boolean ok = tablesService.setFreeGameVictoryPoints(id, vp);
         return ResponseEntity.ok(Map.of("ok", ok));
     }
 }

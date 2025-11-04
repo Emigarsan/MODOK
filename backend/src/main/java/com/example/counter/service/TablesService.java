@@ -119,18 +119,41 @@ public class TablesService {
         return registerTables.stream().anyMatch(t -> t.code().equalsIgnoreCase(code));
     }
 
-    public synchronized com.example.counter.service.model.FreeGameTable createFreeGame(int tableNumber, String name, int players, List<com.example.counter.service.model.FreeGamePlayerInfo> playersInfo) {
+    public synchronized com.example.counter.service.model.FreeGameTable createFreeGame(int tableNumber, String name, String difficulty, String inevitableChallenge, int players, List<com.example.counter.service.model.FreeGamePlayerInfo> playersInfo) {
         String id = UUID.randomUUID().toString();
         String code = shortCode();
         int tn = Math.max(0, tableNumber);
         List<com.example.counter.service.model.FreeGamePlayerInfo> info = playersInfo == null ? List.of() : new ArrayList<>(playersInfo);
-        com.example.counter.service.model.FreeGameTable t = new com.example.counter.service.model.FreeGameTable(id, tn, name, Math.max(0, players), info, code, Instant.now());
+        com.example.counter.service.model.FreeGameTable t = new com.example.counter.service.model.FreeGameTable(
+                id,
+                tn,
+                name,
+                difficulty == null ? "Normal" : difficulty,
+                (inevitableChallenge == null || inevitableChallenge.isBlank()) ? "(Ninguno)" : inevitableChallenge,
+                Math.max(0, players),
+                info,
+                code,
+                0,
+                Instant.now());
         freeGameTables.add(t);
         return t;
     }
 
     public synchronized boolean joinFreeGame(String code) {
         return freeGameTables.stream().anyMatch(t -> t.code().equalsIgnoreCase(code));
+    }
+
+    public synchronized boolean setFreeGameVictoryPoints(String id, int victoryPoints) {
+        for (int i = 0; i < freeGameTables.size(); i++) {
+            var t = freeGameTables.get(i);
+            if (t.id().equals(id)) {
+                freeGameTables.set(i, new com.example.counter.service.model.FreeGameTable(
+                        t.id(), t.tableNumber(), t.name(), t.difficulty(), t.inevitableChallenge(), t.players(), t.playersInfo(), t.code(), Math.max(0, victoryPoints), t.createdAt()
+                ));
+                return true;
+            }
+        }
+        return false;
     }
 
     public synchronized List<RegisterTable> listRegister() {
