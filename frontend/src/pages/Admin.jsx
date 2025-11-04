@@ -189,16 +189,16 @@ export default function AdminPage() {
               <div className="counter-value">{state.primary}</div>
               <div className="form">
                 <label>
-                  Cantidad
-                  <input type="number" min={0} value={amountPrimary} onChange={(e) => setAmountPrimary(Number(e.target.value))} />
-                </label>
-              </div>
-              <div className="form">
-                <label>
                   Fijar a
                   <input type="number" inputMode="numeric" placeholder="0" value={pVal} min={0} onChange={(e) => setPVal(e.target.value)} />
                 </label>
                 <button onClick={setExact('primary', pVal)}>Guardar</button>
+              </div>
+              <div className="form">
+                <label>
+                  Cantidad
+                  <input type="number" min={0} value={amountPrimary} onChange={(e) => setAmountPrimary(Number(e.target.value))} />
+                </label>
               </div>
               <div className="button-grid">
                 <button onClick={update('primary', +1)}>+</button>
@@ -209,12 +209,6 @@ export default function AdminPage() {
             <section className="counter-card">
               <h3>Celdas de Contención</h3>
               <div className="counter-value">{state.secondary}</div>
-              <div className="form">
-                <label>
-                  Cantidad
-                  <input type="number" min={0} value={amountSecondary} onChange={(e) => setAmountSecondary(Number(e.target.value))} />
-                </label>
-              </div>
               <div className="form">
                 <label>
                   Fijar a
@@ -229,6 +223,12 @@ export default function AdminPage() {
                 </label>
                 <button onClick={setImageIndex}>Guardar imagen</button>
               </div>
+              <div className="form">
+                <label>
+                  Cantidad
+                  <input type="number" min={0} value={amountSecondary} onChange={(e) => setAmountSecondary(Number(e.target.value))} />
+                </label>
+              </div>
               <div className="button-grid">
                 <button onClick={update('secondary', +1)}>+</button>
                 <button onClick={update('secondary', -1)}>- </button>
@@ -240,16 +240,15 @@ export default function AdminPage() {
               <div className="counter-value">{state.tertiary}</div>
               <div className="form">
                 <label>
-                  Cantidad (�)
-                  <input type="number" min={0} value={amountTertiary} onChange={(e) => setAmountTertiary(Number(e.target.value))} />
-                </label>
-              </div>
-              <div className="form">
-                <label>
                   Fijar a
                   <input type="number" inputMode="numeric" placeholder="0" value={tVal} min={0} onChange={(e) => setTVal(e.target.value)} />
                 </label>
                 <button onClick={setExact('tertiary', tVal)}>Guardar</button>
+              </div><div className="form">
+                <label>
+                  Cantidad
+                  <input type="number" min={0} value={amountTertiary} onChange={(e) => setAmountTertiary(Number(e.target.value))} />
+                </label>
               </div>
               <div className="button-grid">
                 <button onClick={update('tertiary', +1)}>+</button>
