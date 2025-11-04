@@ -34,7 +34,7 @@ public class TablesController {
             String aspect = String.valueOf(row.getOrDefault("aspect", ""));
             info.add(new PlayerInfo(character, aspect));
         }
-        if (tablesService.isTableNumberUsed(tableNumber)) {
+        if (tablesService.isRegisterTableNumberUsed(tableNumber)) {
             return ResponseEntity.status(409).build();
         }
         return ResponseEntity.ok(tablesService.createRegister(tableNumber, tableName, difficulty, players, info));
@@ -83,7 +83,7 @@ public class TablesController {
             String legacy = String.valueOf(row.getOrDefault("legacy", "Ninguno"));
             info.add(new com.example.counter.service.model.FreeGamePlayerInfo(character, aspect, legacy));
         }
-        if (tablesService.isTableNumberUsed(tableNumber)) {
+        if (tablesService.isFreeGameTableNumberUsed(tableNumber)) {
             return ResponseEntity.status(409).build();
         }
         return ResponseEntity.ok(tablesService.createFreeGame(tableNumber, name, difficulty, inevitableChallenge, players, info));

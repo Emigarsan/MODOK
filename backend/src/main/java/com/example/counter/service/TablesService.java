@@ -171,11 +171,14 @@ public class TablesService {
         if (free != null) freeGameTables.addAll(free);
     }
 
-    public synchronized boolean isTableNumberUsed(int tableNumber) {
+    public synchronized boolean isRegisterTableNumberUsed(int tableNumber) {
         int tn = Math.max(0, tableNumber);
-        boolean inRegister = registerTables.stream().anyMatch(t -> t.tableNumber() == tn);
-        boolean inFree = freeGameTables.stream().anyMatch(t -> t.tableNumber() == tn);
-        return inRegister || inFree;
+        return registerTables.stream().anyMatch(t -> t.tableNumber() == tn);
+    }
+
+    public synchronized boolean isFreeGameTableNumberUsed(int tableNumber) {
+        int tn = Math.max(0, tableNumber);
+        return freeGameTables.stream().anyMatch(t -> t.tableNumber() == tn);
     }
 
     public synchronized List<String> getRegisterCharacters() {

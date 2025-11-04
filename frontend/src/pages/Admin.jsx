@@ -1,4 +1,4 @@
-﻿﻿﻿import { useCallback, useEffect, useState } from 'react';
+﻿﻿import { useCallback, useEffect, useState } from 'react';
 
 const API_BASE = '/api/counter';
 
@@ -24,7 +24,7 @@ export default function AdminPage() {
   const [purgeKeep, setPurgeKeep] = useState('10');
 
   // Campos de fijaci�n permanecen vacÃ�os hasta que el usuario escriba.
-  const syncFromState = () => {};
+  const syncFromState = () => { };
 
   const fetchState = useCallback(() => {
     fetch(API_BASE)
@@ -35,22 +35,22 @@ export default function AdminPage() {
 
   useEffect(() => { fetchState(); const id = setInterval(fetchState, 3000); return () => clearInterval(id); }, [fetchState]);
 
-  // No auto-login: siempre pedimos Contrase�a hasta pulsar "Entrar".
+  // No auto-login: siempre pedimos contraseña hasta pulsar "Entrar".
 
   const fetchTables = useCallback(() => {
     if (!isAuthed) return;
-    fetch('/api/admin/tables', { headers: { 'X-Admin-Secret': adminKey }})
+    fetch('/api/admin/tables', { headers: { 'X-Admin-Secret': adminKey } })
       .then((r) => r.ok ? r.json() : Promise.reject(new Error('No autorizado')))
       .then((data) => setTables(data))
-      .catch(() => {});
+      .catch(() => { });
   }, [adminKey, isAuthed]);
 
-  useEffect(() => { if (isAuthed) { fetchTables(); const id = setInterval(fetchTables, 3000); return () => clearInterval(id); }}, [isAuthed, fetchTables]);
+  useEffect(() => { if (isAuthed) { fetchTables(); const id = setInterval(fetchTables, 3000); return () => clearInterval(id); } }, [isAuthed, fetchTables]);
 
   useEffect(() => {
     if (!isAuthed) return;
     const load = () => {
-      fetch('/api/mesas/summary').then(r => r.ok ? r.json() : {}).then(setMesaSummary).catch(() => {});
+      fetch('/api/mesas/summary').then(r => r.ok ? r.json() : {}).then(setMesaSummary).catch(() => { });
     };
     load();
     const id = setInterval(load, 3000);
@@ -60,10 +60,10 @@ export default function AdminPage() {
   const fetchBackups = useCallback(() => {
     if (!isAuthed) return;
     setBackupsLoading(true);
-    fetch('/api/admin/backup/list', { headers: { 'X-Admin-Secret': adminKey }})
+    fetch('/api/admin/backup/list', { headers: { 'X-Admin-Secret': adminKey } })
       .then((r) => r.ok ? r.json() : Promise.reject(new Error('No autorizado')))
       .then((data) => setBackups({ dir: data.dir || '', files: Array.isArray(data.files) ? data.files : [] }))
-      .catch(() => {})
+      .catch(() => { })
       .finally(() => setBackupsLoading(false));
   }, [adminKey, isAuthed]);
 
@@ -110,7 +110,7 @@ export default function AdminPage() {
   };
 
   const download = (path, filename) => {
-    fetch(path, { headers: { 'X-Admin-Secret': adminKey }})
+    fetch(path, { headers: { 'X-Admin-Secret': adminKey } })
       .then((r) => r.ok ? r.blob() : Promise.reject(new Error('No autorizado')))
       .then((blob) => {
         const url = URL.createObjectURL(blob);
@@ -126,7 +126,7 @@ export default function AdminPage() {
     e.preventDefault();
     if (!adminKey) return;
     // Probe a protected endpoint to validate key
-    fetch('/api/admin/tables', { headers: { 'X-Admin-Secret': adminKey }})
+    fetch('/api/admin/tables', { headers: { 'X-Admin-Secret': adminKey } })
       .then((r) => {
         if (r.ok) {
           setIsAuthed(true);
@@ -149,7 +149,7 @@ export default function AdminPage() {
         <h2>Admin</h2>
         <form className="form" onSubmit={tryAuth}>
           <label>
-            Contrase�a
+            Contraseña
             <input type="password" value={adminKey} onChange={(e) => setAdminKey(e.target.value)} />
           </label>
           <button type="submit">Entrar</button>
@@ -173,7 +173,7 @@ export default function AdminPage() {
         <>
           {false && (<div className="form">
             <label>
-                ntidad (�)
+              ntidad (�)
               <input type="number" value={amount} min={0} onChange={(e) => setAmount(Number(e.target.value))} />
             </label>
           </div>)}
@@ -182,7 +182,7 @@ export default function AdminPage() {
             <button className={tab === 'tables' ? 'active' : ''} onClick={() => setTab('tables')}>Ver mesas</button>
             <button className={tab === 'backup' ? 'active' : ''} onClick={() => setTab('backup')}>Backups</button>
           </div>
-          
+
           <div className="admin-grid" style={{ display: tab === 'mod' ? 'grid' : 'none' }}>
             <section className="counter-card">
               <h3>Vida M.O.D.O.K.</h3>
@@ -263,7 +263,7 @@ export default function AdminPage() {
                 <h3>Snapshots</h3>
                 <div style={{ display: 'flex', gap: 8, alignItems: 'center', flexWrap: 'wrap' }}>
                   <button onClick={() => {
-                    fetch('/api/admin/backup/snapshot-now', { method: 'POST', headers: { 'X-Admin-Secret': adminKey }})
+                    fetch('/api/admin/backup/snapshot-now', { method: 'POST', headers: { 'X-Admin-Secret': adminKey } })
                       .then(r => r.ok ? r.json() : Promise.reject(new Error('No autorizado')))
                       .then(() => fetchBackups())
                       .catch((e) => alert(e.message));
@@ -279,7 +279,7 @@ export default function AdminPage() {
                   </label>
                   <button onClick={() => {
                     const m = Math.max(0, parseInt(purgeMinutes, 10) || 0);
-                    fetch(`/api/admin/backup/purge-older-than?minutes=${m}`, { method: 'POST', headers: { 'X-Admin-Secret': adminKey }})
+                    fetch(`/api/admin/backup/purge-older-than?minutes=${m}`, { method: 'POST', headers: { 'X-Admin-Secret': adminKey } })
                       .then(r => r.ok ? r.json() : Promise.reject(new Error('No autorizado')))
                       .then(() => fetchBackups())
                       .catch((e) => alert(e.message));
@@ -290,7 +290,7 @@ export default function AdminPage() {
                   </label>
                   <button onClick={() => {
                     const k = Math.max(0, parseInt(purgeKeep, 10) || 0);
-                    fetch(`/api/admin/backup/purge-keep-latest?keep=${k}`, { method: 'POST', headers: { 'X-Admin-Secret': adminKey }})
+                    fetch(`/api/admin/backup/purge-keep-latest?keep=${k}`, { method: 'POST', headers: { 'X-Admin-Secret': adminKey } })
                       .then(r => r.ok ? r.json() : Promise.reject(new Error('No autorizado')))
                       .then(() => fetchBackups())
                       .catch((e) => alert(e.message));
@@ -321,14 +321,14 @@ export default function AdminPage() {
                             <button onClick={() => download(`/api/admin/backup/download/${encodeURIComponent(name)}`, name)}>Descargar</button>
                             <button onClick={() => {
                               if (!confirm(`Restaurar desde ${name}? Esto sobreescribir� el estado en memoria.`)) return;
-                              fetch(`/api/admin/backup/restore/${encodeURIComponent(name)}`, { method: 'POST', headers: { 'X-Admin-Secret': adminKey }})
+                              fetch(`/api/admin/backup/restore/${encodeURIComponent(name)}`, { method: 'POST', headers: { 'X-Admin-Secret': adminKey } })
                                 .then(r => r.ok ? r.json() : Promise.reject(new Error('No autorizado')))
                                 .then(() => alert('Restaurado'))
                                 .catch((e) => alert(e.message));
                             }}>Restaurar</button>
                             <button onClick={() => {
                               if (!confirm(`Eliminar ${name}?`)) return;
-                              fetch(`/api/admin/backup/delete/${encodeURIComponent(name)}`, { method: 'DELETE', headers: { 'X-Admin-Secret': adminKey }})
+                              fetch(`/api/admin/backup/delete/${encodeURIComponent(name)}`, { method: 'DELETE', headers: { 'X-Admin-Secret': adminKey } })
                                 .then(r => r.ok ? r.json() : Promise.reject(new Error('No autorizado')))
                                 .then(() => fetchBackups())
                                 .catch((e) => alert(e.message));
@@ -347,133 +347,114 @@ export default function AdminPage() {
           )}
 
           {tab === 'tables' && (<>
-          <h3>Mesas (vivo)</h3>
-          <div className="admin-tabs" style={{ marginBottom: 8 }}>
-            <button className={tablesTab === 'event' ? 'active' : ''} onClick={() => setTablesTab('event')}>Event</button>
-            <button className={tablesTab === 'freegame' ? 'active' : ''} onClick={() => setTablesTab('freegame')}>Freegame</button>
-          </div>
-          <div className="admin-grid" style={{ marginBottom: 12, gridTemplateColumns: '1fr' }}>
-            <section className="counter-card" style={{ overflowX: 'auto', display: tablesTab === 'event' ? 'block' : 'none' }}>
-              <h3>Event</h3>
-              <table className="data-table" style={{ width: '100%' }}>
-                <thead>
-                  <tr>
-                    <th>Mesa</th>
-                    <th>Nombre</th>
-                    <th>Dificultad</th><th>Reto inevitable</th>
-                    <th>Jugadores</th>
-                    <th>Detalle jugadores</th>
-                    <th>Código</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {(tables.register || []).map((t) => {
-                    const mesa = t.tableNumber ?? '';
-                    const nombre = t.tableName ?? '';
-                    const dif = t.difficulty ?? '';
-                    const players = t.players ?? '';
-                    const detalle = Array.isArray(t.playersInfo)
-                      ? t.playersInfo.map((p) => `${p.character}${p.aspect ? ` (${p.aspect})` : ''}`).join(', ')
-                      : '';
-                    return (
+            <h3>Mesas (vivo)</h3>
+            <div className="admin-tabs" style={{ marginBottom: 8 }}>
+              <button className={tablesTab === 'event' ? 'active' : ''} onClick={() => setTablesTab('event')}>Event</button>
+              <button className={tablesTab === 'freegame' ? 'active' : ''} onClick={() => setTablesTab('freegame')}>Freegame</button>
+            </div>
+            <div className="admin-grid" style={{ marginBottom: 12, gridTemplateColumns: '1fr' }}>
+              <section className="counter-card" style={{ overflowX: 'auto', display: tablesTab === 'event' ? 'block' : 'none' }}>
+                <h3>Event</h3>
+                <table className="data-table" style={{ width: '100%' }}>
+                  <thead>
+                    <tr>
+                      <th>Mesa</th>
+                      <th>Nombre</th>
+                      <th>Dificultad</th><th>Reto inevitable</th>
+                      <th>Jugadores</th>
+                      <th>Detalle jugadores</th>
+                      <th>Código</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {(tables.register || []).map((t) => {
+                      const mesa = t.tableNumber ?? '';
+                      const nombre = t.tableName ?? '';
+                      const dif = t.difficulty ?? '';
+                      const players = t.players ?? '';
+                      const detalle = Array.isArray(t.playersInfo)
+                        ? t.playersInfo.map((p) => `${p.character}${p.aspect ? ` (${p.aspect})` : ''}`).join(', ')
+                        : '';
+                      return (
+                        <tr key={t.id}>
+                          <td>{mesa}</td>
+                          <td>{nombre}</td>
+                          <td>{dif}</td>
+                          <td>{players}</td>
+                          <td>{detalle}</td>
+                          <td>{t.code}</td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </section>
+              <section className="counter-card" style={{ overflowX: 'auto', display: tablesTab === 'freegame' ? 'block' : 'none' }}>
+                <h3>Freegame</h3>
+                <table className="data-table" style={{ width: '100%' }}>
+                  <thead>
+                    <tr>
+                      <th>Mesa</th><th>Nombre</th><th>Reto inevitable</th><th>Jugadores</th><th>Detalle jugadores</th><th>Código</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {(tables.freegame || []).map((t) => (
                       <tr key={t.id}>
-                      <td>{mesa}</td>
-                      <td>{nombre}</td>
-                      <td>{dif}</td>
-                      <td>{players}</td>
-                      <td>{detalle}</td>
-                      <td>{t.code}</td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
-            </section>
-            <section className="counter-card" style={{ overflowX: 'auto', display: tablesTab === 'freegame' ? 'block' : 'none' }}>
-              <h3>Freegame</h3>
-              <table className="data-table" style={{ width: '100%' }}>
-                <thead>
-                  <tr>
-                    <th>Mesa</th><th>Nombre</th><th>Reto inevitable</th><th>Jugadores</th><th>Detalle jugadores</th><th>Código</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {(tables.freegame || []).map((t) => (
-                    <tr key={t.id}>
-                      <td>{t.tableNumber}</td>
-                      <td>{t.name}</td><td>{t.inevitableChallenge || '(Ninguno)'}</td>
-                      <td>{t.players}</td>
-                      <td>{Array.isArray(t.playersInfo) ? t.playersInfo.map((p) => p.character + (p.aspect ? ' (' + p.aspect + ')' : '') + (p.legacy ? ' [' + p.legacy + ']' : '')).join(', ') : ''}</td>
-                      <td>{t.code}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>              <h4 style={{ marginTop: 12 }}>Puntuación por mesa (desglose)</h4>
-              <table className="data-table" style={{ width: '100%' }}>
-                <thead>
-                  <tr>
-                    <th>Mesa</th>
-                    <th>Dificultad</th><th>Reto inevitable</th>
-                    <th>Puntos base</th>
-                    <th>Legados</th>
-                    <th>Puntos de Victoria</th>
-                    <th>Total</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {(tables.freegame || []).map((t) => {
-                    const noCh = !t?.inevitableChallenge || t.inevitableChallenge === '(Ninguno)'; const base = noCh ? 0 : (t?.difficulty === 'Experto' ? 5 : 3);
-                    const legacyCount = noCh ? 0 : (Array.isArray(t?.playersInfo) ? t.playersInfo.filter(p => p.legacy && String(p.legacy) !== 'Ninguno').length : 0);
-                    const vp = noCh ? 0 : (typeof t?.victoryPoints === 'number' ? t.victoryPoints : 0);
-                    const total = noCh ? 0 : (base + legacyCount + vp);
-                    return (
-                      <tr key={t.id + '-score'}>
                         <td>{t.tableNumber}</td>
-                        <td>{t.difficulty || 'Normal'}</td><td>{t.inevitableChallenge || '(Ninguno)'}</td>
-                        <td>{base}</td>
-                        <td>{legacyCount}</td>
-                        <td>{vp}</td>
-                        <td>{total}</td>
+                        <td>{t.name}</td><td>{t.inevitableChallenge || '(Ninguno)'}</td>
+                        <td>{t.players}</td>
+                        <td>{Array.isArray(t.playersInfo) ? t.playersInfo.map((p) => p.character + (p.aspect ? ' (' + p.aspect + ')' : '') + (p.legacy ? ' [' + p.legacy + ']' : '')).join(', ') : ''}</td>
+                        <td>{t.code}</td>
                       </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
-            </section>
-            <section className="counter-card" style={{ overflowX: 'auto' }}>
-              <h3>Mesas - Totales por contador</h3>
-              <table className="data-table" style={{ width: '100%' }}>
-                <thead>
-                  <tr>
-                    <th>Mesa</th>
-                    <th>Contador 1</th>
-                    <th>Contador 2</th>
-                    <th>Contador 3</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {Object.entries(mesaSummary || {}).sort((a,b) => Number(a[0]) - Number(b[0])).map(([mesa, t]) => (
-                    <tr key={mesa}>
-                      <td>{mesa}</td>
-                      <td>{t?.c1 ?? 0}</td>
-                      <td>{t?.c2 ?? 0}</td>
-                      <td>{t?.c3 ?? 0}</td>
+                    ))}
+                  </tbody>
+                </table>
+              </section>
+              <section className="counter-card" style={{ overflowX: 'auto' }}>
+                <h3>Puntuaci�n por mesa (desglose)</h3>
+                <table className="data-table" style={{ width: '100%' }}>
+                  <thead>
+                    <tr>
+                      <th>Mesa</th>
+                      <th>Dificultad</th><th>Reto inevitable</th>
+                      <th>Puntos base</th>
+                      <th>Legados</th>
+                      <th>Puntos de Victoria</th>
+                      <th>Total</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            </section>
-          </div>
-          <div className="form" style={{ marginTop: 16, gap: 8, display: 'flex', flexWrap: 'wrap' }}>
-            <button onClick={() => download('/api/admin/export/event.csv', 'event.csv')}>Exportar CSV (Event)</button>
-            <button onClick={() => download('/api/admin/export/freegame.csv', 'freegame.csv')}>Exportar CSV (Freegame)</button>
-          </div>
+                  </thead>
+                  <tbody>
+                    {(tables.freegame || []).map((t) => {
+                      const noCh = !t?.inevitableChallenge || t.inevitableChallenge === '(Ninguno)'; const base = noCh ? 0 : (t?.difficulty === 'Experto' ? 5 : 3);
+                      const legacyCount = noCh ? 0 : (Array.isArray(t?.playersInfo) ? t.playersInfo.filter(p => p.legacy && String(p.legacy) !== 'Ninguno').length : 0);
+                      const vp = noCh ? 0 : (typeof t?.victoryPoints === 'number' ? t.victoryPoints : 0);
+                      const total = noCh ? 0 : (base + legacyCount + vp);
+                      return (
+                        <tr key={t.id + '-score'}>
+                          <td>{t.tableNumber}</td>
+                          <td>{t.difficulty || 'Normal'}</td><td>{t.inevitableChallenge || '(Ninguno)'}</td>
+                          <td>{base}</td>
+                          <td>{legacyCount}</td>
+                          <td>{vp}</td>
+                          <td>{total}</td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </section>
+            </div>
+            <div className="form" style={{ marginTop: 16, gap: 8, display: 'flex', flexWrap: 'wrap' }}>
+              <button onClick={() => download('/api/admin/export/event.csv', 'event.csv')}>Exportar CSV (Event)</button>
+              <button onClick={() => download('/api/admin/export/freegame.csv', 'freegame.csv')}>Exportar CSV (Freegame)</button>
+            </div>
           </>)}
         </>
       )}
     </div>
   );
 }
+
 
 
 

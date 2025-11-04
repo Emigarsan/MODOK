@@ -12,7 +12,6 @@ export default function FreeGamePage() {
   const [playersInfo, setPlayersInfo] = useState([]);
   const [joinCode, setJoinCode] = useState('');
 
-  const [existingRegister, setExistingRegister] = useState([]);
   const [existingFree, setExistingFree] = useState([]);
 
   const [characters, setCharacters] = useState([]);
@@ -42,10 +41,7 @@ export default function FreeGamePage() {
   }, [characters]);
 
   useEffect(() => {
-    fetch('/api/tables/register/list')
       .then(r => r.ok ? r.json() : [])
-      .then(data => setExistingRegister(Array.isArray(data) ? data : []))
-      .catch(() => setExistingRegister([]));
     fetch('/api/tables/freegame/list')
       .then(r => r.ok ? r.json() : [])
       .then(data => setExistingFree(Array.isArray(data) ? data : []))
@@ -99,14 +95,13 @@ export default function FreeGamePage() {
     try {
       if (mode === 'create') {
         if (!mesaNumber) {
-          alert('Indica un nÃºmero de mesa');
+          alert('Indica un número de mesa');
           return;
         }
         const num = parseInt(mesaNumber, 10) || 0;
-        const usedInRegister = (existingRegister || []).some(t => Number(t.tableNumber) === num);
         const usedInFree = (existingFree || []).some(t => Number(t.tableNumber) === num);
-        if (usedInRegister || usedInFree) {
-          alert(`El nÃºmero de mesa ${num} ya existe. Elige otro.`);
+        if (usedInFree) {
+          alert(`El número de mesa ${num} ya existe. Elige otro.`);
           return;
         }
         if (!players || (parseInt(players, 10) || 0) <= 0) {
@@ -153,7 +148,7 @@ export default function FreeGamePage() {
         {mode === 'create' ? (
           <>
             <label>
-              NÃºmero de mesa
+              Número de mesa
               <input type="number" min={1} value={mesaNumber} onChange={(e) => setMesaNumber(e.target.value)} placeholder="Ej. 50" required />
             </label>
             <label>
@@ -179,7 +174,7 @@ export default function FreeGamePage() {
               </select>
             </label>
             <label>
-              NÃºmero de jugadores
+              Número de jugadores
               <input type="text" inputMode="numeric" pattern="[0-9]*" placeholder="Ej. 4" value={players} onChange={(e) => { const v = e.target.value; if (/^\d*$/.test(v) && (v === '' || parseInt(v, 10) <= 4)) setPlayers(v); }} />
             </label>
             {playersInfo.map((p, idx) => (
@@ -226,23 +221,23 @@ export default function FreeGamePage() {
           </>
         ) : (
           <>
-          <label>
-            Unirse a mesa existente
-            <select value={joinCode} onChange={(e) => setJoinCode(e.target.value)} required>
-              <option value="" disabled>Selecciona una mesa</option>
-              {existingFree.map((t) => (
-                <option key={t.id} value={t.code}>
-                  {(() => {
-                    const base = t.tableNumber ? `Mesa ${t.tableNumber}` : 'Mesa';
-                    const named = (t.name && String(t.name).trim().length > 0)
-                      ? `${base} - ${t.name}`
-                      : base;
-                    return `${named} - CÃ³digo: ${t.code}`;
-                  })()}
-                </option>
-              ))}
-            </select>
-          </label>
+            <label>
+              Unirse a mesa existente
+              <select value={joinCode} onChange={(e) => setJoinCode(e.target.value)} required>
+                <option value="" disabled>Selecciona una mesa</option>
+                {existingFree.map((t) => (
+                  <option key={t.id} value={t.code}>
+                    {(() => {
+                      const base = t.tableNumber ? `Mesa ${t.tableNumber}` : 'Mesa';
+                      const named = (t.name && String(t.name).trim().length > 0)
+                        ? `${base} - ${t.name}`
+                        : base;
+                      return `${named} - CÃ³digo: ${t.code}`;
+                    })()}
+                  </option>
+                ))}
+              </select>
+            </label>
           </>
         )}
         <button type="submit">Guardar</button>
@@ -282,7 +277,7 @@ export default function FreeGamePage() {
                               headers: { 'Content-Type': 'application/json' },
                               body: JSON.stringify({ id: created.id, victoryPoints: n })
                             });
-                          } catch (_) {}
+                          } catch (_) { }
                         }} />
                       </td>
                       <td>{total}</td>
