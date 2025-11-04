@@ -49,16 +49,18 @@ export default function RegisterPage() {
       .catch(() => setExisting([]));
   }, []);
 
-  const n = Math.max(0, parseInt(playersCount, 10) || 0);
-  setPlayers((prev) => {
-    const next = [...prev];
-    if (next.length < n) {
-      while (next.length < n) next.push({ character: '', aspect: '' });
-    } else if (next.length > n) {
-      next.length = n;
-    }
-    return next;
-  });
+  useEffect(() => {
+    const n = Math.max(0, parseInt(playersCount, 10) || 0);
+    setPlayers((prev) => {
+      const next = [...prev];
+      if (next.length < n) {
+        while (next.length < n) next.push({ character: '', aspect: '' });
+      } else if (next.length > n) {
+        next.length = n;
+      }
+      return next;
+    });
+  }, [playersCount]);
 
   useEffect(() => {
     fetch('/api/tables/register/characters')
