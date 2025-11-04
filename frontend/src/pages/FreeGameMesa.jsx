@@ -1,8 +1,9 @@
 import { useEffect, useMemo, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
 export default function FreeGameMesa() {
   const { mesaId } = useParams();
+  const navigate = useNavigate();
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -12,15 +13,21 @@ export default function FreeGameMesa() {
   useEffect(() => {
     setLoading(true);
     fetch(`/api/tables/freegame/by-number/${encodeURIComponent(mesaId)}`)
-      .then(r => r.ok ? r.json() : Promise.reject(new Error('No encontrada')))
-      .then(d => { setData(d); setVpInput(String(d?.victoryPoints ?? 0)); setError(''); })
+      .then((r) => (r.ok ? r.json() : Promise.reject(new Error('No encontrada'))))
+      .then((d) => {
+        setData(d);
+        setVpInput(String(d?.victoryPoints ?? 0));
+        setError('');
+      })
       .catch(() => setError('No se encontró la mesa'))
       .finally(() => setLoading(false));
   }, [mesaId]);
 
   const legacyCount = useMemo(() => {
     if (!data || !Array.isArray(data.playersInfo)) return 0;
-    return data.playersInfo.filter(p => p?.legacy && String(p.legacy) !== 'Ninguno').length;
+    return data.playersInfo.filter(
+      (p) => p && p.legacy && String(p.legacy) !== 'Ninguno'
+    ).length;
   }, [data]);
 
   if (loading) return <div className="container overlay-card"><p>Cargando...</p></div>;
@@ -49,13 +56,27 @@ export default function FreeGameMesa() {
 
   return (
     <div className="container overlay-card">
+      <div className="form" style={{ marginBottom: 12 }}>
+        <button onClick={() => navigate('/freegame')}>Volver</button>
+      </div>
       <h2>Freegame — Mesa {data.tableNumber}</h2>
       <div className="form" style={{ display: 'grid', gap: 8 }}>
         <div><strong>Nombre:</strong> {data.name || '-'}</div>
         <div><strong>Dificultad:</strong> {data.difficulty || 'Normal'}</div>
         <div><strong>Reto inevitable:</strong> {data.inevitableChallenge || '(Ninguno)'}</div>
         <div><strong>Jugadores:</strong> {data.players}</div>
-        <div><strong>Detalle jugadores:</strong> {Array.isArray(data.playersInfo) ? data.playersInfo.map((p,i) => `${p.character}${p.aspect ? ` (${p.aspect})` : ''}${p.legacy ? ` [${p.legacy}]` : ''}`).join(', ') : ''}</div>
+        <div>
+          <strong>Detalle jugadores:</strong>{' '}
+          {Array.isArray(data.playersInfo)
+            ? data.playersInfo.map((p, i) => {
+                const parts = [];
+                if (p.character) parts.push(p.character);
+                if (p.aspect) parts.push(`(${p.aspect})`);
+                if (p.legacy) parts.push(`[${p.legacy}]`);
+                return parts.join(' ');
+              }).join(', ')
+            : ''}
+        </div>
       </div>
 
       <h3 style={{ marginTop: 16 }}>Puntuación por mesa (desglose)</h3>
@@ -75,15 +96,22 @@ export default function FreeGameMesa() {
             <td>{base}</td>
             <td>{legacyCount}</td>
             <td>
-              <input type="number" min={0} value={vpInput} disabled={noChallenge || saved}
-                     onChange={(e) => setVpInput(e.target.value)} />
+              <input
+                type="number"
+                min={0}
+                value={vpInput}
+                disabled={noChallenge || saved}
+                onChange={(e) => setVpInput(e.target.value)}
+              />
             </td>
             <td>{total}</td>
           </tr>
         </tbody>
       </table>
       <div className="form" style={{ marginTop: 8 }}>
-        <button disabled={noChallenge || saved} onClick={saveVP}>Enviar puntuación</button>
+        <button disabled={noChallenge || saved} onClick={saveVP}>
+          Enviar puntuación
+        </button>
         {saved && <span style={{ marginLeft: 8 }}>Guardado como definitivo</span>}
       </div>
     </div>

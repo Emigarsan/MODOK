@@ -1,9 +1,10 @@
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useCallback } from 'react';
 import { EventView } from '../App.jsx';
 
 export default function MesaPage() {
   const { mesaId } = useParams();
+  const navigate = useNavigate();
 
   const logMesaEvent = useCallback(async ({ contador, delta }) => {
     const payload = { delta, uuid: crypto.randomUUID(), ts: Date.now() };
@@ -17,10 +18,12 @@ export default function MesaPage() {
   }, [mesaId]);
 
   return (
-    <>
-      <h3 style={{ marginTop: 8 }}>Mesa {mesaId}</h3>
+    <div className="container overlay-card">
+      <div className="form" style={{ marginBottom: 12 }}>
+        <button onClick={() => navigate('/register')}>Volver</button>
+      </div>
+      <h3>Mesa {mesaId}</h3>
       <EventView onAction={logMesaEvent} />
-    </>
+    </div>
   );
 }
-
