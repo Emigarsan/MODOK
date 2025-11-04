@@ -163,7 +163,7 @@ export default function AdminPage() {
       <h2>Admin</h2>
       {isAuthed && (
         <div className="form" style={{ alignSelf: 'flex-end' }}>
-          <button onClick={logout}>Cerrar sesi�n</button>
+          <button onClick={logout}>Cerrar sesión</button>
         </div>
       )}
       {error && <p className="error">{error}</p>}
@@ -173,7 +173,7 @@ export default function AdminPage() {
         <>
           {false && (<div className="form">
             <label>
-              ntidad (�)
+              Cantidad
               <input type="number" value={amount} min={0} onChange={(e) => setAmount(Number(e.target.value))} />
             </label>
           </div>)}
@@ -189,7 +189,7 @@ export default function AdminPage() {
               <div className="counter-value">{state.primary}</div>
               <div className="form">
                 <label>
-                  Cantidad (�)
+                  Cantidad
                   <input type="number" min={0} value={amountPrimary} onChange={(e) => setAmountPrimary(Number(e.target.value))} />
                 </label>
               </div>
@@ -201,17 +201,17 @@ export default function AdminPage() {
                 <button onClick={setExact('primary', pVal)}>Guardar</button>
               </div>
               <div className="button-grid">
-                <button onClick={update('primary', +1)}>+ Incrementar</button>
-                <button onClick={update('primary', -1)}>- Decrementar</button>
+                <button onClick={update('primary', +1)}>+</button>
+                <button onClick={update('primary', -1)}>-</button>
               </div>
             </section>
 
             <section className="counter-card">
-              <h3>Celdas de Contenci�n</h3>
+              <h3>Celdas de Contención</h3>
               <div className="counter-value">{state.secondary}</div>
               <div className="form">
                 <label>
-                  Cantidad (�)
+                  Cantidad
                   <input type="number" min={0} value={amountSecondary} onChange={(e) => setAmountSecondary(Number(e.target.value))} />
                 </label>
               </div>
@@ -230,8 +230,8 @@ export default function AdminPage() {
                 <button onClick={setImageIndex}>Guardar imagen</button>
               </div>
               <div className="button-grid">
-                <button onClick={update('secondary', +1)}>+ Incrementar</button>
-                <button onClick={update('secondary', -1)}>- Decrementar</button>
+                <button onClick={update('secondary', +1)}>+</button>
+                <button onClick={update('secondary', -1)}>- </button>
               </div>
             </section>
 
@@ -252,8 +252,8 @@ export default function AdminPage() {
                 <button onClick={setExact('tertiary', tVal)}>Guardar</button>
               </div>
               <div className="button-grid">
-                <button onClick={update('tertiary', +1)}>+ Incrementar</button>
-                <button onClick={update('tertiary', -1)}>- Decrementar</button>
+                <button onClick={update('tertiary', +1)}>+</button>
+                <button onClick={update('tertiary', -1)}>-</button>
               </div>
             </section>
           </div>
@@ -343,29 +343,6 @@ export default function AdminPage() {
                   </tbody>
                 </table>
               </section>
-              <section className="counter-card" style={{ overflowX: 'auto', display: tablesTab === 'event' ? 'block' : 'none' }}>
-                <h3>Mesas - Totales por contador</h3>
-                <table className="data-table" style={{ width: '100%' }}>
-                  <thead>
-                    <tr>
-                      <th>Mesa</th>
-                      <th>Contador 1</th>
-                      <th>Contador 2</th>
-                      <th>Contador 3</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {Object.entries(mesaSummary || {}).sort((a, b) => Number(a[0]) - Number(b[0])).map(([mesa, t]) => (
-                      <tr key={mesa}>
-                        <td>{mesa}</td>
-                        <td>{t?.c1 ?? 0}</td>
-                        <td>{t?.c2 ?? 0}</td>
-                        <td>{t?.c3 ?? 0}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </section>
             </div>
           )}
 
@@ -383,7 +360,7 @@ export default function AdminPage() {
                     <tr>
                       <th>Mesa</th>
                       <th>Nombre</th>
-                      <th>Dificultad</th><th>Reto inevitable</th>
+                      <th>Dificultad</th>
                       <th>Jugadores</th>
                       <th>Detalle jugadores</th>
                       <th>Código</th>
@@ -412,6 +389,29 @@ export default function AdminPage() {
                   </tbody>
                 </table>
               </section>
+              <section className="counter-card" style={{ overflowX: 'auto', display: tablesTab === 'event' ? 'block' : 'none' }}>
+                <h3>Mesas - Totales por contador</h3>
+                <table className="data-table" style={{ width: '100%' }}>
+                  <thead>
+                    <tr>
+                      <th>Mesa</th>
+                      <th>Contador 1</th>
+                      <th>Contador 2</th>
+                      <th>Contador 3</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {Object.entries(mesaSummary || {}).sort((a, b) => Number(a[0]) - Number(b[0])).map(([mesa, t]) => (
+                      <tr key={mesa}>
+                        <td>{mesa}</td>
+                        <td>{t?.c1 ?? 0}</td>
+                        <td>{t?.c2 ?? 0}</td>
+                        <td>{t?.c3 ?? 0}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </section>
               <section className="counter-card" style={{ overflowX: 'auto', display: tablesTab === 'freegame' ? 'block' : 'none' }}>
                 <h3>Freegame</h3>
                 <table className="data-table" style={{ width: '100%' }}>
@@ -434,12 +434,13 @@ export default function AdminPage() {
                 </table>
               </section>
               <section className="counter-card" style={{ overflowX: 'auto' }}>
-                <h3>Puntuaci�n por mesa (desglose)</h3>
+                <h3>Puntuación por mesa (desglose)</h3>
                 <table className="data-table" style={{ width: '100%' }}>
                   <thead>
                     <tr>
                       <th>Mesa</th>
-                      <th>Dificultad</th><th>Reto inevitable</th>
+                      <th>Dificultad</th>
+                      <th>Reto inevitable</th>
                       <th>Puntos base</th>
                       <th>Legados</th>
                       <th>Puntos de Victoria</th>
@@ -455,7 +456,8 @@ export default function AdminPage() {
                       return (
                         <tr key={t.id + '-score'}>
                           <td>{t.tableNumber}</td>
-                          <td>{t.difficulty || 'Normal'}</td><td>{t.inevitableChallenge || '(Ninguno)'}</td>
+                          <td>{t.difficulty || 'Normal'}</td>
+                          <td>{t.inevitableChallenge || '(Ninguno)'}</td>
                           <td>{base}</td>
                           <td>{legacyCount}</td>
                           <td>{vp}</td>
