@@ -1,4 +1,4 @@
-﻿import { useCallback, useEffect, useState } from 'react';
+﻿﻿﻿import { useCallback, useEffect, useState } from 'react';
 
 const API_BASE = '/api/counter';
 
@@ -376,7 +376,13 @@ export default function AdminPage() {
                       ? t.playersInfo.map((p) => `${p.character}${p.aspect ? ` (${p.aspect})` : ''}`).join(', ')
                       : '';
                     return (
-                      <tr key={t.id}>\r\n                      <td>{mesa}</td>\r\n                      <td>{nombre}</td>\r\n                      <td>{dif}</td>\r\n                      <td>{players}</td>\r\n                      <td>{detalle}</td>\r\n                      <td>{t.code}</td>
+                      <tr key={t.id}>
+                      <td>{mesa}</td>
+                      <td>{nombre}</td>
+                      <td>{dif}</td>
+                      <td>{players}</td>
+                      <td>{detalle}</td>
+                      <td>{t.code}</td>
                       </tr>
                     );
                   })}
@@ -393,12 +399,17 @@ export default function AdminPage() {
                 </thead>
                 <tbody>
                   {(tables.freegame || []).map((t) => (
-                    <tr key={t.id}>\r\n                      <td>{t.tableNumber}</td>`r`n                      <td>{t.name}</td><td>{t.inevitableChallenge || '(Ninguno)'}</td>\r\n                      <td>{t.players}</td>\r\n                      <td>{Array.isArray(t.playersInfo) ? t.playersInfo.map((p) => p.character + (p.aspect ? ' (' + p.aspect + ')' : '') + (p.legacy ? ' [' + p.legacy + ']' : '')).join(', ') : ''}</td>\r\n                      <td>{t.code}</td>
+                    <tr key={t.id}>
+                      <td>{t.tableNumber}</td>
+                      <td>{t.name}</td><td>{t.inevitableChallenge || '(Ninguno)'}</td>
+                      <td>{t.players}</td>
+                      <td>{Array.isArray(t.playersInfo) ? t.playersInfo.map((p) => p.character + (p.aspect ? ' (' + p.aspect + ')' : '') + (p.legacy ? ' [' + p.legacy + ']' : '')).join(', ') : ''}</td>
+                      <td>{t.code}</td>
                     </tr>
                   ))}
                 </tbody>
               </table>              <h4 style={{ marginTop: 12 }}>Puntuación por mesa (desglose)</h4>
-              <table className=\"data-table\" style={{ width: '100%' }}>
+              <table className="data-table" style={{ width: '100%' }}>
                 <thead>
                   <tr>
                     <th>Mesa</th>
@@ -442,7 +453,11 @@ export default function AdminPage() {
                 </thead>
                 <tbody>
                   {Object.entries(mesaSummary || {}).sort((a,b) => Number(a[0]) - Number(b[0])).map(([mesa, t]) => (
-                    <tr key={mesa}>\r\n                      <td>{mesa}</td>\r\n                      <td>{t?.c1 ?? 0}</td>\r\n                      <td>{t?.c2 ?? 0}</td>\r\n                      <td>{t?.c3 ?? 0}</td>
+                    <tr key={mesa}>
+                      <td>{mesa}</td>
+                      <td>{t?.c1 ?? 0}</td>
+                      <td>{t?.c2 ?? 0}</td>
+                      <td>{t?.c3 ?? 0}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -459,6 +474,7 @@ export default function AdminPage() {
     </div>
   );
 }
+
 
 
 
