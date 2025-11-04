@@ -433,7 +433,7 @@ export default function AdminPage() {
                   </tbody>
                 </table>
               </section>
-              <section className="counter-card" style={{ overflowX: 'auto' }}>
+              <section className="counter-card" style={{ overflowX: 'auto', display: tablesTab === 'freegame' ? 'block' : 'none' }}>
                 <h3>Puntuación por mesa (desglose)</h3>
                 <table className="data-table" style={{ width: '100%' }}>
                   <thead>
