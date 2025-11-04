@@ -20,12 +20,12 @@ export default function FreeGamePage() {
 
   const legacyOptions = useMemo(() => ([
     'Ninguno',
-    'VÃ¡stago de M',
-    'Mutante hÃ­brido',
+    'Vástago de M',
+    'Mutante hí­brido',
     'Equipo de dos',
-    'Los mÃ¡s buscados',
+    'Los más buscados',
     'Equipado para lo peor',
-    'Guerreros araÃ±a',
+    'Guerreros araña',
     'Instruidas por Thanos',
     'Rabia irradiada',
     'Ronin',
@@ -41,7 +41,6 @@ export default function FreeGamePage() {
   }, [characters]);
 
   useEffect(() => {
-      .then(r => r.ok ? r.json() : [])
     fetch('/api/tables/freegame/list')
       .then(r => r.ok ? r.json() : [])
       .then(data => setExistingFree(Array.isArray(data) ? data : []))
