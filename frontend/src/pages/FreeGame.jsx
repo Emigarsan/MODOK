@@ -1,6 +1,7 @@
-﻿import { useEffect, useMemo, useState } from 'react';
+﻿import { useEffect, useMemo, useState } from 'react';\nimport { useNavigate } from 'react-router-dom';
 
 export default function FreeGamePage() {
+  const navigate = useNavigate();
   const [mode, setMode] = useState('create');
   const [mesaNumber, setMesaNumber] = useState('');
   const [mesaName, setMesaName] = useState('');
@@ -239,59 +240,4 @@ export default function FreeGamePage() {
             </label>
           </>
         )}
-        <button type="submit">Guardar</button>
-      </form>      {created && (
-        <div className="counter-card" style={{ marginTop: 16 }}>
-          <h3>Puntuación de la mesa</h3>
-          {(() => {
-            const noChallenge = !created.inevitableChallenge || created.inevitableChallenge === '(Ninguno)';
-            const base = noChallenge ? 0 : ((created.difficulty === 'Experto') ? 5 : 3);
-            const legacyCount = noChallenge ? 0 : (Array.isArray(created.playersInfo) ? created.playersInfo.filter(p => (p.legacy && String(p.legacy) !== 'Ninguno')).length : 0);
-            const vp = noChallenge ? 0 : (parseInt(vpInput, 10) || 0);
-            const total = base + legacyCount + vp;
-            return (
-              <>
-                <table className="data-table" style={{ width: '100%' }}>
-                  <thead>
-                    <tr>
-                      <th>Dificultad</th>
-                      <th>Puntos base</th>
-                      <th>Legados</th>
-                      <th>Puntos de Victoria</th>
-                      <th>Total</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>{created.difficulty}</td>
-                      <td>{base}</td>
-                      <td>{legacyCount}</td>
-                      <td>
-                        <input type="number" min={0} value={vpInput} onChange={async (e) => {
-                          const v = e.target.value; setVpInput(v);
-                          const n = Math.max(0, parseInt(v, 10) || 0);
-                          try {
-                            await fetch('/api/tables/freegame/victory-points', {
-                              method: 'POST',
-                              headers: { 'Content-Type': 'application/json' },
-                              body: JSON.stringify({ id: created.id, victoryPoints: n })
-                            });
-                          } catch (_) { }
-                        }} />
-                      </td>
-                      <td>{total}</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </>
-            );
-          })()}
-        </div>
-      )}
-    </div>
-  );
-}
-
-
-
-
+        <button type="submit">Guardar</button>\n      </form>\n    </div>\n  );\n}\n

@@ -342,10 +342,6 @@ export default function AdminPage() {
                   </tbody>
                 </table>
               </section>
-              <div className="form" style={{ marginTop: 8, gap: 8, display: tablesTab === 'event' ? 'flex' : 'none', flexWrap: 'wrap' }}>
-                <button onClick={() => download('/api/admin/export/event.csv', 'event.csv')}>Exportar CSV (Event)</button>
-                <button onClick={() => download('/api/admin/export/mesas_totales.csv', 'mesas_totales.csv')}>Exportar CSV (Totales por contador)</button>
-              </div>
             </div>
           )}
 
@@ -418,6 +414,10 @@ export default function AdminPage() {
                     ))}
                   </tbody>
                 </table>
+              <div className="form" style={{ marginTop: 8, gap: 8, display: tablesTab === 'event' ? 'flex' : 'none', flexWrap: 'wrap' }}>
+                <button onClick={() => download('/api/admin/export/event.csv', 'event.csv')}>Exportar CSV (Event)</button>
+                <button onClick={() => download('/api/admin/export/mesas_totales.csv', 'mesas_totales.csv')}>Exportar CSV (Totales por contador)</button>
+              </div>
               </section>
               <section className="counter-card" style={{ overflowX: 'auto', display: tablesTab === 'freegame' ? 'block' : 'none' }}>
                 <h3>Retos Inevitables</h3>

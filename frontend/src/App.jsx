@@ -216,7 +216,7 @@ export function EventView({ onAction } = {}) {
             const signed = delta < 0 ? -Math.abs(effectiveAmount) : Math.abs(effectiveAmount);
             onAction({ segment, contador: idx, delta: signed });
           }
-        } catch (_) {}
+        } catch (_) { }
       })
       .catch((err) => {
         console.error(err);
@@ -230,7 +230,7 @@ export function EventView({ onAction } = {}) {
   const currentSecondaryImage =
     secondaryImages[state.secondaryImageIndex] ?? secondaryImages[initialState.secondaryImageIndex];
   const displayedSecondaryImage = secondaryLocked ? celda7Accesorio : currentSecondaryImage;
-  const secondaryTitle = secondaryLocked ? 'Accesorio M.Y.T.H.O.S.' : 'Celdas de Contenci�n';
+  const secondaryTitle = secondaryLocked ? 'Accesorio M.Y.T.H.O.S.' : 'Celdas de Contención';
 
   return (
     <>
@@ -330,7 +330,7 @@ export default function App() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
       });
-    } catch (_) {}
+    } catch (_) { }
   };
 
   return <EventView onAction={mesaId ? onAction : undefined} />;
