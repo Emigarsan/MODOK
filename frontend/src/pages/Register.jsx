@@ -131,10 +131,12 @@ export default function RegisterPage() {
         <label>
           Número de mesa
           <input type="number" min={1} value={mesaNumber} onChange={(e) => setMesaNumber(e.target.value)} placeholder="Ej. 12" required />
+          <small className="help-text">Debe ser único dentro del evento. Se sugiere seguir la numeración del plano de salas.</small>
         </label>
         <label>
           Nombre de mesa (opcional)
           <input value={mesaName} onChange={(e) => setMesaName(e.target.value)} placeholder="Ej. Vengadores" />
+          <small className="help-text">Texto libre para identificar la mesa en la cartelería o en la pantalla de control.</small>
         </label>
         <label>
           Dificultad
@@ -143,6 +145,7 @@ export default function RegisterPage() {
             <option value="Normal">Normal</option>
             <option value="Experto">Experto</option>
           </select>
+          <small className="help-text">Define la dificultad que verán los jugadores. No afecta a cálculos automáticos.</small>
         </label>
         <label>
           Número de jugadores
@@ -155,6 +158,7 @@ export default function RegisterPage() {
             onChange={(e) => { const v = e.target.value; if (/^\d*$/.test(v) && (v === '' || parseInt(v, 10) <= 4)) setPlayersCount(v); }}
             required
           />
+          <small className="help-text">Máximo 4 plazas. El formulario ajusta automáticamente el número de fichas de jugador.</small>
         </label>
 
         {players.map((p, idx) => (
@@ -167,6 +171,7 @@ export default function RegisterPage() {
               <datalist id="character-list">
                 {characters.map(c => (<option key={c} value={c} />))}
               </datalist>
+              <small className="help-text">Escribe parte del nombre y selecciona la sugerencia. Se normaliza para evitar duplicados por tildes.</small>
             </label>
             <label>
               Aspecto
@@ -183,6 +188,7 @@ export default function RegisterPage() {
                   </select>
                 );
               })()}
+              <small className="help-text">Selecciona uno de los aspectos válidos. Para Adam Warlock se deja vacío y queda bloqueado.</small>
             </label>
           </div>
         ))}
@@ -207,6 +213,7 @@ export default function RegisterPage() {
               </option>
             ))}
           </select>
+          <small className="help-text">Selecciona la mesa disponible para obtener el código y gestionarla desde esta pantalla.</small>
         </label>
         <button type="submit">Unirse y continuar</button>
       </form>

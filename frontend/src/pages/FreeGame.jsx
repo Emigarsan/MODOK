@@ -200,6 +200,7 @@ export default function FreeGamePage() {
                 placeholder="Ej. 50"
                 required
               />
+              <small className="help-text">Debe ser único dentro del bloque Freegame. Usa el número físico de la mesa libre.</small>
             </label>
             <label>
               Nombre de mesa
@@ -208,6 +209,7 @@ export default function FreeGamePage() {
                 onChange={(e) => setMesaName(e.target.value)}
                 placeholder="Ej. Mesa Libre 1"
               />
+              <small className="help-text">Identificador visible para los participantes (opcional).</small>
             </label>
             <label>
               Dificultad
@@ -215,6 +217,7 @@ export default function FreeGamePage() {
                 <option value="Normal">Normal</option>
                 <option value="Experto">Experto</option>
               </select>
+              <small className="help-text">Define el reto propuesto. No modifica los cálculos automáticos.</small>
             </label>
             <label>
               Reto inevitable
@@ -229,6 +232,7 @@ export default function FreeGamePage() {
                 <option value="Thunder Force">Thunder Force</option>
                 <option value="Ultron Infinito">Ultron Infinito</option>
               </select>
+              <small className="help-text">Si queda en "(Ninguno)", la puntuación total será 0 y los puntos de victoria se bloquean.</small>
             </label>
             <label>
               Numero de jugadores
@@ -246,6 +250,7 @@ export default function FreeGamePage() {
                 }}
                 required
               />
+              <small className="help-text">Entre 1 y 4 plazas. El formulario añade/elimina fichas de jugadores automáticamente.</small>
             </label>
             {playersInfo.map((p, idx) => (
               <div key={idx} className="player-row freegame-row">
@@ -262,6 +267,7 @@ export default function FreeGamePage() {
                       <option key={c} value={c} />
                     ))}
                   </datalist>
+                  <small className="help-text">Escribe parte del nombre y selecciona la sugerencia. Se normaliza para evitar duplicidades.</small>
                 </label>
                 <label>
                   Aspecto
@@ -293,6 +299,7 @@ export default function FreeGamePage() {
                       </select>
                     );
                   })()}
+                  <small className="help-text">Lista de aspectos válidos. Para Adam Warlock queda bloqueado sin aspecto.</small>
                 </label>
                 <label>
                   Legado
@@ -313,6 +320,7 @@ export default function FreeGamePage() {
                       </option>
                     ))}
                   </select>
+                  <small className="help-text">Selecciona el legado entregado. Cada legado distinto de "Ninguno" suma 1 punto.</small>
                 </label>
               </div>
             ))}
@@ -342,6 +350,7 @@ export default function FreeGamePage() {
                   </option>
                 ))}
               </select>
+              <small className="help-text">Selecciona una mesa libre ya creada para verla o actualizar su puntuación.</small>
             </label>
           </>
         )}
@@ -350,4 +359,3 @@ export default function FreeGamePage() {
     </div>
   );
 }
-
