@@ -102,7 +102,7 @@ export default function FreeGamePage() {
         const num = parseInt(mesaNumber, 10) || 0;
         const usedInFree = (existingFree || []).some(t => Number(t.tableNumber) === num);
         if (usedInFree) {
-          alert(El numero de mesa  ya existe. Elige otro.);
+          alert("El numero de mesa  ya existe. Elige otro");
           return;
         }
         if (!players || (parseInt(players, 10) || 0) <= 0) {
@@ -153,9 +153,6 @@ export default function FreeGamePage() {
     }
   }; 
       }
-    }
-  };
-
   return (
     <div className="container overlay-card">
       <h2>Retos Inevitables</h2>
@@ -262,5 +259,3 @@ export default function FreeGamePage() {
         <button type="submit">Guardar</button>
       </form>
     </div>);
-
-}
