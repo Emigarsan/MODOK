@@ -1,9 +1,7 @@
 ﻿import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
 
 export default function FreeGamePage() {
-  const navigate = useNavigate();
   const navigate = useNavigate();
   const [mode, setMode] = useState('create');
   const [mesaNumber, setMesaNumber] = useState('');
@@ -25,7 +23,7 @@ export default function FreeGamePage() {
   const legacyOptions = useMemo(() => ([
     'Ninguno',
     'Vástago de M',
-    'Mutante hí­brido',
+    'Mutante h�brido',
     'Equipo de dos',
     'Los más buscados',
     'Equipado para lo peor',
@@ -98,13 +96,13 @@ export default function FreeGamePage() {
     try {
       if (mode === 'create') {
         if (!mesaNumber) {
-          alert('Indica un número de mesa');
+          alert('Indica un n�mero de mesa');
           return;
         }
         const num = parseInt(mesaNumber, 10) || 0;
         const usedInFree = (existingFree || []).some(t => Number(t.tableNumber) === num);
         if (usedInFree) {
-          alert(`El número de mesa ${num} ya existe. Elige otro.`);
+          alert(`El n�mero de mesa ${num} ya existe. Elige otro.`);
           return;
         }
         if (!players || (parseInt(players, 10) || 0) <= 0) {
@@ -133,7 +131,7 @@ export default function FreeGamePage() {
       } else {
         const res = await fetch('/api/tables/freegame/join', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ code: joinCode }) });
         const data = await res.json();
-        alert(data.ok ? 'Unido correctamente' : 'CÃ³digo no encontrado');
+        alert(data.ok ? 'Unido correctamente' : 'Código no encontrado');
       }
     } catch (e) {
       alert(e.message);
@@ -151,7 +149,7 @@ export default function FreeGamePage() {
         {mode === 'create' ? (
           <>
             <label>
-              Número de mesa
+              N�mero de mesa
               <input type="number" min={1} value={mesaNumber} onChange={(e) => setMesaNumber(e.target.value)} placeholder="Ej. 50" required />
             </label>
             <label>
@@ -173,11 +171,11 @@ export default function FreeGamePage() {
                 <option value="Hail H.Y.D.R.A.">Hail H.Y.D.R.A.</option>
                 <option value="La Sala Roja">La Sala Roja</option>
                 <option value="Thunder Force">Thunder Force</option>
-                <option value="Ultrón Infinito">Ultrón Infinito</option>
+                <option value="Ultr�n Infinito">Ultr�n Infinito</option>
               </select>
             </label>
             <label>
-              Número de jugadores
+              N�mero de jugadores
               <input type="text" inputMode="numeric" pattern="[0-9]*" placeholder="Ej. 4" value={players} onChange={(e) => { const v = e.target.value; if (/^\d*$/.test(v) && (v === '' || parseInt(v, 10) <= 4)) setPlayers(v); }} />
             </label>
             {playersInfo.map((p, idx) => (
@@ -235,7 +233,7 @@ export default function FreeGamePage() {
                       const named = (t.name && String(t.name).trim().length > 0)
                         ? `${base} - ${t.name}`
                         : base;
-                      return `${named} - CÃ³digo: ${t.code}`;
+                      return `${named} - Código: ${t.code}`;
                     })()}
                   </option>
                 ))}
@@ -244,7 +242,6 @@ export default function FreeGamePage() {
           </>
         )}
         <button type="submit">Guardar</button>
-        \n
       </form>
     </div>);
 

@@ -1,5 +1,6 @@
-﻿import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
+import { useLocation } from 'react-router-dom';
 import centralImage from './assets/50103a.png';
 import celda1 from './assets/secondary/5A Entorno Celda 1.jpg';
 import celda2 from './assets/secondary/6A Entorno Celda 2.jpg';
@@ -91,7 +92,7 @@ export function EventView({ onAction } = {}) {
     fetch(API_BASE)
       .then((response) => {
         if (!response.ok) {
-          throw new Error('Respuesta inv�lida del servidor');
+          throw new Error('Respuesta inv?lida del servidor');
         }
         return response.json();
       })
@@ -137,7 +138,7 @@ export function EventView({ onAction } = {}) {
     }
   }, [state.secondaryImageIndex]);
 
-  // When already on the last image (7ª) and secondary transitions to 0, show modal
+  // When already on the last image (7�) and secondary transitions to 0, show modal
   useEffect(() => {
     if (previousSecondaryValue.current !== state.secondary) {
       const reachedZeroNow = state.secondary === 0 && previousSecondaryValue.current > 0;
@@ -192,7 +193,7 @@ export function EventView({ onAction } = {}) {
       const available = state.secondary;
       effectiveAmount = Math.min(effectiveAmount, available);
       if (effectiveAmount === 0) {
-        // Already at 0 → no-op; modal will already have been handled previously
+        // Already at 0 ? no-op; modal will already have been handled previously
         return;
       }
     }
@@ -230,7 +231,7 @@ export function EventView({ onAction } = {}) {
   const currentSecondaryImage =
     secondaryImages[state.secondaryImageIndex] ?? secondaryImages[initialState.secondaryImageIndex];
   const displayedSecondaryImage = secondaryLocked ? celda7Accesorio : currentSecondaryImage;
-  const secondaryTitle = secondaryLocked ? 'Accesorio M.Y.T.H.O.S.' : 'Celdas de Contención';
+  const secondaryTitle = secondaryLocked ? 'Accesorio M.Y.T.H.O.S.' : 'Celdas de Contenci�n';
 
   return (
     <>
@@ -269,7 +270,7 @@ export function EventView({ onAction } = {}) {
                 onClick={() => updateCounter('secondary', delta)}
                 disabled={secondaryLocked}
                 aria-disabled={secondaryLocked}
-                title={secondaryLocked ? 'Bloqueado tras la s�ptima imagen' : undefined}
+                title={secondaryLocked ? 'Bloqueado tras la s?ptima imagen' : undefined}
               >
                 {label}
               </button>
