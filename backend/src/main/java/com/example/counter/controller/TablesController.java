@@ -1,7 +1,6 @@
 package com.example.counter.controller;
 
 import com.example.counter.service.TablesService;
-import com.example.counter.service.model.FreeGameTable;
 import com.example.counter.service.model.RegisterTable;
 import com.example.counter.service.model.PlayerInfo;
 import org.springframework.http.ResponseEntity;

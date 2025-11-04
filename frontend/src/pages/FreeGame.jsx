@@ -153,7 +153,7 @@ export default function FreeGamePage() {
           <>
             <label>
               NÃºmero de mesa
-              <input type="number" disabled={noChallenge} min={1} value={mesaNumber} onChange={(e) => setMesaNumber(e.target.value)} placeholder="Ej. 50" required />
+              <input type="number" min={1} value={mesaNumber} onChange={(e) => setMesaNumber(e.target.value)} placeholder="Ej. 50" required />
             </label>
             <label>
               Nombre de mesa
@@ -272,7 +272,7 @@ export default function FreeGamePage() {
                       <td>{base}</td>
                       <td>{legacyCount}</td>
                       <td>
-                        <input type="number" disabled={noChallenge} min={0} value={vpInput} onChange={async (e) => {
+                        <input type="number" min={0} value={vpInput} onChange={async (e) => {
                           const v = e.target.value; setVpInput(v);
                           const n = Math.max(0, parseInt(v, 10) || 0);
                           try {
@@ -296,6 +296,7 @@ export default function FreeGamePage() {
     </div>
   );
 }
+
 
 
 
