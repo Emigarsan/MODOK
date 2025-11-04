@@ -16,6 +16,44 @@ const LEGACY_OPTIONS = [
   'Solo ante el peligro'
 ];
 
+const HELP = {
+  mesaNumber: 'Numero unico para mesas libres. Usa la numeracion del area libre.',
+  mesaName: 'Nombre visible en las pantallas de control (opcional).',
+  difficulty: 'Etiqueta informativa para el staff. No altera puntos.',
+  challenge: 'Si permanece en (Ninguno), la puntuacion total sera 0 y los puntos de victoria se bloquean.',
+  players: 'Entre 1 y 4 plazas. Ajusta el numero de fichas de jugador automaticamente.',
+  playerCharacter: 'Escribe parte del nombre y selecciona la sugerencia normalizada.',
+  playerAspect: 'Lista de aspectos validos. Para Adam Warlock queda bloqueado.',
+  playerLegacy: 'Cada legado distinto de "Ninguno" suma 1 punto adicional.',
+  joinCode: 'Selecciona la mesa libre creada para gestionarla o ver su puntuacion.'
+};
+
+function Help({ text }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <span
+      className={`help-wrapper${open ? ' is-open' : ''}`}
+      onMouseEnter={() => setOpen(true)}
+      onMouseLeave={() => setOpen(false)}
+    >
+      <button
+        type="button"
+        className="help-icon"
+        aria-label="Mas informacion"
+        onClick={(e) => {
+          e.preventDefault();
+          setOpen((prev) => !prev);
+        }}
+        onFocus={() => setOpen(true)}
+        onBlur={() => setOpen(false)}
+      >
+        ?
+      </button>
+      <span className="help-tooltip">{text}</span>
+    </span>
+  );
+}
+
 export default function FreeGamePage() {
   const navigate = useNavigate();
   const [mode, setMode] = useState('create');
@@ -190,8 +228,11 @@ export default function FreeGamePage() {
       <form onSubmit={handleSubmit} className="form">
         {mode === 'create' ? (
           <>
-            <label>
-              Numero de mesa
+            <label className="field-label">
+              <span className="field-label-title">
+                Numero de mesa
+                <Help text={HELP.mesaNumber} />
+              </span>
               <input
                 type="number"
                 min={1}
@@ -200,27 +241,33 @@ export default function FreeGamePage() {
                 placeholder="Ej. 50"
                 required
               />
-              <small className="help-text">Debe ser único dentro del bloque Freegame. Usa el número físico de la mesa libre.</small>
-            </label>
-            <label>
-              Nombre de mesa
+              </label>
+            <label className="field-label">
+              <span className="field-label-title">
+                Nombre de mesa
+                <Help text={HELP.mesaName} />
+              </span>
               <input
                 value={mesaName}
                 onChange={(e) => setMesaName(e.target.value)}
                 placeholder="Ej. Mesa Libre 1"
               />
-              <small className="help-text">Identificador visible para los participantes (opcional).</small>
-            </label>
-            <label>
-              Dificultad
+              </label>
+            <label className="field-label">
+              <span className="field-label-title">
+                Dificultad
+                <Help text={HELP.difficulty} />
+              </span>
               <select value={difficulty} onChange={(e) => setDifficulty(e.target.value)}>
                 <option value="Normal">Normal</option>
                 <option value="Experto">Experto</option>
               </select>
-              <small className="help-text">Define el reto propuesto. No modifica los cálculos automáticos.</small>
-            </label>
-            <label>
-              Reto inevitable
+              </label>
+            <label className="field-label">
+              <span className="field-label-title">
+                Reto inevitable
+                <Help text={HELP.challenge} />
+              </span>
               <select
                 value={inevitableChallenge}
                 onChange={(e) => setInevitableChallenge(e.target.value)}
@@ -232,10 +279,12 @@ export default function FreeGamePage() {
                 <option value="Thunder Force">Thunder Force</option>
                 <option value="Ultron Infinito">Ultron Infinito</option>
               </select>
-              <small className="help-text">Si queda en "(Ninguno)", la puntuación total será 0 y los puntos de victoria se bloquean.</small>
-            </label>
-            <label>
-              Numero de jugadores
+              </label>
+            <label className="field-label">
+              <span className="field-label-title">
+                Numero de jugadores
+                <Help text={HELP.players} />
+              </span>
               <input
                 type="text"
                 inputMode="numeric"
@@ -250,12 +299,14 @@ export default function FreeGamePage() {
                 }}
                 required
               />
-              <small className="help-text">Entre 1 y 4 plazas. El formulario añade/elimina fichas de jugadores automáticamente.</small>
-            </label>
+              </label>
             {playersInfo.map((p, idx) => (
               <div key={idx} className="player-row freegame-row">
-                <label>
-                  Personaje
+                <label className="field-label">
+                  <span className="field-label-title">
+                    Personaje
+                    <Help text={HELP.playerCharacter} />
+                  </span>
                   <input
                     list="character-list-free"
                     value={p.character}
@@ -267,10 +318,12 @@ export default function FreeGamePage() {
                       <option key={c} value={c} />
                     ))}
                   </datalist>
-                  <small className="help-text">Escribe parte del nombre y selecciona la sugerencia. Se normaliza para evitar duplicidades.</small>
-                </label>
-                <label>
-                  Aspecto
+                  </label>
+                <label className="field-label">
+                  <span className="field-label-title">
+                    Aspecto
+                    <Help text={HELP.playerAspect} />
+                  </span>
                   {(() => {
                     const isAdam = p.character === 'Adam Warlock';
                     const isSW = p.character === 'Spider-woman';
@@ -299,10 +352,12 @@ export default function FreeGamePage() {
                       </select>
                     );
                   })()}
-                  <small className="help-text">Lista de aspectos válidos. Para Adam Warlock queda bloqueado sin aspecto.</small>
-                </label>
-                <label>
-                  Legado
+                  </label>
+                <label className="field-label">
+                  <span className="field-label-title">
+                    Legado
+                    <Help text={HELP.playerLegacy} />
+                  </span>
                   <select
                     value={p.legacy}
                     onChange={(e) => {
@@ -320,15 +375,17 @@ export default function FreeGamePage() {
                       </option>
                     ))}
                   </select>
-                  <small className="help-text">Selecciona el legado entregado. Cada legado distinto de "Ninguno" suma 1 punto.</small>
-                </label>
+                  </label>
               </div>
             ))}
           </>
         ) : (
           <>
-            <label>
-              Unirse a mesa existente
+            <label className="field-label">
+              <span className="field-label-title">
+                Unirse a mesa existente
+                <Help text={HELP.joinCode} />
+              </span>
               <select
                 value={joinCode}
                 onChange={(e) => setJoinCode(e.target.value)}
@@ -350,8 +407,7 @@ export default function FreeGamePage() {
                   </option>
                 ))}
               </select>
-              <small className="help-text">Selecciona una mesa libre ya creada para verla o actualizar su puntuación.</small>
-            </label>
+              </label>
           </>
         )}
         <button type="submit">Guardar</button>
