@@ -282,9 +282,9 @@ export default function AdminPage() {
                       .then(r => r.ok ? r.json() : Promise.reject(new Error('No autorizado')))
                       .then(() => fetchBackups())
                       .catch((e) => alert(e.message));
-                  }}>Purgar por antig�edad</button>
+                  }}>Purgar por antigüedad</button>
                   <label>
-                    Conservar �ltimos
+                    Conservar últimos
                     <input type="number" min={0} value={purgeKeep} onChange={(e) => setPurgeKeep(e.target.value)} />
                   </label>
                   <button onClick={() => {
@@ -342,6 +342,10 @@ export default function AdminPage() {
                   </tbody>
                 </table>
               </section>
+              <div className="form" style={{ marginTop: 8, gap: 8, display: tablesTab === 'event' ? 'flex' : 'none', flexWrap: 'wrap' }}>
+                <button onClick={() => download('/api/admin/export/event.csv', 'event.csv')}>Exportar CSV (Event)</button>
+                <button onClick={() => download('/api/admin/export/mesas_totales.csv', 'mesas_totales.csv')}>Exportar CSV (Totales por contador)</button>
+              </div>
             </div>
           )}
 
@@ -353,7 +357,7 @@ export default function AdminPage() {
             </div>
             <div className="admin-grid" style={{ marginBottom: 12, gridTemplateColumns: '1fr' }}>
               <section className="counter-card" style={{ overflowX: 'auto', display: tablesTab === 'event' ? 'block' : 'none' }}>
-                <h3>Event</h3>
+                <h3>Evento M.O.D.O.K.</h3>
                 <table className="data-table" style={{ width: '100%' }}>
                   <thead>
                     <tr>
@@ -388,6 +392,10 @@ export default function AdminPage() {
                   </tbody>
                 </table>
               </section>
+              <div className="form" style={{ marginTop: 8, gap: 8, display: tablesTab === 'freegame' ? 'flex' : 'none', flexWrap: 'wrap' }}>
+                <button onClick={() => download('/api/admin/export/freegame.csv', 'freegame.csv')}>Exportar CSV (Freegame)</button>
+                <button onClick={() => download('/api/admin/export/freegame_scores.csv', 'freegame_scores.csv')}>Exportar CSV (Puntuación Freegame)</button>
+              </div>
               <section className="counter-card" style={{ overflowX: 'auto', display: tablesTab === 'event' ? 'block' : 'none' }}>
                 <h3>Mesas - Totales por contador</h3>
                 <table className="data-table" style={{ width: '100%' }}>
@@ -412,7 +420,7 @@ export default function AdminPage() {
                 </table>
               </section>
               <section className="counter-card" style={{ overflowX: 'auto', display: tablesTab === 'freegame' ? 'block' : 'none' }}>
-                <h3>Freegame</h3>
+                <h3>Retos Inevitables</h3>
                 <table className="data-table" style={{ width: '100%' }}>
                   <thead>
                     <tr>
@@ -467,10 +475,6 @@ export default function AdminPage() {
                   </tbody>
                 </table>
               </section>
-            </div>
-            <div className="form" style={{ marginTop: 16, gap: 8, display: 'flex', flexWrap: 'wrap' }}>
-              <button onClick={() => download('/api/admin/export/event.csv', 'event.csv')}>Exportar CSV (Event)</button>
-              <button onClick={() => download('/api/admin/export/freegame.csv', 'freegame.csv')}>Exportar CSV (Freegame)</button>
             </div>
           </>)}
         </>

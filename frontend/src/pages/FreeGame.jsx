@@ -138,7 +138,7 @@ export default function FreeGamePage() {
 
   return (
     <div className="container overlay-card">
-      <h2>Freegame</h2>
+      <h2>Retos Inevitables</h2>
       <div className="tabs">
         <button className={mode === 'create' ? 'active' : ''} onClick={() => setMode('create')}>Registrar mesa</button>
         <button className={mode === 'join' ? 'active' : ''} onClick={() => setMode('join')}>Unirse</button>
@@ -164,7 +164,7 @@ export default function FreeGamePage() {
             <label>
               Reto inevitable
               <select value={inevitableChallenge} onChange={(e) => setInevitableChallenge(e.target.value)}>
-                <option value="(Ninguno)">(Ninguno)</option>
+                <option value="(Ninguno)">Ninguno</option>
                 <option value="Celdas falsas">Celdas falsas</option>
                 <option value="Hail H.Y.D.R.A.">Hail H.Y.D.R.A.</option>
                 <option value="La Sala Roja">La Sala Roja</option>

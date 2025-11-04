@@ -386,6 +386,27 @@ button[aria-disabled="true"] {
   min-width: 160px;
 }
 
+/* Display page: scale up for large screens */
+.display-layout .dashboard {
+  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+  gap: 2.25rem;
+}
+
+.display-layout .counter-card h2 {
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+}
+
+.display-layout .counter-art {
+  width: min(85vw, 420px);
+  max-width: 520px;
+}
+
+.display-layout .counter-value {
+  font-size: clamp(4rem, 8vw, 6rem);
+  padding: 1rem 2.25rem;
+  min-width: 220px;
+}
+
 @media (max-width: 700px) {
   .page {
     padding: 2.5rem 1rem 3rem;

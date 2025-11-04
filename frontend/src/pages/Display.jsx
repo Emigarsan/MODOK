@@ -87,31 +87,32 @@ export default function DisplayPage() {
   const secondaryTitle = secondaryLocked ? 'Accesorio M.Y.T.H.O.S.' : 'Celdas de Contención';
 
   return (
-    <div className="dashboard">
+    <div className="display-layout">
+      <div className="dashboard">
       {error && <p className="error">{error}</p>}
 
       {primaryRevealed && (
         <section className="counter-card">
-          <img src={centralImage} alt="M.O.D.O.K" className="counter-art" />
           <h2>Vida M.O.D.O.K.</h2>
+          <img src={centralImage} alt="M.O.D.O.K" className="counter-art" />
           <div className="counter-value">{state.primary}</div>
         </section>
       )}
 
       <section className="counter-card">
+        <h2>{secondaryTitle}</h2>
         <img
           src={displayedSecondaryImage}
           alt={`Celda ${state.secondaryImageIndex + 1}`}
           className="counter-art"
         />
-        <h2>{secondaryTitle}</h2>
         {!secondaryLocked && <div className="counter-value">{state.secondary}</div>}
       </section>
 
       {state.tertiary > 0 && (
         <section className="counter-card">
-          <img src={tertiaryCore} alt="Entrenamiento Especializado" className="counter-art" />
           <h2>Entrenamiento especializado</h2>
+          <img src={tertiaryCore} alt="Entrenamiento Especializado" className="counter-art" />
           <div className="counter-value">{state.tertiary}</div>
         </section>
       )}
@@ -123,6 +124,7 @@ export default function DisplayPage() {
           </div>
         </div>
       )}
+      </div>
     </div>
   );
 }

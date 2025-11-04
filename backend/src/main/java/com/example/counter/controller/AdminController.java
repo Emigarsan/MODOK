@@ -1,6 +1,7 @@
 package com.example.counter.controller;
 
 import com.example.counter.service.TablesService;
+import com.example.counter.service.mesa.MesaCounterService;
 import com.example.counter.service.model.FreeGameTable;
 import com.example.counter.service.model.RegisterTable;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,11 +22,14 @@ import java.util.StringJoiner;
 @CrossOrigin(origins = "*")
 public class AdminController {
     private final TablesService tablesService;
+    private final MesaCounterService mesaCounterService;
     private final String adminSecret;
 
     public AdminController(TablesService tablesService,
+                           MesaCounterService mesaCounterService,
                            @Value("${admin.secret:}") String adminSecret) {
         this.tablesService = tablesService;
+        this.mesaCounterService = mesaCounterService;
         this.adminSecret = adminSecret;
     }
 
@@ -56,6 +60,61 @@ public class AdminController {
         List<FreeGameTable> free = tablesService.listFreeGame();
         String csv = buildFreeGameCsv(free);
         return csvResponse(csv, "freegame.csv");
+    }
+
+    @GetMapping(value = "/export/mesas_totales.csv", produces = "text/csv")
+    public ResponseEntity<byte[]> exportMesaTotalesCsv(@RequestHeader(value = "X-Admin-Secret", required = false) String secret) {
+        if (!isAdmin(secret)) return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        Map<Integer, MesaCounterService.TotalesMesa> map = mesaCounterService.getTotalesSnapshot();
+        StringJoiner sj = new StringJoiner("\n");
+        sj.add("mesa,c1,c2,c3");
+        map.entrySet().stream()
+                .sorted((a,b) -> Integer.compare(a.getKey(), b.getKey()))
+                .forEach(e -> {
+                    var t = e.getValue();
+                    sj.add(String.join(",",
+                            String.valueOf(e.getKey()),
+                            String.valueOf(t == null ? 0 : t.c1),
+                            String.valueOf(t == null ? 0 : t.c2),
+                            String.valueOf(t == null ? 0 : t.c3)
+                    ));
+                });
+        String csv = sj.toString() + "\n";
+        return csvResponse(csv, "mesas_totales.csv");
+    }
+
+    @GetMapping(value = "/export/freegame_scores.csv", produces = "text/csv")
+    public ResponseEntity<byte[]> exportFreeGameScoresCsv(@RequestHeader(value = "X-Admin-Secret", required = false) String secret) {
+        if (!isAdmin(secret)) return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        List<FreeGameTable> free = tablesService.listFreeGame();
+        StringJoiner sj = new StringJoiner("\n");
+        sj.add("tableNumber,difficulty,inevitableChallenge,base,legados,victoryPoints,total");
+        for (FreeGameTable t : free) {
+            boolean noCh = t.inevitableChallenge() == null || t.inevitableChallenge().isBlank() || "(Ninguno)".equals(t.inevitableChallenge());
+            int base = noCh ? 0 : ("Experto".equalsIgnoreCase(t.difficulty()) ? 5 : 3);
+            int legacyCount = 0;
+            if (!noCh && t.playersInfo() != null) {
+                for (var p : t.playersInfo()) {
+                    if (p != null) {
+                        String lg = p.legacy();
+                        if (lg != null && !lg.isBlank() && !"Ninguno".equalsIgnoreCase(lg)) legacyCount++;
+                    }
+                }
+            }
+            int vp = noCh ? 0 : Math.max(0, t.victoryPoints());
+            int total = noCh ? 0 : (base + legacyCount + vp);
+            sj.add(String.join(",",
+                    String.valueOf(t.tableNumber()),
+                    escape(nullToEmpty(t.difficulty())),
+                    escape(nullToEmpty(t.inevitableChallenge())),
+                    String.valueOf(base),
+                    String.valueOf(legacyCount),
+                    String.valueOf(vp),
+                    String.valueOf(total)
+            ));
+        }
+        String csv = sj.toString() + "\n";
+        return csvResponse(csv, "freegame_scores.csv");
     }
 
     private String buildRegisterCsv(List<RegisterTable> reg) {
@@ -145,6 +204,10 @@ public class AdminController {
         boolean needsQuote = v.contains(",") || v.contains("\n") || v.contains("\"");
         String out = v.replace("\"", "\"\"");
         return needsQuote ? ("\"" + out + "\"") : out;
+    }
+
+    private String nullToEmpty(String v) {
+        return v == null ? "" : v;
     }
 
     private ResponseEntity<byte[]> csvResponse(String csv, String filename) {

@@ -112,7 +112,7 @@ export default function RegisterPage() {
         if (data.ok) {
           const sel = (existing || []).find(t => String(t.code) === String(joinCode));
           const mesa = sel ? sel.tableNumber : '';
-          if (mesa !== '') navigate(`/mesa/${mesa}`); else navigate('/event');
+          if (mesa !== '') navigate(`/mesa/${mesa}`); else navigate('/register');
         } else alert('Codigo no encontrado');
       }
     } catch (e) {
