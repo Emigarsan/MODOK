@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+ï»¿import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 export default function FreeGamePage() {
@@ -22,12 +22,12 @@ export default function FreeGamePage() {
 
   const legacyOptions = useMemo(() => ([
     'Ninguno',
-    'Vástago de M',
+    'VÃ¡stago de M',
     'Mutante h?brido',
     'Equipo de dos',
-    'Los más buscados',
+    'Los mÃ¡s buscados',
     'Equipado para lo peor',
-    'Guerreros araña',
+    'Guerreros araÃ±a',
     'Instruidas por Thanos',
     'Rabia irradiada',
     'Ronin',
@@ -96,13 +96,13 @@ export default function FreeGamePage() {
     try {
       if (mode === 'create') {
         if (!mesaNumber) {
-          alert('Indica un n?mero de mesa');
+          alert('Indica un numero de mesa');
           return;
         }
         const num = parseInt(mesaNumber, 10) || 0;
         const usedInFree = (existingFree || []).some(t => Number(t.tableNumber) === num);
         if (usedInFree) {
-          alert(`El n?mero de mesa ${num} ya existe. Elige otro.`);
+          alert(El numero de mesa  ya existe. Elige otro.);
           return;
         }
         if (!players || (parseInt(players, 10) || 0) <= 0) {
@@ -123,15 +123,36 @@ export default function FreeGamePage() {
             inevitableChallenge,
             players: (parseInt(players, 10) || 0),
             playersInfo: playersInfo.map(p => ({ character: p.character || '', aspect: p.aspect || '', legacy: p.legacy || 'Ninguno' }))
+          })
+        });
+        if (!res.ok) throw new Error('No se pudo registrar la mesa');
         const data = await res.json();
-        const numCreated = data && typeof data.tableNumber === "number" ? data.tableNumber : num;
-        navigate(`/freegame/${numCreated}`);
-        const res = await fetch('/api/tables/freegame/join', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ code: joinCode }) });
+        const numCreated = data && typeof data.tableNumber === 'number' ? data.tableNumber : num;
+        navigate(/freegame/);
+      } else {
+        const res = await fetch('/api/tables/freegame/join', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ code: joinCode })
+        });
         const data = await res.json();
-        alert(data.ok ? 'Unido correctamente' : 'Código no encontrado');
+        if (data.ok) {
+          const sel = (existingFree || []).find(t => String(t.code) === String(joinCode));
+          const mesa = sel ? sel.tableNumber : '';
+          if (mesa !== '') {
+            navigate(/freegame/);
+          } else {
+            navigate('/freegame');
+          }
+        } else {
+          alert('Codigo no encontrado');
+        }
       }
-    } catch (e) {
-      alert(e.message);
+    } catch (error) {
+      alert(error.message);
+    }
+  }; 
+      }
     }
   };
 
@@ -230,7 +251,7 @@ export default function FreeGamePage() {
                       const named = (t.name && String(t.name).trim().length > 0)
                         ? `${base} - ${t.name}`
                         : base;
-                      return `${named} - Código: ${t.code}`;
+                      return `${named} - CÃ³digo: ${t.code}`;
                     })()}
                   </option>
                 ))}
