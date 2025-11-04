@@ -1,4 +1,4 @@
-﻿import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 export default function FreeGamePage() {
@@ -22,12 +22,12 @@ export default function FreeGamePage() {
 
   const legacyOptions = useMemo(() => ([
     'Ninguno',
-    'Vástago de M',
-    'Mutante h�brido',
+    'V�stago de M',
+    'Mutante h?brido',
     'Equipo de dos',
-    'Los más buscados',
+    'Los m�s buscados',
     'Equipado para lo peor',
-    'Guerreros araña',
+    'Guerreros ara�a',
     'Instruidas por Thanos',
     'Rabia irradiada',
     'Ronin',
@@ -96,13 +96,13 @@ export default function FreeGamePage() {
     try {
       if (mode === 'create') {
         if (!mesaNumber) {
-          alert('Indica un n�mero de mesa');
+          alert('Indica un n?mero de mesa');
           return;
         }
         const num = parseInt(mesaNumber, 10) || 0;
         const usedInFree = (existingFree || []).some(t => Number(t.tableNumber) === num);
         if (usedInFree) {
-          alert(`El n�mero de mesa ${num} ya existe. Elige otro.`);
+          alert(`El n?mero de mesa ${num} ya existe. Elige otro.`);
           return;
         }
         if (!players || (parseInt(players, 10) || 0) <= 0) {
@@ -123,15 +123,12 @@ export default function FreeGamePage() {
             inevitableChallenge,
             players: (parseInt(players, 10) || 0),
             playersInfo: playersInfo.map(p => ({ character: p.character || '', aspect: p.aspect || '', legacy: p.legacy || 'Ninguno' }))
-          })
-        });
-        if (!res.ok) throw new Error('No se pudo registrar la mesa');
         const data = await res.json();
-        setCreated(data); setVpInput(String((data && typeof data.victoryPoints === "number") ? data.victoryPoints : 0)); alert(`Mesa libre registrada. Código: ${data.code}`);
-      } else {
+        const numCreated = data && typeof data.tableNumber === "number" ? data.tableNumber : num;
+        navigate(`/freegame/${numCreated}`);
         const res = await fetch('/api/tables/freegame/join', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ code: joinCode }) });
         const data = await res.json();
-        alert(data.ok ? 'Unido correctamente' : 'Código no encontrado');
+        alert(data.ok ? 'Unido correctamente' : 'C�digo no encontrado');
       }
     } catch (e) {
       alert(e.message);
@@ -149,7 +146,7 @@ export default function FreeGamePage() {
         {mode === 'create' ? (
           <>
             <label>
-              N�mero de mesa
+              N?mero de mesa
               <input type="number" min={1} value={mesaNumber} onChange={(e) => setMesaNumber(e.target.value)} placeholder="Ej. 50" required />
             </label>
             <label>
@@ -171,11 +168,11 @@ export default function FreeGamePage() {
                 <option value="Hail H.Y.D.R.A.">Hail H.Y.D.R.A.</option>
                 <option value="La Sala Roja">La Sala Roja</option>
                 <option value="Thunder Force">Thunder Force</option>
-                <option value="Ultr�n Infinito">Ultr�n Infinito</option>
+                <option value="Ultr?n Infinito">Ultr?n Infinito</option>
               </select>
             </label>
             <label>
-              N�mero de jugadores
+              N?mero de jugadores
               <input type="text" inputMode="numeric" pattern="[0-9]*" placeholder="Ej. 4" value={players} onChange={(e) => { const v = e.target.value; if (/^\d*$/.test(v) && (v === '' || parseInt(v, 10) <= 4)) setPlayers(v); }} />
             </label>
             {playersInfo.map((p, idx) => (
@@ -233,7 +230,7 @@ export default function FreeGamePage() {
                       const named = (t.name && String(t.name).trim().length > 0)
                         ? `${base} - ${t.name}`
                         : base;
-                      return `${named} - Código: ${t.code}`;
+                      return `${named} - C�digo: ${t.code}`;
                     })()}
                   </option>
                 ))}
