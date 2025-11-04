@@ -5,6 +5,7 @@ export default function FreeGamePage() {
   const [mesaNumber, setMesaNumber] = useState('');
   const [mesaName, setMesaName] = useState('');
   const [difficulty, setDifficulty] = useState('Normal');
+  const [inevitableChallenge, setInevitableChallenge] = useState('(Ninguno)');
   const [created, setCreated] = useState(null);
   const [vpInput, setVpInput] = useState('0');
   const [players, setPlayers] = useState('');

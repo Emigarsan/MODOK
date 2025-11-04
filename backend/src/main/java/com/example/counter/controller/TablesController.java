@@ -96,6 +96,11 @@ public class TablesController {
         return ResponseEntity.ok(Map.of("ok", ok));
     }
 
+    @GetMapping("/freegame/list")
+    public ResponseEntity<List<com.example.counter.service.model.FreeGameTable>> listFreeGame() {
+        return ResponseEntity.ok(tablesService.listFreeGame());
+    }
+
     @PostMapping("/freegame/victory-points")
     public ResponseEntity<Map<String, Object>> setFreeGameVictoryPoints(@RequestBody Map<String, Object> payload) {
         String id = String.valueOf(payload.getOrDefault("id", ""));
