@@ -352,6 +352,10 @@ export default function AdminPage() {
               <button className={tablesTab === 'freegame' ? 'active' : ''} onClick={() => setTablesTab('freegame')}>Freegame</button>
             </div>
             <div className="admin-grid" style={{ marginBottom: 12, gridTemplateColumns: '1fr' }}>
+              <div className="form" style={{ marginTop: 8, gap: 8, display: tablesTab === 'event' ? 'flex' : 'none', flexWrap: 'wrap' }}>
+                <button onClick={() => download('/api/admin/export/event.csv', 'event.csv')}>Exportar CSV (Event)</button>
+                <button onClick={() => download('/api/admin/export/mesas_totales.csv', 'mesas_totales.csv')}>Exportar CSV (Totales por contador)</button>
+              </div>
               <section className="counter-card" style={{ overflowX: 'auto', display: tablesTab === 'event' ? 'block' : 'none' }}>
                 <h3>Evento M.O.D.O.K.</h3>
                 <table className="data-table" style={{ width: '100%' }}>
@@ -414,10 +418,6 @@ export default function AdminPage() {
                     ))}
                   </tbody>
                 </table>
-              <div className="form" style={{ marginTop: 8, gap: 8, display: tablesTab === 'event' ? 'flex' : 'none', flexWrap: 'wrap' }}>
-                <button onClick={() => download('/api/admin/export/event.csv', 'event.csv')}>Exportar CSV (Event)</button>
-                <button onClick={() => download('/api/admin/export/mesas_totales.csv', 'mesas_totales.csv')}>Exportar CSV (Totales por contador)</button>
-              </div>
               </section>
               <section className="counter-card" style={{ overflowX: 'auto', display: tablesTab === 'freegame' ? 'block' : 'none' }}>
                 <h3>Retos Inevitables</h3>
