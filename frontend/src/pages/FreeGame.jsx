@@ -1,7 +1,9 @@
 ﻿import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 export default function FreeGamePage() {
+  const navigate = useNavigate();
   const navigate = useNavigate();
   const [mode, setMode] = useState('create');
   const [mesaNumber, setMesaNumber] = useState('');

@@ -101,6 +101,13 @@ public class TablesController {
         return ResponseEntity.ok(tablesService.listFreeGame());
     }
 
+    @GetMapping("/freegame/by-number/{tableNumber}")
+    public ResponseEntity<com.example.counter.service.model.FreeGameTable> getFreeGameByNumber(@PathVariable("tableNumber") int tableNumber) {
+        var t = tablesService.findFreeGameByNumber(tableNumber);
+        if (t == null) return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(t);
+    }
+
     @PostMapping("/freegame/victory-points")
     public ResponseEntity<Map<String, Object>> setFreeGameVictoryPoints(@RequestBody Map<String, Object> payload) {
         String id = String.valueOf(payload.getOrDefault("id", ""));

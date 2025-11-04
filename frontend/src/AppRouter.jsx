@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route, Link, Navigate, useLocation } from 'react-router-dom';
 import RegisterPage from './pages/Register.jsx';
 import FreeGamePage from './pages/FreeGame.jsx';
+import FreeGameMesa from './pages/FreeGameMesa.jsx';
 import FreeGameTablePage from './pages/FreeGameTable.jsx';
 import DisplayPage from './pages/Display.jsx';
 import AdminPage from './pages/Admin.jsx';
@@ -30,6 +31,7 @@ export default function AppRouter() {
         <Routes>
           <Route path="/" element={<Navigate to="/register" replace />} />
           <Route path="/register" element={<RegisterPage />} />
+          <Route path="/freegame/:mesaId" element={<FreeGameMesa />} />
           <Route path="/freegame" element={<FreeGamePage />} />
           <Route path="/freegame/:id" element={<FreeGameTablePage />} />
           <Route path="/display" element={<DisplayPage />} />

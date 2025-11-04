@@ -164,6 +164,14 @@ public class TablesService {
         return Collections.unmodifiableList(new ArrayList<>(freeGameTables));
     }
 
+    public synchronized FreeGameTable findFreeGameByNumber(int tableNumber) {
+        int tn = Math.max(0, tableNumber);
+        for (FreeGameTable t : freeGameTables) {
+            if (t.tableNumber() == tn) return t;
+        }
+        return null;
+    }
+
     public synchronized void restore(List<RegisterTable> reg, List<FreeGameTable> free) {
         registerTables.clear();
         freeGameTables.clear();
