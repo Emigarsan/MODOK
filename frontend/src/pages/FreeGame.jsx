@@ -1,4 +1,5 @@
-﻿import { useEffect, useMemo, useState } from 'react';\nimport { useNavigate } from 'react-router-dom';
+﻿import { useEffect, useMemo, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export default function FreeGamePage() {
   const navigate = useNavigate();
@@ -240,4 +241,9 @@ export default function FreeGamePage() {
             </label>
           </>
         )}
-        <button type="submit">Guardar</button>\n      </form>\n    </div>\n  );\n}\n
+        <button type="submit">Guardar</button>
+        \n
+      </form>
+    </div>);
+
+}
