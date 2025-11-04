@@ -1,6 +1,5 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+ï»¿import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
-import { useLocation } from 'react-router-dom';
 import centralImage from './assets/50103a.png';
 import celda1 from './assets/secondary/5A Entorno Celda 1.jpg';
 import celda2 from './assets/secondary/6A Entorno Celda 2.jpg';
@@ -92,7 +91,7 @@ export function EventView({ onAction } = {}) {
     fetch(API_BASE)
       .then((response) => {
         if (!response.ok) {
-          throw new Error('Respuesta inválida del servidor');
+          throw new Error('Respuesta invï¿½lida del servidor');
         }
         return response.json();
       })
@@ -231,7 +230,7 @@ export function EventView({ onAction } = {}) {
   const currentSecondaryImage =
     secondaryImages[state.secondaryImageIndex] ?? secondaryImages[initialState.secondaryImageIndex];
   const displayedSecondaryImage = secondaryLocked ? celda7Accesorio : currentSecondaryImage;
-  const secondaryTitle = secondaryLocked ? 'Accesorio M.Y.T.H.O.S.' : 'Celdas de Contención';
+  const secondaryTitle = secondaryLocked ? 'Accesorio M.Y.T.H.O.S.' : 'Celdas de Contenciï¿½n';
 
   return (
     <div className="page">
@@ -275,7 +274,7 @@ export function EventView({ onAction } = {}) {
                 onClick={() => updateCounter('secondary', delta)}
                 disabled={secondaryLocked}
                 aria-disabled={secondaryLocked}
-                title={secondaryLocked ? 'Bloqueado tras la séptima imagen' : undefined}
+                title={secondaryLocked ? 'Bloqueado tras la sï¿½ptima imagen' : undefined}
               >
                 {label}
               </button>
@@ -320,7 +319,6 @@ export function EventView({ onAction } = {}) {
   );
 }
 
-import { useLocation } from 'react-router-dom';
 
 export default function App() {
   const location = useLocation();
