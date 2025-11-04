@@ -233,13 +233,8 @@ export function EventView({ onAction } = {}) {
   const secondaryTitle = secondaryLocked ? 'Accesorio M.Y.T.H.O.S.' : 'Celdas de Contenci�n';
 
   return (
-    <div className="page">
-      <header>
-        <h1>InevitableCON 2025 Sevilla</h1>
-      </header>
-
+    <>
       {error && <p className="error">{error}</p>}
-
       <div className="dashboard">
         {primaryRevealed && (
           <section className="counter-card">
@@ -315,7 +310,7 @@ export function EventView({ onAction } = {}) {
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 }
 

@@ -300,7 +300,7 @@ export default function AdminPage() {
                   <thead>
                     <tr>
                       <th>Archivo</th>
-                      <th>Tama�o</th>
+                      <th>Tamaño</th>
                       <th>Modificado</th>
                       <th>Acciones</th>
                     </tr>
@@ -340,6 +340,29 @@ export default function AdminPage() {
                     {(!backups.files || backups.files.length === 0) && (
                       <tr><td colSpan={4} style={{ textAlign: 'center', opacity: 0.7 }}>Sin archivos</td></tr>
                     )}
+                  </tbody>
+                </table>
+              </section>
+              <section className="counter-card" style={{ overflowX: 'auto', display: tablesTab === 'event' ? 'block' : 'none' }}>
+                <h3>Mesas - Totales por contador</h3>
+                <table className="data-table" style={{ width: '100%' }}>
+                  <thead>
+                    <tr>
+                      <th>Mesa</th>
+                      <th>Contador 1</th>
+                      <th>Contador 2</th>
+                      <th>Contador 3</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {Object.entries(mesaSummary || {}).sort((a, b) => Number(a[0]) - Number(b[0])).map(([mesa, t]) => (
+                      <tr key={mesa}>
+                        <td>{mesa}</td>
+                        <td>{t?.c1 ?? 0}</td>
+                        <td>{t?.c2 ?? 0}</td>
+                        <td>{t?.c3 ?? 0}</td>
+                      </tr>
+                    ))}
                   </tbody>
                 </table>
               </section>

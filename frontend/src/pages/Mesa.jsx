@@ -17,12 +17,10 @@ export default function MesaPage() {
   }, [mesaId]);
 
   return (
-    <div className="page">
-      <header>
-        <h1>Mesa {mesaId}</h1>
-      </header>
+    <>
+      <h3 style={{ marginTop: 8 }}>Mesa {mesaId}</h3>
       <EventView onAction={logMesaEvent} />
-    </div>
+    </>
   );
 }
 
