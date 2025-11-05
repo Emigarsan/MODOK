@@ -277,7 +277,9 @@ header p {
   width: 100%;
 }
 
-.character-selector input {
+.character-selector input,
+.player-row input,
+.player-row select {
   width: 100%;
   border: 1px solid var(--color-divider);
   border-radius: 0.9rem;
@@ -292,7 +294,8 @@ header p {
   outline-offset: 0;
 }
 
-.character-selector__list {
+.character-selector__list,
+.select-dropdown {
   position: absolute;
   top: 100%;
   left: 0;
@@ -309,14 +312,17 @@ header p {
   overflow: auto;
 }
 
-.character-selector__list li {
+.character-selector__list li,
+.select-dropdown li {
   padding: 0.45rem 1rem;
   cursor: pointer;
   color: var(--color-text-primary);
 }
 
 .character-selector__list li:hover,
-.character-selector__list li:focus {
+.character-selector__list li:focus,
+.select-dropdown li:hover,
+.select-dropdown li:focus {
   background: var(--color-surface-2);
 }
 
