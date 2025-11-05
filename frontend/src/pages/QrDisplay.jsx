@@ -58,7 +58,7 @@ export default function QrDisplayPage() {
       {error && <p className="error">{error}</p>}
       <div className="qr-grid">
         <section className={`qr-card ${flags.freegame ? 'active' : 'inactive'}`}>
-          <h2>Retos Inevitables (Ma\u00f1ana)</h2>
+          <h2>Retos Inevitables (Mañana)</h2>
           <img src={qrMorning} alt="Codigo QR Retos Inevitables por la ma\u00f1ana" />
           <p className="qr-status">
             {flags.freegame ? 'Disponible para escanear' : 'Pendiente de activar desde Admin > Ver Mesas > Freegame'}
