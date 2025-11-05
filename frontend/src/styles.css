@@ -55,9 +55,8 @@ body::before {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
-  gap: 2.5rem;
-  padding: 3rem 1.5rem 4rem;
+  gap: 1.75rem;
+  padding: 2.5rem 1.5rem 3.5rem;
   max-width: 1200px;
   margin: 0 auto;
   position: relative;
@@ -99,7 +98,7 @@ header {
   max-width: 760px;
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 0.5rem;
 }
 
 header h1 {
@@ -603,7 +602,7 @@ button[aria-disabled="true"] {
 
 @media (max-width: 700px) {
   .page {
-    padding: 2.5rem 1rem 3rem;
+    padding: 2rem 1rem 2.75rem;
   }
 
   .button-grid.primary-controls {
