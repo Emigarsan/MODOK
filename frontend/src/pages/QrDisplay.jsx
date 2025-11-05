@@ -57,18 +57,18 @@ export default function QrDisplayPage() {
     <div className="qr-display-page">
       {error && <p className="error">{error}</p>}
       <div className="qr-grid">
-        <section className={`qr-card ${flags.event ? 'active' : 'inactive'}`}>
-          <h2>QR Evento (Manana)</h2>
-          <img src={qrMorning} alt="Codigo QR del pase de la manana" />
-          <p className="qr-status">
-            {flags.event ? 'Disponible para escanear' : 'Pendiente de activar desde Admin > Ver Mesas > Event'}
-          </p>
-        </section>
         <section className={`qr-card ${flags.freegame ? 'active' : 'inactive'}`}>
-          <h2>QR Freegame (Tarde)</h2>
-          <img src={qrAfternoon} alt="Codigo QR del pase de la tarde" />
+          <h2>Retos Inevitables (Ma\u00f1ana)</h2>
+          <img src={qrMorning} alt="Codigo QR Retos Inevitables por la ma\u00f1ana" />
           <p className="qr-status">
             {flags.freegame ? 'Disponible para escanear' : 'Pendiente de activar desde Admin > Ver Mesas > Freegame'}
+          </p>
+        </section>
+        <section className={`qr-card ${flags.event ? 'active' : 'inactive'}`}>
+          <h2>Evento (Tarde)</h2>
+          <img src={qrAfternoon} alt="Codigo QR Evento por la tarde" />
+          <p className="qr-status">
+            {flags.event ? 'Disponible para escanear' : 'Pendiente de activar desde Admin > Ver Mesas > Event'}
           </p>
         </section>
       </div>

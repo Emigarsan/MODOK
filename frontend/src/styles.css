@@ -490,9 +490,19 @@ button[aria-disabled="true"] {
 
 /* Display page: scale up for large screens */
 .display-layout .dashboard {
-  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: stretch;
   gap: 2.25rem;
-  justify-items: center;
+  flex-wrap: wrap;
+}
+
+.display-layout .counter-card {
+  flex: 1 1 clamp(260px, 30vw, 360px);
+  max-width: clamp(280px, 32vw, 380px);
+  padding: 1.75rem 1.4rem;
+  gap: 1.35rem;
 }
 
 .display-layout .counter-card h2 {
@@ -500,35 +510,33 @@ button[aria-disabled="true"] {
 }
 
 .display-layout .counter-art {
-  width: min(85vw, 420px);
-  max-width: 520px;
+  width: min(70vw, 360px);
+  max-width: 360px;
 }
 
 .display-layout .counter-value {
-  font-size: clamp(4rem, 8vw, 6rem);
-  padding: 1rem 2.25rem;
-  min-width: 220px;
+  font-size: clamp(3.6rem, 6vw, 5.4rem);
+  padding: 0.85rem 1.9rem;
+  min-width: 0;
 }
 
 @media (min-width: 1100px) and (orientation: landscape) {
   .display-layout .dashboard {
-    grid-template-columns: repeat(3, minmax(300px, 1fr));
-    align-items: stretch;
+    flex-wrap: nowrap;
   }
 
   .display-layout .counter-card {
+    flex: 1 1 clamp(280px, 26vw, 360px);
+    max-width: clamp(300px, 28vw, 380px);
     padding: 1.5rem 1.25rem;
-    gap: 1.25rem;
   }
 
   .display-layout .counter-art {
-    width: min(28vw, 360px);
-    max-width: 360px;
+    width: min(26vw, 340px);
   }
 
   .display-layout .counter-value {
-    font-size: clamp(3.4rem, 5vw, 4.8rem);
-    min-width: 0;
+    font-size: clamp(3.2rem, 4.8vw, 4.6rem);
   }
 }
 
