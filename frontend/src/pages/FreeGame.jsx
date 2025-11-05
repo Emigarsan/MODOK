@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { usePreferSelectInput } from '../hooks/usePreferSelectInput.js';
 
 const LEGACY_OPTIONS = [
   'Ninguno',
@@ -68,6 +69,7 @@ export default function FreeGamePage() {
   const [characters, setCharacters] = useState([]);
   const [aspects, setAspects] = useState([]);
   const [swAspects, setSwAspects] = useState([]);
+  const preferSelectInput = usePreferSelectInput();
 
   const legacyOptions = useMemo(() => LEGACY_OPTIONS, []);
 
@@ -300,25 +302,45 @@ export default function FreeGamePage() {
                 required
               />
             </label>
-            {playersInfo.map((p, idx) => (
-              <div key={idx} className="player-row freegame-row">
-                <label className="field-label">
-                  <span className="field-label-title">
-                    Personaje
-                    <Help text={HELP.playerCharacter} />
-                  </span>
-                  <input
-                    list="character-list-free"
-                    value={p.character}
-                    onChange={(e) => handleCharacterChange(idx, e.target.value)}
-                    placeholder="Busca personaje"
-                  />
-                  <datalist id="character-list-free">
-                    {characters.map((c) => (
-                      <option key={c} value={c} />
-                    ))}
-                  </datalist>
-                </label>
+            {playersInfo.map((p, idx) => {
+              const dataListId = `character-list-free-${idx}`;
+              return (
+                <div key={idx} className="player-row freegame-row">
+                  <label className="field-label">
+                    <span className="field-label-title">
+                      Personaje
+                      <Help text={HELP.playerCharacter} />
+                    </span>
+                    {preferSelectInput ? (
+                      <select
+                        value={p.character}
+                        onChange={(e) => handleCharacterChange(idx, e.target.value)}
+                      >
+                        <option value="" disabled>
+                          Selecciona personaje
+                        </option>
+                        {characters.map((c) => (
+                          <option key={c} value={c}>
+                            {c}
+                          </option>
+                        ))}
+                      </select>
+                    ) : (
+                      <>
+                        <input
+                          list={dataListId}
+                          value={p.character}
+                          onChange={(e) => handleCharacterChange(idx, e.target.value)}
+                          placeholder="Busca personaje"
+                        />
+                        <datalist id={dataListId}>
+                          {characters.map((c) => (
+                            <option key={c} value={c} />
+                          ))}
+                        </datalist>
+                      </>
+                    )}
+                  </label>
                 <label className="field-label">
                   <span className="field-label-title">
                     Aspecto
@@ -375,9 +397,10 @@ export default function FreeGamePage() {
                       </option>
                     ))}
                   </select>
-                </label>
-              </div>
-            ))}
+                  </label>
+                </div>
+              );
+            })}
           </>
         ) : (
           <>

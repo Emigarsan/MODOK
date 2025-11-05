@@ -27,7 +27,7 @@ public class TablesService {
                 "Capitana Marvel",
                 "Hulka",
                 "Iron Man",
-                "Pantera Negra",
+                "Pantera Negra (T'Challa)",
                 "Capitán América",
                 "Ms. Marvel",
                 "Thor",
@@ -80,18 +80,16 @@ public class TablesService {
                 "Magneto",
                 "María Hill",
                 "Nick Fury",
-                "Black Panther",
+                "Pantera Negra (Shuri)",
                 "Seda",
                 "Halcón",
-                "Soldado de invierno"
-        );
+                "Soldado de invierno");
         registerAspects = List.of(
                 "Agresividad",
                 "Justicia",
                 "Liderazgo",
                 "Protección",
-                "Masacrismo"
-        );
+                "Masacrismo");
         registerSpiderwomanAspects = List.of(
                 "Agresividad-Justicia",
                 "Agresividad-Liderazgo",
@@ -102,17 +100,19 @@ public class TablesService {
                 "Justicia-Protección",
                 "Liderazgo-Masacrismo",
                 "Liderazgo-Protección",
-                "Masacrismo-Protección"
-        );
+                "Masacrismo-Protección");
     }
 
-    public synchronized RegisterTable createRegister(int tableNumber, String tableName, String difficulty, int players, List<PlayerInfo> playersInfo) {
+    public synchronized RegisterTable createRegister(int tableNumber, String tableName, String difficulty, int players,
+            List<PlayerInfo> playersInfo) {
         String id = UUID.randomUUID().toString();
         String code = shortCode();
-        if (playersInfo == null) playersInfo = List.of();
+        if (playersInfo == null)
+            playersInfo = List.of();
         List<PlayerInfo> sanitized = sanitizeRegisterPlayers(playersInfo);
         int tn = Math.max(0, tableNumber);
-        RegisterTable t = new RegisterTable(id, tn, tableName, difficulty, Math.max(0, players), sanitized, code, Instant.now());
+        RegisterTable t = new RegisterTable(id, tn, tableName, difficulty, Math.max(0, players), sanitized, code,
+                Instant.now());
         registerTables.add(t);
         return t;
     }
@@ -121,11 +121,14 @@ public class TablesService {
         return registerTables.stream().anyMatch(t -> t.code().equalsIgnoreCase(code));
     }
 
-    public synchronized com.example.counter.service.model.FreeGameTable createFreeGame(int tableNumber, String name, String difficulty, String inevitableChallenge, int players, List<com.example.counter.service.model.FreeGamePlayerInfo> playersInfo) {
+    public synchronized com.example.counter.service.model.FreeGameTable createFreeGame(int tableNumber, String name,
+            String difficulty, String inevitableChallenge, int players,
+            List<com.example.counter.service.model.FreeGamePlayerInfo> playersInfo) {
         String id = UUID.randomUUID().toString();
         String code = shortCode();
         int tn = Math.max(0, tableNumber);
-        List<com.example.counter.service.model.FreeGamePlayerInfo> info = playersInfo == null ? List.of() : new ArrayList<>(playersInfo);
+        List<com.example.counter.service.model.FreeGamePlayerInfo> info = playersInfo == null ? List.of()
+                : new ArrayList<>(playersInfo);
         com.example.counter.service.model.FreeGameTable t = new com.example.counter.service.model.FreeGameTable(
                 id,
                 tn,
@@ -150,8 +153,8 @@ public class TablesService {
             var t = freeGameTables.get(i);
             if (t.id().equals(id)) {
                 freeGameTables.set(i, new com.example.counter.service.model.FreeGameTable(
-                        t.id(), t.tableNumber(), t.name(), t.difficulty(), t.inevitableChallenge(), t.players(), t.playersInfo(), t.code(), Math.max(0, victoryPoints), t.createdAt()
-                ));
+                        t.id(), t.tableNumber(), t.name(), t.difficulty(), t.inevitableChallenge(), t.players(),
+                        t.playersInfo(), t.code(), Math.max(0, victoryPoints), t.createdAt()));
                 return true;
             }
         }
@@ -169,7 +172,8 @@ public class TablesService {
     public synchronized FreeGameTable findFreeGameByNumber(int tableNumber) {
         int tn = Math.max(0, tableNumber);
         for (FreeGameTable t : freeGameTables) {
-            if (t.tableNumber() == tn) return t;
+            if (t.tableNumber() == tn)
+                return t;
         }
         return null;
     }
@@ -177,8 +181,10 @@ public class TablesService {
     public synchronized void restore(List<RegisterTable> reg, List<FreeGameTable> free) {
         registerTables.clear();
         freeGameTables.clear();
-        if (reg != null) registerTables.addAll(reg);
-        if (free != null) freeGameTables.addAll(free);
+        if (reg != null)
+            registerTables.addAll(reg);
+        if (free != null)
+            freeGameTables.addAll(free);
     }
 
     public synchronized boolean isRegisterTableNumberUsed(int tableNumber) {
@@ -225,8 +231,10 @@ public class TablesService {
             String character = safeTrim(pi == null ? null : pi.character());
             String aspect = safeTrim(pi == null ? null : pi.aspect());
 
-            if (character == null) character = "";
-            if (aspect == null) aspect = "";
+            if (character == null)
+                character = "";
+            if (aspect == null)
+                aspect = "";
 
             if (equalsIgnoreCase(character, "Adam Warlock")) {
                 // Adam Warlock: aspecto vacío y bloqueado
@@ -256,9 +264,11 @@ public class TablesService {
     }
 
     private boolean containsIgnoreCase(List<String> list, String value) {
-        if (value == null) return false;
+        if (value == null)
+            return false;
         for (String item : list) {
-            if (item != null && item.equalsIgnoreCase(value)) return true;
+            if (item != null && item.equalsIgnoreCase(value))
+                return true;
         }
         return false;
     }

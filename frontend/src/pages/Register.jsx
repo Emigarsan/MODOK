@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { usePreferSelectInput } from '../hooks/usePreferSelectInput.js';
 
 const HELP = {
   mesaNumber: 'Número único e identificativo de tu mesa, estará indicado físicamente en la misma',
@@ -50,6 +51,7 @@ export default function RegisterPage() {
   const [characters, setCharacters] = useState([]);
   const [aspects, setAspects] = useState([]);
   const [swAspects, setSwAspects] = useState([]);
+  const preferSelectInput = usePreferSelectInput();
 
   const normalize = (s) =>
     (s || '')
@@ -263,59 +265,80 @@ export default function RegisterPage() {
           />
         </label>
 
-        {players.map((p, idx) => (
-          <div key={idx} className="player-row">
-            <label className="field-label">
-              <span className="field-label-title">
-                Personaje
-                <Help text={HELP.playerCharacter} />
-              </span>
-              <input
-                list="register-character-list"
-                value={p.character}
-                onChange={(e) => handleCharacterChange(idx, e.target.value)}
-                placeholder="Busca personaje"
-              />
-              <datalist id="register-character-list">
-                {characters.map((c) => (
-                  <option key={c} value={c} />
-                ))}
-              </datalist>
-            </label>
-            <label className="field-label">
-              <span className="field-label-title">
-                Aspecto
-                <Help text={HELP.playerAspect} />
-              </span>
-              {(() => {
-                const isAdam = p.character === 'Adam Warlock';
-                const isSW = p.character === 'Spider-woman';
-                const options = isSW ? swAspects : aspects;
-                return (
+        {players.map((p, idx) => {
+          const dataListId = `register-character-list-${idx}`;
+          return (
+            <div key={idx} className="player-row">
+              <label className="field-label">
+                <span className="field-label-title">
+                  Personaje
+                  <Help text={HELP.playerCharacter} />
+                </span>
+                {preferSelectInput ? (
                   <select
-                    value={p.aspect}
-                    disabled={isAdam}
-                    onChange={(e) => {
-                      const value = e.target.value;
-                      setPlayers((prev) =>
-                        prev.map((row, i) => (i === idx ? { ...row, aspect: value } : row))
-                      );
-                    }}
+                    value={p.character}
+                    onChange={(e) => handleCharacterChange(idx, e.target.value)}
                   >
                     <option value="" disabled>
-                      {isAdam ? 'No aplica' : 'Selecciona aspecto'}
+                      Selecciona personaje
                     </option>
-                    {options.map((a) => (
-                      <option key={a} value={a}>
-                        {a}
+                    {characters.map((c) => (
+                      <option key={c} value={c}>
+                        {c}
                       </option>
                     ))}
                   </select>
-                );
-              })()}
-            </label>
-          </div>
-        ))}
+                ) : (
+                  <>
+                    <input
+                      list={dataListId}
+                      value={p.character}
+                      onChange={(e) => handleCharacterChange(idx, e.target.value)}
+                      placeholder="Busca personaje"
+                    />
+                    <datalist id={dataListId}>
+                      {characters.map((c) => (
+                        <option key={c} value={c} />
+                      ))}
+                    </datalist>
+                  </>
+                )}
+              </label>
+              <label className="field-label">
+                <span className="field-label-title">
+                  Aspecto
+                  <Help text={HELP.playerAspect} />
+                </span>
+                {(() => {
+                  const isAdam = p.character === 'Adam Warlock';
+                  const isSW = p.character === 'Spider-woman';
+                  const options = isSW ? swAspects : aspects;
+                  return (
+                    <select
+                      value={p.aspect}
+                      disabled={isAdam}
+                      onChange={(e) => {
+                        const value = e.target.value;
+                        setPlayers((prev) =>
+                          prev.map((row, i) => (i === idx ? { ...row, aspect: value } : row))
+                        );
+                      }}
+                    >
+                      <option value="" disabled>
+                        {isAdam ? 'No aplica' : 'Selecciona aspecto'}
+                      </option>
+                      {options.map((a) => (
+                        <option key={a} value={a}>
+                          {a}
+                        </option>
+                      ))}
+                    </select>
+                  );
+                })()}
+              </label>
+            </div>
+          );
+        })}
 
         <button type="submit">Crear y continuar</button>
       </form>
