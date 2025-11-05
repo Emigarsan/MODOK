@@ -34,8 +34,6 @@ function Help({ text }) {
   return (
     <span
       className={`help-wrapper${open ? ' is-open' : ''}`}
-      onMouseEnter={() => setOpen(true)}
-      onMouseLeave={() => setOpen(false)}
     >
       <button
         type="button"
@@ -45,7 +43,6 @@ function Help({ text }) {
           e.preventDefault();
           setOpen((prev) => !prev);
         }}
-        onFocus={() => setOpen(true)}
         onBlur={() => setOpen(false)}
       >
         <span aria-hidden="true">i</span>

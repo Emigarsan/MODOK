@@ -24,19 +24,19 @@ export default function AdminPage() {
   const [purgeMinutes, setPurgeMinutes] = useState('1440');
   const [purgeKeep, setPurgeKeep] = useState('10');
 
-  // Campos de fijaci?n permanecen vacÃ?os hasta que el usuario escriba.
+  // Campos de fijaci?n permanecen vacÃ­os hasta que el usuario escriba.
   const syncFromState = () => { };
 
   const fetchState = useCallback(() => {
     fetch(API_BASE)
-      .then((r) => r.ok ? r.json() : Promise.reject(new Error('Respuesta inválida')))
+      .then((r) => r.ok ? r.json() : Promise.reject(new Error('Respuesta invÃ¡lida')))
       .then((data) => { setState(data); setError(null); syncFromState(data); })
       .catch((e) => setError(e.message));
   }, []);
 
   useEffect(() => { fetchState(); const id = setInterval(fetchState, 3000); return () => clearInterval(id); }, [fetchState]);
 
-  // No auto-login: siempre pedimos contraseña hasta pulsar "Entrar".
+  // No auto-login: siempre pedimos contraseÃ±a hasta pulsar "Entrar".
 
   const fetchTables = useCallback(() => {
     if (!isAuthed) return;
@@ -188,7 +188,7 @@ export default function AdminPage() {
         <h2>Admin</h2>
         <form className="form" onSubmit={tryAuth}>
           <label>
-            Contraseña
+            ContraseÃ±a
             <input type="password" value={adminKey} onChange={(e) => setAdminKey(e.target.value)} />
           </label>
           <button type="submit">Entrar</button>
@@ -202,7 +202,7 @@ export default function AdminPage() {
       <h2>Admin</h2>
       {isAuthed && (
         <div className="form" style={{ alignSelf: 'flex-end' }}>
-          <button onClick={logout}>Cerrar sesión</button>
+          <button onClick={logout}>Cerrar sesiÃ³n</button>
         </div>
       )}
       {error && <p className="error">{error}</p>}
@@ -246,7 +246,7 @@ export default function AdminPage() {
             </section>
 
             <section className="counter-card">
-              <h3>Celdas de Contención</h3>
+              <h3>Celdas de ContenciÃ³n</h3>
               <div className="counter-value">{state.secondary}</div>
               <div className="form">
                 <label>
@@ -321,9 +321,9 @@ export default function AdminPage() {
                       .then(r => r.ok ? r.json() : Promise.reject(new Error('No autorizado')))
                       .then(() => fetchBackups())
                       .catch((e) => alert(e.message));
-                  }}>Purgar por antigüedad</button>
+                  }}>Purgar por antigÃ¼edad</button>
                   <label>
-                    Conservar últimos
+                    Conservar Ãºltimos
                     <input type="number" min={0} value={purgeKeep} onChange={(e) => setPurgeKeep(e.target.value)} />
                   </label>
                   <button onClick={() => {
@@ -338,7 +338,7 @@ export default function AdminPage() {
                   <thead>
                     <tr>
                       <th>Archivo</th>
-                      <th>Tamaño</th>
+                      <th>TamaÃ±o</th>
                       <th>Modificado</th>
                       <th>Acciones</th>
                     </tr>
@@ -413,7 +413,7 @@ export default function AdminPage() {
                       <th>Dificultad</th>
                       <th>Jugadores</th>
                       <th>Detalle jugadores</th>
-                      <th>Código</th>
+                      <th>CÃ³digo</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -441,7 +441,7 @@ export default function AdminPage() {
               </section>
               <div className="form" style={{ marginTop: 8, gap: 8, display: tablesTab === 'freegame' ? 'flex' : 'none', flexWrap: 'wrap' }}>
                 <button onClick={() => download('/api/admin/export/freegame.csv', 'freegame.csv')}>Exportar CSV (Freegame)</button>
-                <button onClick={() => download('/api/admin/export/freegame_scores.csv', 'freegame_scores.csv')}>Exportar CSV (Puntuación Freegame)</button>
+                <button onClick={() => download('/api/admin/export/freegame_scores.csv', 'freegame_scores.csv')}>Exportar CSV (PuntuaciÃ³n Freegame)</button>
                 <label className="admin-toggle">
                   <input
                     type="checkbox"
@@ -479,7 +479,7 @@ export default function AdminPage() {
                 <table className="data-table" style={{ width: '100%' }}>
                   <thead>
                     <tr>
-                      <th>Mesa</th><th>Nombre</th><th>Reto inevitable</th><th>Jugadores</th><th>Detalle jugadores</th><th>Código</th>
+                      <th>Mesa</th><th>Nombre</th><th>Reto inevitable</th><th>Jugadores</th><th>Detalle jugadores</th><th>CÃ³digo</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -496,7 +496,7 @@ export default function AdminPage() {
                 </table>
               </section>
               <section className="counter-card" style={{ overflowX: 'auto', display: tablesTab === 'freegame' ? 'block' : 'none' }}>
-                <h3>Puntuación por mesa (desglose)</h3>
+                <h3>PuntuaciÃ³n por mesa (desglose)</h3>
                 <table className="data-table" style={{ width: '100%' }}>
                   <thead>
                     <tr>

@@ -138,7 +138,7 @@ export function EventView({ onAction } = {}) {
     }
   }, [state.secondaryImageIndex]);
 
-  // When already on the last image (7ª) and secondary transitions to 0, show modal
+  // When already on the last image (7ï¿½) and secondary transitions to 0, show modal
   useEffect(() => {
     if (previousSecondaryValue.current !== state.secondary) {
       const reachedZeroNow = state.secondary === 0 && previousSecondaryValue.current > 0;
@@ -231,7 +231,7 @@ export function EventView({ onAction } = {}) {
   const currentSecondaryImage =
     secondaryImages[state.secondaryImageIndex] ?? secondaryImages[initialState.secondaryImageIndex];
   const displayedSecondaryImage = secondaryLocked ? celda7Accesorio : currentSecondaryImage;
-  const secondaryTitle = secondaryLocked ? 'Accesorio M.Y.T.H.O.S.' : 'Celdas de Contención';
+  const secondaryTitle = secondaryLocked ? 'Accesorio M.Y.T.H.O.S.' : 'Celdas de ContenciÃ³n';
 
   return (
     <>
