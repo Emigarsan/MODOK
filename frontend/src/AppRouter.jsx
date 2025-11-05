@@ -11,7 +11,8 @@ import MesaPage from './pages/Mesa.jsx';
 function PageWrapper({ children }) {
   const location = useLocation();
   const isAdmin = location.pathname.startsWith('/admin');
-  const pageClass = isAdmin ? 'page page-wide' : 'page';
+  const isDisplay = location.pathname.startsWith('/display');
+  const pageClass = isAdmin || isDisplay ? 'page page-wide' : 'page';
   return (
     <div className={pageClass}>
       {children}
