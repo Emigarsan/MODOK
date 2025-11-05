@@ -171,54 +171,56 @@ header p {
   position: relative;
   display: inline-flex;
   align-items: center;
+  margin-left: 0.25rem;
 }
 
 .help-icon {
-  width: 1.5rem;
-  height: 1.5rem;
+  width: 1rem;
+  height: 1rem;
   border-radius: 50%;
-  border: 1px solid var(--color-accent);
+  border: 1px solid var(--color-text-secondary);
   background: transparent;
-  color: var(--color-accent);
-  font-size: 0.85rem;
-  font-weight: 700;
-  cursor: pointer;
+  color: var(--color-text-secondary);
+  font-size: 0.65rem;
+  font-weight: 600;
+  cursor: help;
   padding: 0;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+  transition: color 0.15s ease, border-color 0.15s ease, background 0.15s ease;
 }
 
 .help-wrapper:hover .help-icon,
 .help-wrapper:focus-within .help-icon,
 .help-wrapper.is-open .help-icon {
-  background: var(--color-accent);
-  color: var(--color-surface-2);
-  border-color: var(--color-accent);
+  background: rgba(241, 233, 229, 0.08);
+  color: var(--color-text-primary);
+  border-color: var(--color-text-primary);
 }
 
 .help-tooltip {
   position: absolute;
-  bottom: calc(100% + 0.5rem);
+  bottom: 100%;
   left: 50%;
-  transform: translate(-50%, 0.35rem);
-  background: var(--color-surface-2);
-  border: 1px solid var(--color-divider);
-  border-radius: 0.75rem;
-  padding: 0.6rem 0.75rem;
-  font-size: 0.8rem;
-  line-height: 1.3;
-  color: var(--color-text-primary);
+  transform: translate(-50%, -0.5rem);
+  min-width: 12rem;
+  max-width: 18rem;
+  padding: 0.45rem 0.65rem;
+  border-radius: 0.6rem;
+  background: rgba(17, 16, 24, 0.92);
+  color: #fff;
+  font-size: 0.7rem;
+  line-height: 1.35;
   opacity: 0;
+  visibility: hidden;
   pointer-events: none;
-  width: min(260px, 70vw);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-  transition: opacity 0.15s ease, transform 0.15s ease;
-  z-index: 6;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+  transition: opacity 0.15s ease, visibility 0.15s ease, transform 0.15s ease;
+  z-index: 8;
 }
 
-.help-tooltip::before {
+.help-tooltip::after {
   content: '';
   position: absolute;
   top: 100%;
@@ -226,15 +228,16 @@ header p {
   transform: translateX(-50%);
   border-width: 6px;
   border-style: solid;
-  border-color: var(--color-surface-2) transparent transparent transparent;
+  border-color: rgba(17, 16, 24, 0.92) transparent transparent transparent;
 }
 
 .help-wrapper:hover .help-tooltip,
 .help-wrapper:focus-within .help-tooltip,
 .help-wrapper.is-open .help-tooltip {
   opacity: 1;
-  pointer-events: auto;
-  transform: translate(-50%, 0);
+  visibility: visible;
+  pointer-events: none;
+  transform: translate(-50%, -0.2rem);
 }
 
 /* Player row layout for Register page */

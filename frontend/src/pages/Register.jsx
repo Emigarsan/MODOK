@@ -30,7 +30,7 @@ function Help({ text }) {
         onFocus={() => setOpen(true)}
         onBlur={() => setOpen(false)}
       >
-        ?
+        <span aria-hidden="true">i</span>
       </button>
       <span className="help-tooltip">{text}</span>
     </span>
