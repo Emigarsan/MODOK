@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { usePreferSelectInput } from '../hooks/usePreferSelectInput.js';
+import CharacterSelector from '../components/CharacterSelector.jsx';
 
 const HELP = {
   mesaNumber: 'Número único e identificativo de tu mesa, estará indicado físicamente en la misma',
@@ -51,7 +51,6 @@ export default function RegisterPage() {
   const [characters, setCharacters] = useState([]);
   const [aspects, setAspects] = useState([]);
   const [swAspects, setSwAspects] = useState([]);
-  const preferSelectInput = usePreferSelectInput();
 
   const normalize = (s) =>
     (s || '')
@@ -265,59 +264,33 @@ export default function RegisterPage() {
           />
         </label>
 
-        {players.map((p, idx) => {
-          const dataListId = `register-character-list-${idx}`;
-          return (
-            <div key={idx} className="player-row">
-              <label className="field-label">
-                <span className="field-label-title">
-                  Personaje
-                  <Help text={HELP.playerCharacter} />
-                </span>
-                {preferSelectInput ? (
+        {players.map((p, idx) => (
+          <div key={idx} className="player-row">
+            <label className="field-label">
+              <span className="field-label-title">
+                Personaje
+                <Help text={HELP.playerCharacter} />
+              </span>
+              <CharacterSelector
+                value={p.character}
+                options={characters}
+                onChange={(next) => handleCharacterChange(idx, next)}
+              />
+            </label>
+            <label className="field-label">
+              <span className="field-label-title">
+                Aspecto
+                <Help text={HELP.playerAspect} />
+              </span>
+              {(() => {
+                const isAdam = p.character === 'Adam Warlock';
+                const isSW = p.character === 'Spider-woman';
+                const options = isSW ? swAspects : aspects;
+                return (
                   <select
-                    value={p.character}
-                    onChange={(e) => handleCharacterChange(idx, e.target.value)}
-                  >
-                    <option value="" disabled>
-                      Selecciona personaje
-                    </option>
-                    {characters.map((c) => (
-                      <option key={c} value={c}>
-                        {c}
-                      </option>
-                    ))}
-                  </select>
-                ) : (
-                  <>
-                    <input
-                      list={dataListId}
-                      value={p.character}
-                      onChange={(e) => handleCharacterChange(idx, e.target.value)}
-                      placeholder="Busca personaje"
-                    />
-                    <datalist id={dataListId}>
-                      {characters.map((c) => (
-                        <option key={c} value={c} />
-                      ))}
-                    </datalist>
-                  </>
-                )}
-              </label>
-              <label className="field-label">
-                <span className="field-label-title">
-                  Aspecto
-                  <Help text={HELP.playerAspect} />
-                </span>
-                {(() => {
-                  const isAdam = p.character === 'Adam Warlock';
-                  const isSW = p.character === 'Spider-woman';
-                  const options = isSW ? swAspects : aspects;
-                  return (
-                    <select
-                      value={p.aspect}
-                      disabled={isAdam}
-                      onChange={(e) => {
+                    value={p.aspect}
+                    disabled={isAdam}
+                    onChange={(e) => {
                         const value = e.target.value;
                         setPlayers((prev) =>
                           prev.map((row, i) => (i === idx ? { ...row, aspect: value } : row))

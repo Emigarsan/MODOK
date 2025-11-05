@@ -272,6 +272,54 @@ header p {
   width: 100%;
 }
 
+.character-selector {
+  position: relative;
+  width: 100%;
+}
+
+.character-selector input {
+  width: 100%;
+  border: 1px solid var(--color-divider);
+  border-radius: 0.9rem;
+  padding: 0.75rem 1rem;
+  background: rgba(0, 0, 0, 0.25);
+  color: var(--color-text-primary);
+  font-size: 1rem;
+}
+
+.character-selector input:focus {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 0;
+}
+
+.character-selector__list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  max-height: 220px;
+  margin-top: 0.4rem;
+  padding: 0.4rem 0;
+  list-style: none;
+  background: var(--color-surface);
+  border: 1px solid var(--color-divider);
+  border-radius: 0.9rem;
+  box-shadow: 0 12px 22px rgba(0, 0, 0, 0.35);
+  overflow: auto;
+}
+
+.character-selector__list li {
+  padding: 0.45rem 1rem;
+  cursor: pointer;
+  color: var(--color-text-primary);
+}
+
+.character-selector__list li:hover,
+.character-selector__list li:focus {
+  background: var(--color-surface-2);
+}
+
 @media (max-width: 600px) {
   .player-row {
     grid-template-columns: 1fr;
