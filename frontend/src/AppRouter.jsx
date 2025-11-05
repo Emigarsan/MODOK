@@ -20,16 +20,26 @@ function PageWrapper({ children }) {
   );
 }
 
+function SiteHeader() {
+  const location = useLocation();
+  const hideNav = location.pathname.startsWith('/display');
+  return (
+    <header>
+      <h1>InevitableCON 2025 Sevilla</h1>
+      {!hideNav && (
+        <nav className="nav">
+          <Link to="/register"><button>Inicio</button></Link>
+        </nav>
+      )}
+    </header>
+  );
+}
+
 export default function AppRouter() {
   return (
     <BrowserRouter>
       <PageWrapper>
-        <header>
-          <h1>InevitableCON 2025 Sevilla</h1>
-          <nav className="nav">
-            <Link to="/register"><button>Inicio</button></Link>
-          </nav>
-        </header>
+        <SiteHeader />
         <Routes>
           <Route path="/" element={<Navigate to="/register" replace />} />
           <Route path="/register" element={<RegisterPage />} />
