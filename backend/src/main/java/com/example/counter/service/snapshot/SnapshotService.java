@@ -77,6 +77,8 @@ public class SnapshotService {
         public List<FreeGameTable> freeGameTables;
         public Map<Integer, TotalesMesa> mesaTotals;
         public List<Event> mesaEvents;
+        public boolean qrEventEnabled;
+        public boolean qrFreegameEnabled;
         public long ts;
     }
 
@@ -135,6 +137,8 @@ public class SnapshotService {
         data.counter = counterService.getState();
         data.registerTables = tablesService.listRegister();
         data.freeGameTables = tablesService.listFreeGame();
+        data.qrEventEnabled = tablesService.isEventQrEnabled();
+        data.qrFreegameEnabled = tablesService.isFreegameQrEnabled();
         data.mesaTotals = mesaService.getTotalesSnapshot();
         data.mesaEvents = mesaService.getEventosSnapshot();
         data.ts = System.currentTimeMillis();
@@ -181,6 +185,8 @@ public class SnapshotService {
         }
         mesaService.restore(data.mesaTotals, data.mesaEvents);
         tablesService.restore(data.registerTables, data.freeGameTables);
+        tablesService.setEventQrEnabled(data.qrEventEnabled);
+        tablesService.setFreegameQrEnabled(data.qrFreegameEnabled);
     }
 
     public synchronized boolean restoreFromFileName(String name) {

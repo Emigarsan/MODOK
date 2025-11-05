@@ -18,6 +18,8 @@ public class TablesService {
     private final List<String> registerCharacters;
     private final List<String> registerAspects;
     private final List<String> registerSpiderwomanAspects;
+    private boolean eventQrEnabled;
+    private boolean freegameQrEnabled;
 
     public TablesService() {
         registerCharacters = List.of(
@@ -199,6 +201,22 @@ public class TablesService {
 
     public synchronized List<String> getRegisterSpiderwomanAspects() {
         return Collections.unmodifiableList(new ArrayList<>(registerSpiderwomanAspects));
+    }
+
+    public synchronized boolean isEventQrEnabled() {
+        return eventQrEnabled;
+    }
+
+    public synchronized boolean isFreegameQrEnabled() {
+        return freegameQrEnabled;
+    }
+
+    public synchronized void setEventQrEnabled(boolean enabled) {
+        this.eventQrEnabled = enabled;
+    }
+
+    public synchronized void setFreegameQrEnabled(boolean enabled) {
+        this.freegameQrEnabled = enabled;
     }
 
     private List<PlayerInfo> sanitizeRegisterPlayers(List<PlayerInfo> playersInfo) {

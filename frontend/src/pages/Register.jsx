@@ -2,13 +2,13 @@ import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const HELP = {
-  mesaNumber: 'Debe ser unico dentro del evento. Sigue la numeracion del plano de mesas.',
-  mesaName: 'Identificador visible para participantes y pantallas (opcional).',
-  difficulty: 'Solo informativo para el personal. No modifica calculos.',
-  playersCount: 'Entre 1 y 4 plazas. El formulario ajusta automaticamente las fichas.',
-  playerCharacter: 'Escribe parte del nombre y elige la sugerencia normalizada.',
-  playerAspect: 'Lista de aspectos validos. Para Adam Warlock queda bloqueado.',
-  joinCode: 'Selecciona la mesa ya creada para cargarla y gestionarla desde aqui.'
+  mesaNumber: 'Número único e identificativo de tu mesa, estará indicado físicamente en la misma',
+  mesaName: 'Nombre del grupo de jugadores, es opcional.',
+  difficulty: 'Dificultad en la que se va a jugar la partida.',
+  playersCount: 'Entre 1 y 4 jugadores. Aparecerán tantas fichas como jugadores seleccionados.',
+  playerCharacter: 'Nombre del personaje. Escribe parte del nombre y selecciona la sugerencia normalizada.',
+  playerAspect: 'Lista de aspectos. Para Adam Warlock queda bloqueado.',
+  joinCode: 'Selecciona la mesa ya creada para cargarla y gestionarla.'
 };
 
 function Help({ text }) {

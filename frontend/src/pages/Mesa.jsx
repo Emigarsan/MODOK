@@ -14,16 +14,15 @@ export default function MesaPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
       });
-    } catch (_) {}
+    } catch (_) { }
   }, [mesaId]);
 
   return (
-    <div className="container overlay-card">
-      <div className="form" style={{ marginBottom: 12 }}>
-        <button onClick={() => navigate('/register')}>Volver</button>
-      </div>
-      <h3>Mesa {mesaId}</h3>
-      <EventView onAction={logMesaEvent} />
-    </div>
+    <><div className="form" style={{ marginBottom: 12 }}>
+      <button onClick={() => navigate('/register')}>Volver</button>
+    </div><div className="container overlay-card">
+        <h3>Mesa {mesaId}</h3>
+        <EventView onAction={logMesaEvent} />
+      </div></>
   );
 }

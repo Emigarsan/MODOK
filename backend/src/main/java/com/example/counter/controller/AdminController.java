@@ -42,7 +42,8 @@ public class AdminController {
         if (!isAdmin(secret)) return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         return ResponseEntity.ok(Map.of(
                 "register", tablesService.listRegister(),
-                "freegame", tablesService.listFreeGame()
+                "freegame", tablesService.listFreeGame(),
+                "qrFlags", buildQrFlags()
         ));
     }
 
@@ -115,6 +116,28 @@ public class AdminController {
         }
         String csv = sj.toString() + "\n";
         return csvResponse(csv, "freegame_scores.csv");
+    }
+
+    @GetMapping("/qr")
+    public ResponseEntity<Map<String, Boolean>> getQrFlags(@RequestHeader(value = "X-Admin-Secret", required = false) String secret) {
+        if (!isAdmin(secret)) return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        return ResponseEntity.ok(buildQrFlags());
+    }
+
+    @PostMapping("/qr/event")
+    public ResponseEntity<Map<String, Boolean>> setEventQrFlag(@RequestHeader(value = "X-Admin-Secret", required = false) String secret,
+                                                               @RequestBody Map<String, Object> payload) {
+        if (!isAdmin(secret)) return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        tablesService.setEventQrEnabled(parseEnabled(payload));
+        return ResponseEntity.ok(buildQrFlags());
+    }
+
+    @PostMapping("/qr/freegame")
+    public ResponseEntity<Map<String, Boolean>> setFreegameQrFlag(@RequestHeader(value = "X-Admin-Secret", required = false) String secret,
+                                                                  @RequestBody Map<String, Object> payload) {
+        if (!isAdmin(secret)) return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        tablesService.setFreegameQrEnabled(parseEnabled(payload));
+        return ResponseEntity.ok(buildQrFlags());
     }
 
     private String buildRegisterCsv(List<RegisterTable> reg) {
@@ -197,6 +220,27 @@ public class AdminController {
             }
         }
         return sj.toString() + "\n";
+    }
+
+    private Map<String, Boolean> buildQrFlags() {
+        return Map.of(
+                "event", tablesService.isEventQrEnabled(),
+                "freegame", tablesService.isFreegameQrEnabled()
+        );
+    }
+
+    private boolean parseEnabled(Map<String, Object> payload) {
+        Object raw = payload == null ? null : payload.get("enabled");
+        if (raw instanceof Boolean b) {
+            return b;
+        }
+        if (raw instanceof String s) {
+            return Boolean.parseBoolean(s);
+        }
+        if (raw instanceof Number n) {
+            return n.intValue() != 0;
+        }
+        return false;
     }
 
     private String escape(String v) {

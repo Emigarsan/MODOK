@@ -4,6 +4,7 @@ import FreeGamePage from './pages/FreeGame.jsx';
 import FreeGameMesa from './pages/FreeGameMesa.jsx';
 import FreeGameTablePage from './pages/FreeGameTable.jsx';
 import DisplayPage from './pages/Display.jsx';
+import QrDisplayPage from './pages/QrDisplay.jsx';
 import AdminPage from './pages/Admin.jsx';
 import MesaPage from './pages/Mesa.jsx';
 
@@ -35,6 +36,7 @@ export default function AppRouter() {
           <Route path="/freegame" element={<FreeGamePage />} />
           <Route path="/freegame/:id" element={<FreeGameTablePage />} />
           <Route path="/display" element={<DisplayPage />} />
+          <Route path="/display/qr" element={<QrDisplayPage />} />
           <Route path="/admin" element={<AdminPage />} />
           <Route path="/mesa/:mesaId" element={<MesaPage />} />
           <Route path="*" element={<Navigate to="/register" replace />} />

@@ -17,15 +17,15 @@ const LEGACY_OPTIONS = [
 ];
 
 const HELP = {
-  mesaNumber: 'Numero unico para mesas libres. Usa la numeracion del area libre.',
-  mesaName: 'Nombre visible en las pantallas de control (opcional).',
-  difficulty: 'Etiqueta informativa para el staff. No altera puntos.',
-  challenge: 'Si permanece en (Ninguno), la puntuacion total sera 0 y los puntos de victoria se bloquean.',
-  players: 'Entre 1 y 4 plazas. Ajusta el numero de fichas de jugador automaticamente.',
-  playerCharacter: 'Escribe parte del nombre y selecciona la sugerencia normalizada.',
-  playerAspect: 'Lista de aspectos validos. Para Adam Warlock queda bloqueado.',
-  playerLegacy: 'Cada legado distinto de "Ninguno" suma 1 punto adicional.',
-  joinCode: 'Selecciona la mesa libre creada para gestionarla o ver su puntuacion.'
+  mesaNumber: 'Número único e identificativo de tu mesa, estará indicado físicamente en la misma',
+  mesaName: 'Nombre del grupo de jugadores, es opcional.',
+  difficulty: 'Dificultad en la que se va a jugar la partida. Supone 3 puntos si es Normal y 5 puntos si es Experto.',
+  challenge: 'Reto seleccionado para la partida de la mañana. Si se elige Ninguno, la puntuacion total sera 0.',
+  players: 'Entre 1 y 4 jugadores. Aparecerán tantas fichas como jugadores seleccionados.',
+  playerCharacter: 'Nombre del personaje. Escribe parte del nombre y selecciona la sugerencia normalizada.',
+  playerAspect: 'Lista de aspectos. Para Adam Warlock queda bloqueado.',
+  playerLegacy: 'Legado seleccionado para este héroe. Cada legado distinto de "Ninguno" suma 1 punto adicional.',
+  joinCode: 'Selecciona la mesa creada con anterioridad para gestionarla o ver su puntuacion. Puedes entrar de nuevo para modificar los puntos de Victoria.'
 };
 
 function Help({ text }) {
@@ -210,7 +210,7 @@ export default function FreeGamePage() {
 
   return (
     <div className="container overlay-card">
-      <h2>Retos inevitables</h2>
+      <h2>Retos Inevitables</h2>
       <div className="tabs">
         <button
           className={mode === 'create' ? 'active' : ''}
@@ -241,7 +241,7 @@ export default function FreeGamePage() {
                 placeholder="Ej. 50"
                 required
               />
-              </label>
+            </label>
             <label className="field-label">
               <span className="field-label-title">
                 Nombre de mesa
@@ -252,7 +252,7 @@ export default function FreeGamePage() {
                 onChange={(e) => setMesaName(e.target.value)}
                 placeholder="Ej. Mesa Libre 1"
               />
-              </label>
+            </label>
             <label className="field-label">
               <span className="field-label-title">
                 Dificultad
@@ -262,7 +262,7 @@ export default function FreeGamePage() {
                 <option value="Normal">Normal</option>
                 <option value="Experto">Experto</option>
               </select>
-              </label>
+            </label>
             <label className="field-label">
               <span className="field-label-title">
                 Reto inevitable
@@ -279,7 +279,7 @@ export default function FreeGamePage() {
                 <option value="Thunder Force">Thunder Force</option>
                 <option value="Ultron Infinito">Ultron Infinito</option>
               </select>
-              </label>
+            </label>
             <label className="field-label">
               <span className="field-label-title">
                 Numero de jugadores
@@ -299,7 +299,7 @@ export default function FreeGamePage() {
                 }}
                 required
               />
-              </label>
+            </label>
             {playersInfo.map((p, idx) => (
               <div key={idx} className="player-row freegame-row">
                 <label className="field-label">
@@ -318,7 +318,7 @@ export default function FreeGamePage() {
                       <option key={c} value={c} />
                     ))}
                   </datalist>
-                  </label>
+                </label>
                 <label className="field-label">
                   <span className="field-label-title">
                     Aspecto
@@ -352,7 +352,7 @@ export default function FreeGamePage() {
                       </select>
                     );
                   })()}
-                  </label>
+                </label>
                 <label className="field-label">
                   <span className="field-label-title">
                     Legado
@@ -375,7 +375,7 @@ export default function FreeGamePage() {
                       </option>
                     ))}
                   </select>
-                  </label>
+                </label>
               </div>
             ))}
           </>
@@ -407,7 +407,7 @@ export default function FreeGamePage() {
                   </option>
                 ))}
               </select>
-              </label>
+            </label>
           </>
         )}
         <button type="submit">Guardar</button>

@@ -55,66 +55,64 @@ export default function FreeGameMesa() {
   };
 
   return (
-    <div className="container overlay-card">
-      <div className="form" style={{ marginBottom: 12 }}>
-        <button onClick={() => navigate('/freegame')}>Volver</button>
-      </div>
-      <h2>Freegame — Mesa {data.tableNumber}</h2>
-      <div className="form" style={{ display: 'grid', gap: 8 }}>
-        <div><strong>Nombre:</strong> {data.name || '-'}</div>
-        <div><strong>Dificultad:</strong> {data.difficulty || 'Normal'}</div>
-        <div><strong>Reto inevitable:</strong> {data.inevitableChallenge || '(Ninguno)'}</div>
-        <div><strong>Jugadores:</strong> {data.players}</div>
-        <div>
-          <strong>Detalle jugadores:</strong>{' '}
-          {Array.isArray(data.playersInfo)
-            ? data.playersInfo.map((p, i) => {
+    <><div className="form" style={{ marginBottom: 12 }}>
+      <button onClick={() => navigate('/freegame')}>Volver</button>
+    </div><div className="container overlay-card">
+        <h2>Freegame — Mesa {data.tableNumber}</h2>
+        <div className="form" style={{ display: 'grid', gap: 8 }}>
+          <div><strong>Nombre:</strong> {data.name || '-'}</div>
+          <div><strong>Dificultad:</strong> {data.difficulty || 'Normal'}</div>
+          <div><strong>Reto inevitable:</strong> {data.inevitableChallenge || '(Ninguno)'}</div>
+          <div><strong>Jugadores:</strong> {data.players}</div>
+          <div>
+            <strong>Detalle jugadores:</strong>{' '}
+            {Array.isArray(data.playersInfo)
+              ? data.playersInfo.map((p, i) => {
                 const parts = [];
                 if (p.character) parts.push(p.character);
                 if (p.aspect) parts.push(`(${p.aspect})`);
                 if (p.legacy) parts.push(`[${p.legacy}]`);
                 return parts.join(' ');
               }).join(', ')
-            : ''}
+              : ''}
+          </div>
         </div>
-      </div>
 
-      <h3 style={{ marginTop: 16 }}>Puntuación por mesa (desglose)</h3>
-      <table className="data-table" style={{ width: '100%' }}>
-        <thead>
-          <tr>
-            <th>Dificultad</th>
-            <th>Puntos base</th>
-            <th>Legados</th>
-            <th>Puntos de Victoria</th>
-            <th>Total</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>{data.difficulty || 'Normal'}</td>
-            <td>{base}</td>
-            <td>{legacyCount}</td>
-            <td>
-              <input
-                type="number"
-                min={0}
-                value={vpInput}
-                disabled={noChallenge || saved}
-                onChange={(e) => setVpInput(e.target.value)}
-              />
-            </td>
-            <td>{total}</td>
-          </tr>
-        </tbody>
-      </table>
-      <div className="form" style={{ marginTop: 8 }}>
-        <button disabled={noChallenge || saved} onClick={saveVP}>
-          Enviar puntuación
-        </button>
-        {saved && <span style={{ marginLeft: 8 }}>Guardado como definitivo</span>}
-      </div>
-    </div>
+        <h3 style={{ marginTop: 16 }}>Puntuación por mesa (desglose)</h3>
+        <table className="data-table" style={{ width: '100%' }}>
+          <thead>
+            <tr>
+              <th>Dificultad</th>
+              <th>Puntos base</th>
+              <th>Legados</th>
+              <th>Puntos de Victoria</th>
+              <th>Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{data.difficulty || 'Normal'}</td>
+              <td>{base}</td>
+              <td>{legacyCount}</td>
+              <td>
+                <input
+                  type="number"
+                  min={0}
+                  value={vpInput}
+                  disabled={noChallenge || saved}
+                  onChange={(e) => setVpInput(e.target.value)} />
+              </td>
+              <td>{total}</td>
+            </tr>
+          </tbody>
+        </table>
+        <div className="form" style={{ marginTop: 8 }}>
+          <button disabled={noChallenge || saved} onClick={saveVP}>
+            Enviar puntuación
+          </button>
+          {saved && <span style={{ marginLeft: 8 }}>Guardado como definitivo</span>}
+        </div>
+      </div></>
   );
 }
 

@@ -1,4 +1,4 @@
-ï»¿import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 const API_BASE = '/api/counter';
 
@@ -15,6 +15,7 @@ export default function AdminPage() {
   const [adminKey, setAdminKey] = useState('');
   const [isAuthed, setIsAuthed] = useState(false);
   const [tables, setTables] = useState({ register: [], freegame: [] });
+  const [qrFlags, setQrFlags] = useState({ event: false, freegame: false });
   const [mesaSummary, setMesaSummary] = useState({});
   const [tab, setTab] = useState('mod');
   const [tablesTab, setTablesTab] = useState('event');
@@ -23,25 +24,40 @@ export default function AdminPage() {
   const [purgeMinutes, setPurgeMinutes] = useState('1440');
   const [purgeKeep, setPurgeKeep] = useState('10');
 
-  // Campos de fijaciï¿½n permanecen vacÃƒï¿½os hasta que el usuario escriba.
+  // Campos de fijaci?n permanecen vacÃ?os hasta que el usuario escriba.
   const syncFromState = () => { };
 
   const fetchState = useCallback(() => {
     fetch(API_BASE)
-      .then((r) => r.ok ? r.json() : Promise.reject(new Error('Respuesta invÃ¡lida')))
+      .then((r) => r.ok ? r.json() : Promise.reject(new Error('Respuesta inválida')))
       .then((data) => { setState(data); setError(null); syncFromState(data); })
       .catch((e) => setError(e.message));
   }, []);
 
   useEffect(() => { fetchState(); const id = setInterval(fetchState, 3000); return () => clearInterval(id); }, [fetchState]);
 
-  // No auto-login: siempre pedimos contraseÃ±a hasta pulsar "Entrar".
+  // No auto-login: siempre pedimos contraseña hasta pulsar "Entrar".
 
   const fetchTables = useCallback(() => {
     if (!isAuthed) return;
     fetch('/api/admin/tables', { headers: { 'X-Admin-Secret': adminKey } })
       .then((r) => r.ok ? r.json() : Promise.reject(new Error('No autorizado')))
-      .then((data) => setTables(data))
+      .then((data) => {
+        if (!data || typeof data !== 'object') {
+          setTables({ register: [], freegame: [] });
+          return;
+        }
+        const register = Array.isArray(data.register) ? data.register : [];
+        const freegame = Array.isArray(data.freegame) ? data.freegame : [];
+        setTables({ register, freegame });
+        const flags = data.qrFlags;
+        if (flags && typeof flags === 'object') {
+          setQrFlags({
+            event: Boolean(flags.event),
+            freegame: Boolean(flags.freegame)
+          });
+        }
+      })
       .catch(() => { });
   }, [adminKey, isAuthed]);
 
@@ -65,6 +81,29 @@ export default function AdminPage() {
       .then((data) => setBackups({ dir: data.dir || '', files: Array.isArray(data.files) ? data.files : [] }))
       .catch(() => { })
       .finally(() => setBackupsLoading(false));
+  }, [adminKey, isAuthed]);
+
+  const updateQrFlag = useCallback((type, enabled) => {
+    if (!isAuthed) return;
+    const endpoint = type === 'freegame' ? '/api/admin/qr/freegame' : '/api/admin/qr/event';
+    fetch(endpoint, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Admin-Secret': adminKey
+      },
+      body: JSON.stringify({ enabled })
+    })
+      .then((r) => r.ok ? r.json() : Promise.reject(new Error('No autorizado')))
+      .then((data) => {
+        if (data && typeof data === 'object') {
+          setQrFlags({
+            event: Boolean(data.event),
+            freegame: Boolean(data.freegame)
+          });
+        }
+      })
+      .catch(() => { });
   }, [adminKey, isAuthed]);
 
   useEffect(() => {
@@ -149,7 +188,7 @@ export default function AdminPage() {
         <h2>Admin</h2>
         <form className="form" onSubmit={tryAuth}>
           <label>
-            ContraseÃ±a
+            Contraseña
             <input type="password" value={adminKey} onChange={(e) => setAdminKey(e.target.value)} />
           </label>
           <button type="submit">Entrar</button>
@@ -163,7 +202,7 @@ export default function AdminPage() {
       <h2>Admin</h2>
       {isAuthed && (
         <div className="form" style={{ alignSelf: 'flex-end' }}>
-          <button onClick={logout}>Cerrar sesiÃ³n</button>
+          <button onClick={logout}>Cerrar sesión</button>
         </div>
       )}
       {error && <p className="error">{error}</p>}
@@ -207,7 +246,7 @@ export default function AdminPage() {
             </section>
 
             <section className="counter-card">
-              <h3>Celdas de ContenciÃ³n</h3>
+              <h3>Celdas de Contención</h3>
               <div className="counter-value">{state.secondary}</div>
               <div className="form">
                 <label>
@@ -282,9 +321,9 @@ export default function AdminPage() {
                       .then(r => r.ok ? r.json() : Promise.reject(new Error('No autorizado')))
                       .then(() => fetchBackups())
                       .catch((e) => alert(e.message));
-                  }}>Purgar por antigÃ¼edad</button>
+                  }}>Purgar por antigüedad</button>
                   <label>
-                    Conservar Ãºltimos
+                    Conservar últimos
                     <input type="number" min={0} value={purgeKeep} onChange={(e) => setPurgeKeep(e.target.value)} />
                   </label>
                   <button onClick={() => {
@@ -299,7 +338,7 @@ export default function AdminPage() {
                   <thead>
                     <tr>
                       <th>Archivo</th>
-                      <th>TamaÃ±o</th>
+                      <th>Tamaño</th>
                       <th>Modificado</th>
                       <th>Acciones</th>
                     </tr>
@@ -319,7 +358,7 @@ export default function AdminPage() {
                           <td>
                             <button onClick={() => download(`/api/admin/backup/download/${encodeURIComponent(name)}`, name)}>Descargar</button>
                             <button onClick={() => {
-                              if (!confirm(`Restaurar desde ${name}? Esto sobreescribirï¿½ el estado en memoria.`)) return;
+                              if (!confirm(`Restaurar desde ${name}? Esto sobreescribir? el estado en memoria.`)) return;
                               fetch(`/api/admin/backup/restore/${encodeURIComponent(name)}`, { method: 'POST', headers: { 'X-Admin-Secret': adminKey } })
                                 .then(r => r.ok ? r.json() : Promise.reject(new Error('No autorizado')))
                                 .then(() => alert('Restaurado'))
@@ -355,6 +394,14 @@ export default function AdminPage() {
               <div className="form" style={{ marginTop: 8, gap: 8, display: tablesTab === 'event' ? 'flex' : 'none', flexWrap: 'wrap' }}>
                 <button onClick={() => download('/api/admin/export/event.csv', 'event.csv')}>Exportar CSV (Event)</button>
                 <button onClick={() => download('/api/admin/export/mesas_totales.csv', 'mesas_totales.csv')}>Exportar CSV (Totales por contador)</button>
+                <label className="admin-toggle">
+                  <input
+                    type="checkbox"
+                    checked={!!qrFlags.event}
+                    onChange={(e) => updateQrFlag('event', e.target.checked)}
+                  />
+                  <span>Mostrar QR Evento</span>
+                </label>
               </div>
               <section className="counter-card" style={{ overflowX: 'auto', display: tablesTab === 'event' ? 'block' : 'none' }}>
                 <h3>Evento M.O.D.O.K.</h3>
@@ -366,7 +413,7 @@ export default function AdminPage() {
                       <th>Dificultad</th>
                       <th>Jugadores</th>
                       <th>Detalle jugadores</th>
-                      <th>CÃ³digo</th>
+                      <th>Código</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -394,7 +441,15 @@ export default function AdminPage() {
               </section>
               <div className="form" style={{ marginTop: 8, gap: 8, display: tablesTab === 'freegame' ? 'flex' : 'none', flexWrap: 'wrap' }}>
                 <button onClick={() => download('/api/admin/export/freegame.csv', 'freegame.csv')}>Exportar CSV (Freegame)</button>
-                <button onClick={() => download('/api/admin/export/freegame_scores.csv', 'freegame_scores.csv')}>Exportar CSV (PuntuaciÃ³n Freegame)</button>
+                <button onClick={() => download('/api/admin/export/freegame_scores.csv', 'freegame_scores.csv')}>Exportar CSV (Puntuación Freegame)</button>
+                <label className="admin-toggle">
+                  <input
+                    type="checkbox"
+                    checked={!!qrFlags.freegame}
+                    onChange={(e) => updateQrFlag('freegame', e.target.checked)}
+                  />
+                  <span>Mostrar QR Freegame</span>
+                </label>
               </div>
               <section className="counter-card" style={{ overflowX: 'auto', display: tablesTab === 'event' ? 'block' : 'none' }}>
                 <h3>Mesas - Totales por contador</h3>
@@ -424,7 +479,7 @@ export default function AdminPage() {
                 <table className="data-table" style={{ width: '100%' }}>
                   <thead>
                     <tr>
-                      <th>Mesa</th><th>Nombre</th><th>Reto inevitable</th><th>Jugadores</th><th>Detalle jugadores</th><th>CÃ³digo</th>
+                      <th>Mesa</th><th>Nombre</th><th>Reto inevitable</th><th>Jugadores</th><th>Detalle jugadores</th><th>Código</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -441,7 +496,7 @@ export default function AdminPage() {
                 </table>
               </section>
               <section className="counter-card" style={{ overflowX: 'auto', display: tablesTab === 'freegame' ? 'block' : 'none' }}>
-                <h3>PuntuaciÃ³n por mesa (desglose)</h3>
+                <h3>Puntuación por mesa (desglose)</h3>
                 <table className="data-table" style={{ width: '100%' }}>
                   <thead>
                     <tr>
