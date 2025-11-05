@@ -308,10 +308,9 @@ export default function RegisterPage() {
                     </select>
                   );
                 })()}
-              </label>
-            </div>
-          );
-        })}
+            </label>
+          </div>
+        ))}
 
         <button type="submit">Crear y continuar</button>
       </form>
