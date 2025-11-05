@@ -151,6 +151,26 @@ header p {
   gap: 0.75rem;
 }
 
+.form input,
+.form select,
+.form textarea {
+  width: 100%;
+  border: 1px solid var(--color-divider);
+  border-radius: 0.9rem;
+  padding: 0.75rem 1rem;
+  background: rgba(0, 0, 0, 0.25);
+  color: var(--color-text-primary);
+  font-size: 1rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form input:focus,
+.form select:focus,
+.form textarea:focus {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 0;
+}
+
 .field-label {
   display: flex;
   flex-direction: column;
@@ -267,31 +287,14 @@ header p {
   flex-direction: column;
   gap: 0.35rem;
 }
-.player-row input,
-.player-row select {
-  width: 100%;
-}
 
 .character-selector {
   position: relative;
   width: 100%;
 }
 
-.character-selector input,
-.player-row input,
-.player-row select {
+.character-selector input {
   width: 100%;
-  border: 1px solid var(--color-divider);
-  border-radius: 0.9rem;
-  padding: 0.75rem 1rem;
-  background: rgba(0, 0, 0, 0.25);
-  color: var(--color-text-primary);
-  font-size: 1rem;
-}
-
-.character-selector input:focus {
-  outline: 2px solid var(--color-primary);
-  outline-offset: 0;
 }
 
 .character-selector__list,
