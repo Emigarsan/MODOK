@@ -53,9 +53,10 @@ export default function FreeGameTablePage() {
     );
   }
 
+  const playersInfo = Array.isArray(table.playersInfo) ? table.playersInfo : [];
   const noChallenge = !table.inevitableChallenge || table.inevitableChallenge === '(Ninguno)';
   const base = noChallenge ? 0 : ((table.difficulty === 'Experto') ? 5 : 3);
-  const legacyCount = noChallenge ? 0 : (Array.isArray(table.playersInfo) ? table.playersInfo.filter(p => (p && p.legacy && String(p.legacy) !== 'Ninguno')).length : 0);
+  const legacyCount = noChallenge ? 0 : playersInfo.filter(p => (p && p.legacy && String(p.legacy) !== 'Ninguno')).length;
   const vp = noChallenge ? 0 : (parseInt(vpInput, 10) || 0);
   const total = base + legacyCount + vp;
 
@@ -76,7 +77,20 @@ export default function FreeGameTablePage() {
           <strong>Jugadores:</strong> {table.players}
         </div>
         <div>
-          <strong>Detalle jugadores:</strong> {Array.isArray(table.playersInfo) ? table.playersInfo.map((p) => `${p.character}${p.aspect ? ` (${p.aspect})` : ''}${(p.legacy && p.legacy !== 'Ninguno') ? ` [${p.legacy}]` : ''}`).join(', ') : ''}
+          <strong>Detalle jugadores:</strong>
+          <div className="player-detail-list">
+            {playersInfo.length > 0 ? (
+              playersInfo.map((p, idx) => (
+                <div key={`player-${idx}`} className="player-detail-item">
+                  {p.character}
+                  {p.aspect ? ` (${p.aspect})` : ''}
+                  {(p.legacy && p.legacy !== 'Ninguno') ? ` [${p.legacy}]` : ''}
+                </div>
+              ))
+            ) : (
+              <span className="player-detail-empty">Sin jugadores</span>
+            )}
+          </div>
         </div>
         <div>
           <strong>Código:</strong> {table.code}
@@ -85,38 +99,40 @@ export default function FreeGameTablePage() {
 
       <div className="counter-card" style={{ marginTop: 16 }}>
         <h3>Puntuación de la mesa</h3>
-        <table className="data-table" style={{ width: '100%' }}>
-          <thead>
-            <tr>
-              <th>Dificultad</th>
-              <th>Puntos base</th>
-              <th>Legados</th>
-              <th>Puntos de Victoria</th>
-              <th>Total</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>{table.difficulty || 'Normal'}</td>
-              <td>{base}</td>
-              <td>{legacyCount}</td>
-              <td>
-                <input type="number" min={0} value={vpInput} onChange={async (e) => {
-                  const v = e.target.value; setVpInput(v);
-                  const n = Math.max(0, parseInt(v, 10) || 0);
-                  try {
-                    await fetch('/api/tables/freegame/victory-points', {
-                      method: 'POST',
-                      headers: { 'Content-Type': 'application/json' },
-                      body: JSON.stringify({ id: table.id, victoryPoints: n })
-                    });
-                  } catch (_) { }
-                }} />
-              </td>
-              <td>{total}</td>
-            </tr>
-          </tbody>
-        </table>
+        <div className="table-scroll">
+          <table className="data-table">
+            <thead>
+              <tr>
+                <th>Dificultad</th>
+                <th>Puntos base</th>
+                <th>Legados</th>
+                <th>Puntos de Victoria</th>
+                <th>Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{table.difficulty || 'Normal'}</td>
+                <td>{base}</td>
+                <td>{legacyCount}</td>
+                <td>
+                  <input type="number" min={0} value={vpInput} onChange={async (e) => {
+                    const v = e.target.value; setVpInput(v);
+                    const n = Math.max(0, parseInt(v, 10) || 0);
+                    try {
+                      await fetch('/api/tables/freegame/victory-points', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ id: table.id, victoryPoints: n })
+                      });
+                    } catch (_) { }
+                  }} />
+                </td>
+                <td>{total}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
         <p className="counter-meta">Si no hay reto inevitable, la puntuación será 0.</p>
       </div>
 
@@ -126,4 +142,3 @@ export default function FreeGameTablePage() {
     </div>
   );
 }
-
