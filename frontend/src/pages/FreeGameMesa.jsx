@@ -19,7 +19,7 @@ export default function FreeGameMesa() {
         setVpInput(String(d?.victoryPoints ?? 0));
         setError('');
       })
-      .catch(() => setError('No se encontró la mesa'))
+      .catch(() => setError('No se encontro la mesa'))
       .finally(() => setLoading(false));
   }, [mesaId]);
 
@@ -72,7 +72,7 @@ export default function FreeGameMesa() {
         <button type="button" onClick={() => navigate('/freegame')}>Volver</button>
       </div>
 
-      <h2>Freegame — Mesa {data.tableNumber}</h2>
+      <h2>Freegame - Mesa {data.tableNumber}</h2>
 
       <div className="form" style={{ display: 'grid', gap: '0.75rem' }}>
         <div><strong>Nombre:</strong> {data.name || '-'}</div>
@@ -82,7 +82,25 @@ export default function FreeGameMesa() {
         <div><strong>Detalle jugadores:</strong> {detalleJugadores}</div>
       </div>
 
-      <h3 style={{ marginTop: 16 }}>Puntuación por mesa (desglose)</h3>
+      <div className="form" style={{ marginTop: 12, gap: '0.75rem', alignItems: 'flex-end' }}>
+        <label className="field-label" style={{ maxWidth: '12rem' }}>
+          <span className="field-label-title">Puntos de Victoria</span>
+          <input
+            className="vp-input"
+            type="number"
+            min={0}
+            value={vpInput}
+            disabled={noChallenge || saved}
+            onChange={(e) => setVpInput(e.target.value)}
+          />
+        </label>
+        <button type="button" disabled={noChallenge || saved} onClick={saveVP}>
+          Enviar puntuacion
+        </button>
+        {saved && <span style={{ marginLeft: 8 }}>Guardado como definitivo</span>}
+      </div>
+
+      <h3 style={{ marginTop: 16 }}>Puntuacion por mesa (desglose)</h3>
       <div className="table-scroll">
         <table className="data-table data-table--compact">
           <thead>
@@ -104,24 +122,6 @@ export default function FreeGameMesa() {
             </tr>
           </tbody>
         </table>
-      </div>
-
-      <div className="form" style={{ marginTop: 8, gap: '0.75rem', alignItems: 'flex-end' }}>
-        <label className="field-label" style={{ maxWidth: '12rem' }}>
-          <span className="field-label-title">Puntos de Victoria</span>
-          <input
-            className="vp-input"
-            type="number"
-            min={0}
-            value={vpInput}
-            disabled={noChallenge || saved}
-            onChange={(e) => setVpInput(e.target.value)}
-          />
-        </label>
-        <button type="button" disabled={noChallenge || saved} onClick={saveVP}>
-          Enviar puntuación
-        </button>
-        {saved && <span style={{ marginLeft: 8 }}>Guardado como definitivo</span>}
       </div>
     </div>
   );
