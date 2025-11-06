@@ -25,6 +25,11 @@ export default function AdminPage() {
   const [purgeKeep, setPurgeKeep] = useState('10');
 
   // Campos de fijaci?n permanecen vacíos hasta que el usuario escriba.
+  const parseTableNumber = (value) => {
+    const num = Number(value);
+    return Number.isFinite(num) ? num : Number.MAX_SAFE_INTEGER;
+  };
+
   const syncFromState = () => { };
 
   const fetchState = useCallback(() => {
@@ -417,25 +422,36 @@ export default function AdminPage() {
                     </tr>
                   </thead>
                   <tbody>
-                    {(tables.register || []).map((t) => {
-                      const mesa = t.tableNumber ?? '';
-                      const nombre = t.tableName ?? '';
-                      const dif = t.difficulty ?? '';
-                      const players = t.players ?? '';
-                      const detalle = Array.isArray(t.playersInfo)
-                        ? t.playersInfo.map((p) => `${p.character}${p.aspect ? ` (${p.aspect})` : ''}`).join(', ')
-                        : '';
-                      return (
-                        <tr key={t.id}>
-                          <td>{mesa}</td>
-                          <td>{nombre}</td>
-                          <td>{dif}</td>
-                          <td>{players}</td>
-                          <td>{detalle}</td>
-                          <td>{t.code}</td>
-                        </tr>
-                      );
-                    })}
+                    {(tables.register || [])
+                      .slice()
+                      .sort((a, b) => parseTableNumber(a?.tableNumber) - parseTableNumber(b?.tableNumber))
+                      .map((t) => {
+                        const mesa = t.tableNumber ?? '';
+                        const nombre = t.tableName ?? '';
+                        const dif = t.difficulty ?? '';
+                        const players = t.players ?? '';
+                        const playersInfo = Array.isArray(t.playersInfo) ? t.playersInfo : [];
+                        return (
+                          <tr key={t.id}>
+                            <td>{mesa}</td>
+                            <td>{nombre}</td>
+                            <td>{dif}</td>
+                            <td>{players}</td>
+                            <td>
+                              <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+                                {playersInfo.length > 0
+                                  ? playersInfo.map((p, idx) => (
+                                    <div key={`${t.id}-player-${idx}`}>
+                                      {p.character}{p.aspect ? ` (${p.aspect})` : ''}
+                                    </div>
+                                  ))
+                                  : <span style={{ opacity: 0.6 }}>Sin jugadores</span>}
+                              </div>
+                            </td>
+                            <td>{t.code}</td>
+                          </tr>
+                        );
+                      })}
                   </tbody>
                 </table>
               </section>
@@ -483,15 +499,34 @@ export default function AdminPage() {
                     </tr>
                   </thead>
                   <tbody>
-                    {(tables.freegame || []).map((t) => (
-                      <tr key={t.id}>
-                        <td>{t.tableNumber}</td>
-                        <td>{t.name}</td><td>{t.inevitableChallenge || '(Ninguno)'}</td>
-                        <td>{t.players}</td>
-                        <td>{Array.isArray(t.playersInfo) ? t.playersInfo.map((p) => p.character + (p.aspect ? ' (' + p.aspect + ')' : '') + (p.legacy ? ' [' + p.legacy + ']' : '')).join(', ') : ''}</td>
-                        <td>{t.code}</td>
-                      </tr>
-                    ))}
+                    {(tables.freegame || [])
+                      .slice()
+                      .sort((a, b) => parseTableNumber(a?.tableNumber) - parseTableNumber(b?.tableNumber))
+                      .map((t) => {
+                        const playersInfo = Array.isArray(t.playersInfo) ? t.playersInfo : [];
+                        return (
+                          <tr key={t.id}>
+                            <td>{t.tableNumber}</td>
+                            <td>{t.name}</td>
+                            <td>{t.inevitableChallenge || '(Ninguno)'}</td>
+                            <td>{t.players}</td>
+                            <td>
+                              <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+                                {playersInfo.length > 0
+                                  ? playersInfo.map((p, idx) => (
+                                    <div key={`${t.id}-free-${idx}`}>
+                                      {p.character}
+                                      {p.aspect ? ` (${p.aspect})` : ''}
+                                      {p.legacy ? ` [${p.legacy}]` : ''}
+                                    </div>
+                                  ))
+                                  : <span style={{ opacity: 0.6 }}>Sin jugadores</span>}
+                              </div>
+                            </td>
+                            <td>{t.code}</td>
+                          </tr>
+                        );
+                      })}
                   </tbody>
                 </table>
               </section>

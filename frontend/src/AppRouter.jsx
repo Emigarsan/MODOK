@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Link, Navigate, useLocation } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import RegisterPage from './pages/Register.jsx';
 import FreeGamePage from './pages/FreeGame.jsx';
 import FreeGameMesa from './pages/FreeGameMesa.jsx';
@@ -21,16 +21,9 @@ function PageWrapper({ children }) {
 }
 
 function SiteHeader() {
-  const location = useLocation();
-  const hideNav = location.pathname.startsWith('/display');
   return (
     <header>
       <h1>InevitableCON 2025 Sevilla</h1>
-      {!hideNav && (
-        <nav className="nav">
-          <Link to="/register"><button>Inicio</button></Link>
-        </nav>
-      )}
     </header>
   );
 }
