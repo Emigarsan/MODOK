@@ -58,7 +58,7 @@ export default function FreeGameMesa() {
     <><div className="form" style={{ marginBottom: 12 }}>
       <button onClick={() => navigate('/freegame')}>Volver</button>
     </div><div className="container overlay-card">
-        <h2>Freegame — Mesa {data.tableNumber}</h2>
+        <h2>Retos Inevitables - Mesa {data.tableNumber}</h2>
         <div className="form" style={{ display: 'grid', gap: 8 }}>
           <div><strong>Nombre:</strong> {data.name || '-'}</div>
           <div><strong>Dificultad:</strong> {data.difficulty || 'Normal'}</div>
@@ -90,7 +90,7 @@ export default function FreeGameMesa() {
                 <th>Dificultad</th>
                 <th>Puntos base</th>
                 <th>Legados</th>
-                <th>Puntos de Victoria</th>
+                <th>Victoria</th>
                 <th>Total</th>
               </tr>
             </thead>
@@ -122,4 +122,6 @@ export default function FreeGameMesa() {
       </div></>
   );
 }
+
+
 

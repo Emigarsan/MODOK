@@ -106,7 +106,7 @@ export default function FreeGameTablePage() {
                 <th>Dificultad</th>
                 <th>Puntos base</th>
                 <th>Legados</th>
-                <th>Puntos de Victoria</th>
+                <th>Victoria</th>
                 <th>Total</th>
               </tr>
             </thead>
@@ -142,3 +142,4 @@ export default function FreeGameTablePage() {
     </div>
   );
 }
+
