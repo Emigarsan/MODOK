@@ -100,7 +100,7 @@ export default function FreeGameTablePage() {
       <div className="counter-card" style={{ marginTop: 16 }}>
         <h3>Puntuación de la mesa</h3>
         <div className="table-scroll">
-          <table className="data-table">
+          <table className="data-table data-table--compact">
             <thead>
               <tr>
                 <th>Dificultad</th>
@@ -116,7 +116,7 @@ export default function FreeGameTablePage() {
                 <td>{base}</td>
                 <td>{legacyCount}</td>
                 <td>
-                  <input type="number" min={0} value={vpInput} onChange={async (e) => {
+                  <input className="vp-input" type="number" min={0} value={vpInput} onChange={async (e) => {
                     const v = e.target.value; setVpInput(v);
                     const n = Math.max(0, parseInt(v, 10) || 0);
                     try {

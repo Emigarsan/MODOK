@@ -84,7 +84,7 @@ export default function FreeGameMesa() {
 
         <h3 style={{ marginTop: 16 }}>Puntuación por mesa (desglose)</h3>
         <div className="table-scroll">
-          <table className="data-table">
+          <table className="data-table data-table--compact">
             <thead>
               <tr>
                 <th>Dificultad</th>
@@ -101,6 +101,7 @@ export default function FreeGameMesa() {
                 <td>{legacyCount}</td>
                 <td>
                   <input
+                    className="vp-input"
                     type="number"
                     min={0}
                     value={vpInput}

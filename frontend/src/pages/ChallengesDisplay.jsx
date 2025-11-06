@@ -92,8 +92,7 @@ export default function ChallengesDisplay() {
   return (
     <div className="display-wrapper">
       <header className="display-header">
-        <h1>Retos Ineludibles</h1>
-        <p>Progreso acumulado de los retos libres</p>
+        <h1>Retos Inevitables</h1>
       </header>
 
       {loading && tables.length === 0 ? (
@@ -113,7 +112,7 @@ export default function ChallengesDisplay() {
                     alt={challenge.name}
                     className="challenge-image"
                     loading="lazy"
-                    />
+                  />
                 </div>
                 <div className="challenge-body">
                   <h2>{challenge.name}</h2>
