@@ -21,6 +21,7 @@ MODOK es una aplicación full-stack pensada para gestionar en vivo las mesas de 
    - **Crear mesa**: define número de mesa, nombre opcional, dificultad, número de jugadores y los datos de cada jugador (personaje + aspecto). Tras crear, redirige a `/mesa/:mesaId`.
    - **Unirse**: lista las mesas existentes y permite entrar usando el código generado al crear la mesa.
    - **Límites**: número de jugadores entre 1 y 4; la mesa no puede repetirse.
+   - Cada campo muestra un icono `?` con ayudas flotantes que aclaran restricciones y sugerencias.
 
 2. **`/mesa/:mesaId` – Panel de contadores por mesa**
    - Reutiliza `EventView` (M.O.D.O.K, Contadores secundarios y terciarios) pero anota cada acción en `/api/mesas/:mesaId`.
@@ -30,10 +31,11 @@ MODOK es una aplicación full-stack pensada para gestionar en vivo las mesas de 
    - Similar a la vista de registro: número, nombre, dificultad, reto inevitable, jugadores y sus datos (incluye legado).
    - Tras crear o unirse, redirige a `/freegame/:mesaId`.
    - El reto inevitable `(Ninguno)` deja la puntuación total en 0 y bloquea los puntos de victoria.
+   - Los campos numéricos muestran spinners y botones de ayuda `?` con explicaciones breves.
 
 4. **`/freegame/:mesaId` – Ficha de mesa libre**
    - Muestra información de la mesa, desglose de puntuación (base, legados, puntos de victoria).
-  - Botón **Volver** → `/freegame`.
+   - Botón **Volver** → `/freegame`.
    - Permite fijar “Puntos de Victoria”; al enviar se marca como definitivo.
 
 5. **`/event` – Panel de contadores globales**

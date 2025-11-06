@@ -259,6 +259,11 @@ header p {
   transform: translate(-50%, -0.2rem);
 }
 
+.vp-input {
+  width: 5rem;
+  text-align: right;
+}
+
 /* Player row layout for Register page */
 .player-row {
   width: 100%;
