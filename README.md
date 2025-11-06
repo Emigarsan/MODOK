@@ -85,6 +85,8 @@ docker run -p 8080:8080 modok-control
 
 - Para Railway: añadir `BACKUP_DIR`, `BACKUP_EVERY_MS`, `ADMIN_SECRET`, etc. según necesidad.
 - El contenedor arranca el jar `app.jar` con el frontend servidos desde Spring Boot.
+- La imagen fija `JAVA_TOOL_OPTIONS` con `-Xms128m -Xmx256m -XX:+UseSerialGC`; si necesitas más margen puedes sobrescribir la variable en Railway.
+- `spring.main.lazy-initialization=true` viene activado para reducir memoria en reposo; desactívalo si detectas efectos secundarios en arranques muy frecuentes.
 
 ---
 
