@@ -66,46 +66,52 @@ export default function FreeGameMesa() {
           <div><strong>Jugadores:</strong> {data.players}</div>
           <div>
             <strong>Detalle jugadores:</strong>{' '}
-            {Array.isArray(data.playersInfo)
-              ? data.playersInfo.map((p, i) => {
-                const parts = [];
-                if (p.character) parts.push(p.character);
-                if (p.aspect) parts.push(`(${p.aspect})`);
-                if (p.legacy) parts.push(`[${p.legacy}]`);
-                return parts.join(' ');
-              }).join(', ')
-              : ''}
+            <div className="player-detail-list">
+              {Array.isArray(data.playersInfo) && data.playersInfo.length > 0 ? (
+                data.playersInfo.map((p, i) => (
+                  <div key={`free-${i}`} className="player-detail-item">
+                    {p.character || '-'}
+                    {p.aspect ? ` (${p.aspect})` : ''}
+                    {p.legacy && String(p.legacy) !== 'Ninguno' ? ` [${p.legacy}]` : ''}
+                  </div>
+                ))
+              ) : (
+                <span className="player-detail-empty">Sin jugadores</span>
+              )}
+            </div>
           </div>
         </div>
 
         <h3 style={{ marginTop: 16 }}>Puntuación por mesa (desglose)</h3>
-        <table className="data-table" style={{ width: '100%' }}>
-          <thead>
-            <tr>
-              <th>Dificultad</th>
-              <th>Puntos base</th>
-              <th>Legados</th>
-              <th>Puntos de Victoria</th>
-              <th>Total</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>{data.difficulty || 'Normal'}</td>
-              <td>{base}</td>
-              <td>{legacyCount}</td>
-              <td>
-                <input
-                  type="number"
-                  min={0}
-                  value={vpInput}
-                  disabled={noChallenge || saved}
-                  onChange={(e) => setVpInput(e.target.value)} />
-              </td>
-              <td>{total}</td>
-            </tr>
-          </tbody>
-        </table>
+        <div className="table-scroll">
+          <table className="data-table">
+            <thead>
+              <tr>
+                <th>Dificultad</th>
+                <th>Puntos base</th>
+                <th>Legados</th>
+                <th>Puntos de Victoria</th>
+                <th>Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{data.difficulty || 'Normal'}</td>
+                <td>{base}</td>
+                <td>{legacyCount}</td>
+                <td>
+                  <input
+                    type="number"
+                    min={0}
+                    value={vpInput}
+                    disabled={noChallenge || saved}
+                    onChange={(e) => setVpInput(e.target.value)} />
+                </td>
+                <td>{total}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
         <div className="form" style={{ marginTop: 8 }}>
           <button disabled={noChallenge || saved} onClick={saveVP}>
             Enviar puntuación

@@ -85,6 +85,7 @@ export default function DisplayPage() {
     ? celda7Accesorio
     : (secondaryImages[state.secondaryImageIndex] ?? secondaryImages[initialState.secondaryImageIndex]);
   const secondaryTitle = secondaryLocked ? 'Accesorio M.Y.T.H.O.S.' : 'Celdas de Contención';
+  const secondaryNumberLabel = `Celda ${state.secondaryImageIndex + 1}`;
 
   return (
     <div className="display-layout">
@@ -101,6 +102,7 @@ export default function DisplayPage() {
 
       <section className="counter-card">
         <h2>{secondaryTitle}</h2>
+        <div className="counter-subtitle">{secondaryNumberLabel}</div>
         <img
           src={displayedSecondaryImage}
           alt={`Celda ${state.secondaryImageIndex + 1}`}
