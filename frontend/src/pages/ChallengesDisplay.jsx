@@ -4,27 +4,27 @@ const CHALLENGES = [
   {
     id: 'challenge-1',
     name: 'La Sala Roja',
-    image: '/challenges/la-sala-roja.jpg',
+    imageFile: 'la-sala-roja.jpg',
   },
   {
     id: 'challenge-2',
     name: 'Celdas Falsas',
-    image: '/challenges/celdas-falsas.jpg',
+    imageFile: 'celdas-falsas.jpg',
   },
   {
     id: 'challenge-3',
     name: 'Thunder Force',
-    image: '/challenges/thunder-force.jpg',
+    imageFile: 'thunder-force.jpg',
   },
   {
     id: 'challenge-4',
     name: 'Hail H.Y.D.R.A.',
-    image: '/challenges/hail-hydra.jpg',
+    imageFile: 'hail-hydra.jpg',
   },
   {
     id: 'challenge-5',
     name: 'Ultrón Infinito',
-    image: '/challenges/ultron-infinito.jpg',
+    imageFile: 'ultron-infinito.jpg',
   },
 ];
 
@@ -103,16 +103,17 @@ export default function ChallengesDisplay() {
           {CHALLENGES.map((challenge) => {
             const total = pointsByChallenge.get(challenge.name) || 0;
             const safeTotal = Math.min(total, MAX_POINTS);
+            const imageSrc = `${import.meta.env.BASE_URL}challenges/${challenge.imageFile}`;
 
             return (
               <article key={challenge.id} className="challenge-card">
                 <div className="challenge-image-wrapper">
                   <img
-                    src={challenge.image}
+                    src={imageSrc}
                     alt={challenge.name}
                     className="challenge-image"
                     loading="lazy"
-                  />
+                    />
                 </div>
                 <div className="challenge-body">
                   <h2>{challenge.name}</h2>
