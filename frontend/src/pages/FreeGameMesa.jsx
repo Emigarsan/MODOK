@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 export default function FreeGameMesa() {
   const { mesaId } = useParams();
@@ -37,91 +37,93 @@ export default function FreeGameMesa() {
   const noChallenge = !data.inevitableChallenge || data.inevitableChallenge === '(Ninguno)';
   const base = noChallenge ? 0 : (data.difficulty === 'Experto' ? 5 : 3);
   const vp = noChallenge ? 0 : (parseInt(vpInput, 10) || 0);
-  const total = noChallenge ? 0 : (base + legacyCount + vp);
+  const total = noChallenge ? 0 : base + legacyCount + vp;
 
   const saveVP = async () => {
     const n = Math.max(0, parseInt(vpInput, 10) || 0);
     try {
-      const r = await fetch('/api/tables/freegame/victory-points', {
+      const resp = await fetch('/api/tables/freegame/victory-points', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ id: data.id, victoryPoints: n })
       });
-      if (!r.ok) throw new Error('Error al guardar');
+      if (!resp.ok) throw new Error('Error al guardar');
       setSaved(true);
-    } catch (e) {
+    } catch {
       alert('No se pudo guardar');
     }
   };
 
-  return (
-    <><div className="form" style={{ marginBottom: 12 }}>
-      <button onClick={() => navigate('/freegame')}>Volver</button>
-    </div><div className="container overlay-card">
-        <h2>Retos Inevitables - Mesa {data.tableNumber}</h2>
-        <div className="form" style={{ display: 'grid', gap: 8 }}>
-          <div><strong>Nombre:</strong> {data.name || '-'}</div>
-          <div><strong>Dificultad:</strong> {data.difficulty || 'Normal'}</div>
-          <div><strong>Reto inevitable:</strong> {data.inevitableChallenge || '(Ninguno)'}</div>
-          <div><strong>Jugadores:</strong> {data.players}</div>
-          <div>
-            <strong>Detalle jugadores:</strong>{' '}
-            <div className="player-detail-list">
-              {Array.isArray(data.playersInfo) && data.playersInfo.length > 0 ? (
-                data.playersInfo.map((p, i) => (
-                  <div key={`free-${i}`} className="player-detail-item">
-                    {p.character || '-'}
-                    {p.aspect ? ` (${p.aspect})` : ''}
-                    {p.legacy && String(p.legacy) !== 'Ninguno' ? ` [${p.legacy}]` : ''}
-                  </div>
-                ))
-              ) : (
-                <span className="player-detail-empty">Sin jugadores</span>
-              )}
-            </div>
-          </div>
-        </div>
+  const detalleJugadores = Array.isArray(data.playersInfo)
+    ? data.playersInfo
+        .map((p) => {
+          const parts = [];
+          if (p.character) parts.push(p.character);
+          if (p.aspect) parts.push(`(${p.aspect})`);
+          if (p.legacy) parts.push(`[${p.legacy}]`);
+          return parts.join(' ');
+        })
+        .join(', ')
+    : '';
 
-        <h3 style={{ marginTop: 16 }}>Puntuación por mesa (desglose)</h3>
-        <div className="table-scroll">
-          <table className="data-table data-table--compact">
-            <thead>
-              <tr>
-                <th>Dificultad</th>
-                <th>Puntos base</th>
-                <th>Legados</th>
-                <th>Victoria</th>
-                <th>Total</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>{data.difficulty || 'Normal'}</td>
-                <td>{base}</td>
-                <td>{legacyCount}</td>
-                <td>
-                  <input
-                    className="vp-input"
-                    type="number"
-                    min={0}
-                    value={vpInput}
-                    disabled={noChallenge || saved}
-                    onChange={(e) => setVpInput(e.target.value)} />
-                </td>
-                <td>{total}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <div className="form" style={{ marginTop: 8 }}>
-          <button disabled={noChallenge || saved} onClick={saveVP}>
-            Enviar puntuación
-          </button>
-          {saved && <span style={{ marginLeft: 8 }}>Guardado como definitivo</span>}
-        </div>
-      </div></>
+  return (
+    <div className="container overlay-card">
+      <div className="form" style={{ marginBottom: 12 }}>
+        <button type="button" onClick={() => navigate('/freegame')}>Volver</button>
+      </div>
+
+      <h2>Freegame — Mesa {data.tableNumber}</h2>
+
+      <div className="form" style={{ display: 'grid', gap: '0.75rem' }}>
+        <div><strong>Nombre:</strong> {data.name || '-'}</div>
+        <div><strong>Dificultad:</strong> {data.difficulty || 'Normal'}</div>
+        <div><strong>Reto inevitable:</strong> {data.inevitableChallenge || '(Ninguno)'}</div>
+        <div><strong>Jugadores:</strong> {data.players}</div>
+        <div><strong>Detalle jugadores:</strong> {detalleJugadores}</div>
+      </div>
+
+      <h3 style={{ marginTop: 16 }}>Puntuación por mesa (desglose)</h3>
+      <div className="table-scroll">
+        <table className="data-table data-table--compact">
+          <thead>
+            <tr>
+              <th>Dificultad</th>
+              <th>Puntos base</th>
+              <th>Legados</th>
+              <th>Puntos de Victoria</th>
+              <th>Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{data.difficulty || 'Normal'}</td>
+              <td>{base}</td>
+              <td>{legacyCount}</td>
+              <td>{vp}</td>
+              <td>{total}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div className="form" style={{ marginTop: 8, gap: '0.75rem', alignItems: 'flex-end' }}>
+        <label className="field-label" style={{ maxWidth: '12rem' }}>
+          <span className="field-label-title">Puntos de Victoria</span>
+          <input
+            className="vp-input"
+            type="number"
+            min={0}
+            value={vpInput}
+            disabled={noChallenge || saved}
+            onChange={(e) => setVpInput(e.target.value)}
+          />
+        </label>
+        <button type="button" disabled={noChallenge || saved} onClick={saveVP}>
+          Enviar puntuación
+        </button>
+        {saved && <span style={{ marginLeft: 8 }}>Guardado como definitivo</span>}
+      </div>
+    </div>
   );
 }
-
-
 
