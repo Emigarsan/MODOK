@@ -5,6 +5,7 @@ export default function FreeGameTablePage() {
   const { id } = useParams();
   const [table, setTable] = useState(null);
   const [vpInput, setVpInput] = useState('0');
+  const [scenarioCleared, setScenarioCleared] = useState('no');
   const [error, setError] = useState(null);
 
   const legacyOptions = useMemo(() => ([
@@ -31,6 +32,7 @@ export default function FreeGameTablePage() {
         if (found) {
           const vp = (typeof found.victoryPoints === 'number') ? found.victoryPoints : 0;
           setVpInput(String(vp));
+          setScenarioCleared(found.scenarioCleared ? 'si' : 'no');
           setError(null);
         }
       })
@@ -42,6 +44,23 @@ export default function FreeGameTablePage() {
     const timer = setInterval(fetchTable, 3000);
     return () => clearInterval(timer);
   }, [id]);
+
+  const persistResult = async (vpValue, scenarioValue) => {
+    if (!table || !table.id) return;
+    try {
+      await fetch('/api/tables/freegame/victory-points', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          id: table.id,
+          victoryPoints: Math.max(0, vpValue),
+          scenarioCleared: scenarioValue === 'si'
+        })
+      });
+    } catch (_) {
+      // ignore network errors for now
+    }
+  };
 
   if (!table) {
     return (
@@ -55,9 +74,15 @@ export default function FreeGameTablePage() {
 
   const playersInfo = Array.isArray(table.playersInfo) ? table.playersInfo : [];
   const noChallenge = !table.inevitableChallenge || table.inevitableChallenge === '(Ninguno)';
-  const base = noChallenge ? 0 : ((table.difficulty === 'Experto') ? 5 : 3);
-  const legacyCount = noChallenge ? 0 : playersInfo.filter(p => (p && p.legacy && String(p.legacy) !== 'Ninguno')).length;
-  const vp = noChallenge ? 0 : (parseInt(vpInput, 10) || 0);
+  const hasChallenge = !noChallenge;
+  const scenarioClearedBool = scenarioCleared === 'si';
+  const scoringActive = hasChallenge && scenarioClearedBool;
+  const basePoints = hasChallenge ? ((table.difficulty === 'Experto') ? 5 : 3) : 0;
+  const legacyCountRaw = hasChallenge ? playersInfo.filter(p => (p && p.legacy && String(p.legacy) !== 'Ninguno')).length : 0;
+  const vpValue = Math.max(0, parseInt(vpInput, 10) || 0);
+  const base = scoringActive ? basePoints : 0;
+  const legacyCount = scoringActive ? legacyCountRaw : 0;
+  const vp = scoringActive ? vpValue : 0;
   const total = base + legacyCount + vp;
 
   return (
@@ -72,6 +97,40 @@ export default function FreeGameTablePage() {
         </div>
         <div>
           <strong>Reto inevitable:</strong> {table.inevitableChallenge || '(Ninguno)'}
+        </div>
+        <div>
+          <strong>Escenario superado:</strong>
+          <div className="option-toggle-group" style={{ marginTop: 4 }}>
+            <label className={`option-toggle${!hasChallenge ? ' is-disabled' : ''}`}>
+              <input
+                type="radio"
+                name="table-scenario"
+                value="si"
+                checked={scenarioCleared === 'si'}
+                onChange={() => {
+                  setScenarioCleared('si');
+                  const n = Math.max(0, parseInt(vpInput, 10) || 0);
+                  persistResult(n, 'si');
+                }}
+                disabled={!hasChallenge}
+              />
+              Si
+            </label>
+            <label className="option-toggle">
+              <input
+                type="radio"
+                name="table-scenario"
+                value="no"
+                checked={scenarioCleared === 'no'}
+                onChange={() => {
+                  setScenarioCleared('no');
+                  const n = Math.max(0, parseInt(vpInput, 10) || 0);
+                  persistResult(n, 'no');
+                }}
+              />
+              No
+            </label>
+          </div>
         </div>
         <div>
           <strong>Jugadores:</strong> {table.players}
@@ -116,16 +175,10 @@ export default function FreeGameTablePage() {
                 <td>{base}</td>
                 <td>{legacyCount}</td>
                 <td>
-                  <input className="vp-input" type="number" min={0} value={vpInput} onChange={async (e) => {
+                  <input className="vp-input" type="number" min={0} value={vpInput} onChange={(e) => {
                     const v = e.target.value; setVpInput(v);
                     const n = Math.max(0, parseInt(v, 10) || 0);
-                    try {
-                      await fetch('/api/tables/freegame/victory-points', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ id: table.id, victoryPoints: n })
-                      });
-                    } catch (_) { }
+                    persistResult(n, scenarioCleared);
                   }} />
                 </td>
                 <td>{total}</td>

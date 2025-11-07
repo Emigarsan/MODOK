@@ -75,6 +75,7 @@ public class TablesController {
         String difficulty = String.valueOf(payload.getOrDefault("difficulty", "Normal"));
         String inevitableChallenge = String.valueOf(payload.getOrDefault("inevitableChallenge", "(Ninguno)"));
         int players = ((Number) payload.getOrDefault("players", 0)).intValue();
+        boolean scenarioCleared = parseBoolean(payload.get("scenarioCleared"));
         List<Map<String, Object>> p = (List<Map<String, Object>>) payload.getOrDefault("playersInfo", List.of());
         List<com.example.counter.service.model.FreeGamePlayerInfo> info = new ArrayList<>();
         for (Map<String, Object> row : p) {
@@ -86,7 +87,7 @@ public class TablesController {
         if (tablesService.isFreeGameTableNumberUsed(tableNumber)) {
             return ResponseEntity.status(409).build();
         }
-        return ResponseEntity.ok(tablesService.createFreeGame(tableNumber, name, difficulty, inevitableChallenge, players, info));
+        return ResponseEntity.ok(tablesService.createFreeGame(tableNumber, name, difficulty, inevitableChallenge, players, info, scenarioCleared));
     }
 
     @PostMapping("/freegame/join")
@@ -112,7 +113,21 @@ public class TablesController {
     public ResponseEntity<Map<String, Object>> setFreeGameVictoryPoints(@RequestBody Map<String, Object> payload) {
         String id = String.valueOf(payload.getOrDefault("id", ""));
         int vp = ((Number) payload.getOrDefault("victoryPoints", 0)).intValue();
-        boolean ok = tablesService.setFreeGameVictoryPoints(id, vp);
+        Boolean scenarioCleared = payload.containsKey("scenarioCleared") ? parseBoolean(payload.get("scenarioCleared")) : null;
+        boolean ok = tablesService.setFreeGameVictoryPoints(id, vp, scenarioCleared);
         return ResponseEntity.ok(Map.of("ok", ok));
+    }
+
+    private boolean parseBoolean(Object raw) {
+        if (raw instanceof Boolean b) {
+            return b;
+        }
+        if (raw instanceof String s) {
+            return Boolean.parseBoolean(s);
+        }
+        if (raw instanceof Number n) {
+            return n.intValue() != 0;
+        }
+        return false;
     }
 }

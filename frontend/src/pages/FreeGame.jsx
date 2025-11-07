@@ -59,6 +59,7 @@ export default function FreeGamePage() {
   const [mesaName, setMesaName] = useState('');
   const [difficulty, setDifficulty] = useState('Normal');
   const [inevitableChallenge, setInevitableChallenge] = useState('(Ninguno)');
+  const [scenarioClearedChoice, setScenarioClearedChoice] = useState('no');
   const [players, setPlayers] = useState('');
   const [playersInfo, setPlayersInfo] = useState([]);
   const [joinCode, setJoinCode] = useState('');
@@ -115,6 +116,12 @@ export default function FreeGamePage() {
     });
   }, [players]);
 
+  useEffect(() => {
+    if (inevitableChallenge === '(Ninguno)' && scenarioClearedChoice !== 'no') {
+      setScenarioClearedChoice('no');
+    }
+  }, [inevitableChallenge, scenarioClearedChoice]);
+
   const handleCharacterChange = (idx, value) => {
     let v = value;
     const canon = charMap.get(normalize(v));
@@ -136,6 +143,8 @@ export default function FreeGamePage() {
       })
     );
   };
+
+  const hasChallengeSelected = inevitableChallenge && inevitableChallenge !== '(Ninguno)';
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -170,6 +179,7 @@ export default function FreeGamePage() {
             difficulty,
             inevitableChallenge,
             players: totalPlayers,
+            scenarioCleared: hasChallengeSelected && scenarioClearedChoice === 'si',
             playersInfo: playersInfo.map((p) => ({
               character: p.character || '',
               aspect: p.aspect || '',
@@ -279,6 +289,35 @@ export default function FreeGamePage() {
                 <option value="Thunder Force">Thunder Force</option>
                 <option value="Ultron Infinito">Ultron Infinito</option>
               </select>
+            </label>
+            <label className="field-label">
+              <span className="field-label-title">Escenario superado</span>
+              <div className="option-toggle-group">
+                <label className={`option-toggle${!hasChallengeSelected ? ' is-disabled' : ''}`}>
+                  <input
+                    type="radio"
+                    name="scenario-cleared"
+                    value="si"
+                    checked={scenarioClearedChoice === 'si'}
+                    onChange={() => setScenarioClearedChoice('si')}
+                    disabled={!hasChallengeSelected}
+                  />
+                  Si
+                </label>
+                <label className="option-toggle">
+                  <input
+                    type="radio"
+                    name="scenario-cleared"
+                    value="no"
+                    checked={scenarioClearedChoice === 'no'}
+                    onChange={() => setScenarioClearedChoice('no')}
+                  />
+                  No
+                </label>
+              </div>
+              {!hasChallengeSelected && (
+                <span className="field-hint">Selecciona un reto para activar la opcion "Si".</span>
+              )}
             </label>
             <label className="field-label">
               <span className="field-label-title">

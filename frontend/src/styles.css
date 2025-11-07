@@ -203,6 +203,38 @@ header p {
   color: var(--color-text-primary);
 }
 
+.field-hint {
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+  opacity: 0.85;
+}
+
+.option-toggle-group {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.option-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  opacity: 0.95;
+}
+
+.option-toggle input[type="radio"] {
+  width: 1rem;
+  height: 1rem;
+  accent-color: var(--color-primary);
+}
+
+.option-toggle.is-disabled {
+  opacity: 0.5;
+}
+
 .help-wrapper {
   position: relative;
   display: inline-flex;
@@ -638,8 +670,12 @@ button[aria-disabled="true"] {
 }
 
 .display-layout .counter-art {
-  width: min(70vw, 360px);
-  max-width: 360px;
+  width: auto;
+  max-width: 100%;
+  height: clamp(280px, 32vw, 520px);
+  object-fit: contain;
+  display: block;
+  margin: 0 auto;
 }
 
 .display-layout .counter-value {
@@ -660,7 +696,7 @@ button[aria-disabled="true"] {
   }
 
   .display-layout .counter-art {
-    width: min(26vw, 340px);
+    height: clamp(320px, 26vw, 560px);
   }
 
   .display-layout .counter-value {
@@ -804,7 +840,21 @@ button[aria-disabled="true"] {
   padding: clamp(0.5rem, 1.5vw, 1rem) clamp(0.35rem, 1.25vw, 0.85rem) clamp(1rem, 3vw, 1.75rem);
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: clamp(1.25rem, 2vw, 1.75rem);
+}
+
+.challenge-board-card {
+  width: min(100%, 1650px);
+  margin: 0 auto;
+  background: rgba(10, 2, 2, 0.72);
+  border: 1px solid rgba(251, 203, 114, 0.25);
+  border-radius: 24px;
+  padding: clamp(1rem, 2vw, 1.6rem) clamp(1rem, 3vw, 2.4rem) clamp(1.25rem, 3vw, 2rem);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1rem, 2vw, 1.75rem);
+  box-shadow: 0 25px 45px rgba(0, 0, 0, 0.55);
 }
 
 .display-header {
@@ -873,6 +923,35 @@ button[aria-disabled="true"] {
 .challenge-body h2 {
   margin: 0;
   font-size: clamp(0.85rem, 1.4vw, 1.15rem);
+}
+
+.challenge-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.65rem;
+  width: 100%;
+}
+
+.challenge-stat {
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 10px;
+  padding: 0.65rem 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  min-height: 76px;
+}
+
+.challenge-stat-label {
+  font-size: clamp(0.65rem, 1vw, 0.8rem);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-text-secondary);
+}
+
+.challenge-stat-value {
+  font-size: clamp(1rem, 1.4vw, 1.25rem);
+  font-weight: 700;
 }
 
 .challenge-progress {

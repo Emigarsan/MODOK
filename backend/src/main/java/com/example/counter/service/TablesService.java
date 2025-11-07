@@ -123,12 +123,16 @@ public class TablesService {
 
     public synchronized com.example.counter.service.model.FreeGameTable createFreeGame(int tableNumber, String name,
             String difficulty, String inevitableChallenge, int players,
-            List<com.example.counter.service.model.FreeGamePlayerInfo> playersInfo) {
+            List<com.example.counter.service.model.FreeGamePlayerInfo> playersInfo,
+            boolean scenarioCleared) {
         String id = UUID.randomUUID().toString();
         String code = shortCode();
         int tn = Math.max(0, tableNumber);
         List<com.example.counter.service.model.FreeGamePlayerInfo> info = playersInfo == null ? List.of()
                 : new ArrayList<>(playersInfo);
+        boolean hasChallenge = inevitableChallenge != null && !inevitableChallenge.isBlank()
+                && !"(Ninguno)".equalsIgnoreCase(inevitableChallenge);
+        boolean normalizedScenario = hasChallenge && scenarioCleared;
         com.example.counter.service.model.FreeGameTable t = new com.example.counter.service.model.FreeGameTable(
                 id,
                 tn,
@@ -139,6 +143,7 @@ public class TablesService {
                 info,
                 code,
                 0,
+                normalizedScenario,
                 Instant.now());
         freeGameTables.add(t);
         return t;
@@ -148,13 +153,18 @@ public class TablesService {
         return freeGameTables.stream().anyMatch(t -> t.code().equalsIgnoreCase(code));
     }
 
-    public synchronized boolean setFreeGameVictoryPoints(String id, int victoryPoints) {
+    public synchronized boolean setFreeGameVictoryPoints(String id, int victoryPoints, Boolean scenarioCleared) {
         for (int i = 0; i < freeGameTables.size(); i++) {
             var t = freeGameTables.get(i);
             if (t.id().equals(id)) {
+                boolean cleared = scenarioCleared == null ? t.scenarioCleared() : scenarioCleared.booleanValue();
+                boolean hasChallenge = t.inevitableChallenge() != null
+                        && !t.inevitableChallenge().isBlank()
+                        && !"(Ninguno)".equalsIgnoreCase(t.inevitableChallenge());
+                boolean normalizedScenario = hasChallenge && cleared;
                 freeGameTables.set(i, new com.example.counter.service.model.FreeGameTable(
                         t.id(), t.tableNumber(), t.name(), t.difficulty(), t.inevitableChallenge(), t.players(),
-                        t.playersInfo(), t.code(), Math.max(0, victoryPoints), t.createdAt()));
+                        t.playersInfo(), t.code(), Math.max(0, victoryPoints), normalizedScenario, t.createdAt()));
                 return true;
             }
         }

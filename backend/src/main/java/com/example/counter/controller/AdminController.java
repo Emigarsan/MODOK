@@ -89,7 +89,7 @@ public class AdminController {
         if (!isAdmin(secret)) return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         List<FreeGameTable> free = tablesService.listFreeGame();
         StringJoiner sj = new StringJoiner("\n");
-        sj.add("tableNumber,difficulty,inevitableChallenge,base,legados,victoryPoints,total");
+        sj.add("tableNumber,difficulty,inevitableChallenge,base,legados,victoryPoints,total,scenarioCleared");
         for (FreeGameTable t : free) {
             boolean noCh = t.inevitableChallenge() == null || t.inevitableChallenge().isBlank() || "(Ninguno)".equals(t.inevitableChallenge());
             int base = noCh ? 0 : ("Experto".equalsIgnoreCase(t.difficulty()) ? 5 : 3);
@@ -102,8 +102,9 @@ public class AdminController {
                     }
                 }
             }
-            int vp = noCh ? 0 : Math.max(0, t.victoryPoints());
-            int total = noCh ? 0 : (base + legacyCount + vp);
+            boolean scenarioCleared = t.scenarioCleared();
+            int vp = (noCh || !scenarioCleared) ? 0 : Math.max(0, t.victoryPoints());
+            int total = (noCh || !scenarioCleared) ? 0 : (base + legacyCount + vp);
             sj.add(String.join(",",
                     String.valueOf(t.tableNumber()),
                     escape(nullToEmpty(t.difficulty())),
@@ -111,7 +112,8 @@ public class AdminController {
                     String.valueOf(base),
                     String.valueOf(legacyCount),
                     String.valueOf(vp),
-                    String.valueOf(total)
+                    String.valueOf(total),
+                    String.valueOf(scenarioCleared)
             ));
         }
         String csv = sj.toString() + "\n";
@@ -184,7 +186,7 @@ public class AdminController {
     private String buildFreeGameCsv(List<FreeGameTable> free) {
         StringJoiner sj = new StringJoiner("\n");
         // One row per player; repeat table info
-        sj.add("id,tableNumber,name,players,code,createdAt,playerIndex,character,aspect,legacy");
+        sj.add("id,tableNumber,name,players,code,createdAt,scenarioCleared,playerIndex,character,aspect,legacy");
         DateTimeFormatter fmt = DateTimeFormatter.ISO_INSTANT;
         for (FreeGameTable t : free) {
             var list = t.playersInfo();
@@ -196,6 +198,7 @@ public class AdminController {
                         String.valueOf(t.players()),
                         escape(t.code()),
                         escape(fmt.format(t.createdAt())),
+                        String.valueOf(t.scenarioCleared()),
                         "",
                         "",
                         "",
@@ -212,6 +215,7 @@ public class AdminController {
                         String.valueOf(t.players()),
                         escape(t.code()),
                         escape(fmt.format(t.createdAt())),
+                        String.valueOf(t.scenarioCleared()),
                         String.valueOf(i + 1),
                         escape(pi.character()),
                         escape(pi.aspect()),

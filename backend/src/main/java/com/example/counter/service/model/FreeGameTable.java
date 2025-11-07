@@ -13,6 +13,7 @@ public record FreeGameTable(
         List<FreeGamePlayerInfo> playersInfo,
         String code,
         int victoryPoints,
+        boolean scenarioCleared,
         Instant createdAt
 ) {}
 
