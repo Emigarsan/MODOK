@@ -545,7 +545,10 @@ export default function AdminPage() {
                     </tr>
                   </thead>
                   <tbody>
-                    {(tables.freegame || []).map((t) => {
+                  {(tables.freegame || [])
+                    .slice()
+                    .sort((a, b) => parseTableNumber(a?.tableNumber) - parseTableNumber(b?.tableNumber))
+                    .map((t) => {
                       const noCh = !t?.inevitableChallenge || t.inevitableChallenge === '(Ninguno)'; const base = noCh ? 0 : (t?.difficulty === 'Experto' ? 5 : 3);
                       const legacyCount = noCh ? 0 : (Array.isArray(t?.playersInfo) ? t.playersInfo.filter(p => p.legacy && String(p.legacy) !== 'Ninguno').length : 0);
                       const vp = noCh ? 0 : (typeof t?.victoryPoints === 'number' ? t.victoryPoints : 0);

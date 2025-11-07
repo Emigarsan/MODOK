@@ -89,7 +89,8 @@ export default function RegisterPage() {
   }, []);
 
   useEffect(() => {
-    const count = Math.max(0, parseInt(playersCount, 10) || 0);
+    const parsed = parseInt(playersCount, 10);
+    const count = Number.isNaN(parsed) ? 0 : Math.max(0, parsed);
     setPlayers((prev) => {
       const next = [...prev];
       if (next.length < count) {
@@ -131,7 +132,8 @@ export default function RegisterPage() {
           alert('La mesa ya existe');
           return;
         }
-        const total = parseInt(playersCount, 10) || 0;
+        const parsedPlayers = parseInt(playersCount, 10);
+        const total = Number.isNaN(parsedPlayers) ? 0 : parsedPlayers;
         if (total > 4) {
           alert('Maximo 4 jugadores');
           return;
@@ -210,6 +212,7 @@ export default function RegisterPage() {
           <input
             type="number"
             min={1}
+            step={1}
             value={mesaNumber}
             onChange={(e) => setMesaNumber(e.target.value)}
             placeholder="Ej. 12"
@@ -246,16 +249,25 @@ export default function RegisterPage() {
             <Help text={HELP.playersCount} />
           </span>
           <input
-            type="text"
-            inputMode="numeric"
-            pattern="[0-9]*"
+            type="number"
+            min={1}
+            max={4}
+            step={1}
             placeholder="Ej. 4"
             value={playersCount}
             onChange={(e) => {
               const value = e.target.value;
-              if (/^\d*$/.test(value) && (value === '' || parseInt(value, 10) <= 4)) {
-                setPlayersCount(value);
+              if (value === '') {
+                setPlayersCount('');
+                return;
               }
+              let parsed = parseInt(value, 10);
+              if (Number.isNaN(parsed)) {
+                setPlayersCount('');
+                return;
+              }
+              parsed = Math.min(4, Math.max(1, parsed));
+              setPlayersCount(String(parsed));
             }}
             required
           />

@@ -98,12 +98,12 @@ body::before {
   padding: clamp(0.75rem, 2vw, 1.5rem) clamp(0.5rem, 2vw, 1.25rem) clamp(1.5rem, 3vw, 2.5rem);
 }
 
-.page-display > header {
+.page-display>header {
   max-width: none;
   width: 100%;
 }
 
-.page-display > header h1 {
+.page-display>header h1 {
   width: 100%;
   text-align: center;
 }
@@ -150,11 +150,13 @@ header p {
   padding-bottom: 0.5rem;
   margin-bottom: 0.5rem;
 }
+
 .tabs button {
   background: transparent;
   color: var(--color-text-secondary);
   border: 1px solid transparent;
 }
+
 .tabs button.active {
   background: var(--color-surface-2);
   color: var(--color-text-primary);
@@ -274,6 +276,11 @@ header p {
   transform: translate(-50%, -0.2rem);
 }
 
+.vp-input {
+  width: 5rem;
+  text-align: right;
+}
+
 /* Player row layout for Register page */
 .player-row {
   width: 100%;
@@ -282,6 +289,7 @@ header p {
   gap: 0.75rem;
   align-items: end;
 }
+
 .freegame-row {
   grid-template-columns: 1fr 1fr 1fr;
   gap: 0.75rem;
@@ -291,10 +299,15 @@ header p {
   background: var(--color-surface-2);
   margin: 0.5rem 0;
 }
-.freegame-row label { margin: 0; }
+
+.freegame-row label {
+  margin: 0;
+}
 
 @media (max-width: 600px) {
-  .freegame-row { grid-template-columns: 1fr; }
+  .freegame-row {
+    grid-template-columns: 1fr;
+  }
 }
 
 .player-row label {
@@ -360,11 +373,13 @@ header p {
   padding-bottom: 0.5rem;
   margin-bottom: 0.5rem;
 }
+
 .admin-tabs button {
   background: transparent;
   color: var(--color-text-secondary);
   border: 1px solid transparent;
 }
+
 .admin-tabs button.active {
   background: var(--color-surface-2);
   color: var(--color-text-primary);
@@ -397,17 +412,21 @@ header p {
   border-collapse: collapse;
   font-size: 0.95rem;
 }
-.data-table th, .data-table td {
+
+.data-table th,
+.data-table td {
   border: 1px solid var(--color-divider);
   padding: 0.5rem 0.6rem;
   text-align: left;
 }
+
 .data-table thead th {
   background: var(--color-surface-2);
   color: var(--color-text-primary);
 }
+
 .data-table tbody tr:nth-child(even) td {
-  background: rgba(255,255,255,0.02);
+  background: rgba(255, 255, 255, 0.02);
 }
 
 .data-table--compact {
@@ -415,6 +434,7 @@ header p {
   font-size: 0.9rem;
   table-layout: fixed;
 }
+
 .data-table--compact th,
 .data-table--compact td {
   text-align: center;
@@ -428,6 +448,7 @@ header p {
   font-size: 0.95rem;
   -moz-appearance: textfield;
 }
+
 .vp-input::-webkit-outer-spin-button,
 .vp-input::-webkit-inner-spin-button {
   margin: 0;
@@ -790,6 +811,7 @@ button[aria-disabled="true"] {
   text-align: center;
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 0.5rem;
 }
 
@@ -829,9 +851,8 @@ button[aria-disabled="true"] {
 }
 
 .challenge-image-wrapper {
-  aspect-ratio: 3 / 4;
-  max-height: clamp(150px, 18vw, 320px);
-  background: rgba(0, 0, 0, 0.2);
+  aspect-ratio: 2 / 3;
+  max-height: clamp(190px, 22vw, 360px);
   overflow: hidden;
 }
 

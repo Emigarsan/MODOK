@@ -100,7 +100,8 @@ export default function FreeGamePage() {
   }, []);
 
   useEffect(() => {
-    const n = Math.max(0, parseInt(players, 10) || 0);
+    const parsed = parseInt(players, 10);
+    const n = Number.isNaN(parsed) ? 0 : Math.max(0, parsed);
     setPlayersInfo((prev) => {
       const next = [...prev];
       if (next.length < n) {
@@ -150,7 +151,8 @@ export default function FreeGamePage() {
           alert(`El numero de mesa ${num} ya existe. Elige otro.`);
           return;
         }
-        const totalPlayers = parseInt(players, 10) || 0;
+        const parsedPlayers = parseInt(players, 10);
+        const totalPlayers = Number.isNaN(parsedPlayers) ? 0 : parsedPlayers;
         if (totalPlayers <= 0) {
           alert('Indica numero de jugadores');
           return;
