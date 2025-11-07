@@ -55,16 +55,15 @@ export default function FreeGameMesa() {
   };
 
   const detalleJugadores = Array.isArray(data.playersInfo)
-    ? data.playersInfo
-        .map((p) => {
-          const parts = [];
-          if (p.character) parts.push(p.character);
-          if (p.aspect) parts.push(`(${p.aspect})`);
-          if (p.legacy) parts.push(`[${p.legacy}]`);
-          return parts.join(' ');
-        })
-        .join(', ')
-    : '';
+    ? data.playersInfo.map((p) => {
+        if (!p) return '';
+        const parts = [];
+        if (p.character) parts.push(p.character);
+        if (p.aspect) parts.push(`(${p.aspect})`);
+        if (p.legacy && p.legacy !== 'Ninguno') parts.push(`[${p.legacy}]`);
+        return parts.join(' ').trim();
+      })
+    : [];
 
   return (
     <div className="container overlay-card">
@@ -79,7 +78,20 @@ export default function FreeGameMesa() {
         <div><strong>Dificultad:</strong> {data.difficulty || 'Normal'}</div>
         <div><strong>Reto inevitable:</strong> {data.inevitableChallenge || '(Ninguno)'}</div>
         <div><strong>Jugadores:</strong> {data.players}</div>
-        <div><strong>Detalle jugadores:</strong> {detalleJugadores}</div>
+        <div>
+          <strong>Detalle jugadores:</strong>
+          {detalleJugadores.length > 0 ? (
+            <div className="player-detail-list" style={{ marginTop: 4 }}>
+              {detalleJugadores.map((linea, idx) => (
+                <div key={`player-${idx}`} className="player-detail-item">
+                  {linea || 'Sin datos'}
+                </div>
+              ))}
+            </div>
+          ) : (
+            <span style={{ marginLeft: 6 }}>Sin jugadores</span>
+          )}
+        </div>
       </div>
 
       <div className="form" style={{ marginTop: 12, gap: '0.75rem', alignItems: 'flex-end' }}>

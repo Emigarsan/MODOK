@@ -10,12 +10,12 @@ export default function FreeGameTablePage() {
 
   const legacyOptions = useMemo(() => ([
     'Ninguno',
-    'Vástago de M',
-    'Mutante híbrido',
+    'VÃ¡stago de M',
+    'Mutante hÃ­brido',
     'Equipo de dos',
-    'Los más buscados',
+    'Los mÃ¡s buscados',
     'Equipado para lo peor',
-    'Guerreros araña',
+    'Guerreros araÃ±a',
     'Instruidas por Thanos',
     'Rabia irradiada',
     'Ronin',
@@ -99,40 +99,6 @@ export default function FreeGameTablePage() {
           <strong>Reto inevitable:</strong> {table.inevitableChallenge || '(Ninguno)'}
         </div>
         <div>
-          <strong>Escenario superado:</strong>
-          <div className="option-toggle-group" style={{ marginTop: 4 }}>
-            <label className={`option-toggle${!hasChallenge ? ' is-disabled' : ''}`}>
-              <input
-                type="radio"
-                name="table-scenario"
-                value="si"
-                checked={scenarioCleared === 'si'}
-                onChange={() => {
-                  setScenarioCleared('si');
-                  const n = Math.max(0, parseInt(vpInput, 10) || 0);
-                  persistResult(n, 'si');
-                }}
-                disabled={!hasChallenge}
-              />
-              Si
-            </label>
-            <label className="option-toggle">
-              <input
-                type="radio"
-                name="table-scenario"
-                value="no"
-                checked={scenarioCleared === 'no'}
-                onChange={() => {
-                  setScenarioCleared('no');
-                  const n = Math.max(0, parseInt(vpInput, 10) || 0);
-                  persistResult(n, 'no');
-                }}
-              />
-              No
-            </label>
-          </div>
-        </div>
-        <div>
           <strong>Jugadores:</strong> {table.players}
         </div>
         <div>
@@ -152,12 +118,44 @@ export default function FreeGameTablePage() {
           </div>
         </div>
         <div>
-          <strong>Código:</strong> {table.code}
+          <strong>CÃ³digo:</strong> {table.code}
         </div>
       </div>
 
       <div className="counter-card" style={{ marginTop: 16 }}>
-        <h3>Puntuación de la mesa</h3>
+        <h3>Puntuacion de la mesa</h3>
+        <div className="option-toggle-group" style={{ justifyContent: 'center', marginBottom: '0.75rem' }}>
+          <span className="challenge-stat-label" style={{ letterSpacing: '0.08em', textTransform: 'uppercase' }}>Escenario superado</span>
+          <label className={`option-toggle${!hasChallenge ? ' is-disabled' : ''}`}>
+            <input
+              type="radio"
+              name="table-scenario"
+              value="si"
+              checked={scenarioCleared === 'si'}
+              onChange={() => {
+                setScenarioCleared('si');
+                const n = Math.max(0, parseInt(vpInput, 10) || 0);
+                persistResult(n, 'si');
+              }}
+              disabled={!hasChallenge}
+            />
+            Si
+          </label>
+          <label className="option-toggle">
+            <input
+              type="radio"
+              name="table-scenario"
+              value="no"
+              checked={scenarioCleared === 'no'}
+              onChange={() => {
+                setScenarioCleared('no');
+                const n = Math.max(0, parseInt(vpInput, 10) || 0);
+                persistResult(n, 'no');
+              }}
+            />
+            No
+          </label>
+        </div>
         <div className="table-scroll">
           <table className="data-table data-table--compact">
             <thead>
@@ -186,7 +184,7 @@ export default function FreeGameTablePage() {
             </tbody>
           </table>
         </div>
-        <p className="counter-meta">Si no hay reto inevitable, la puntuación será 0.</p>
+        <p className="counter-meta">Si no hay reto inevitable, la puntuaciÃ³n serÃ¡ 0.</p>
       </div>
 
       <div className="form" style={{ marginTop: 16 }}>
