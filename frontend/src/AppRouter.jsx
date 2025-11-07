@@ -13,9 +13,15 @@ function PageWrapper({ children }) {
   const location = useLocation();
   const isAdmin = location.pathname.startsWith('/admin');
   const isDisplay = location.pathname.startsWith('/display');
-  const pageClass = isAdmin || isDisplay ? 'page page-wide' : 'page';
+  const classNames = ['page'];
+  if (isAdmin || isDisplay) {
+    classNames.push('page-wide');
+  }
+  if (isDisplay) {
+    classNames.push('page-display');
+  }
   return (
-    <div className={pageClass}>
+    <div className={classNames.join(' ')}>
       {children}
     </div>
   );

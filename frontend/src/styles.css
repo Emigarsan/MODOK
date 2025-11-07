@@ -93,6 +93,21 @@ body::before {
   width: 100%;
 }
 
+.page-display {
+  align-items: stretch;
+  padding: clamp(0.75rem, 2vw, 1.5rem) clamp(0.5rem, 2vw, 1.25rem) clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.page-display > header {
+  max-width: none;
+  width: 100%;
+}
+
+.page-display > header h1 {
+  width: 100%;
+  text-align: center;
+}
+
 header {
   text-align: center;
   max-width: 760px;
@@ -577,12 +592,16 @@ button[aria-disabled="true"] {
 }
 
 /* Display page: scale up for large screens */
+.display-layout {
+  width: 100%;
+}
+
 .display-layout .dashboard {
   display: flex;
   width: 100%;
   justify-content: center;
   align-items: stretch;
-  gap: 2.25rem;
+  gap: clamp(1rem, 2vw, 1.85rem);
   flex-wrap: wrap;
 }
 
@@ -758,12 +777,13 @@ button[aria-disabled="true"] {
 
 
 .display-wrapper {
-  max-width: 1500px;
-  margin: 0 auto;
-  padding: 1.5rem 0.75rem 2.5rem;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: clamp(0.5rem, 1.5vw, 1rem) clamp(0.35rem, 1.25vw, 0.85rem) clamp(1rem, 3vw, 1.75rem);
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: clamp(1.25rem, 2vw, 1.75rem);
 }
 
 .display-header {
@@ -790,9 +810,10 @@ button[aria-disabled="true"] {
 }
 
 .challenge-grid {
+  width: 100%;
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 0.75rem;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: clamp(0.4rem, 0.9vw, 0.75rem);
 }
 
 .challenge-card {
