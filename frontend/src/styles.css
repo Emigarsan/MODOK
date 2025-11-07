@@ -670,9 +670,10 @@ button[aria-disabled="true"] {
 }
 
 .display-layout .counter-art {
-  width: auto;
-  max-width: 100%;
-  height: clamp(280px, 32vw, 520px);
+  width: 100%;
+  max-width: clamp(240px, 30vw, 420px);
+  height: auto;
+  max-height: none;
   object-fit: contain;
   display: block;
   margin: 0 auto;
@@ -696,7 +697,7 @@ button[aria-disabled="true"] {
   }
 
   .display-layout .counter-art {
-    height: clamp(320px, 26vw, 560px);
+    max-width: clamp(280px, 24vw, 460px);
   }
 
   .display-layout .counter-value {
@@ -855,6 +856,11 @@ button[aria-disabled="true"] {
   flex-direction: column;
   gap: clamp(1rem, 2vw, 1.75rem);
   box-shadow: 0 25px 45px rgba(0, 0, 0, 0.55);
+  align-items: center;
+}
+
+.challenge-board-card > * {
+  width: 100%;
 }
 
 .display-header {
@@ -862,12 +868,15 @@ button[aria-disabled="true"] {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: 0.5rem;
+  width: 100%;
 }
 
 .display-header h1 {
   font-size: clamp(2rem, 4vw, 3rem);
   margin: 0;
+  width: 100%;
 }
 
 .display-header p {
@@ -954,6 +963,10 @@ button[aria-disabled="true"] {
   font-weight: 700;
 }
 
+.challenge-stat-value.is-complete {
+  color: #52d669;
+}
+
 .challenge-progress {
   font-size: clamp(1.4rem, 2.6vw, 2.1rem);
   font-weight: 700;
@@ -961,6 +974,14 @@ button[aria-disabled="true"] {
   align-items: baseline;
   gap: 0.5rem;
   color: var(--color-accent);
+}
+
+.challenge-progress.is-complete {
+  color: #52d669;
+}
+
+.challenge-progress.is-complete .challenge-progress-max {
+  color: rgba(82, 214, 105, 0.75);
 }
 
 .challenge-progress-max {

@@ -112,6 +112,8 @@ export default function ChallengesDisplay() {
               const totalPoints = stats.points || 0;
               const safeTotal = Math.min(totalPoints, POINT_TARGET);
               const overflow = totalPoints > POINT_TARGET;
+              const winsGoalMet = stats.wins >= 3;
+              const pointsGoalMet = totalPoints >= POINT_TARGET;
               const imageSrc = `${import.meta.env.BASE_URL}challenges/${challenge.imageFile}`;
 
               return (
@@ -133,11 +135,13 @@ export default function ChallengesDisplay() {
                       </div>
                       <div className="challenge-stat">
                         <span className="challenge-stat-label">Victorias</span>
-                        <span className="challenge-stat-value">{`${stats.wins} / 3`}</span>
+                        <span className={`challenge-stat-value${winsGoalMet ? ' is-complete' : ''}`}>
+                          {`${stats.wins} / 3`}
+                        </span>
                       </div>
                       <div className="challenge-stat">
                         <span className="challenge-stat-label">Puntos</span>
-                        <div className="challenge-progress">
+                        <div className={`challenge-progress${pointsGoalMet ? ' is-complete' : ''}`}>
                           <span className="challenge-progress-value">{safeTotal}</span>
                           <span className="challenge-progress-max">/ {POINT_TARGET}</span>
                         </div>
