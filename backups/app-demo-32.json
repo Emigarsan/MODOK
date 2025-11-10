@@ -1,990 +1,1833 @@
 ﻿{
-    "counter": {
-        "primary": 1500,
-        "secondary": 120,
-        "tertiary": 300,
-        "secondaryImageIndex": 2
-    },
-    "registerTables": [],
-    "freeGameTables": [
-        {
-            "id": "demo-free-1",
-            "tableNumber": 1,
-            "name": "Mesa Demo 1",
-            "difficulty": "Normal",
-            "inevitableChallenge": "Celdas Falsas",
-            "players": 3,
-            "playersInfo": [
-                {
-                    "character": "Spectrum",
-                    "aspect": "Justicia",
-                    "legacy": "Equipo de dos"
-                },
-                {
-                    "character": "Star-Lord",
-                    "aspect": "Agresividad",
-                    "legacy": "Ninguno"
-                },
-                {
-                    "character": "Star-Lord",
-                    "aspect": "Agresividad",
-                    "legacy": "Guerreros arana"
-                }
-            ],
-            "code": "DEMO0001",
-            "victoryPoints": 0,
-            "scenarioCleared": false,
-            "createdAt": "2025-01-10T10:00:00Z"
-        },
-        {
-            "id": "demo-free-2",
-            "tableNumber": 2,
-            "name": "Mesa Demo 2",
-            "difficulty": "Normal",
-            "inevitableChallenge": "Thunder Force",
-            "players": 4,
-            "playersInfo": [
-                {
-                    "character": "Hulk",
-                    "aspect": "Agresividad",
-                    "legacy": "Guerreros arana"
-                },
-                {
-                    "character": "Doctor Strange",
-                    "aspect": "Liderazgo",
-                    "legacy": "Ronin"
-                },
-                {
-                    "character": "Thor",
-                    "aspect": "Justicia",
-                    "legacy": "Equipo de dos"
-                },
-                {
-                    "character": "Spider-Man",
-                    "aspect": "Proteccion",
-                    "legacy": "Equipo de dos"
-                }
-            ],
-            "code": "DEMO0002",
-            "victoryPoints": 7,
-            "scenarioCleared": true,
-            "createdAt": "2025-01-10T10:00:00Z"
-        },
-        {
-            "id": "demo-free-3",
-            "tableNumber": 3,
-            "name": "Mesa Demo 3",
-            "difficulty": "Normal",
-            "inevitableChallenge": "Hail H.Y.D.R.A.",
-            "players": 2,
-            "playersInfo": [
-                {
-                    "character": "Wasp",
-                    "aspect": "Agresividad",
-                    "legacy": "Equipo de dos"
-                },
-                {
-                    "character": "Vision",
-                    "aspect": "Liderazgo",
-                    "legacy": "Ninguno"
-                }
-            ],
-            "code": "DEMO0003",
-            "victoryPoints": 0,
-            "scenarioCleared": false,
-            "createdAt": "2025-01-10T10:00:00Z"
-        },
-        {
-            "id": "demo-free-4",
-            "tableNumber": 4,
-            "name": "Mesa Demo 4",
-            "difficulty": "Experto",
-            "inevitableChallenge": "Ultron Infinito",
-            "players": 3,
-            "playersInfo": [
-                {
-                    "character": "Hulk",
-                    "aspect": "Proteccion",
-                    "legacy": "Equipo de dos"
-                },
-                {
-                    "character": "Spider-Man",
-                    "aspect": "Proteccion",
-                    "legacy": "Equipo de dos"
-                },
-                {
-                    "character": "Spectrum",
-                    "aspect": "Liderazgo",
-                    "legacy": "Equipo de dos"
-                }
-            ],
-            "code": "DEMO0004",
-            "victoryPoints": 6,
-            "scenarioCleared": true,
-            "createdAt": "2025-01-10T10:00:00Z"
-        },
-        {
-            "id": "demo-free-5",
-            "tableNumber": 5,
-            "name": "Mesa Demo 5",
-            "difficulty": "Normal",
-            "inevitableChallenge": "La Sala Roja",
-            "players": 4,
-            "playersInfo": [
-                {
-                    "character": "Hulk",
-                    "aspect": "Justicia",
-                    "legacy": "Ronin"
-                },
-                {
-                    "character": "Thor",
-                    "aspect": "Agresividad",
-                    "legacy": "Equipo de dos"
-                },
-                {
-                    "character": "Star-Lord",
-                    "aspect": "Agresividad",
-                    "legacy": "Guerreros arana"
-                },
-                {
-                    "character": "Rocket",
-                    "aspect": "Agresividad",
-                    "legacy": "Vastago de M"
-                }
-            ],
-            "code": "DEMO0005",
-            "victoryPoints": 0,
-            "scenarioCleared": false,
-            "createdAt": "2025-01-10T10:00:00Z"
-        },
-        {
-            "id": "demo-free-6",
-            "tableNumber": 6,
-            "name": "Mesa Demo 6",
-            "difficulty": "Normal",
-            "inevitableChallenge": "Celdas Falsas",
-            "players": 2,
-            "playersInfo": [
-                {
-                    "character": "Ant-Man",
-                    "aspect": "Proteccion",
-                    "legacy": "Equipo de dos"
-                },
-                {
-                    "character": "Vision",
-                    "aspect": "Agresividad",
-                    "legacy": "Ronin"
-                }
-            ],
-            "code": "DEMO0006",
-            "victoryPoints": 13,
-            "scenarioCleared": true,
-            "createdAt": "2025-01-10T10:00:00Z"
-        },
-        {
-            "id": "demo-free-7",
-            "tableNumber": 7,
-            "name": "Mesa Demo 7",
-            "difficulty": "Normal",
-            "inevitableChallenge": "Thunder Force",
-            "players": 3,
-            "playersInfo": [
-                {
-                    "character": "Spectrum",
-                    "aspect": "Justicia",
-                    "legacy": "Equipo de dos"
-                },
-                {
-                    "character": "Spectrum",
-                    "aspect": "Justicia",
-                    "legacy": "Vastago de M"
-                },
-                {
-                    "character": "Iron Man",
-                    "aspect": "Justicia",
-                    "legacy": "Equipo de dos"
-                }
-            ],
-            "code": "DEMO0007",
-            "victoryPoints": 0,
-            "scenarioCleared": false,
-            "createdAt": "2025-01-10T10:00:00Z"
-        },
-        {
-            "id": "demo-free-8",
-            "tableNumber": 8,
-            "name": "Mesa Demo 8",
-            "difficulty": "Experto",
-            "inevitableChallenge": "Hail H.Y.D.R.A.",
-            "players": 4,
-            "playersInfo": [
-                {
-                    "character": "Star-Lord",
-                    "aspect": "Liderazgo",
-                    "legacy": "Ninguno"
-                },
-                {
-                    "character": "Spider-Man",
-                    "aspect": "Agresividad",
-                    "legacy": "Equipo de dos"
-                },
-                {
-                    "character": "Ant-Man",
-                    "aspect": "Proteccion",
-                    "legacy": "Ninguno"
-                },
-                {
-                    "character": "Vision",
-                    "aspect": "Proteccion",
-                    "legacy": "Guerreros arana"
-                }
-            ],
-            "code": "DEMO0008",
-            "victoryPoints": 9,
-            "scenarioCleared": true,
-            "createdAt": "2025-01-10T10:00:00Z"
-        },
-        {
-            "id": "demo-free-9",
-            "tableNumber": 9,
-            "name": "Mesa Demo 9",
-            "difficulty": "Normal",
-            "inevitableChallenge": "Ultron Infinito",
-            "players": 2,
-            "playersInfo": [
-                {
-                    "character": "Ant-Man",
-                    "aspect": "Liderazgo",
-                    "legacy": "Equipo de dos"
-                },
-                {
-                    "character": "Captain Marvel",
-                    "aspect": "Proteccion",
-                    "legacy": "Vastago de M"
-                }
-            ],
-            "code": "DEMO0009",
-            "victoryPoints": 0,
-            "scenarioCleared": false,
-            "createdAt": "2025-01-10T10:00:00Z"
-        },
-        {
-            "id": "demo-free-10",
-            "tableNumber": 10,
-            "name": "Mesa Demo 10",
-            "difficulty": "Normal",
-            "inevitableChallenge": "La Sala Roja",
-            "players": 3,
-            "playersInfo": [
-                {
-                    "character": "Rocket",
-                    "aspect": "Agresividad",
-                    "legacy": "Guerreros arana"
-                },
-                {
-                    "character": "Vision",
-                    "aspect": "Liderazgo",
-                    "legacy": "Vastago de M"
-                },
-                {
-                    "character": "Black Widow",
-                    "aspect": "Agresividad",
-                    "legacy": "Ronin"
-                }
-            ],
-            "code": "DEMO0010",
-            "victoryPoints": 18,
-            "scenarioCleared": true,
-            "createdAt": "2025-01-10T10:00:00Z"
-        },
-        {
-            "id": "demo-free-11",
-            "tableNumber": 11,
-            "name": "Mesa Demo 11",
-            "difficulty": "Normal",
-            "inevitableChallenge": "Celdas Falsas",
-            "players": 4,
-            "playersInfo": [
-                {
-                    "character": "Wasp",
-                    "aspect": "Proteccion",
-                    "legacy": "Equipo de dos"
-                },
-                {
-                    "character": "Vision",
-                    "aspect": "Justicia",
-                    "legacy": "Ninguno"
-                },
-                {
-                    "character": "Vision",
-                    "aspect": "Justicia",
-                    "legacy": "Guerreros arana"
-                },
-                {
-                    "character": "Thor",
-                    "aspect": "Proteccion",
-                    "legacy": "Ninguno"
-                }
-            ],
-            "code": "DEMO0011",
-            "victoryPoints": 0,
-            "scenarioCleared": false,
-            "createdAt": "2025-01-10T10:00:00Z"
-        },
-        {
-            "id": "demo-free-12",
-            "tableNumber": 12,
-            "name": "Mesa Demo 12",
-            "difficulty": "Experto",
-            "inevitableChallenge": "Thunder Force",
-            "players": 2,
-            "playersInfo": [
-                {
-                    "character": "Star-Lord",
-                    "aspect": "Justicia",
-                    "legacy": "Equipo de dos"
-                },
-                {
-                    "character": "Iron Man",
-                    "aspect": "Agresividad",
-                    "legacy": "Vastago de M"
-                }
-            ],
-            "code": "DEMO0012",
-            "victoryPoints": 16,
-            "scenarioCleared": true,
-            "createdAt": "2025-01-10T10:00:00Z"
-        },
-        {
-            "id": "demo-free-13",
-            "tableNumber": 13,
-            "name": "Mesa Demo 13",
-            "difficulty": "Normal",
-            "inevitableChallenge": "Hail H.Y.D.R.A.",
-            "players": 3,
-            "playersInfo": [
-                {
-                    "character": "Hulk",
-                    "aspect": "Proteccion",
-                    "legacy": "Equipo de dos"
-                },
-                {
-                    "character": "Star-Lord",
-                    "aspect": "Justicia",
-                    "legacy": "Vastago de M"
-                },
-                {
-                    "character": "Captain Marvel",
-                    "aspect": "Proteccion",
-                    "legacy": "Ninguno"
-                }
-            ],
-            "code": "DEMO0013",
-            "victoryPoints": 0,
-            "scenarioCleared": false,
-            "createdAt": "2025-01-10T10:00:00Z"
-        },
-        {
-            "id": "demo-free-14",
-            "tableNumber": 14,
-            "name": "Mesa Demo 14",
-            "difficulty": "Normal",
-            "inevitableChallenge": "Ultron Infinito",
-            "players": 4,
-            "playersInfo": [
-                {
-                    "character": "Ant-Man",
-                    "aspect": "Justicia",
-                    "legacy": "Guerreros arana"
-                },
-                {
-                    "character": "Ms. Marvel",
-                    "aspect": "Proteccion",
-                    "legacy": "Ninguno"
-                },
-                {
-                    "character": "Spectrum",
-                    "aspect": "Justicia",
-                    "legacy": "Vastago de M"
-                },
-                {
-                    "character": "Rocket",
-                    "aspect": "Liderazgo",
-                    "legacy": "Ninguno"
-                }
-            ],
-            "code": "DEMO0014",
-            "victoryPoints": 8,
-            "scenarioCleared": true,
-            "createdAt": "2025-01-10T10:00:00Z"
-        },
-        {
-            "id": "demo-free-15",
-            "tableNumber": 15,
-            "name": "Mesa Demo 15",
-            "difficulty": "Normal",
-            "inevitableChallenge": "La Sala Roja",
-            "players": 2,
-            "playersInfo": [
-                {
-                    "character": "Ms. Marvel",
-                    "aspect": "Proteccion",
-                    "legacy": "Ronin"
-                },
-                {
-                    "character": "Star-Lord",
-                    "aspect": "Liderazgo",
-                    "legacy": "Equipo de dos"
-                }
-            ],
-            "code": "DEMO0015",
-            "victoryPoints": 0,
-            "scenarioCleared": false,
-            "createdAt": "2025-01-10T10:00:00Z"
-        },
-        {
-            "id": "demo-free-16",
-            "tableNumber": 16,
-            "name": "Mesa Demo 16",
-            "difficulty": "Experto",
-            "inevitableChallenge": "Celdas Falsas",
-            "players": 3,
-            "playersInfo": [
-                {
-                    "character": "Vision",
-                    "aspect": "Justicia",
-                    "legacy": "Ninguno"
-                },
-                {
-                    "character": "Ms. Marvel",
-                    "aspect": "Proteccion",
-                    "legacy": "Equipo de dos"
-                },
-                {
-                    "character": "Spider-Man",
-                    "aspect": "Proteccion",
-                    "legacy": "Vastago de M"
-                }
-            ],
-            "code": "DEMO0016",
-            "victoryPoints": 18,
-            "scenarioCleared": true,
-            "createdAt": "2025-01-10T10:00:00Z"
-        },
-        {
-            "id": "demo-free-17",
-            "tableNumber": 17,
-            "name": "Mesa Demo 17",
-            "difficulty": "Normal",
-            "inevitableChallenge": "Thunder Force",
-            "players": 4,
-            "playersInfo": [
-                {
-                    "character": "Black Widow",
-                    "aspect": "Proteccion",
-                    "legacy": "Vastago de M"
-                },
-                {
-                    "character": "Spectrum",
-                    "aspect": "Liderazgo",
-                    "legacy": "Guerreros arana"
-                },
-                {
-                    "character": "Black Widow",
-                    "aspect": "Proteccion",
-                    "legacy": "Guerreros arana"
-                },
-                {
-                    "character": "Wasp",
-                    "aspect": "Proteccion",
-                    "legacy": "Vastago de M"
-                }
-            ],
-            "code": "DEMO0017",
-            "victoryPoints": 0,
-            "scenarioCleared": false,
-            "createdAt": "2025-01-10T10:00:00Z"
-        },
-        {
-            "id": "demo-free-18",
-            "tableNumber": 18,
-            "name": "Mesa Demo 18",
-            "difficulty": "Normal",
-            "inevitableChallenge": "Hail H.Y.D.R.A.",
-            "players": 2,
-            "playersInfo": [
-                {
-                    "character": "Ms. Marvel",
-                    "aspect": "Justicia",
-                    "legacy": "Guerreros arana"
-                },
-                {
-                    "character": "Hulk",
-                    "aspect": "Liderazgo",
-                    "legacy": "Equipo de dos"
-                }
-            ],
-            "code": "DEMO0018",
-            "victoryPoints": 15,
-            "scenarioCleared": true,
-            "createdAt": "2025-01-10T10:00:00Z"
-        },
-        {
-            "id": "demo-free-19",
-            "tableNumber": 19,
-            "name": "Mesa Demo 19",
-            "difficulty": "Normal",
-            "inevitableChallenge": "Ultron Infinito",
-            "players": 3,
-            "playersInfo": [
-                {
-                    "character": "Thor",
-                    "aspect": "Agresividad",
-                    "legacy": "Ronin"
-                },
-                {
-                    "character": "Spectrum",
-                    "aspect": "Proteccion",
-                    "legacy": "Guerreros arana"
-                },
-                {
-                    "character": "Gamora",
-                    "aspect": "Justicia",
-                    "legacy": "Vastago de M"
-                }
-            ],
-            "code": "DEMO0019",
-            "victoryPoints": 0,
-            "scenarioCleared": false,
-            "createdAt": "2025-01-10T10:00:00Z"
-        },
-        {
-            "id": "demo-free-20",
-            "tableNumber": 20,
-            "name": "Mesa Demo 20",
-            "difficulty": "Experto",
-            "inevitableChallenge": "La Sala Roja",
-            "players": 4,
-            "playersInfo": [
-                {
-                    "character": "Black Widow",
-                    "aspect": "Liderazgo",
-                    "legacy": "Ninguno"
-                },
-                {
-                    "character": "Rocket",
-                    "aspect": "Justicia",
-                    "legacy": "Equipo de dos"
-                },
-                {
-                    "character": "Spider-Man",
-                    "aspect": "Justicia",
-                    "legacy": "Ninguno"
-                },
-                {
-                    "character": "Black Widow",
-                    "aspect": "Liderazgo",
-                    "legacy": "Ronin"
-                }
-            ],
-            "code": "DEMO0020",
-            "victoryPoints": 6,
-            "scenarioCleared": true,
-            "createdAt": "2025-01-10T10:00:00Z"
-        },
-        {
-            "id": "demo-free-21",
-            "tableNumber": 21,
-            "name": "Mesa Demo 21",
-            "difficulty": "Normal",
-            "inevitableChallenge": "Celdas Falsas",
-            "players": 2,
-            "playersInfo": [
-                {
-                    "character": "Wasp",
-                    "aspect": "Liderazgo",
-                    "legacy": "Ronin"
-                },
-                {
-                    "character": "Spider-Man",
-                    "aspect": "Liderazgo",
-                    "legacy": "Guerreros arana"
-                }
-            ],
-            "code": "DEMO0021",
-            "victoryPoints": 0,
-            "scenarioCleared": false,
-            "createdAt": "2025-01-10T10:00:00Z"
-        },
-        {
-            "id": "demo-free-22",
-            "tableNumber": 22,
-            "name": "Mesa Demo 22",
-            "difficulty": "Normal",
-            "inevitableChallenge": "Thunder Force",
-            "players": 3,
-            "playersInfo": [
-                {
-                    "character": "Vision",
-                    "aspect": "Justicia",
-                    "legacy": "Vastago de M"
-                },
-                {
-                    "character": "Spectrum",
-                    "aspect": "Liderazgo",
-                    "legacy": "Vastago de M"
-                },
-                {
-                    "character": "Vision",
-                    "aspect": "Proteccion",
-                    "legacy": "Ronin"
-                }
-            ],
-            "code": "DEMO0022",
-            "victoryPoints": 17,
-            "scenarioCleared": true,
-            "createdAt": "2025-01-10T10:00:00Z"
-        },
-        {
-            "id": "demo-free-23",
-            "tableNumber": 23,
-            "name": "Mesa Demo 23",
-            "difficulty": "Normal",
-            "inevitableChallenge": "Hail H.Y.D.R.A.",
-            "players": 4,
-            "playersInfo": [
-                {
-                    "character": "Wasp",
-                    "aspect": "Justicia",
-                    "legacy": "Guerreros arana"
-                },
-                {
-                    "character": "Captain Marvel",
-                    "aspect": "Justicia",
-                    "legacy": "Ninguno"
-                },
-                {
-                    "character": "Iron Man",
-                    "aspect": "Liderazgo",
-                    "legacy": "Vastago de M"
-                },
-                {
-                    "character": "Ms. Marvel",
-                    "aspect": "Proteccion",
-                    "legacy": "Vastago de M"
-                }
-            ],
-            "code": "DEMO0023",
-            "victoryPoints": 0,
-            "scenarioCleared": false,
-            "createdAt": "2025-01-10T10:00:00Z"
-        },
-        {
-            "id": "demo-free-24",
-            "tableNumber": 24,
-            "name": "Mesa Demo 24",
-            "difficulty": "Experto",
-            "inevitableChallenge": "Ultron Infinito",
-            "players": 2,
-            "playersInfo": [
-                {
-                    "character": "Hulk",
-                    "aspect": "Justicia",
-                    "legacy": "Equipo de dos"
-                },
-                {
-                    "character": "Hulk",
-                    "aspect": "Proteccion",
-                    "legacy": "Ninguno"
-                }
-            ],
-            "code": "DEMO0024",
-            "victoryPoints": 11,
-            "scenarioCleared": true,
-            "createdAt": "2025-01-10T10:00:00Z"
-        },
-        {
-            "id": "demo-free-25",
-            "tableNumber": 25,
-            "name": "Mesa Demo 25",
-            "difficulty": "Normal",
-            "inevitableChallenge": "La Sala Roja",
-            "players": 3,
-            "playersInfo": [
-                {
-                    "character": "Black Widow",
-                    "aspect": "Liderazgo",
-                    "legacy": "Guerreros arana"
-                },
-                {
-                    "character": "Spectrum",
-                    "aspect": "Agresividad",
-                    "legacy": "Guerreros arana"
-                },
-                {
-                    "character": "Spider-Man",
-                    "aspect": "Justicia",
-                    "legacy": "Ninguno"
-                }
-            ],
-            "code": "DEMO0025",
-            "victoryPoints": 0,
-            "scenarioCleared": false,
-            "createdAt": "2025-01-10T10:00:00Z"
-        },
-        {
-            "id": "demo-free-26",
-            "tableNumber": 26,
-            "name": "Mesa Demo 26",
-            "difficulty": "Normal",
-            "inevitableChallenge": "Celdas Falsas",
-            "players": 4,
-            "playersInfo": [
-                {
-                    "character": "Gamora",
-                    "aspect": "Justicia",
-                    "legacy": "Guerreros arana"
-                },
-                {
-                    "character": "Gamora",
-                    "aspect": "Liderazgo",
-                    "legacy": "Ninguno"
-                },
-                {
-                    "character": "Vision",
-                    "aspect": "Agresividad",
-                    "legacy": "Guerreros arana"
-                },
-                {
-                    "character": "Black Widow",
-                    "aspect": "Proteccion",
-                    "legacy": "Ninguno"
-                }
-            ],
-            "code": "DEMO0026",
-            "victoryPoints": 8,
-            "scenarioCleared": true,
-            "createdAt": "2025-01-10T10:00:00Z"
-        },
-        {
-            "id": "demo-free-27",
-            "tableNumber": 27,
-            "name": "Mesa Demo 27",
-            "difficulty": "Normal",
-            "inevitableChallenge": "Thunder Force",
-            "players": 2,
-            "playersInfo": [
-                {
-                    "character": "Rocket",
-                    "aspect": "Proteccion",
-                    "legacy": "Guerreros arana"
-                },
-                {
-                    "character": "Spider-Man",
-                    "aspect": "Agresividad",
-                    "legacy": "Vastago de M"
-                }
-            ],
-            "code": "DEMO0027",
-            "victoryPoints": 0,
-            "scenarioCleared": false,
-            "createdAt": "2025-01-10T10:00:00Z"
-        },
-        {
-            "id": "demo-free-28",
-            "tableNumber": 28,
-            "name": "Mesa Demo 28",
-            "difficulty": "Experto",
-            "inevitableChallenge": "Hail H.Y.D.R.A.",
-            "players": 3,
-            "playersInfo": [
-                {
-                    "character": "Doctor Strange",
-                    "aspect": "Proteccion",
-                    "legacy": "Vastago de M"
-                },
-                {
-                    "character": "Rocket",
-                    "aspect": "Justicia",
-                    "legacy": "Equipo de dos"
-                },
-                {
-                    "character": "Rocket",
-                    "aspect": "Liderazgo",
-                    "legacy": "Vastago de M"
-                }
-            ],
-            "code": "DEMO0028",
-            "victoryPoints": 12,
-            "scenarioCleared": true,
-            "createdAt": "2025-01-10T10:00:00Z"
-        },
-        {
-            "id": "demo-free-29",
-            "tableNumber": 29,
-            "name": "Mesa Demo 29",
-            "difficulty": "Normal",
-            "inevitableChallenge": "Ultron Infinito",
-            "players": 4,
-            "playersInfo": [
-                {
-                    "character": "Thor",
-                    "aspect": "Proteccion",
-                    "legacy": "Guerreros arana"
-                },
-                {
-                    "character": "Wasp",
-                    "aspect": "Proteccion",
-                    "legacy": "Equipo de dos"
-                },
-                {
-                    "character": "Captain Marvel",
-                    "aspect": "Proteccion",
-                    "legacy": "Guerreros arana"
-                },
-                {
-                    "character": "Doctor Strange",
-                    "aspect": "Justicia",
-                    "legacy": "Vastago de M"
-                }
-            ],
-            "code": "DEMO0029",
-            "victoryPoints": 0,
-            "scenarioCleared": false,
-            "createdAt": "2025-01-10T10:00:00Z"
-        },
-        {
-            "id": "demo-free-30",
-            "tableNumber": 30,
-            "name": "Mesa Demo 30",
-            "difficulty": "Normal",
-            "inevitableChallenge": "La Sala Roja",
-            "players": 2,
-            "playersInfo": [
-                {
-                    "character": "Captain Marvel",
-                    "aspect": "Justicia",
-                    "legacy": "Equipo de dos"
-                },
-                {
-                    "character": "Doctor Strange",
-                    "aspect": "Proteccion",
-                    "legacy": "Guerreros arana"
-                }
-            ],
-            "code": "DEMO0030",
-            "victoryPoints": 12,
-            "scenarioCleared": true,
-            "createdAt": "2025-01-10T10:00:00Z"
-        },
-        {
-            "id": "demo-free-31",
-            "tableNumber": 31,
-            "name": "Mesa Demo 31",
-            "difficulty": "Normal",
-            "inevitableChallenge": "Celdas Falsas",
-            "players": 3,
-            "playersInfo": [
-                {
-                    "character": "Vision",
-                    "aspect": "Agresividad",
-                    "legacy": "Vastago de M"
-                },
-                {
-                    "character": "Hulk",
-                    "aspect": "Liderazgo",
-                    "legacy": "Equipo de dos"
-                },
-                {
-                    "character": "Star-Lord",
-                    "aspect": "Proteccion",
-                    "legacy": "Ronin"
-                }
-            ],
-            "code": "DEMO0031",
-            "victoryPoints": 0,
-            "scenarioCleared": false,
-            "createdAt": "2025-01-10T10:00:00Z"
-        },
-        {
-            "id": "demo-free-32",
-            "tableNumber": 32,
-            "name": "Mesa Demo 32",
-            "difficulty": "Experto",
-            "inevitableChallenge": "Thunder Force",
-            "players": 4,
-            "playersInfo": [
-                {
-                    "character": "Gamora",
-                    "aspect": "Proteccion",
-                    "legacy": "Ronin"
-                },
-                {
-                    "character": "Black Widow",
-                    "aspect": "Liderazgo",
-                    "legacy": "Vastago de M"
-                },
-                {
-                    "character": "Spectrum",
-                    "aspect": "Justicia",
-                    "legacy": "Equipo de dos"
-                },
-                {
-                    "character": "Thor",
-                    "aspect": "Proteccion",
-                    "legacy": "Guerreros arana"
-                }
-            ],
-            "code": "DEMO0032",
-            "victoryPoints": 14,
-            "scenarioCleared": true,
-            "createdAt": "2025-01-10T10:00:00Z"
-        }
-    ],
-    "mesaTotals": {
-        "7": {
-            "c1": 70,
-            "c2": 35,
-            "c3": 21
-        },
-        "3": {
-            "c1": 30,
-            "c2": 15,
-            "c3": 9
-        },
-        "2": {
-            "c1": 20,
-            "c2": 10,
-            "c3": 6
-        },
-        "1": {
-            "c1": 10,
-            "c2": 5,
-            "c3": 3
-        },
-        "4": {
-            "c1": 40,
-            "c2": 20,
-            "c3": 12
-        },
-        "6": {
-            "c1": 60,
-            "c2": 30,
-            "c3": 18
-        },
-        "5": {
-            "c1": 50,
-            "c2": 25,
-            "c3": 15
-        },
-        "8": {
-            "c1": 80,
-            "c2": 40,
-            "c3": 24
-        }
-    },
-    "mesaEvents": [],
-    "qrEventEnabled": false,
-    "qrFreegameEnabled": true,
-    "ts": 1762772233463
+    "counter":  {
+                    "primary":  1500,
+                    "secondary":  120,
+                    "tertiary":  300,
+                    "secondaryImageIndex":  2
+                },
+    "registerTables":  [
+                           {
+                               "id":  "demo-reg-1",
+                               "tableNumber":  1,
+                               "tableName":  "Registro Demo 1",
+                               "difficulty":  "Normal",
+                               "players":  4,
+                               "playersInfo":  [
+                                                   {
+                                                       "character":  "Mariposa Mental",
+                                                       "aspect":  "ProtecciÃ³n"
+                                                   },
+                                                   {
+                                                       "character":  "Gamora",
+                                                       "aspect":  "Masacrismo"
+                                                   },
+                                                   {
+                                                       "character":  "Hombre de Hielo",
+                                                       "aspect":  "Justicia"
+                                                   },
+                                                   {
+                                                       "character":  "Lobezno",
+                                                       "aspect":  "Justicia"
+                                                   }
+                                               ],
+                               "code":  "REG0001",
+                               "createdAt":  "2025-01-10T09:30:00Z"
+                           },
+                           {
+                               "id":  "demo-reg-2",
+                               "tableNumber":  2,
+                               "tableName":  "Registro Demo 2",
+                               "difficulty":  "Normal",
+                               "players":  3,
+                               "playersInfo":  [
+                                                   {
+                                                       "character":  "Gatasombra",
+                                                       "aspect":  "Masacrismo"
+                                                   },
+                                                   {
+                                                       "character":  "SP//dr",
+                                                       "aspect":  "Liderazgo"
+                                                   },
+                                                   {
+                                                       "character":  "Avispa",
+                                                       "aspect":  "ProtecciÃ³n"
+                                                   }
+                                               ],
+                               "code":  "REG0002",
+                               "createdAt":  "2025-01-10T09:30:00Z"
+                           },
+                           {
+                               "id":  "demo-reg-3",
+                               "tableNumber":  3,
+                               "tableName":  "Registro Demo 3",
+                               "difficulty":  "Experto",
+                               "players":  4,
+                               "playersInfo":  [
+                                                   {
+                                                       "character":  "Magik",
+                                                       "aspect":  "Agresividad"
+                                                   },
+                                                   {
+                                                       "character":  "Spider-woman",
+                                                       "aspect":  "Liderazgo"
+                                                   },
+                                                   {
+                                                       "character":  "Avispa",
+                                                       "aspect":  "ProtecciÃ³n"
+                                                   },
+                                                   {
+                                                       "character":  "Mariposa Mental",
+                                                       "aspect":  "Agresividad"
+                                                   }
+                                               ],
+                               "code":  "REG0003",
+                               "createdAt":  "2025-01-10T09:30:00Z"
+                           },
+                           {
+                               "id":  "demo-reg-4",
+                               "tableNumber":  4,
+                               "tableName":  "Registro Demo 4",
+                               "difficulty":  "Normal",
+                               "players":  3,
+                               "playersInfo":  [
+                                                   {
+                                                       "character":  "DominÃ³",
+                                                       "aspect":  "ProtecciÃ³n"
+                                                   },
+                                                   {
+                                                       "character":  "Veneno",
+                                                       "aspect":  "Agresividad"
+                                                   },
+                                                   {
+                                                       "character":  "Spectrum",
+                                                       "aspect":  "Masacrismo"
+                                                   }
+                                               ],
+                               "code":  "REG0004",
+                               "createdAt":  "2025-01-10T09:30:00Z"
+                           },
+                           {
+                               "id":  "demo-reg-5",
+                               "tableNumber":  5,
+                               "tableName":  "Registro Demo 5",
+                               "difficulty":  "Normal",
+                               "players":  4,
+                               "playersInfo":  [
+                                                   {
+                                                       "character":  "Iron Man",
+                                                       "aspect":  "Masacrismo"
+                                                   },
+                                                   {
+                                                       "character":  "Bishop",
+                                                       "aspect":  "Masacrismo"
+                                                   },
+                                                   {
+                                                       "character":  "Viuda Negra",
+                                                       "aspect":  "Agresividad"
+                                                   },
+                                                   {
+                                                       "character":  "Spider-Man (Miles Morales)",
+                                                       "aspect":  "ProtecciÃ³n"
+                                                   }
+                                               ],
+                               "code":  "REG0005",
+                               "createdAt":  "2025-01-10T09:30:00Z"
+                           },
+                           {
+                               "id":  "demo-reg-6",
+                               "tableNumber":  6,
+                               "tableName":  "Registro Demo 6",
+                               "difficulty":  "Experto",
+                               "players":  3,
+                               "playersInfo":  [
+                                                   {
+                                                       "character":  "Magneto",
+                                                       "aspect":  "Agresividad"
+                                                   },
+                                                   {
+                                                       "character":  "Thor",
+                                                       "aspect":  "ProtecciÃ³n"
+                                                   },
+                                                   {
+                                                       "character":  "Capitana Marvel",
+                                                       "aspect":  "Masacrismo"
+                                                   }
+                                               ],
+                               "code":  "REG0006",
+                               "createdAt":  "2025-01-10T09:30:00Z"
+                           },
+                           {
+                               "id":  "demo-reg-7",
+                               "tableNumber":  7,
+                               "tableName":  "Registro Demo 7",
+                               "difficulty":  "Normal",
+                               "players":  4,
+                               "playersInfo":  [
+                                                   {
+                                                       "character":  "Magik",
+                                                       "aspect":  "ProtecciÃ³n"
+                                                   },
+                                                   {
+                                                       "character":  "Lobezno",
+                                                       "aspect":  "Justicia"
+                                                   },
+                                                   {
+                                                       "character":  "Veneno",
+                                                       "aspect":  "Agresividad"
+                                                   },
+                                                   {
+                                                       "character":  "Ojo de HalcÃ³n",
+                                                       "aspect":  "ProtecciÃ³n"
+                                                   }
+                                               ],
+                               "code":  "REG0007",
+                               "createdAt":  "2025-01-10T09:30:00Z"
+                           },
+                           {
+                               "id":  "demo-reg-8",
+                               "tableNumber":  8,
+                               "tableName":  "Registro Demo 8",
+                               "difficulty":  "Normal",
+                               "players":  3,
+                               "playersInfo":  [
+                                                   {
+                                                       "character":  "SP//dr",
+                                                       "aspect":  "Masacrismo"
+                                                   },
+                                                   {
+                                                       "character":  "Bruja Escarlata",
+                                                       "aspect":  "Justicia"
+                                                   },
+                                                   {
+                                                       "character":  "Ms. Marvel",
+                                                       "aspect":  "Justicia"
+                                                   }
+                                               ],
+                               "code":  "REG0008",
+                               "createdAt":  "2025-01-10T09:30:00Z"
+                           },
+                           {
+                               "id":  "demo-reg-9",
+                               "tableNumber":  9,
+                               "tableName":  "Registro Demo 9",
+                               "difficulty":  "Experto",
+                               "players":  4,
+                               "playersInfo":  [
+                                                   {
+                                                       "character":  "JÃºbilo",
+                                                       "aspect":  "Agresividad"
+                                                   },
+                                                   {
+                                                       "character":  "Gamora",
+                                                       "aspect":  "Masacrismo"
+                                                   },
+                                                   {
+                                                       "character":  "Ms. Marvel",
+                                                       "aspect":  "Justicia"
+                                                   },
+                                                   {
+                                                       "character":  "Gatasombra",
+                                                       "aspect":  "Liderazgo"
+                                                   }
+                                               ],
+                               "code":  "REG0009",
+                               "createdAt":  "2025-01-10T09:30:00Z"
+                           },
+                           {
+                               "id":  "demo-reg-10",
+                               "tableNumber":  10,
+                               "tableName":  "Registro Demo 10",
+                               "difficulty":  "Normal",
+                               "players":  3,
+                               "playersInfo":  [
+                                                   {
+                                                       "character":  "Bruja Escarlata",
+                                                       "aspect":  "Liderazgo"
+                                                   },
+                                                   {
+                                                       "character":  "Nebula",
+                                                       "aspect":  "Agresividad"
+                                                   },
+                                                   {
+                                                       "character":  "Mapache Cohete",
+                                                       "aspect":  "Justicia"
+                                                   }
+                                               ],
+                               "code":  "REG0010",
+                               "createdAt":  "2025-01-10T09:30:00Z"
+                           },
+                           {
+                               "id":  "demo-reg-11",
+                               "tableNumber":  11,
+                               "tableName":  "Registro Demo 11",
+                               "difficulty":  "Normal",
+                               "players":  4,
+                               "playersInfo":  [
+                                                   {
+                                                       "character":  "Ãngel",
+                                                       "aspect":  "Agresividad"
+                                                   },
+                                                   {
+                                                       "character":  "DominÃ³",
+                                                       "aspect":  "Liderazgo"
+                                                   },
+                                                   {
+                                                       "character":  "Spectrum",
+                                                       "aspect":  "Agresividad"
+                                                   },
+                                                   {
+                                                       "character":  "Spider-Man (Miles Morales)",
+                                                       "aspect":  "Agresividad"
+                                                   }
+                                               ],
+                               "code":  "REG0011",
+                               "createdAt":  "2025-01-10T09:30:00Z"
+                           },
+                           {
+                               "id":  "demo-reg-12",
+                               "tableNumber":  12,
+                               "tableName":  "Registro Demo 12",
+                               "difficulty":  "Experto",
+                               "players":  3,
+                               "playersInfo":  [
+                                                   {
+                                                       "character":  "Iron Man",
+                                                       "aspect":  "Liderazgo"
+                                                   },
+                                                   {
+                                                       "character":  "Pantera Negra (Shuri)",
+                                                       "aspect":  "ProtecciÃ³n"
+                                                   },
+                                                   {
+                                                       "character":  "Coloso",
+                                                       "aspect":  "Liderazgo"
+                                                   }
+                                               ],
+                               "code":  "REG0012",
+                               "createdAt":  "2025-01-10T09:30:00Z"
+                           },
+                           {
+                               "id":  "demo-reg-13",
+                               "tableNumber":  13,
+                               "tableName":  "Registro Demo 13",
+                               "difficulty":  "Normal",
+                               "players":  4,
+                               "playersInfo":  [
+                                                   {
+                                                       "character":  "CÃ­clope",
+                                                       "aspect":  "Masacrismo"
+                                                   },
+                                                   {
+                                                       "character":  "Ironheart",
+                                                       "aspect":  "ProtecciÃ³n"
+                                                   },
+                                                   {
+                                                       "character":  "Spiderman (Peter Parker)",
+                                                       "aspect":  "Liderazgo"
+                                                   },
+                                                   {
+                                                       "character":  "Lobezno",
+                                                       "aspect":  "Liderazgo"
+                                                   }
+                                               ],
+                               "code":  "REG0013",
+                               "createdAt":  "2025-01-10T09:30:00Z"
+                           },
+                           {
+                               "id":  "demo-reg-14",
+                               "tableNumber":  14,
+                               "tableName":  "Registro Demo 14",
+                               "difficulty":  "Normal",
+                               "players":  3,
+                               "playersInfo":  [
+                                                   {
+                                                       "character":  "Dr. ExtraÃ±o",
+                                                       "aspect":  "ProtecciÃ³n"
+                                                   },
+                                                   {
+                                                       "character":  "PÃ­cara",
+                                                       "aspect":  "ProtecciÃ³n"
+                                                   },
+                                                   {
+                                                       "character":  "Coloso",
+                                                       "aspect":  "Liderazgo"
+                                                   }
+                                               ],
+                               "code":  "REG0014",
+                               "createdAt":  "2025-01-10T09:30:00Z"
+                           },
+                           {
+                               "id":  "demo-reg-15",
+                               "tableNumber":  15,
+                               "tableName":  "Registro Demo 15",
+                               "difficulty":  "Experto",
+                               "players":  4,
+                               "playersInfo":  [
+                                                   {
+                                                       "character":  "Nova",
+                                                       "aspect":  "Liderazgo"
+                                                   },
+                                                   {
+                                                       "character":  "Groot",
+                                                       "aspect":  "Masacrismo"
+                                                   },
+                                                   {
+                                                       "character":  "Spectrum",
+                                                       "aspect":  "Justicia"
+                                                   },
+                                                   {
+                                                       "character":  "Star-Lord",
+                                                       "aspect":  "Agresividad"
+                                                   }
+                                               ],
+                               "code":  "REG0015",
+                               "createdAt":  "2025-01-10T09:30:00Z"
+                           },
+                           {
+                               "id":  "demo-reg-16",
+                               "tableNumber":  16,
+                               "tableName":  "Registro Demo 16",
+                               "difficulty":  "Normal",
+                               "players":  3,
+                               "playersInfo":  [
+                                                   {
+                                                       "character":  "Star-Lord",
+                                                       "aspect":  "Justicia"
+                                                   },
+                                                   {
+                                                       "character":  "Bishop",
+                                                       "aspect":  "ProtecciÃ³n"
+                                                   },
+                                                   {
+                                                       "character":  "Nick Fury",
+                                                       "aspect":  "Justicia"
+                                                   }
+                                               ],
+                               "code":  "REG0016",
+                               "createdAt":  "2025-01-10T09:30:00Z"
+                           },
+                           {
+                               "id":  "demo-reg-17",
+                               "tableNumber":  17,
+                               "tableName":  "Registro Demo 17",
+                               "difficulty":  "Normal",
+                               "players":  4,
+                               "playersInfo":  [
+                                                   {
+                                                       "character":  "Ironheart",
+                                                       "aspect":  "Masacrismo"
+                                                   },
+                                                   {
+                                                       "character":  "Hulk",
+                                                       "aspect":  "Agresividad"
+                                                   },
+                                                   {
+                                                       "character":  "Drax",
+                                                       "aspect":  "ProtecciÃ³n"
+                                                   },
+                                                   {
+                                                       "character":  "CapitÃ¡n AmÃ©rica",
+                                                       "aspect":  "Justicia"
+                                                   }
+                                               ],
+                               "code":  "REG0017",
+                               "createdAt":  "2025-01-10T09:30:00Z"
+                           },
+                           {
+                               "id":  "demo-reg-18",
+                               "tableNumber":  18,
+                               "tableName":  "Registro Demo 18",
+                               "difficulty":  "Experto",
+                               "players":  3,
+                               "playersInfo":  [
+                                                   {
+                                                       "character":  "Ms. Marvel",
+                                                       "aspect":  "Justicia"
+                                                   },
+                                                   {
+                                                       "character":  "Thor",
+                                                       "aspect":  "Agresividad"
+                                                   },
+                                                   {
+                                                       "character":  "MarÃ­a Hill",
+                                                       "aspect":  "Masacrismo"
+                                                   }
+                                               ],
+                               "code":  "REG0018",
+                               "createdAt":  "2025-01-10T09:30:00Z"
+                           },
+                           {
+                               "id":  "demo-reg-19",
+                               "tableNumber":  19,
+                               "tableName":  "Registro Demo 19",
+                               "difficulty":  "Normal",
+                               "players":  4,
+                               "playersInfo":  [
+                                                   {
+                                                       "character":  "Coloso",
+                                                       "aspect":  "Liderazgo"
+                                                   },
+                                                   {
+                                                       "character":  "Bruja Escarlata",
+                                                       "aspect":  "Justicia"
+                                                   },
+                                                   {
+                                                       "character":  "Ojo de HalcÃ³n",
+                                                       "aspect":  "ProtecciÃ³n"
+                                                   },
+                                                   {
+                                                       "character":  "HalcÃ³n",
+                                                       "aspect":  "Agresividad"
+                                                   }
+                                               ],
+                               "code":  "REG0019",
+                               "createdAt":  "2025-01-10T09:30:00Z"
+                           },
+                           {
+                               "id":  "demo-reg-20",
+                               "tableNumber":  20,
+                               "tableName":  "Registro Demo 20",
+                               "difficulty":  "Normal",
+                               "players":  3,
+                               "playersInfo":  [
+                                                   {
+                                                       "character":  "DominÃ³",
+                                                       "aspect":  "Justicia"
+                                                   },
+                                                   {
+                                                       "character":  "Hulk",
+                                                       "aspect":  "Justicia"
+                                                   },
+                                                   {
+                                                       "character":  "Soldado de invierno",
+                                                       "aspect":  "Liderazgo"
+                                                   }
+                                               ],
+                               "code":  "REG0020",
+                               "createdAt":  "2025-01-10T09:30:00Z"
+                           },
+                           {
+                               "id":  "demo-reg-21",
+                               "tableNumber":  21,
+                               "tableName":  "Registro Demo 21",
+                               "difficulty":  "Experto",
+                               "players":  4,
+                               "playersInfo":  [
+                                                   {
+                                                       "character":  "Seda",
+                                                       "aspect":  "Liderazgo"
+                                                   },
+                                                   {
+                                                       "character":  "Spider-woman",
+                                                       "aspect":  "Liderazgo"
+                                                   },
+                                                   {
+                                                       "character":  "Nick Fury",
+                                                       "aspect":  "ProtecciÃ³n"
+                                                   },
+                                                   {
+                                                       "character":  "Iron Man",
+                                                       "aspect":  "Masacrismo"
+                                                   }
+                                               ],
+                               "code":  "REG0021",
+                               "createdAt":  "2025-01-10T09:30:00Z"
+                           },
+                           {
+                               "id":  "demo-reg-22",
+                               "tableNumber":  22,
+                               "tableName":  "Registro Demo 22",
+                               "difficulty":  "Normal",
+                               "players":  3,
+                               "playersInfo":  [
+                                                   {
+                                                       "character":  "Groot",
+                                                       "aspect":  "Liderazgo"
+                                                   },
+                                                   {
+                                                       "character":  "Hulka",
+                                                       "aspect":  "Agresividad"
+                                                   },
+                                                   {
+                                                       "character":  "Capitana Marvel",
+                                                       "aspect":  "Liderazgo"
+                                                   }
+                                               ],
+                               "code":  "REG0022",
+                               "createdAt":  "2025-01-10T09:30:00Z"
+                           },
+                           {
+                               "id":  "demo-reg-23",
+                               "tableNumber":  23,
+                               "tableName":  "Registro Demo 23",
+                               "difficulty":  "Normal",
+                               "players":  4,
+                               "playersInfo":  [
+                                                   {
+                                                       "character":  "Ghost-Spider",
+                                                       "aspect":  "Masacrismo"
+                                                   },
+                                                   {
+                                                       "character":  "Iron Man",
+                                                       "aspect":  "Justicia"
+                                                   },
+                                                   {
+                                                       "character":  "HalcÃ³n",
+                                                       "aspect":  "Agresividad"
+                                                   },
+                                                   {
+                                                       "character":  "Ms. Marvel",
+                                                       "aspect":  "Justicia"
+                                                   }
+                                               ],
+                               "code":  "REG0023",
+                               "createdAt":  "2025-01-10T09:30:00Z"
+                           },
+                           {
+                               "id":  "demo-reg-24",
+                               "tableNumber":  24,
+                               "tableName":  "Registro Demo 24",
+                               "difficulty":  "Experto",
+                               "players":  3,
+                               "playersInfo":  [
+                                                   {
+                                                       "character":  "Spider-woman",
+                                                       "aspect":  "ProtecciÃ³n"
+                                                   },
+                                                   {
+                                                       "character":  "Spiderman (Peter Parker)",
+                                                       "aspect":  "Liderazgo"
+                                                   },
+                                                   {
+                                                       "character":  "Bishop",
+                                                       "aspect":  "Agresividad"
+                                                   }
+                                               ],
+                               "code":  "REG0024",
+                               "createdAt":  "2025-01-10T09:30:00Z"
+                           },
+                           {
+                               "id":  "demo-reg-25",
+                               "tableNumber":  25,
+                               "tableName":  "Registro Demo 25",
+                               "difficulty":  "Normal",
+                               "players":  4,
+                               "playersInfo":  [
+                                                   {
+                                                       "character":  "Seda",
+                                                       "aspect":  "ProtecciÃ³n"
+                                                   },
+                                                   {
+                                                       "character":  "Mapache Cohete",
+                                                       "aspect":  "Justicia"
+                                                   },
+                                                   {
+                                                       "character":  "Valquiria",
+                                                       "aspect":  "ProtecciÃ³n"
+                                                   },
+                                                   {
+                                                       "character":  "Coloso",
+                                                       "aspect":  "Masacrismo"
+                                                   }
+                                               ],
+                               "code":  "REG0025",
+                               "createdAt":  "2025-01-10T09:30:00Z"
+                           },
+                           {
+                               "id":  "demo-reg-26",
+                               "tableNumber":  26,
+                               "tableName":  "Registro Demo 26",
+                               "difficulty":  "Normal",
+                               "players":  3,
+                               "playersInfo":  [
+                                                   {
+                                                       "character":  "Veneno",
+                                                       "aspect":  "Liderazgo"
+                                                   },
+                                                   {
+                                                       "character":  "Ironheart",
+                                                       "aspect":  "Agresividad"
+                                                   },
+                                                   {
+                                                       "character":  "Ghost-Spider",
+                                                       "aspect":  "Agresividad"
+                                                   }
+                                               ],
+                               "code":  "REG0026",
+                               "createdAt":  "2025-01-10T09:30:00Z"
+                           },
+                           {
+                               "id":  "demo-reg-27",
+                               "tableNumber":  27,
+                               "tableName":  "Registro Demo 27",
+                               "difficulty":  "Experto",
+                               "players":  4,
+                               "playersInfo":  [
+                                                   {
+                                                       "character":  "Vision",
+                                                       "aspect":  "Agresividad"
+                                                   },
+                                                   {
+                                                       "character":  "Pantera Negra (T\u0027Challa)",
+                                                       "aspect":  "Agresividad"
+                                                   },
+                                                   {
+                                                       "character":  "Nick Fury",
+                                                       "aspect":  "Liderazgo"
+                                                   },
+                                                   {
+                                                       "character":  "Magik",
+                                                       "aspect":  "Masacrismo"
+                                                   }
+                                               ],
+                               "code":  "REG0027",
+                               "createdAt":  "2025-01-10T09:30:00Z"
+                           },
+                           {
+                               "id":  "demo-reg-28",
+                               "tableNumber":  28,
+                               "tableName":  "Registro Demo 28",
+                               "difficulty":  "Normal",
+                               "players":  3,
+                               "playersInfo":  [
+                                                   {
+                                                       "character":  "Vision",
+                                                       "aspect":  "Agresividad"
+                                                   },
+                                                   {
+                                                       "character":  "Spider-woman",
+                                                       "aspect":  "Liderazgo"
+                                                   },
+                                                   {
+                                                       "character":  "Hulka",
+                                                       "aspect":  "Agresividad"
+                                                   }
+                                               ],
+                               "code":  "REG0028",
+                               "createdAt":  "2025-01-10T09:30:00Z"
+                           },
+                           {
+                               "id":  "demo-reg-29",
+                               "tableNumber":  29,
+                               "tableName":  "Registro Demo 29",
+                               "difficulty":  "Normal",
+                               "players":  4,
+                               "playersInfo":  [
+                                                   {
+                                                       "character":  "Gambito",
+                                                       "aspect":  "ProtecciÃ³n"
+                                                   },
+                                                   {
+                                                       "character":  "DominÃ³",
+                                                       "aspect":  "Agresividad"
+                                                   },
+                                                   {
+                                                       "character":  "Lobezno",
+                                                       "aspect":  "Justicia"
+                                                   },
+                                                   {
+                                                       "character":  "Hombre Hormiga",
+                                                       "aspect":  "Liderazgo"
+                                                   }
+                                               ],
+                               "code":  "REG0029",
+                               "createdAt":  "2025-01-10T09:30:00Z"
+                           },
+                           {
+                               "id":  "demo-reg-30",
+                               "tableNumber":  30,
+                               "tableName":  "Registro Demo 30",
+                               "difficulty":  "Experto",
+                               "players":  3,
+                               "playersInfo":  [
+                                                   {
+                                                       "character":  "Masacre",
+                                                       "aspect":  "Justicia"
+                                                   },
+                                                   {
+                                                       "character":  "Viuda Negra",
+                                                       "aspect":  "ProtecciÃ³n"
+                                                   },
+                                                   {
+                                                       "character":  "Hombre de Hielo",
+                                                       "aspect":  "ProtecciÃ³n"
+                                                   }
+                                               ],
+                               "code":  "REG0030",
+                               "createdAt":  "2025-01-10T09:30:00Z"
+                           },
+                           {
+                               "id":  "demo-reg-31",
+                               "tableNumber":  31,
+                               "tableName":  "Registro Demo 31",
+                               "difficulty":  "Normal",
+                               "players":  4,
+                               "playersInfo":  [
+                                                   {
+                                                       "character":  "Pantera Negra (T\u0027Challa)",
+                                                       "aspect":  "Masacrismo"
+                                                   },
+                                                   {
+                                                       "character":  "Capitana Marvel",
+                                                       "aspect":  "Justicia"
+                                                   },
+                                                   {
+                                                       "character":  "X-23",
+                                                       "aspect":  "Masacrismo"
+                                                   },
+                                                   {
+                                                       "character":  "Iron Man",
+                                                       "aspect":  "Agresividad"
+                                                   }
+                                               ],
+                               "code":  "REG0031",
+                               "createdAt":  "2025-01-10T09:30:00Z"
+                           },
+                           {
+                               "id":  "demo-reg-32",
+                               "tableNumber":  32,
+                               "tableName":  "Registro Demo 32",
+                               "difficulty":  "Normal",
+                               "players":  3,
+                               "playersInfo":  [
+                                                   {
+                                                       "character":  "Valquiria",
+                                                       "aspect":  "ProtecciÃ³n"
+                                                   },
+                                                   {
+                                                       "character":  "Mercurio",
+                                                       "aspect":  "Agresividad"
+                                                   },
+                                                   {
+                                                       "character":  "Bruja Escarlata",
+                                                       "aspect":  "Agresividad"
+                                                   }
+                                               ],
+                               "code":  "REG0032",
+                               "createdAt":  "2025-01-10T09:30:00Z"
+                           }
+                       ],
+    "freeGameTables":  [
+                           {
+                               "id":  "demo-free-1",
+                               "tableNumber":  1,
+                               "name":  "Mesa Demo 1",
+                               "difficulty":  "Normal",
+                               "inevitableChallenge":  "La Sala Roja",
+                               "players":  3,
+                               "playersInfo":  [
+                                                   {
+                                                       "character":  "Bruja Escarlata",
+                                                       "aspect":  "Justicia",
+                                                       "legacy":  "Rabia irradiada"
+                                                   },
+                                                   {
+                                                       "character":  "MÃ¡quina de Guerra",
+                                                       "aspect":  "Masacrismo",
+                                                       "legacy":  "Ronin"
+                                                   },
+                                                   {
+                                                       "character":  "Veneno",
+                                                       "aspect":  "ProtecciÃ³n",
+                                                       "legacy":  "Equipo de dos"
+                                                   }
+                                               ],
+                               "code":  "DEMO0001",
+                               "victoryPoints":  0,
+                               "scenarioCleared":  false,
+                               "createdAt":  "2025-01-10T10:00:00Z"
+                           },
+                           {
+                               "id":  "demo-free-2",
+                               "tableNumber":  2,
+                               "name":  "Mesa Demo 2",
+                               "difficulty":  "Normal",
+                               "inevitableChallenge":  "Celdas Falsas",
+                               "players":  4,
+                               "playersInfo":  [
+                                                   {
+                                                       "character":  "Gambito",
+                                                       "aspect":  "Masacrismo",
+                                                       "legacy":  "Mutante hibrido"
+                                                   },
+                                                   {
+                                                       "character":  "Ms. Marvel",
+                                                       "aspect":  "Agresividad",
+                                                       "legacy":  "Equipo de dos"
+                                                   },
+                                                   {
+                                                       "character":  "Iron Man",
+                                                       "aspect":  "Agresividad",
+                                                       "legacy":  "Rabia irradiada"
+                                                   },
+                                                   {
+                                                       "character":  "Bishop",
+                                                       "aspect":  "Justicia",
+                                                       "legacy":  "Solo ante el peligro"
+                                                   }
+                                               ],
+                               "code":  "DEMO0002",
+                               "victoryPoints":  16,
+                               "scenarioCleared":  true,
+                               "createdAt":  "2025-01-10T10:00:00Z"
+                           },
+                           {
+                               "id":  "demo-free-3",
+                               "tableNumber":  3,
+                               "name":  "Mesa Demo 3",
+                               "difficulty":  "Normal",
+                               "inevitableChallenge":  "Thunder Force",
+                               "players":  2,
+                               "playersInfo":  [
+                                                   {
+                                                       "character":  "X-23",
+                                                       "aspect":  "Agresividad",
+                                                       "legacy":  "Mutante hibrido"
+                                                   },
+                                                   {
+                                                       "character":  "Avispa",
+                                                       "aspect":  "Liderazgo",
+                                                       "legacy":  "Rabia irradiada"
+                                                   }
+                                               ],
+                               "code":  "DEMO0003",
+                               "victoryPoints":  0,
+                               "scenarioCleared":  false,
+                               "createdAt":  "2025-01-10T10:00:00Z"
+                           },
+                           {
+                               "id":  "demo-free-4",
+                               "tableNumber":  4,
+                               "name":  "Mesa Demo 4",
+                               "difficulty":  "Experto",
+                               "inevitableChallenge":  "Hail H.Y.D.R.A.",
+                               "players":  3,
+                               "playersInfo":  [
+                                                   {
+                                                       "character":  "Magneto",
+                                                       "aspect":  "ProtecciÃ³n",
+                                                       "legacy":  "Vastago de M"
+                                                   },
+                                                   {
+                                                       "character":  "Hulk",
+                                                       "aspect":  "Masacrismo",
+                                                       "legacy":  "Rabia irradiada"
+                                                   },
+                                                   {
+                                                       "character":  "Tormenta",
+                                                       "aspect":  "Justicia",
+                                                       "legacy":  "Equipado para lo peor"
+                                                   }
+                                               ],
+                               "code":  "DEMO0004",
+                               "victoryPoints":  9,
+                               "scenarioCleared":  true,
+                               "createdAt":  "2025-01-10T10:00:00Z"
+                           },
+                           {
+                               "id":  "demo-free-5",
+                               "tableNumber":  5,
+                               "name":  "Mesa Demo 5",
+                               "difficulty":  "Normal",
+                               "inevitableChallenge":  "Ultron Infinito",
+                               "players":  4,
+                               "playersInfo":  [
+                                                   {
+                                                       "character":  "Viuda Negra",
+                                                       "aspect":  "Masacrismo",
+                                                       "legacy":  "Ronin"
+                                                   },
+                                                   {
+                                                       "character":  "Pantera Negra (T\u0027Challa)",
+                                                       "aspect":  "ProtecciÃ³n",
+                                                       "legacy":  "Ninguno"
+                                                   },
+                                                   {
+                                                       "character":  "DominÃ³",
+                                                       "aspect":  "Agresividad",
+                                                       "legacy":  "Solo ante el peligro"
+                                                   },
+                                                   {
+                                                       "character":  "Spider-woman",
+                                                       "aspect":  "Justicia",
+                                                       "legacy":  "Instruidas por Thanos"
+                                                   }
+                                               ],
+                               "code":  "DEMO0005",
+                               "victoryPoints":  0,
+                               "scenarioCleared":  false,
+                               "createdAt":  "2025-01-10T10:00:00Z"
+                           },
+                           {
+                               "id":  "demo-free-6",
+                               "tableNumber":  6,
+                               "name":  "Mesa Demo 6",
+                               "difficulty":  "Normal",
+                               "inevitableChallenge":  "La Sala Roja",
+                               "players":  2,
+                               "playersInfo":  [
+                                                   {
+                                                       "character":  "Adam Warlock",
+                                                       "aspect":  "ProtecciÃ³n",
+                                                       "legacy":  "Equipo de dos"
+                                                   },
+                                                   {
+                                                       "character":  "Hombre Hormiga",
+                                                       "aspect":  "Masacrismo",
+                                                       "legacy":  "Equipo de dos"
+                                                   }
+                                               ],
+                               "code":  "DEMO0006",
+                               "victoryPoints":  6,
+                               "scenarioCleared":  true,
+                               "createdAt":  "2025-01-10T10:00:00Z"
+                           },
+                           {
+                               "id":  "demo-free-7",
+                               "tableNumber":  7,
+                               "name":  "Mesa Demo 7",
+                               "difficulty":  "Normal",
+                               "inevitableChallenge":  "Celdas Falsas",
+                               "players":  3,
+                               "playersInfo":  [
+                                                   {
+                                                       "character":  "Iron Man",
+                                                       "aspect":  "Justicia",
+                                                       "legacy":  "Mutante hibrido"
+                                                   },
+                                                   {
+                                                       "character":  "Hulk",
+                                                       "aspect":  "Agresividad",
+                                                       "legacy":  "Mutante hibrido"
+                                                   },
+                                                   {
+                                                       "character":  "Vision",
+                                                       "aspect":  "Masacrismo",
+                                                       "legacy":  "Instruidas por Thanos"
+                                                   }
+                                               ],
+                               "code":  "DEMO0007",
+                               "victoryPoints":  0,
+                               "scenarioCleared":  false,
+                               "createdAt":  "2025-01-10T10:00:00Z"
+                           },
+                           {
+                               "id":  "demo-free-8",
+                               "tableNumber":  8,
+                               "name":  "Mesa Demo 8",
+                               "difficulty":  "Experto",
+                               "inevitableChallenge":  "Thunder Force",
+                               "players":  4,
+                               "playersInfo":  [
+                                                   {
+                                                       "character":  "PÃ­cara",
+                                                       "aspect":  "Agresividad",
+                                                       "legacy":  "Ronin"
+                                                   },
+                                                   {
+                                                       "character":  "Mariposa Mental",
+                                                       "aspect":  "Agresividad",
+                                                       "legacy":  "Equipo de dos"
+                                                   },
+                                                   {
+                                                       "character":  "Avispa",
+                                                       "aspect":  "Masacrismo",
+                                                       "legacy":  "Equipado para lo peor"
+                                                   },
+                                                   {
+                                                       "character":  "Ms. Marvel",
+                                                       "aspect":  "Justicia",
+                                                       "legacy":  "Equipado para lo peor"
+                                                   }
+                                               ],
+                               "code":  "DEMO0008",
+                               "victoryPoints":  16,
+                               "scenarioCleared":  true,
+                               "createdAt":  "2025-01-10T10:00:00Z"
+                           },
+                           {
+                               "id":  "demo-free-9",
+                               "tableNumber":  9,
+                               "name":  "Mesa Demo 9",
+                               "difficulty":  "Normal",
+                               "inevitableChallenge":  "Hail H.Y.D.R.A.",
+                               "players":  2,
+                               "playersInfo":  [
+                                                   {
+                                                       "character":  "Bruja Escarlata",
+                                                       "aspect":  "Liderazgo",
+                                                       "legacy":  "Solo ante el peligro"
+                                                   },
+                                                   {
+                                                       "character":  "Adam Warlock",
+                                                       "aspect":  "Masacrismo",
+                                                       "legacy":  "Los mas buscados"
+                                                   }
+                                               ],
+                               "code":  "DEMO0009",
+                               "victoryPoints":  0,
+                               "scenarioCleared":  false,
+                               "createdAt":  "2025-01-10T10:00:00Z"
+                           },
+                           {
+                               "id":  "demo-free-10",
+                               "tableNumber":  10,
+                               "name":  "Mesa Demo 10",
+                               "difficulty":  "Normal",
+                               "inevitableChallenge":  "Ultron Infinito",
+                               "players":  3,
+                               "playersInfo":  [
+                                                   {
+                                                       "character":  "Bruja Escarlata",
+                                                       "aspect":  "ProtecciÃ³n",
+                                                       "legacy":  "Rabia irradiada"
+                                                   },
+                                                   {
+                                                       "character":  "Soldado de invierno",
+                                                       "aspect":  "Justicia",
+                                                       "legacy":  "Vastago de M"
+                                                   },
+                                                   {
+                                                       "character":  "SP//dr",
+                                                       "aspect":  "ProtecciÃ³n",
+                                                       "legacy":  "Solo ante el peligro"
+                                                   }
+                                               ],
+                               "code":  "DEMO0010",
+                               "victoryPoints":  16,
+                               "scenarioCleared":  true,
+                               "createdAt":  "2025-01-10T10:00:00Z"
+                           },
+                           {
+                               "id":  "demo-free-11",
+                               "tableNumber":  11,
+                               "name":  "Mesa Demo 11",
+                               "difficulty":  "Normal",
+                               "inevitableChallenge":  "La Sala Roja",
+                               "players":  4,
+                               "playersInfo":  [
+                                                   {
+                                                       "character":  "Pantera Negra (Shuri)",
+                                                       "aspect":  "Agresividad",
+                                                       "legacy":  "Dama de la muerte"
+                                                   },
+                                                   {
+                                                       "character":  "MÃ¡quina de Guerra",
+                                                       "aspect":  "Liderazgo",
+                                                       "legacy":  "Solo ante el peligro"
+                                                   },
+                                                   {
+                                                       "character":  "Masacre",
+                                                       "aspect":  "ProtecciÃ³n",
+                                                       "legacy":  "Dama de la muerte"
+                                                   },
+                                                   {
+                                                       "character":  "CÃ­clope",
+                                                       "aspect":  "Agresividad",
+                                                       "legacy":  "Dama de la muerte"
+                                                   }
+                                               ],
+                               "code":  "DEMO0011",
+                               "victoryPoints":  0,
+                               "scenarioCleared":  false,
+                               "createdAt":  "2025-01-10T10:00:00Z"
+                           },
+                           {
+                               "id":  "demo-free-12",
+                               "tableNumber":  12,
+                               "name":  "Mesa Demo 12",
+                               "difficulty":  "Experto",
+                               "inevitableChallenge":  "Celdas Falsas",
+                               "players":  2,
+                               "playersInfo":  [
+                                                   {
+                                                       "character":  "Tormenta",
+                                                       "aspect":  "Agresividad",
+                                                       "legacy":  "Vastago de M"
+                                                   },
+                                                   {
+                                                       "character":  "Soldado de invierno",
+                                                       "aspect":  "Masacrismo",
+                                                       "legacy":  "Rabia irradiada"
+                                                   }
+                                               ],
+                               "code":  "DEMO0012",
+                               "victoryPoints":  14,
+                               "scenarioCleared":  true,
+                               "createdAt":  "2025-01-10T10:00:00Z"
+                           },
+                           {
+                               "id":  "demo-free-13",
+                               "tableNumber":  13,
+                               "name":  "Mesa Demo 13",
+                               "difficulty":  "Normal",
+                               "inevitableChallenge":  "Thunder Force",
+                               "players":  3,
+                               "playersInfo":  [
+                                                   {
+                                                       "character":  "Avispa",
+                                                       "aspect":  "Masacrismo",
+                                                       "legacy":  "Guerreros arana"
+                                                   },
+                                                   {
+                                                       "character":  "FÃ©nix",
+                                                       "aspect":  "Liderazgo",
+                                                       "legacy":  "Mutante hibrido"
+                                                   },
+                                                   {
+                                                       "character":  "Veneno",
+                                                       "aspect":  "Justicia",
+                                                       "legacy":  "Instruidas por Thanos"
+                                                   }
+                                               ],
+                               "code":  "DEMO0013",
+                               "victoryPoints":  0,
+                               "scenarioCleared":  false,
+                               "createdAt":  "2025-01-10T10:00:00Z"
+                           },
+                           {
+                               "id":  "demo-free-14",
+                               "tableNumber":  14,
+                               "name":  "Mesa Demo 14",
+                               "difficulty":  "Normal",
+                               "inevitableChallenge":  "Hail H.Y.D.R.A.",
+                               "players":  4,
+                               "playersInfo":  [
+                                                   {
+                                                       "character":  "Star-Lord",
+                                                       "aspect":  "ProtecciÃ³n",
+                                                       "legacy":  "Mutante hibrido"
+                                                   },
+                                                   {
+                                                       "character":  "Viuda Negra",
+                                                       "aspect":  "Liderazgo",
+                                                       "legacy":  "Equipado para lo peor"
+                                                   },
+                                                   {
+                                                       "character":  "JÃºbilo",
+                                                       "aspect":  "Masacrismo",
+                                                       "legacy":  "Ninguno"
+                                                   },
+                                                   {
+                                                       "character":  "MÃ¡quina de Guerra",
+                                                       "aspect":  "Masacrismo",
+                                                       "legacy":  "Equipado para lo peor"
+                                                   }
+                                               ],
+                               "code":  "DEMO0014",
+                               "victoryPoints":  6,
+                               "scenarioCleared":  true,
+                               "createdAt":  "2025-01-10T10:00:00Z"
+                           },
+                           {
+                               "id":  "demo-free-15",
+                               "tableNumber":  15,
+                               "name":  "Mesa Demo 15",
+                               "difficulty":  "Normal",
+                               "inevitableChallenge":  "Ultron Infinito",
+                               "players":  2,
+                               "playersInfo":  [
+                                                   {
+                                                       "character":  "Mariposa Mental",
+                                                       "aspect":  "ProtecciÃ³n",
+                                                       "legacy":  "Guerreros arana"
+                                                   },
+                                                   {
+                                                       "character":  "Gatasombra",
+                                                       "aspect":  "ProtecciÃ³n",
+                                                       "legacy":  "Equipo de dos"
+                                                   }
+                                               ],
+                               "code":  "DEMO0015",
+                               "victoryPoints":  0,
+                               "scenarioCleared":  false,
+                               "createdAt":  "2025-01-10T10:00:00Z"
+                           },
+                           {
+                               "id":  "demo-free-16",
+                               "tableNumber":  16,
+                               "name":  "Mesa Demo 16",
+                               "difficulty":  "Experto",
+                               "inevitableChallenge":  "La Sala Roja",
+                               "players":  3,
+                               "playersInfo":  [
+                                                   {
+                                                       "character":  "Star-Lord",
+                                                       "aspect":  "Liderazgo",
+                                                       "legacy":  "Equipado para lo peor"
+                                                   },
+                                                   {
+                                                       "character":  "Ghost-Spider",
+                                                       "aspect":  "Liderazgo",
+                                                       "legacy":  "Los mas buscados"
+                                                   },
+                                                   {
+                                                       "character":  "Iron Man",
+                                                       "aspect":  "Masacrismo",
+                                                       "legacy":  "Rabia irradiada"
+                                                   }
+                                               ],
+                               "code":  "DEMO0016",
+                               "victoryPoints":  10,
+                               "scenarioCleared":  true,
+                               "createdAt":  "2025-01-10T10:00:00Z"
+                           },
+                           {
+                               "id":  "demo-free-17",
+                               "tableNumber":  17,
+                               "name":  "Mesa Demo 17",
+                               "difficulty":  "Normal",
+                               "inevitableChallenge":  "Celdas Falsas",
+                               "players":  4,
+                               "playersInfo":  [
+                                                   {
+                                                       "character":  "HalcÃ³n",
+                                                       "aspect":  "Liderazgo",
+                                                       "legacy":  "Solo ante el peligro"
+                                                   },
+                                                   {
+                                                       "character":  "Magik",
+                                                       "aspect":  "Masacrismo",
+                                                       "legacy":  "Rabia irradiada"
+                                                   },
+                                                   {
+                                                       "character":  "Valquiria",
+                                                       "aspect":  "Masacrismo",
+                                                       "legacy":  "Rabia irradiada"
+                                                   },
+                                                   {
+                                                       "character":  "Ironheart",
+                                                       "aspect":  "Masacrismo",
+                                                       "legacy":  "Mutante hibrido"
+                                                   }
+                                               ],
+                               "code":  "DEMO0017",
+                               "victoryPoints":  0,
+                               "scenarioCleared":  false,
+                               "createdAt":  "2025-01-10T10:00:00Z"
+                           },
+                           {
+                               "id":  "demo-free-18",
+                               "tableNumber":  18,
+                               "name":  "Mesa Demo 18",
+                               "difficulty":  "Normal",
+                               "inevitableChallenge":  "Thunder Force",
+                               "players":  2,
+                               "playersInfo":  [
+                                                   {
+                                                       "character":  "X-23",
+                                                       "aspect":  "Masacrismo",
+                                                       "legacy":  "Vastago de M"
+                                                   },
+                                                   {
+                                                       "character":  "Spider-woman",
+                                                       "aspect":  "Masacrismo",
+                                                       "legacy":  "Mutante hibrido"
+                                                   }
+                                               ],
+                               "code":  "DEMO0018",
+                               "victoryPoints":  14,
+                               "scenarioCleared":  true,
+                               "createdAt":  "2025-01-10T10:00:00Z"
+                           },
+                           {
+                               "id":  "demo-free-19",
+                               "tableNumber":  19,
+                               "name":  "Mesa Demo 19",
+                               "difficulty":  "Normal",
+                               "inevitableChallenge":  "Hail H.Y.D.R.A.",
+                               "players":  3,
+                               "playersInfo":  [
+                                                   {
+                                                       "character":  "Nebula",
+                                                       "aspect":  "Liderazgo",
+                                                       "legacy":  "Equipo de dos"
+                                                   },
+                                                   {
+                                                       "character":  "Adam Warlock",
+                                                       "aspect":  "ProtecciÃ³n",
+                                                       "legacy":  "Ronin"
+                                                   },
+                                                   {
+                                                       "character":  "Pantera Negra (T\u0027Challa)",
+                                                       "aspect":  "ProtecciÃ³n",
+                                                       "legacy":  "Ronin"
+                                                   }
+                                               ],
+                               "code":  "DEMO0019",
+                               "victoryPoints":  0,
+                               "scenarioCleared":  false,
+                               "createdAt":  "2025-01-10T10:00:00Z"
+                           },
+                           {
+                               "id":  "demo-free-20",
+                               "tableNumber":  20,
+                               "name":  "Mesa Demo 20",
+                               "difficulty":  "Experto",
+                               "inevitableChallenge":  "Ultron Infinito",
+                               "players":  4,
+                               "playersInfo":  [
+                                                   {
+                                                       "character":  "X-23",
+                                                       "aspect":  "Justicia",
+                                                       "legacy":  "Guerreros arana"
+                                                   },
+                                                   {
+                                                       "character":  "DominÃ³",
+                                                       "aspect":  "Justicia",
+                                                       "legacy":  "Los mas buscados"
+                                                   },
+                                                   {
+                                                       "character":  "Seda",
+                                                       "aspect":  "Masacrismo",
+                                                       "legacy":  "Vastago de M"
+                                                   },
+                                                   {
+                                                       "character":  "FÃ©nix",
+                                                       "aspect":  "Liderazgo",
+                                                       "legacy":  "Guerreros arana"
+                                                   }
+                                               ],
+                               "code":  "DEMO0020",
+                               "victoryPoints":  11,
+                               "scenarioCleared":  true,
+                               "createdAt":  "2025-01-10T10:00:00Z"
+                           },
+                           {
+                               "id":  "demo-free-21",
+                               "tableNumber":  21,
+                               "name":  "Mesa Demo 21",
+                               "difficulty":  "Normal",
+                               "inevitableChallenge":  "La Sala Roja",
+                               "players":  2,
+                               "playersInfo":  [
+                                                   {
+                                                       "character":  "Hombre de Hielo",
+                                                       "aspect":  "ProtecciÃ³n",
+                                                       "legacy":  "Ninguno"
+                                                   },
+                                                   {
+                                                       "character":  "Spider-woman",
+                                                       "aspect":  "Agresividad",
+                                                       "legacy":  "Solo ante el peligro"
+                                                   }
+                                               ],
+                               "code":  "DEMO0021",
+                               "victoryPoints":  0,
+                               "scenarioCleared":  false,
+                               "createdAt":  "2025-01-10T10:00:00Z"
+                           },
+                           {
+                               "id":  "demo-free-22",
+                               "tableNumber":  22,
+                               "name":  "Mesa Demo 22",
+                               "difficulty":  "Normal",
+                               "inevitableChallenge":  "Celdas Falsas",
+                               "players":  3,
+                               "playersInfo":  [
+                                                   {
+                                                       "character":  "CapitÃ¡n AmÃ©rica",
+                                                       "aspect":  "Masacrismo",
+                                                       "legacy":  "Equipado para lo peor"
+                                                   },
+                                                   {
+                                                       "character":  "MÃ¡quina de Guerra",
+                                                       "aspect":  "ProtecciÃ³n",
+                                                       "legacy":  "Solo ante el peligro"
+                                                   },
+                                                   {
+                                                       "character":  "Mercurio",
+                                                       "aspect":  "Justicia",
+                                                       "legacy":  "Los mas buscados"
+                                                   }
+                                               ],
+                               "code":  "DEMO0022",
+                               "victoryPoints":  13,
+                               "scenarioCleared":  true,
+                               "createdAt":  "2025-01-10T10:00:00Z"
+                           },
+                           {
+                               "id":  "demo-free-23",
+                               "tableNumber":  23,
+                               "name":  "Mesa Demo 23",
+                               "difficulty":  "Normal",
+                               "inevitableChallenge":  "Thunder Force",
+                               "players":  4,
+                               "playersInfo":  [
+                                                   {
+                                                       "character":  "Adam Warlock",
+                                                       "aspect":  "Agresividad",
+                                                       "legacy":  "Solo ante el peligro"
+                                                   },
+                                                   {
+                                                       "character":  "Coloso",
+                                                       "aspect":  "Liderazgo",
+                                                       "legacy":  "Vastago de M"
+                                                   },
+                                                   {
+                                                       "character":  "Ojo de HalcÃ³n",
+                                                       "aspect":  "ProtecciÃ³n",
+                                                       "legacy":  "Solo ante el peligro"
+                                                   },
+                                                   {
+                                                       "character":  "Spectrum",
+                                                       "aspect":  "Agresividad",
+                                                       "legacy":  "Dama de la muerte"
+                                                   }
+                                               ],
+                               "code":  "DEMO0023",
+                               "victoryPoints":  0,
+                               "scenarioCleared":  false,
+                               "createdAt":  "2025-01-10T10:00:00Z"
+                           },
+                           {
+                               "id":  "demo-free-24",
+                               "tableNumber":  24,
+                               "name":  "Mesa Demo 24",
+                               "difficulty":  "Experto",
+                               "inevitableChallenge":  "Hail H.Y.D.R.A.",
+                               "players":  2,
+                               "playersInfo":  [
+                                                   {
+                                                       "character":  "Bishop",
+                                                       "aspect":  "Liderazgo",
+                                                       "legacy":  "Solo ante el peligro"
+                                                   },
+                                                   {
+                                                       "character":  "Soldado de invierno",
+                                                       "aspect":  "Agresividad",
+                                                       "legacy":  "Equipado para lo peor"
+                                                   }
+                                               ],
+                               "code":  "DEMO0024",
+                               "victoryPoints":  9,
+                               "scenarioCleared":  true,
+                               "createdAt":  "2025-01-10T10:00:00Z"
+                           },
+                           {
+                               "id":  "demo-free-25",
+                               "tableNumber":  25,
+                               "name":  "Mesa Demo 25",
+                               "difficulty":  "Normal",
+                               "inevitableChallenge":  "Ultron Infinito",
+                               "players":  3,
+                               "playersInfo":  [
+                                                   {
+                                                       "character":  "Tormenta",
+                                                       "aspect":  "ProtecciÃ³n",
+                                                       "legacy":  "Instruidas por Thanos"
+                                                   },
+                                                   {
+                                                       "character":  "X-23",
+                                                       "aspect":  "Agresividad",
+                                                       "legacy":  "Ninguno"
+                                                   },
+                                                   {
+                                                       "character":  "Spider-woman",
+                                                       "aspect":  "Masacrismo",
+                                                       "legacy":  "Vastago de M"
+                                                   }
+                                               ],
+                               "code":  "DEMO0025",
+                               "victoryPoints":  0,
+                               "scenarioCleared":  false,
+                               "createdAt":  "2025-01-10T10:00:00Z"
+                           },
+                           {
+                               "id":  "demo-free-26",
+                               "tableNumber":  26,
+                               "name":  "Mesa Demo 26",
+                               "difficulty":  "Normal",
+                               "inevitableChallenge":  "La Sala Roja",
+                               "players":  4,
+                               "playersInfo":  [
+                                                   {
+                                                       "character":  "Hombre Hormiga",
+                                                       "aspect":  "Masacrismo",
+                                                       "legacy":  "Vastago de M"
+                                                   },
+                                                   {
+                                                       "character":  "Ironheart",
+                                                       "aspect":  "Liderazgo",
+                                                       "legacy":  "Ronin"
+                                                   },
+                                                   {
+                                                       "character":  "Spider-Man (Miles Morales)",
+                                                       "aspect":  "Masacrismo",
+                                                       "legacy":  "Guerreros arana"
+                                                   },
+                                                   {
+                                                       "character":  "JÃºbilo",
+                                                       "aspect":  "Justicia",
+                                                       "legacy":  "Equipo de dos"
+                                                   }
+                                               ],
+                               "code":  "DEMO0026",
+                               "victoryPoints":  18,
+                               "scenarioCleared":  true,
+                               "createdAt":  "2025-01-10T10:00:00Z"
+                           },
+                           {
+                               "id":  "demo-free-27",
+                               "tableNumber":  27,
+                               "name":  "Mesa Demo 27",
+                               "difficulty":  "Normal",
+                               "inevitableChallenge":  "Celdas Falsas",
+                               "players":  2,
+                               "playersInfo":  [
+                                                   {
+                                                       "character":  "Hulk",
+                                                       "aspect":  "Agresividad",
+                                                       "legacy":  "Ronin"
+                                                   },
+                                                   {
+                                                       "character":  "Ghost-Spider",
+                                                       "aspect":  "Justicia",
+                                                       "legacy":  "Solo ante el peligro"
+                                                   }
+                                               ],
+                               "code":  "DEMO0027",
+                               "victoryPoints":  0,
+                               "scenarioCleared":  false,
+                               "createdAt":  "2025-01-10T10:00:00Z"
+                           },
+                           {
+                               "id":  "demo-free-28",
+                               "tableNumber":  28,
+                               "name":  "Mesa Demo 28",
+                               "difficulty":  "Experto",
+                               "inevitableChallenge":  "Thunder Force",
+                               "players":  3,
+                               "playersInfo":  [
+                                                   {
+                                                       "character":  "Mapache Cohete",
+                                                       "aspect":  "Agresividad",
+                                                       "legacy":  "Equipado para lo peor"
+                                                   },
+                                                   {
+                                                       "character":  "Hombre Hormiga",
+                                                       "aspect":  "Masacrismo",
+                                                       "legacy":  "Guerreros arana"
+                                                   },
+                                                   {
+                                                       "character":  "Capitana Marvel",
+                                                       "aspect":  "Agresividad",
+                                                       "legacy":  "Equipo de dos"
+                                                   }
+                                               ],
+                               "code":  "DEMO0028",
+                               "victoryPoints":  18,
+                               "scenarioCleared":  true,
+                               "createdAt":  "2025-01-10T10:00:00Z"
+                           },
+                           {
+                               "id":  "demo-free-29",
+                               "tableNumber":  29,
+                               "name":  "Mesa Demo 29",
+                               "difficulty":  "Normal",
+                               "inevitableChallenge":  "Hail H.Y.D.R.A.",
+                               "players":  4,
+                               "playersInfo":  [
+                                                   {
+                                                       "character":  "Spidercerdo",
+                                                       "aspect":  "Liderazgo",
+                                                       "legacy":  "Guerreros arana"
+                                                   },
+                                                   {
+                                                       "character":  "Masacre",
+                                                       "aspect":  "Justicia",
+                                                       "legacy":  "Rabia irradiada"
+                                                   },
+                                                   {
+                                                       "character":  "Groot",
+                                                       "aspect":  "Liderazgo",
+                                                       "legacy":  "Rabia irradiada"
+                                                   },
+                                                   {
+                                                       "character":  "Drax",
+                                                       "aspect":  "ProtecciÃ³n",
+                                                       "legacy":  "Ronin"
+                                                   }
+                                               ],
+                               "code":  "DEMO0029",
+                               "victoryPoints":  0,
+                               "scenarioCleared":  false,
+                               "createdAt":  "2025-01-10T10:00:00Z"
+                           },
+                           {
+                               "id":  "demo-free-30",
+                               "tableNumber":  30,
+                               "name":  "Mesa Demo 30",
+                               "difficulty":  "Normal",
+                               "inevitableChallenge":  "Ultron Infinito",
+                               "players":  2,
+                               "playersInfo":  [
+                                                   {
+                                                       "character":  "DominÃ³",
+                                                       "aspect":  "Justicia",
+                                                       "legacy":  "Los mas buscados"
+                                                   },
+                                                   {
+                                                       "character":  "Avispa",
+                                                       "aspect":  "Masacrismo",
+                                                       "legacy":  "Vastago de M"
+                                                   }
+                                               ],
+                               "code":  "DEMO0030",
+                               "victoryPoints":  15,
+                               "scenarioCleared":  true,
+                               "createdAt":  "2025-01-10T10:00:00Z"
+                           },
+                           {
+                               "id":  "demo-free-31",
+                               "tableNumber":  31,
+                               "name":  "Mesa Demo 31",
+                               "difficulty":  "Normal",
+                               "inevitableChallenge":  "La Sala Roja",
+                               "players":  3,
+                               "playersInfo":  [
+                                                   {
+                                                       "character":  "Spiderman (Peter Parker)",
+                                                       "aspect":  "Agresividad",
+                                                       "legacy":  "Rabia irradiada"
+                                                   },
+                                                   {
+                                                       "character":  "Bruja Escarlata",
+                                                       "aspect":  "Agresividad",
+                                                       "legacy":  "Los mas buscados"
+                                                   },
+                                                   {
+                                                       "character":  "PÃ­cara",
+                                                       "aspect":  "Masacrismo",
+                                                       "legacy":  "Rabia irradiada"
+                                                   }
+                                               ],
+                               "code":  "DEMO0031",
+                               "victoryPoints":  0,
+                               "scenarioCleared":  false,
+                               "createdAt":  "2025-01-10T10:00:00Z"
+                           },
+                           {
+                               "id":  "demo-free-32",
+                               "tableNumber":  32,
+                               "name":  "Mesa Demo 32",
+                               "difficulty":  "Experto",
+                               "inevitableChallenge":  "Celdas Falsas",
+                               "players":  4,
+                               "playersInfo":  [
+                                                   {
+                                                       "character":  "Masacre",
+                                                       "aspect":  "Justicia",
+                                                       "legacy":  "Solo ante el peligro"
+                                                   },
+                                                   {
+                                                       "character":  "Mapache Cohete",
+                                                       "aspect":  "Agresividad",
+                                                       "legacy":  "Instruidas por Thanos"
+                                                   },
+                                                   {
+                                                       "character":  "Ghost-Spider",
+                                                       "aspect":  "Masacrismo",
+                                                       "legacy":  "Instruidas por Thanos"
+                                                   },
+                                                   {
+                                                       "character":  "Spiderman (Peter Parker)",
+                                                       "aspect":  "Agresividad",
+                                                       "legacy":  "Ninguno"
+                                                   }
+                                               ],
+                               "code":  "DEMO0032",
+                               "victoryPoints":  18,
+                               "scenarioCleared":  true,
+                               "createdAt":  "2025-01-10T10:00:00Z"
+                           }
+                       ],
+    "mesaTotals":  {
+                       "16":  {
+                                  "c1":  108,
+                                  "c2":  60,
+                                  "c3":  52
+                              },
+                       "3":  {
+                                 "c1":  69,
+                                 "c2":  55,
+                                 "c3":  41
+                             },
+                       "5":  {
+                                 "c1":  75,
+                                 "c2":  65,
+                                 "c3":  55
+                             },
+                       "12":  {
+                                  "c1":  96,
+                                  "c2":  40,
+                                  "c3":  24
+                              },
+                       "10":  {
+                                  "c1":  90,
+                                  "c2":  90,
+                                  "c3":  50
+                              },
+                       "2":  {
+                                 "c1":  66,
+                                 "c2":  50,
+                                 "c3":  34
+                             },
+                       "8":  {
+                                 "c1":  84,
+                                 "c2":  80,
+                                 "c3":  36
+                             },
+                       "11":  {
+                                  "c1":  93,
+                                  "c2":  95,
+                                  "c3":  57
+                              },
+                       "1":  {
+                                 "c1":  63,
+                                 "c2":  45,
+                                 "c3":  27
+                             },
+                       "9":  {
+                                 "c1":  87,
+                                 "c2":  85,
+                                 "c3":  43
+                             },
+                       "14":  {
+                                  "c1":  102,
+                                  "c2":  50,
+                                  "c3":  38
+                              },
+                       "7":  {
+                                 "c1":  81,
+                                 "c2":  75,
+                                 "c3":  29
+                             },
+                       "15":  {
+                                  "c1":  105,
+                                  "c2":  55,
+                                  "c3":  45
+                              },
+                       "6":  {
+                                 "c1":  78,
+                                 "c2":  70,
+                                 "c3":  22
+                             },
+                       "4":  {
+                                 "c1":  72,
+                                 "c2":  60,
+                                 "c3":  48
+                             },
+                       "13":  {
+                                  "c1":  99,
+                                  "c2":  45,
+                                  "c3":  31
+                              }
+                   },
+    "mesaEvents":  [
+
+                   ],
+    "qrEventEnabled":  false,
+    "qrFreegameEnabled":  true,
+    "ts":  1762773118103
 }

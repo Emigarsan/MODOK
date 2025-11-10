@@ -110,7 +110,6 @@ export default function ChallengesDisplay() {
             {CHALLENGES.map((challenge) => {
               const stats = statsByChallenge.get(challenge.name) || { points: 0, tables: 0, wins: 0 };
               const totalPoints = stats.points || 0;
-              const safeTotal = Math.min(totalPoints, POINT_TARGET);
               const overflow = totalPoints > POINT_TARGET;
               const winsGoalMet = stats.wins >= 3;
               const pointsGoalMet = totalPoints >= POINT_TARGET;
@@ -142,7 +141,7 @@ export default function ChallengesDisplay() {
                       <div className="challenge-stat">
                         <span className="challenge-stat-label">Puntos</span>
                         <div className={`challenge-progress${pointsGoalMet ? ' is-complete' : ''}`}>
-                          <span className="challenge-progress-value">{safeTotal}</span>
+                          <span className="challenge-progress-value">{totalPoints}</span>
                           <span className="challenge-progress-max">/ {POINT_TARGET}</span>
                         </div>
                       </div>
