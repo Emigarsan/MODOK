@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 const API_BASE = '/api/counter';
 
@@ -21,8 +21,10 @@ export default function AdminPage() {
   const [tablesTab, setTablesTab] = useState('event');
   const [backups, setBackups] = useState({ dir: '', files: [] });
   const [backupsLoading, setBackupsLoading] = useState(false);
+  const [uploadingBackup, setUploadingBackup] = useState(false);
   const [purgeMinutes, setPurgeMinutes] = useState('1440');
   const [purgeKeep, setPurgeKeep] = useState('10');
+  const backupFileInputRef = useRef(null);
 
   // Campos de fijaci?n permanecen vacíos hasta que el usuario escriba.
   const parseTableNumber = (value) => {
@@ -119,6 +121,32 @@ export default function AdminPage() {
       return () => clearInterval(id);
     }
   }, [tab, isAuthed, fetchBackups]);
+
+  const handleBackupImport = useCallback((event) => {
+    if (!isAuthed) return;
+    const file = event.target?.files?.[0];
+    if (!file) return;
+    setUploadingBackup(true);
+    const formData = new FormData();
+    formData.append('file', file);
+    fetch('/api/admin/backup/upload', {
+      method: 'POST',
+      headers: {
+        'X-Admin-Secret': adminKey
+      },
+      body: formData
+    })
+      .then((r) => (r.ok ? r.json() : r.json().then((d) => Promise.reject(new Error(d?.error || 'No autorizado')))))
+      .then(() => {
+        alert('Backup importado correctamente');
+        fetchBackups();
+      })
+      .catch((e) => alert(e.message))
+      .finally(() => {
+        setUploadingBackup(false);
+        if (event.target) event.target.value = '';
+      });
+  }, [adminKey, fetchBackups, isAuthed]);
 
   const update = (segment, sign) => () => {
     const endpoint = sign > 0 ? 'increment' : 'decrement';
@@ -312,6 +340,19 @@ export default function AdminPage() {
                       .catch((e) => alert(e.message));
                   }}>Crear snapshot ahora</button>
                   <button onClick={fetchBackups}>Refrescar</button>
+                  <button
+                    onClick={() => backupFileInputRef.current?.click()}
+                    disabled={uploadingBackup}
+                  >
+                    {uploadingBackup ? 'Importando...' : 'Importar backup'}
+                  </button>
+                  <input
+                    ref={backupFileInputRef}
+                    type="file"
+                    accept="application/json,.json"
+                    style={{ display: 'none' }}
+                    onChange={handleBackupImport}
+                  />
                   <span style={{ fontSize: 12, opacity: 0.8 }}>Dir: {backups.dir || '(desconocido)'}</span>
                   {backupsLoading && <span style={{ fontSize: 12 }}>Cargando...</span>}
                 </div>

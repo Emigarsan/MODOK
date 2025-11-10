@@ -1,0 +1,990 @@
+﻿{
+    "counter": {
+        "primary": 1500,
+        "secondary": 120,
+        "tertiary": 300,
+        "secondaryImageIndex": 2
+    },
+    "registerTables": [],
+    "freeGameTables": [
+        {
+            "id": "demo-free-1",
+            "tableNumber": 1,
+            "name": "Mesa Demo 1",
+            "difficulty": "Normal",
+            "inevitableChallenge": "Celdas Falsas",
+            "players": 3,
+            "playersInfo": [
+                {
+                    "character": "Spectrum",
+                    "aspect": "Justicia",
+                    "legacy": "Equipo de dos"
+                },
+                {
+                    "character": "Star-Lord",
+                    "aspect": "Agresividad",
+                    "legacy": "Ninguno"
+                },
+                {
+                    "character": "Star-Lord",
+                    "aspect": "Agresividad",
+                    "legacy": "Guerreros arana"
+                }
+            ],
+            "code": "DEMO0001",
+            "victoryPoints": 0,
+            "scenarioCleared": false,
+            "createdAt": "2025-01-10T10:00:00Z"
+        },
+        {
+            "id": "demo-free-2",
+            "tableNumber": 2,
+            "name": "Mesa Demo 2",
+            "difficulty": "Normal",
+            "inevitableChallenge": "Thunder Force",
+            "players": 4,
+            "playersInfo": [
+                {
+                    "character": "Hulk",
+                    "aspect": "Agresividad",
+                    "legacy": "Guerreros arana"
+                },
+                {
+                    "character": "Doctor Strange",
+                    "aspect": "Liderazgo",
+                    "legacy": "Ronin"
+                },
+                {
+                    "character": "Thor",
+                    "aspect": "Justicia",
+                    "legacy": "Equipo de dos"
+                },
+                {
+                    "character": "Spider-Man",
+                    "aspect": "Proteccion",
+                    "legacy": "Equipo de dos"
+                }
+            ],
+            "code": "DEMO0002",
+            "victoryPoints": 7,
+            "scenarioCleared": true,
+            "createdAt": "2025-01-10T10:00:00Z"
+        },
+        {
+            "id": "demo-free-3",
+            "tableNumber": 3,
+            "name": "Mesa Demo 3",
+            "difficulty": "Normal",
+            "inevitableChallenge": "Hail H.Y.D.R.A.",
+            "players": 2,
+            "playersInfo": [
+                {
+                    "character": "Wasp",
+                    "aspect": "Agresividad",
+                    "legacy": "Equipo de dos"
+                },
+                {
+                    "character": "Vision",
+                    "aspect": "Liderazgo",
+                    "legacy": "Ninguno"
+                }
+            ],
+            "code": "DEMO0003",
+            "victoryPoints": 0,
+            "scenarioCleared": false,
+            "createdAt": "2025-01-10T10:00:00Z"
+        },
+        {
+            "id": "demo-free-4",
+            "tableNumber": 4,
+            "name": "Mesa Demo 4",
+            "difficulty": "Experto",
+            "inevitableChallenge": "Ultron Infinito",
+            "players": 3,
+            "playersInfo": [
+                {
+                    "character": "Hulk",
+                    "aspect": "Proteccion",
+                    "legacy": "Equipo de dos"
+                },
+                {
+                    "character": "Spider-Man",
+                    "aspect": "Proteccion",
+                    "legacy": "Equipo de dos"
+                },
+                {
+                    "character": "Spectrum",
+                    "aspect": "Liderazgo",
+                    "legacy": "Equipo de dos"
+                }
+            ],
+            "code": "DEMO0004",
+            "victoryPoints": 6,
+            "scenarioCleared": true,
+            "createdAt": "2025-01-10T10:00:00Z"
+        },
+        {
+            "id": "demo-free-5",
+            "tableNumber": 5,
+            "name": "Mesa Demo 5",
+            "difficulty": "Normal",
+            "inevitableChallenge": "La Sala Roja",
+            "players": 4,
+            "playersInfo": [
+                {
+                    "character": "Hulk",
+                    "aspect": "Justicia",
+                    "legacy": "Ronin"
+                },
+                {
+                    "character": "Thor",
+                    "aspect": "Agresividad",
+                    "legacy": "Equipo de dos"
+                },
+                {
+                    "character": "Star-Lord",
+                    "aspect": "Agresividad",
+                    "legacy": "Guerreros arana"
+                },
+                {
+                    "character": "Rocket",
+                    "aspect": "Agresividad",
+                    "legacy": "Vastago de M"
+                }
+            ],
+            "code": "DEMO0005",
+            "victoryPoints": 0,
+            "scenarioCleared": false,
+            "createdAt": "2025-01-10T10:00:00Z"
+        },
+        {
+            "id": "demo-free-6",
+            "tableNumber": 6,
+            "name": "Mesa Demo 6",
+            "difficulty": "Normal",
+            "inevitableChallenge": "Celdas Falsas",
+            "players": 2,
+            "playersInfo": [
+                {
+                    "character": "Ant-Man",
+                    "aspect": "Proteccion",
+                    "legacy": "Equipo de dos"
+                },
+                {
+                    "character": "Vision",
+                    "aspect": "Agresividad",
+                    "legacy": "Ronin"
+                }
+            ],
+            "code": "DEMO0006",
+            "victoryPoints": 13,
+            "scenarioCleared": true,
+            "createdAt": "2025-01-10T10:00:00Z"
+        },
+        {
+            "id": "demo-free-7",
+            "tableNumber": 7,
+            "name": "Mesa Demo 7",
+            "difficulty": "Normal",
+            "inevitableChallenge": "Thunder Force",
+            "players": 3,
+            "playersInfo": [
+                {
+                    "character": "Spectrum",
+                    "aspect": "Justicia",
+                    "legacy": "Equipo de dos"
+                },
+                {
+                    "character": "Spectrum",
+                    "aspect": "Justicia",
+                    "legacy": "Vastago de M"
+                },
+                {
+                    "character": "Iron Man",
+                    "aspect": "Justicia",
+                    "legacy": "Equipo de dos"
+                }
+            ],
+            "code": "DEMO0007",
+            "victoryPoints": 0,
+            "scenarioCleared": false,
+            "createdAt": "2025-01-10T10:00:00Z"
+        },
+        {
+            "id": "demo-free-8",
+            "tableNumber": 8,
+            "name": "Mesa Demo 8",
+            "difficulty": "Experto",
+            "inevitableChallenge": "Hail H.Y.D.R.A.",
+            "players": 4,
+            "playersInfo": [
+                {
+                    "character": "Star-Lord",
+                    "aspect": "Liderazgo",
+                    "legacy": "Ninguno"
+                },
+                {
+                    "character": "Spider-Man",
+                    "aspect": "Agresividad",
+                    "legacy": "Equipo de dos"
+                },
+                {
+                    "character": "Ant-Man",
+                    "aspect": "Proteccion",
+                    "legacy": "Ninguno"
+                },
+                {
+                    "character": "Vision",
+                    "aspect": "Proteccion",
+                    "legacy": "Guerreros arana"
+                }
+            ],
+            "code": "DEMO0008",
+            "victoryPoints": 9,
+            "scenarioCleared": true,
+            "createdAt": "2025-01-10T10:00:00Z"
+        },
+        {
+            "id": "demo-free-9",
+            "tableNumber": 9,
+            "name": "Mesa Demo 9",
+            "difficulty": "Normal",
+            "inevitableChallenge": "Ultron Infinito",
+            "players": 2,
+            "playersInfo": [
+                {
+                    "character": "Ant-Man",
+                    "aspect": "Liderazgo",
+                    "legacy": "Equipo de dos"
+                },
+                {
+                    "character": "Captain Marvel",
+                    "aspect": "Proteccion",
+                    "legacy": "Vastago de M"
+                }
+            ],
+            "code": "DEMO0009",
+            "victoryPoints": 0,
+            "scenarioCleared": false,
+            "createdAt": "2025-01-10T10:00:00Z"
+        },
+        {
+            "id": "demo-free-10",
+            "tableNumber": 10,
+            "name": "Mesa Demo 10",
+            "difficulty": "Normal",
+            "inevitableChallenge": "La Sala Roja",
+            "players": 3,
+            "playersInfo": [
+                {
+                    "character": "Rocket",
+                    "aspect": "Agresividad",
+                    "legacy": "Guerreros arana"
+                },
+                {
+                    "character": "Vision",
+                    "aspect": "Liderazgo",
+                    "legacy": "Vastago de M"
+                },
+                {
+                    "character": "Black Widow",
+                    "aspect": "Agresividad",
+                    "legacy": "Ronin"
+                }
+            ],
+            "code": "DEMO0010",
+            "victoryPoints": 18,
+            "scenarioCleared": true,
+            "createdAt": "2025-01-10T10:00:00Z"
+        },
+        {
+            "id": "demo-free-11",
+            "tableNumber": 11,
+            "name": "Mesa Demo 11",
+            "difficulty": "Normal",
+            "inevitableChallenge": "Celdas Falsas",
+            "players": 4,
+            "playersInfo": [
+                {
+                    "character": "Wasp",
+                    "aspect": "Proteccion",
+                    "legacy": "Equipo de dos"
+                },
+                {
+                    "character": "Vision",
+                    "aspect": "Justicia",
+                    "legacy": "Ninguno"
+                },
+                {
+                    "character": "Vision",
+                    "aspect": "Justicia",
+                    "legacy": "Guerreros arana"
+                },
+                {
+                    "character": "Thor",
+                    "aspect": "Proteccion",
+                    "legacy": "Ninguno"
+                }
+            ],
+            "code": "DEMO0011",
+            "victoryPoints": 0,
+            "scenarioCleared": false,
+            "createdAt": "2025-01-10T10:00:00Z"
+        },
+        {
+            "id": "demo-free-12",
+            "tableNumber": 12,
+            "name": "Mesa Demo 12",
+            "difficulty": "Experto",
+            "inevitableChallenge": "Thunder Force",
+            "players": 2,
+            "playersInfo": [
+                {
+                    "character": "Star-Lord",
+                    "aspect": "Justicia",
+                    "legacy": "Equipo de dos"
+                },
+                {
+                    "character": "Iron Man",
+                    "aspect": "Agresividad",
+                    "legacy": "Vastago de M"
+                }
+            ],
+            "code": "DEMO0012",
+            "victoryPoints": 16,
+            "scenarioCleared": true,
+            "createdAt": "2025-01-10T10:00:00Z"
+        },
+        {
+            "id": "demo-free-13",
+            "tableNumber": 13,
+            "name": "Mesa Demo 13",
+            "difficulty": "Normal",
+            "inevitableChallenge": "Hail H.Y.D.R.A.",
+            "players": 3,
+            "playersInfo": [
+                {
+                    "character": "Hulk",
+                    "aspect": "Proteccion",
+                    "legacy": "Equipo de dos"
+                },
+                {
+                    "character": "Star-Lord",
+                    "aspect": "Justicia",
+                    "legacy": "Vastago de M"
+                },
+                {
+                    "character": "Captain Marvel",
+                    "aspect": "Proteccion",
+                    "legacy": "Ninguno"
+                }
+            ],
+            "code": "DEMO0013",
+            "victoryPoints": 0,
+            "scenarioCleared": false,
+            "createdAt": "2025-01-10T10:00:00Z"
+        },
+        {
+            "id": "demo-free-14",
+            "tableNumber": 14,
+            "name": "Mesa Demo 14",
+            "difficulty": "Normal",
+            "inevitableChallenge": "Ultron Infinito",
+            "players": 4,
+            "playersInfo": [
+                {
+                    "character": "Ant-Man",
+                    "aspect": "Justicia",
+                    "legacy": "Guerreros arana"
+                },
+                {
+                    "character": "Ms. Marvel",
+                    "aspect": "Proteccion",
+                    "legacy": "Ninguno"
+                },
+                {
+                    "character": "Spectrum",
+                    "aspect": "Justicia",
+                    "legacy": "Vastago de M"
+                },
+                {
+                    "character": "Rocket",
+                    "aspect": "Liderazgo",
+                    "legacy": "Ninguno"
+                }
+            ],
+            "code": "DEMO0014",
+            "victoryPoints": 8,
+            "scenarioCleared": true,
+            "createdAt": "2025-01-10T10:00:00Z"
+        },
+        {
+            "id": "demo-free-15",
+            "tableNumber": 15,
+            "name": "Mesa Demo 15",
+            "difficulty": "Normal",
+            "inevitableChallenge": "La Sala Roja",
+            "players": 2,
+            "playersInfo": [
+                {
+                    "character": "Ms. Marvel",
+                    "aspect": "Proteccion",
+                    "legacy": "Ronin"
+                },
+                {
+                    "character": "Star-Lord",
+                    "aspect": "Liderazgo",
+                    "legacy": "Equipo de dos"
+                }
+            ],
+            "code": "DEMO0015",
+            "victoryPoints": 0,
+            "scenarioCleared": false,
+            "createdAt": "2025-01-10T10:00:00Z"
+        },
+        {
+            "id": "demo-free-16",
+            "tableNumber": 16,
+            "name": "Mesa Demo 16",
+            "difficulty": "Experto",
+            "inevitableChallenge": "Celdas Falsas",
+            "players": 3,
+            "playersInfo": [
+                {
+                    "character": "Vision",
+                    "aspect": "Justicia",
+                    "legacy": "Ninguno"
+                },
+                {
+                    "character": "Ms. Marvel",
+                    "aspect": "Proteccion",
+                    "legacy": "Equipo de dos"
+                },
+                {
+                    "character": "Spider-Man",
+                    "aspect": "Proteccion",
+                    "legacy": "Vastago de M"
+                }
+            ],
+            "code": "DEMO0016",
+            "victoryPoints": 18,
+            "scenarioCleared": true,
+            "createdAt": "2025-01-10T10:00:00Z"
+        },
+        {
+            "id": "demo-free-17",
+            "tableNumber": 17,
+            "name": "Mesa Demo 17",
+            "difficulty": "Normal",
+            "inevitableChallenge": "Thunder Force",
+            "players": 4,
+            "playersInfo": [
+                {
+                    "character": "Black Widow",
+                    "aspect": "Proteccion",
+                    "legacy": "Vastago de M"
+                },
+                {
+                    "character": "Spectrum",
+                    "aspect": "Liderazgo",
+                    "legacy": "Guerreros arana"
+                },
+                {
+                    "character": "Black Widow",
+                    "aspect": "Proteccion",
+                    "legacy": "Guerreros arana"
+                },
+                {
+                    "character": "Wasp",
+                    "aspect": "Proteccion",
+                    "legacy": "Vastago de M"
+                }
+            ],
+            "code": "DEMO0017",
+            "victoryPoints": 0,
+            "scenarioCleared": false,
+            "createdAt": "2025-01-10T10:00:00Z"
+        },
+        {
+            "id": "demo-free-18",
+            "tableNumber": 18,
+            "name": "Mesa Demo 18",
+            "difficulty": "Normal",
+            "inevitableChallenge": "Hail H.Y.D.R.A.",
+            "players": 2,
+            "playersInfo": [
+                {
+                    "character": "Ms. Marvel",
+                    "aspect": "Justicia",
+                    "legacy": "Guerreros arana"
+                },
+                {
+                    "character": "Hulk",
+                    "aspect": "Liderazgo",
+                    "legacy": "Equipo de dos"
+                }
+            ],
+            "code": "DEMO0018",
+            "victoryPoints": 15,
+            "scenarioCleared": true,
+            "createdAt": "2025-01-10T10:00:00Z"
+        },
+        {
+            "id": "demo-free-19",
+            "tableNumber": 19,
+            "name": "Mesa Demo 19",
+            "difficulty": "Normal",
+            "inevitableChallenge": "Ultron Infinito",
+            "players": 3,
+            "playersInfo": [
+                {
+                    "character": "Thor",
+                    "aspect": "Agresividad",
+                    "legacy": "Ronin"
+                },
+                {
+                    "character": "Spectrum",
+                    "aspect": "Proteccion",
+                    "legacy": "Guerreros arana"
+                },
+                {
+                    "character": "Gamora",
+                    "aspect": "Justicia",
+                    "legacy": "Vastago de M"
+                }
+            ],
+            "code": "DEMO0019",
+            "victoryPoints": 0,
+            "scenarioCleared": false,
+            "createdAt": "2025-01-10T10:00:00Z"
+        },
+        {
+            "id": "demo-free-20",
+            "tableNumber": 20,
+            "name": "Mesa Demo 20",
+            "difficulty": "Experto",
+            "inevitableChallenge": "La Sala Roja",
+            "players": 4,
+            "playersInfo": [
+                {
+                    "character": "Black Widow",
+                    "aspect": "Liderazgo",
+                    "legacy": "Ninguno"
+                },
+                {
+                    "character": "Rocket",
+                    "aspect": "Justicia",
+                    "legacy": "Equipo de dos"
+                },
+                {
+                    "character": "Spider-Man",
+                    "aspect": "Justicia",
+                    "legacy": "Ninguno"
+                },
+                {
+                    "character": "Black Widow",
+                    "aspect": "Liderazgo",
+                    "legacy": "Ronin"
+                }
+            ],
+            "code": "DEMO0020",
+            "victoryPoints": 6,
+            "scenarioCleared": true,
+            "createdAt": "2025-01-10T10:00:00Z"
+        },
+        {
+            "id": "demo-free-21",
+            "tableNumber": 21,
+            "name": "Mesa Demo 21",
+            "difficulty": "Normal",
+            "inevitableChallenge": "Celdas Falsas",
+            "players": 2,
+            "playersInfo": [
+                {
+                    "character": "Wasp",
+                    "aspect": "Liderazgo",
+                    "legacy": "Ronin"
+                },
+                {
+                    "character": "Spider-Man",
+                    "aspect": "Liderazgo",
+                    "legacy": "Guerreros arana"
+                }
+            ],
+            "code": "DEMO0021",
+            "victoryPoints": 0,
+            "scenarioCleared": false,
+            "createdAt": "2025-01-10T10:00:00Z"
+        },
+        {
+            "id": "demo-free-22",
+            "tableNumber": 22,
+            "name": "Mesa Demo 22",
+            "difficulty": "Normal",
+            "inevitableChallenge": "Thunder Force",
+            "players": 3,
+            "playersInfo": [
+                {
+                    "character": "Vision",
+                    "aspect": "Justicia",
+                    "legacy": "Vastago de M"
+                },
+                {
+                    "character": "Spectrum",
+                    "aspect": "Liderazgo",
+                    "legacy": "Vastago de M"
+                },
+                {
+                    "character": "Vision",
+                    "aspect": "Proteccion",
+                    "legacy": "Ronin"
+                }
+            ],
+            "code": "DEMO0022",
+            "victoryPoints": 17,
+            "scenarioCleared": true,
+            "createdAt": "2025-01-10T10:00:00Z"
+        },
+        {
+            "id": "demo-free-23",
+            "tableNumber": 23,
+            "name": "Mesa Demo 23",
+            "difficulty": "Normal",
+            "inevitableChallenge": "Hail H.Y.D.R.A.",
+            "players": 4,
+            "playersInfo": [
+                {
+                    "character": "Wasp",
+                    "aspect": "Justicia",
+                    "legacy": "Guerreros arana"
+                },
+                {
+                    "character": "Captain Marvel",
+                    "aspect": "Justicia",
+                    "legacy": "Ninguno"
+                },
+                {
+                    "character": "Iron Man",
+                    "aspect": "Liderazgo",
+                    "legacy": "Vastago de M"
+                },
+                {
+                    "character": "Ms. Marvel",
+                    "aspect": "Proteccion",
+                    "legacy": "Vastago de M"
+                }
+            ],
+            "code": "DEMO0023",
+            "victoryPoints": 0,
+            "scenarioCleared": false,
+            "createdAt": "2025-01-10T10:00:00Z"
+        },
+        {
+            "id": "demo-free-24",
+            "tableNumber": 24,
+            "name": "Mesa Demo 24",
+            "difficulty": "Experto",
+            "inevitableChallenge": "Ultron Infinito",
+            "players": 2,
+            "playersInfo": [
+                {
+                    "character": "Hulk",
+                    "aspect": "Justicia",
+                    "legacy": "Equipo de dos"
+                },
+                {
+                    "character": "Hulk",
+                    "aspect": "Proteccion",
+                    "legacy": "Ninguno"
+                }
+            ],
+            "code": "DEMO0024",
+            "victoryPoints": 11,
+            "scenarioCleared": true,
+            "createdAt": "2025-01-10T10:00:00Z"
+        },
+        {
+            "id": "demo-free-25",
+            "tableNumber": 25,
+            "name": "Mesa Demo 25",
+            "difficulty": "Normal",
+            "inevitableChallenge": "La Sala Roja",
+            "players": 3,
+            "playersInfo": [
+                {
+                    "character": "Black Widow",
+                    "aspect": "Liderazgo",
+                    "legacy": "Guerreros arana"
+                },
+                {
+                    "character": "Spectrum",
+                    "aspect": "Agresividad",
+                    "legacy": "Guerreros arana"
+                },
+                {
+                    "character": "Spider-Man",
+                    "aspect": "Justicia",
+                    "legacy": "Ninguno"
+                }
+            ],
+            "code": "DEMO0025",
+            "victoryPoints": 0,
+            "scenarioCleared": false,
+            "createdAt": "2025-01-10T10:00:00Z"
+        },
+        {
+            "id": "demo-free-26",
+            "tableNumber": 26,
+            "name": "Mesa Demo 26",
+            "difficulty": "Normal",
+            "inevitableChallenge": "Celdas Falsas",
+            "players": 4,
+            "playersInfo": [
+                {
+                    "character": "Gamora",
+                    "aspect": "Justicia",
+                    "legacy": "Guerreros arana"
+                },
+                {
+                    "character": "Gamora",
+                    "aspect": "Liderazgo",
+                    "legacy": "Ninguno"
+                },
+                {
+                    "character": "Vision",
+                    "aspect": "Agresividad",
+                    "legacy": "Guerreros arana"
+                },
+                {
+                    "character": "Black Widow",
+                    "aspect": "Proteccion",
+                    "legacy": "Ninguno"
+                }
+            ],
+            "code": "DEMO0026",
+            "victoryPoints": 8,
+            "scenarioCleared": true,
+            "createdAt": "2025-01-10T10:00:00Z"
+        },
+        {
+            "id": "demo-free-27",
+            "tableNumber": 27,
+            "name": "Mesa Demo 27",
+            "difficulty": "Normal",
+            "inevitableChallenge": "Thunder Force",
+            "players": 2,
+            "playersInfo": [
+                {
+                    "character": "Rocket",
+                    "aspect": "Proteccion",
+                    "legacy": "Guerreros arana"
+                },
+                {
+                    "character": "Spider-Man",
+                    "aspect": "Agresividad",
+                    "legacy": "Vastago de M"
+                }
+            ],
+            "code": "DEMO0027",
+            "victoryPoints": 0,
+            "scenarioCleared": false,
+            "createdAt": "2025-01-10T10:00:00Z"
+        },
+        {
+            "id": "demo-free-28",
+            "tableNumber": 28,
+            "name": "Mesa Demo 28",
+            "difficulty": "Experto",
+            "inevitableChallenge": "Hail H.Y.D.R.A.",
+            "players": 3,
+            "playersInfo": [
+                {
+                    "character": "Doctor Strange",
+                    "aspect": "Proteccion",
+                    "legacy": "Vastago de M"
+                },
+                {
+                    "character": "Rocket",
+                    "aspect": "Justicia",
+                    "legacy": "Equipo de dos"
+                },
+                {
+                    "character": "Rocket",
+                    "aspect": "Liderazgo",
+                    "legacy": "Vastago de M"
+                }
+            ],
+            "code": "DEMO0028",
+            "victoryPoints": 12,
+            "scenarioCleared": true,
+            "createdAt": "2025-01-10T10:00:00Z"
+        },
+        {
+            "id": "demo-free-29",
+            "tableNumber": 29,
+            "name": "Mesa Demo 29",
+            "difficulty": "Normal",
+            "inevitableChallenge": "Ultron Infinito",
+            "players": 4,
+            "playersInfo": [
+                {
+                    "character": "Thor",
+                    "aspect": "Proteccion",
+                    "legacy": "Guerreros arana"
+                },
+                {
+                    "character": "Wasp",
+                    "aspect": "Proteccion",
+                    "legacy": "Equipo de dos"
+                },
+                {
+                    "character": "Captain Marvel",
+                    "aspect": "Proteccion",
+                    "legacy": "Guerreros arana"
+                },
+                {
+                    "character": "Doctor Strange",
+                    "aspect": "Justicia",
+                    "legacy": "Vastago de M"
+                }
+            ],
+            "code": "DEMO0029",
+            "victoryPoints": 0,
+            "scenarioCleared": false,
+            "createdAt": "2025-01-10T10:00:00Z"
+        },
+        {
+            "id": "demo-free-30",
+            "tableNumber": 30,
+            "name": "Mesa Demo 30",
+            "difficulty": "Normal",
+            "inevitableChallenge": "La Sala Roja",
+            "players": 2,
+            "playersInfo": [
+                {
+                    "character": "Captain Marvel",
+                    "aspect": "Justicia",
+                    "legacy": "Equipo de dos"
+                },
+                {
+                    "character": "Doctor Strange",
+                    "aspect": "Proteccion",
+                    "legacy": "Guerreros arana"
+                }
+            ],
+            "code": "DEMO0030",
+            "victoryPoints": 12,
+            "scenarioCleared": true,
+            "createdAt": "2025-01-10T10:00:00Z"
+        },
+        {
+            "id": "demo-free-31",
+            "tableNumber": 31,
+            "name": "Mesa Demo 31",
+            "difficulty": "Normal",
+            "inevitableChallenge": "Celdas Falsas",
+            "players": 3,
+            "playersInfo": [
+                {
+                    "character": "Vision",
+                    "aspect": "Agresividad",
+                    "legacy": "Vastago de M"
+                },
+                {
+                    "character": "Hulk",
+                    "aspect": "Liderazgo",
+                    "legacy": "Equipo de dos"
+                },
+                {
+                    "character": "Star-Lord",
+                    "aspect": "Proteccion",
+                    "legacy": "Ronin"
+                }
+            ],
+            "code": "DEMO0031",
+            "victoryPoints": 0,
+            "scenarioCleared": false,
+            "createdAt": "2025-01-10T10:00:00Z"
+        },
+        {
+            "id": "demo-free-32",
+            "tableNumber": 32,
+            "name": "Mesa Demo 32",
+            "difficulty": "Experto",
+            "inevitableChallenge": "Thunder Force",
+            "players": 4,
+            "playersInfo": [
+                {
+                    "character": "Gamora",
+                    "aspect": "Proteccion",
+                    "legacy": "Ronin"
+                },
+                {
+                    "character": "Black Widow",
+                    "aspect": "Liderazgo",
+                    "legacy": "Vastago de M"
+                },
+                {
+                    "character": "Spectrum",
+                    "aspect": "Justicia",
+                    "legacy": "Equipo de dos"
+                },
+                {
+                    "character": "Thor",
+                    "aspect": "Proteccion",
+                    "legacy": "Guerreros arana"
+                }
+            ],
+            "code": "DEMO0032",
+            "victoryPoints": 14,
+            "scenarioCleared": true,
+            "createdAt": "2025-01-10T10:00:00Z"
+        }
+    ],
+    "mesaTotals": {
+        "7": {
+            "c1": 70,
+            "c2": 35,
+            "c3": 21
+        },
+        "3": {
+            "c1": 30,
+            "c2": 15,
+            "c3": 9
+        },
+        "2": {
+            "c1": 20,
+            "c2": 10,
+            "c3": 6
+        },
+        "1": {
+            "c1": 10,
+            "c2": 5,
+            "c3": 3
+        },
+        "4": {
+            "c1": 40,
+            "c2": 20,
+            "c3": 12
+        },
+        "6": {
+            "c1": 60,
+            "c2": 30,
+            "c3": 18
+        },
+        "5": {
+            "c1": 50,
+            "c2": 25,
+            "c3": 15
+        },
+        "8": {
+            "c1": 80,
+            "c2": 40,
+            "c3": 24
+        }
+    },
+    "mesaEvents": [],
+    "qrEventEnabled": false,
+    "qrFreegameEnabled": true,
+    "ts": 1762772233463
+}

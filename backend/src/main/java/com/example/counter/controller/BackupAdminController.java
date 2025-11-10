@@ -8,9 +8,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.nio.file.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -148,6 +151,45 @@ public class BackupAdminController {
             }
         }
         return ResponseEntity.ok(Map.of("ok", true, "deleted", deleted));
+    }
+
+    @PostMapping("/upload")
+    public ResponseEntity<?> upload(@RequestParam("file") MultipartFile file,
+                                    @RequestHeader(value = "X-Admin-Secret", required = false) String secret) throws IOException {
+        if (!isAdmin(secret)) return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        if (file == null || file.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("ok", false, "error", "Archivo vacio"));
+        }
+        Path dir = snapshotService.getBackupDirPath();
+        if (dir == null) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("ok", false, "error", "Directorio de backups no disponible"));
+        }
+        Files.createDirectories(dir);
+        String original = Optional.ofNullable(file.getOriginalFilename()).orElse("").trim();
+        String sanitized = sanitizeBackupName(original);
+        Path target = dir.resolve(sanitized).normalize();
+        if (!target.startsWith(dir.normalize())) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("ok", false, "error", "Ruta invalida"));
+        }
+        try (var in = file.getInputStream()) {
+            Files.copy(in, target, StandardCopyOption.REPLACE_EXISTING);
+        }
+        Map<String, Object> payload = Map.of(
+                "ok", true,
+                "name", sanitized,
+                "size", sizeSafe(target),
+                "modified", mtimeSafe(target)
+        );
+        return ResponseEntity.ok(payload);
+    }
+
+    private String sanitizeBackupName(String original) {
+        String cleaned = original == null ? "" : original.replaceAll("[^a-zA-Z0-9_.-]", "_");
+        if (cleaned.startsWith("app-") && cleaned.endsWith(".json")) {
+            return cleaned;
+        }
+        String stamp = DateTimeFormatter.ofPattern("yyyyMMdd-HHmmss").format(LocalDateTime.now());
+        return "app-uploaded-" + stamp + ".json";
     }
 
     @PostMapping("/purge-keep-latest")
