@@ -14,20 +14,20 @@
                                "players":  4,
                                "playersInfo":  [
                                                    {
-                                                       "character":  "Mariposa Mental",
+                                                       "character":  "Soldado de invierno",
+                                                       "aspect":  "Justicia"
+                                                   },
+                                                   {
+                                                       "character":  "Ms. Marvel",
                                                        "aspect":  "ProtecciÃ³n"
                                                    },
                                                    {
-                                                       "character":  "Gamora",
-                                                       "aspect":  "Masacrismo"
+                                                       "character":  "Pantera Negra (T\u0027Challa)",
+                                                       "aspect":  "Agresividad"
                                                    },
                                                    {
-                                                       "character":  "Hombre de Hielo",
-                                                       "aspect":  "Justicia"
-                                                   },
-                                                   {
-                                                       "character":  "Lobezno",
-                                                       "aspect":  "Justicia"
+                                                       "character":  "Spectrum",
+                                                       "aspect":  "ProtecciÃ³n"
                                                    }
                                                ],
                                "code":  "REG0001",
@@ -41,16 +41,16 @@
                                "players":  3,
                                "playersInfo":  [
                                                    {
-                                                       "character":  "Gatasombra",
-                                                       "aspect":  "Masacrismo"
+                                                       "character":  "Coloso",
+                                                       "aspect":  "Justicia"
                                                    },
                                                    {
-                                                       "character":  "SP//dr",
-                                                       "aspect":  "Liderazgo"
+                                                       "character":  "Masacre",
+                                                       "aspect":  "Justicia"
                                                    },
                                                    {
-                                                       "character":  "Avispa",
-                                                       "aspect":  "ProtecciÃ³n"
+                                                       "character":  "Drax",
+                                                       "aspect":  "Agresividad"
                                                    }
                                                ],
                                "code":  "REG0002",
@@ -64,20 +64,20 @@
                                "players":  4,
                                "playersInfo":  [
                                                    {
-                                                       "character":  "Magik",
-                                                       "aspect":  "Agresividad"
+                                                       "character":  "Adam Warlock",
+                                                       "aspect":  "Justicia"
                                                    },
                                                    {
-                                                       "character":  "Spider-woman",
+                                                       "character":  "Mapache Cohete",
                                                        "aspect":  "Liderazgo"
                                                    },
                                                    {
-                                                       "character":  "Avispa",
-                                                       "aspect":  "ProtecciÃ³n"
+                                                       "character":  "Tormenta",
+                                                       "aspect":  "Masacrismo"
                                                    },
                                                    {
-                                                       "character":  "Mariposa Mental",
-                                                       "aspect":  "Agresividad"
+                                                       "character":  "Spectrum",
+                                                       "aspect":  "Masacrismo"
                                                    }
                                                ],
                                "code":  "REG0003",
@@ -91,16 +91,16 @@
                                "players":  3,
                                "playersInfo":  [
                                                    {
-                                                       "character":  "DominÃ³",
-                                                       "aspect":  "ProtecciÃ³n"
+                                                       "character":  "HalcÃ³n",
+                                                       "aspect":  "Liderazgo"
                                                    },
                                                    {
-                                                       "character":  "Veneno",
+                                                       "character":  "Gatasombra",
+                                                       "aspect":  "Liderazgo"
+                                                   },
+                                                   {
+                                                       "character":  "CÃ­clope",
                                                        "aspect":  "Agresividad"
-                                                   },
-                                                   {
-                                                       "character":  "Spectrum",
-                                                       "aspect":  "Masacrismo"
                                                    }
                                                ],
                                "code":  "REG0004",
@@ -114,20 +114,20 @@
                                "players":  4,
                                "playersInfo":  [
                                                    {
+                                                       "character":  "Mercurio",
+                                                       "aspect":  "Justicia"
+                                                   },
+                                                   {
                                                        "character":  "Iron Man",
+                                                       "aspect":  "Liderazgo"
+                                                   },
+                                                   {
+                                                       "character":  "Mariposa Mental",
+                                                       "aspect":  "Justicia"
+                                                   },
+                                                   {
+                                                       "character":  "Ironheart",
                                                        "aspect":  "Masacrismo"
-                                                   },
-                                                   {
-                                                       "character":  "Bishop",
-                                                       "aspect":  "Masacrismo"
-                                                   },
-                                                   {
-                                                       "character":  "Viuda Negra",
-                                                       "aspect":  "Agresividad"
-                                                   },
-                                                   {
-                                                       "character":  "Spider-Man (Miles Morales)",
-                                                       "aspect":  "ProtecciÃ³n"
                                                    }
                                                ],
                                "code":  "REG0005",
@@ -141,16 +141,16 @@
                                "players":  3,
                                "playersInfo":  [
                                                    {
-                                                       "character":  "Magneto",
+                                                       "character":  "X-23",
+                                                       "aspect":  "Masacrismo"
+                                                   },
+                                                   {
+                                                       "character":  "HalcÃ³n",
                                                        "aspect":  "Agresividad"
                                                    },
                                                    {
-                                                       "character":  "Thor",
-                                                       "aspect":  "ProtecciÃ³n"
-                                                   },
-                                                   {
-                                                       "character":  "Capitana Marvel",
-                                                       "aspect":  "Masacrismo"
+                                                       "character":  "Mercurio",
+                                                       "aspect":  "Liderazgo"
                                                    }
                                                ],
                                "code":  "REG0006",
@@ -164,20 +164,20 @@
                                "players":  4,
                                "playersInfo":  [
                                                    {
-                                                       "character":  "Magik",
+                                                       "character":  "Ms. Marvel",
+                                                       "aspect":  "Masacrismo"
+                                                   },
+                                                   {
+                                                       "character":  "Spider-Man (Miles Morales)",
                                                        "aspect":  "ProtecciÃ³n"
                                                    },
                                                    {
-                                                       "character":  "Lobezno",
+                                                       "character":  "Hulk",
                                                        "aspect":  "Justicia"
                                                    },
                                                    {
-                                                       "character":  "Veneno",
-                                                       "aspect":  "Agresividad"
-                                                   },
-                                                   {
-                                                       "character":  "Ojo de HalcÃ³n",
-                                                       "aspect":  "ProtecciÃ³n"
+                                                       "character":  "Drax",
+                                                       "aspect":  "Liderazgo"
                                                    }
                                                ],
                                "code":  "REG0007",
@@ -191,16 +191,16 @@
                                "players":  3,
                                "playersInfo":  [
                                                    {
-                                                       "character":  "SP//dr",
-                                                       "aspect":  "Masacrismo"
+                                                       "character":  "Ironheart",
+                                                       "aspect":  "ProtecciÃ³n"
                                                    },
                                                    {
-                                                       "character":  "Bruja Escarlata",
-                                                       "aspect":  "Justicia"
+                                                       "character":  "Nick Fury",
+                                                       "aspect":  "ProtecciÃ³n"
                                                    },
                                                    {
-                                                       "character":  "Ms. Marvel",
-                                                       "aspect":  "Justicia"
+                                                       "character":  "Iron Man",
+                                                       "aspect":  "ProtecciÃ³n"
                                                    }
                                                ],
                                "code":  "REG0008",
@@ -214,20 +214,20 @@
                                "players":  4,
                                "playersInfo":  [
                                                    {
-                                                       "character":  "JÃºbilo",
+                                                       "character":  "PÃ­cara",
                                                        "aspect":  "Agresividad"
-                                                   },
-                                                   {
-                                                       "character":  "Gamora",
-                                                       "aspect":  "Masacrismo"
                                                    },
                                                    {
                                                        "character":  "Ms. Marvel",
                                                        "aspect":  "Justicia"
                                                    },
                                                    {
-                                                       "character":  "Gatasombra",
-                                                       "aspect":  "Liderazgo"
+                                                       "character":  "Hulka",
+                                                       "aspect":  "ProtecciÃ³n"
+                                                   },
+                                                   {
+                                                       "character":  "Hombre Hormiga",
+                                                       "aspect":  "Agresividad"
                                                    }
                                                ],
                                "code":  "REG0009",
@@ -241,15 +241,15 @@
                                "players":  3,
                                "playersInfo":  [
                                                    {
-                                                       "character":  "Bruja Escarlata",
+                                                       "character":  "Coloso",
                                                        "aspect":  "Liderazgo"
                                                    },
                                                    {
-                                                       "character":  "Nebula",
-                                                       "aspect":  "Agresividad"
+                                                       "character":  "FÃ©nix",
+                                                       "aspect":  "ProtecciÃ³n"
                                                    },
                                                    {
-                                                       "character":  "Mapache Cohete",
+                                                       "character":  "Thor",
                                                        "aspect":  "Justicia"
                                                    }
                                                ],
@@ -264,20 +264,20 @@
                                "players":  4,
                                "playersInfo":  [
                                                    {
-                                                       "character":  "Ãngel",
-                                                       "aspect":  "Agresividad"
+                                                       "character":  "Capitana Marvel",
+                                                       "aspect":  "Justicia"
                                                    },
                                                    {
-                                                       "character":  "DominÃ³",
+                                                       "character":  "Veneno",
+                                                       "aspect":  "Justicia"
+                                                   },
+                                                   {
+                                                       "character":  "Hombre de Hielo",
+                                                       "aspect":  "ProtecciÃ³n"
+                                                   },
+                                                   {
+                                                       "character":  "Mercurio",
                                                        "aspect":  "Liderazgo"
-                                                   },
-                                                   {
-                                                       "character":  "Spectrum",
-                                                       "aspect":  "Agresividad"
-                                                   },
-                                                   {
-                                                       "character":  "Spider-Man (Miles Morales)",
-                                                       "aspect":  "Agresividad"
                                                    }
                                                ],
                                "code":  "REG0011",
@@ -291,16 +291,16 @@
                                "players":  3,
                                "playersInfo":  [
                                                    {
-                                                       "character":  "Iron Man",
+                                                       "character":  "Tormenta",
+                                                       "aspect":  "Agresividad"
+                                                   },
+                                                   {
+                                                       "character":  "Groot",
                                                        "aspect":  "Liderazgo"
                                                    },
                                                    {
-                                                       "character":  "Pantera Negra (Shuri)",
+                                                       "character":  "MÃ¡quina de Guerra",
                                                        "aspect":  "ProtecciÃ³n"
-                                                   },
-                                                   {
-                                                       "character":  "Coloso",
-                                                       "aspect":  "Liderazgo"
                                                    }
                                                ],
                                "code":  "REG0012",
@@ -314,20 +314,20 @@
                                "players":  4,
                                "playersInfo":  [
                                                    {
-                                                       "character":  "CÃ­clope",
-                                                       "aspect":  "Masacrismo"
-                                                   },
-                                                   {
-                                                       "character":  "Ironheart",
+                                                       "character":  "Vision",
                                                        "aspect":  "ProtecciÃ³n"
                                                    },
                                                    {
-                                                       "character":  "Spiderman (Peter Parker)",
+                                                       "character":  "Iron Man",
                                                        "aspect":  "Liderazgo"
                                                    },
                                                    {
-                                                       "character":  "Lobezno",
-                                                       "aspect":  "Liderazgo"
+                                                       "character":  "JÃºbilo",
+                                                       "aspect":  "Masacrismo"
+                                                   },
+                                                   {
+                                                       "character":  "Bruja Escarlata",
+                                                       "aspect":  "ProtecciÃ³n"
                                                    }
                                                ],
                                "code":  "REG0013",
@@ -341,16 +341,16 @@
                                "players":  3,
                                "playersInfo":  [
                                                    {
-                                                       "character":  "Dr. ExtraÃ±o",
-                                                       "aspect":  "ProtecciÃ³n"
+                                                       "character":  "Star-Lord",
+                                                       "aspect":  "Agresividad"
                                                    },
                                                    {
-                                                       "character":  "PÃ­cara",
-                                                       "aspect":  "ProtecciÃ³n"
+                                                       "character":  "Hulk",
+                                                       "aspect":  "Agresividad"
                                                    },
                                                    {
-                                                       "character":  "Coloso",
-                                                       "aspect":  "Liderazgo"
+                                                       "character":  "Nova",
+                                                       "aspect":  "Masacrismo"
                                                    }
                                                ],
                                "code":  "REG0014",
@@ -364,20 +364,20 @@
                                "players":  4,
                                "playersInfo":  [
                                                    {
-                                                       "character":  "Nova",
+                                                       "character":  "SP//dr",
                                                        "aspect":  "Liderazgo"
                                                    },
                                                    {
-                                                       "character":  "Groot",
-                                                       "aspect":  "Masacrismo"
-                                                   },
-                                                   {
-                                                       "character":  "Spectrum",
-                                                       "aspect":  "Justicia"
-                                                   },
-                                                   {
-                                                       "character":  "Star-Lord",
+                                                       "character":  "Veneno",
                                                        "aspect":  "Agresividad"
+                                                   },
+                                                   {
+                                                       "character":  "Spider-Man (Miles Morales)",
+                                                       "aspect":  "Liderazgo"
+                                                   },
+                                                   {
+                                                       "character":  "HalcÃ³n",
+                                                       "aspect":  "Masacrismo"
                                                    }
                                                ],
                                "code":  "REG0015",
@@ -391,16 +391,16 @@
                                "players":  3,
                                "playersInfo":  [
                                                    {
+                                                       "character":  "MarÃ­a Hill",
+                                                       "aspect":  "Masacrismo"
+                                                   },
+                                                   {
                                                        "character":  "Star-Lord",
-                                                       "aspect":  "Justicia"
+                                                       "aspect":  "Liderazgo"
                                                    },
                                                    {
-                                                       "character":  "Bishop",
-                                                       "aspect":  "ProtecciÃ³n"
-                                                   },
-                                                   {
-                                                       "character":  "Nick Fury",
-                                                       "aspect":  "Justicia"
+                                                       "character":  "FÃ©nix",
+                                                       "aspect":  "Masacrismo"
                                                    }
                                                ],
                                "code":  "REG0016",
@@ -414,20 +414,20 @@
                                "players":  4,
                                "playersInfo":  [
                                                    {
-                                                       "character":  "Ironheart",
+                                                       "character":  "Nebula",
                                                        "aspect":  "Masacrismo"
                                                    },
                                                    {
-                                                       "character":  "Hulk",
-                                                       "aspect":  "Agresividad"
+                                                       "character":  "Iron Man",
+                                                       "aspect":  "Masacrismo"
                                                    },
                                                    {
-                                                       "character":  "Drax",
+                                                       "character":  "Ghost-Spider",
                                                        "aspect":  "ProtecciÃ³n"
                                                    },
                                                    {
-                                                       "character":  "CapitÃ¡n AmÃ©rica",
-                                                       "aspect":  "Justicia"
+                                                       "character":  "Pantera Negra (T\u0027Challa)",
+                                                       "aspect":  "ProtecciÃ³n"
                                                    }
                                                ],
                                "code":  "REG0017",
@@ -441,16 +441,16 @@
                                "players":  3,
                                "playersInfo":  [
                                                    {
-                                                       "character":  "Ms. Marvel",
-                                                       "aspect":  "Justicia"
+                                                       "character":  "Avispa",
+                                                       "aspect":  "ProtecciÃ³n"
                                                    },
                                                    {
-                                                       "character":  "Thor",
-                                                       "aspect":  "Agresividad"
-                                                   },
-                                                   {
-                                                       "character":  "MarÃ­a Hill",
+                                                       "character":  "Vision",
                                                        "aspect":  "Masacrismo"
+                                                   },
+                                                   {
+                                                       "character":  "Spider-woman",
+                                                       "aspect":  "ProtecciÃ³n"
                                                    }
                                                ],
                                "code":  "REG0018",
@@ -464,20 +464,20 @@
                                "players":  4,
                                "playersInfo":  [
                                                    {
-                                                       "character":  "Coloso",
-                                                       "aspect":  "Liderazgo"
-                                                   },
-                                                   {
-                                                       "character":  "Bruja Escarlata",
+                                                       "character":  "Iron Man",
                                                        "aspect":  "Justicia"
                                                    },
                                                    {
-                                                       "character":  "Ojo de HalcÃ³n",
-                                                       "aspect":  "ProtecciÃ³n"
+                                                       "character":  "Capitana Marvel",
+                                                       "aspect":  "Masacrismo"
                                                    },
                                                    {
                                                        "character":  "HalcÃ³n",
-                                                       "aspect":  "Agresividad"
+                                                       "aspect":  "Masacrismo"
+                                                   },
+                                                   {
+                                                       "character":  "CÃ­clope",
+                                                       "aspect":  "Masacrismo"
                                                    }
                                                ],
                                "code":  "REG0019",
@@ -491,16 +491,16 @@
                                "players":  3,
                                "playersInfo":  [
                                                    {
-                                                       "character":  "DominÃ³",
-                                                       "aspect":  "Justicia"
+                                                       "character":  "Gamora",
+                                                       "aspect":  "Agresividad"
                                                    },
                                                    {
-                                                       "character":  "Hulk",
-                                                       "aspect":  "Justicia"
+                                                       "character":  "Veneno",
+                                                       "aspect":  "ProtecciÃ³n"
                                                    },
                                                    {
-                                                       "character":  "Soldado de invierno",
-                                                       "aspect":  "Liderazgo"
+                                                       "character":  "Bruja Escarlata",
+                                                       "aspect":  "Agresividad"
                                                    }
                                                ],
                                "code":  "REG0020",
@@ -514,20 +514,20 @@
                                "players":  4,
                                "playersInfo":  [
                                                    {
-                                                       "character":  "Seda",
+                                                       "character":  "JÃºbilo",
+                                                       "aspect":  "Justicia"
+                                                   },
+                                                   {
+                                                       "character":  "Nova",
                                                        "aspect":  "Liderazgo"
                                                    },
                                                    {
                                                        "character":  "Spider-woman",
-                                                       "aspect":  "Liderazgo"
-                                                   },
-                                                   {
-                                                       "character":  "Nick Fury",
                                                        "aspect":  "ProtecciÃ³n"
                                                    },
                                                    {
-                                                       "character":  "Iron Man",
-                                                       "aspect":  "Masacrismo"
+                                                       "character":  "Pantera Negra (T\u0027Challa)",
+                                                       "aspect":  "Agresividad"
                                                    }
                                                ],
                                "code":  "REG0021",
@@ -541,16 +541,16 @@
                                "players":  3,
                                "playersInfo":  [
                                                    {
-                                                       "character":  "Groot",
-                                                       "aspect":  "Liderazgo"
-                                                   },
-                                                   {
-                                                       "character":  "Hulka",
+                                                       "character":  "JÃºbilo",
                                                        "aspect":  "Agresividad"
                                                    },
                                                    {
-                                                       "character":  "Capitana Marvel",
-                                                       "aspect":  "Liderazgo"
+                                                       "character":  "Ms. Marvel",
+                                                       "aspect":  "Masacrismo"
+                                                   },
+                                                   {
+                                                       "character":  "FÃ©nix",
+                                                       "aspect":  "Agresividad"
                                                    }
                                                ],
                                "code":  "REG0022",
@@ -564,20 +564,20 @@
                                "players":  4,
                                "playersInfo":  [
                                                    {
-                                                       "character":  "Ghost-Spider",
-                                                       "aspect":  "Masacrismo"
-                                                   },
-                                                   {
-                                                       "character":  "Iron Man",
-                                                       "aspect":  "Justicia"
-                                                   },
-                                                   {
-                                                       "character":  "HalcÃ³n",
+                                                       "character":  "Coloso",
                                                        "aspect":  "Agresividad"
                                                    },
                                                    {
-                                                       "character":  "Ms. Marvel",
+                                                       "character":  "Vision",
+                                                       "aspect":  "ProtecciÃ³n"
+                                                   },
+                                                   {
+                                                       "character":  "Avispa",
                                                        "aspect":  "Justicia"
+                                                   },
+                                                   {
+                                                       "character":  "JÃºbilo",
+                                                       "aspect":  "ProtecciÃ³n"
                                                    }
                                                ],
                                "code":  "REG0023",
@@ -591,15 +591,15 @@
                                "players":  3,
                                "playersInfo":  [
                                                    {
-                                                       "character":  "Spider-woman",
+                                                       "character":  "Gamora",
                                                        "aspect":  "ProtecciÃ³n"
                                                    },
                                                    {
-                                                       "character":  "Spiderman (Peter Parker)",
-                                                       "aspect":  "Liderazgo"
+                                                       "character":  "Masacre",
+                                                       "aspect":  "Masacrismo"
                                                    },
                                                    {
-                                                       "character":  "Bishop",
+                                                       "character":  "Drax",
                                                        "aspect":  "Agresividad"
                                                    }
                                                ],
@@ -614,19 +614,19 @@
                                "players":  4,
                                "playersInfo":  [
                                                    {
-                                                       "character":  "Seda",
-                                                       "aspect":  "ProtecciÃ³n"
+                                                       "character":  "Mapache Cohete",
+                                                       "aspect":  "Liderazgo"
                                                    },
                                                    {
-                                                       "character":  "Mapache Cohete",
+                                                       "character":  "Spiderman (Peter Parker)",
+                                                       "aspect":  "Masacrismo"
+                                                   },
+                                                   {
+                                                       "character":  "Spider-woman",
                                                        "aspect":  "Justicia"
                                                    },
                                                    {
-                                                       "character":  "Valquiria",
-                                                       "aspect":  "ProtecciÃ³n"
-                                                   },
-                                                   {
-                                                       "character":  "Coloso",
+                                                       "character":  "Pantera Negra (T\u0027Challa)",
                                                        "aspect":  "Masacrismo"
                                                    }
                                                ],
@@ -641,15 +641,15 @@
                                "players":  3,
                                "playersInfo":  [
                                                    {
-                                                       "character":  "Veneno",
+                                                       "character":  "MarÃ­a Hill",
                                                        "aspect":  "Liderazgo"
                                                    },
                                                    {
-                                                       "character":  "Ironheart",
-                                                       "aspect":  "Agresividad"
+                                                       "character":  "Hulka",
+                                                       "aspect":  "Justicia"
                                                    },
                                                    {
-                                                       "character":  "Ghost-Spider",
+                                                       "character":  "Seda",
                                                        "aspect":  "Agresividad"
                                                    }
                                                ],
@@ -664,20 +664,20 @@
                                "players":  4,
                                "playersInfo":  [
                                                    {
-                                                       "character":  "Vision",
-                                                       "aspect":  "Agresividad"
-                                                   },
-                                                   {
-                                                       "character":  "Pantera Negra (T\u0027Challa)",
-                                                       "aspect":  "Agresividad"
-                                                   },
-                                                   {
-                                                       "character":  "Nick Fury",
+                                                       "character":  "Mariposa Mental",
                                                        "aspect":  "Liderazgo"
                                                    },
                                                    {
-                                                       "character":  "Magik",
-                                                       "aspect":  "Masacrismo"
+                                                       "character":  "Star-Lord",
+                                                       "aspect":  "Justicia"
+                                                   },
+                                                   {
+                                                       "character":  "Coloso",
+                                                       "aspect":  "Justicia"
+                                                   },
+                                                   {
+                                                       "character":  "Bruja Escarlata",
+                                                       "aspect":  "Justicia"
                                                    }
                                                ],
                                "code":  "REG0027",
@@ -691,16 +691,16 @@
                                "players":  3,
                                "playersInfo":  [
                                                    {
-                                                       "character":  "Vision",
-                                                       "aspect":  "Agresividad"
+                                                       "character":  "Capitana Marvel",
+                                                       "aspect":  "ProtecciÃ³n"
                                                    },
                                                    {
-                                                       "character":  "Spider-woman",
+                                                       "character":  "Hombre Hormiga",
+                                                       "aspect":  "Justicia"
+                                                   },
+                                                   {
+                                                       "character":  "Gambito",
                                                        "aspect":  "Liderazgo"
-                                                   },
-                                                   {
-                                                       "character":  "Hulka",
-                                                       "aspect":  "Agresividad"
                                                    }
                                                ],
                                "code":  "REG0028",
@@ -714,19 +714,19 @@
                                "players":  4,
                                "playersInfo":  [
                                                    {
-                                                       "character":  "Gambito",
-                                                       "aspect":  "ProtecciÃ³n"
+                                                       "character":  "Nebula",
+                                                       "aspect":  "Liderazgo"
                                                    },
                                                    {
-                                                       "character":  "DominÃ³",
+                                                       "character":  "Seda",
                                                        "aspect":  "Agresividad"
                                                    },
                                                    {
-                                                       "character":  "Lobezno",
-                                                       "aspect":  "Justicia"
+                                                       "character":  "Avispa",
+                                                       "aspect":  "Agresividad"
                                                    },
                                                    {
-                                                       "character":  "Hombre Hormiga",
+                                                       "character":  "Capitana Marvel",
                                                        "aspect":  "Liderazgo"
                                                    }
                                                ],
@@ -741,16 +741,16 @@
                                "players":  3,
                                "playersInfo":  [
                                                    {
-                                                       "character":  "Masacre",
-                                                       "aspect":  "Justicia"
-                                                   },
-                                                   {
-                                                       "character":  "Viuda Negra",
+                                                       "character":  "X-23",
                                                        "aspect":  "ProtecciÃ³n"
                                                    },
                                                    {
-                                                       "character":  "Hombre de Hielo",
+                                                       "character":  "Ojo de HalcÃ³n",
                                                        "aspect":  "ProtecciÃ³n"
+                                                   },
+                                                   {
+                                                       "character":  "Veneno",
+                                                       "aspect":  "Agresividad"
                                                    }
                                                ],
                                "code":  "REG0030",
@@ -764,20 +764,20 @@
                                "players":  4,
                                "playersInfo":  [
                                                    {
-                                                       "character":  "Pantera Negra (T\u0027Challa)",
-                                                       "aspect":  "Masacrismo"
-                                                   },
-                                                   {
-                                                       "character":  "Capitana Marvel",
-                                                       "aspect":  "Justicia"
-                                                   },
-                                                   {
-                                                       "character":  "X-23",
-                                                       "aspect":  "Masacrismo"
-                                                   },
-                                                   {
-                                                       "character":  "Iron Man",
+                                                       "character":  "CapitÃ¡n AmÃ©rica",
                                                        "aspect":  "Agresividad"
+                                                   },
+                                                   {
+                                                       "character":  "Nova",
+                                                       "aspect":  "ProtecciÃ³n"
+                                                   },
+                                                   {
+                                                       "character":  "Magik",
+                                                       "aspect":  "Masacrismo"
+                                                   },
+                                                   {
+                                                       "character":  "Pantera Negra (Shuri)",
+                                                       "aspect":  "Masacrismo"
                                                    }
                                                ],
                                "code":  "REG0031",
@@ -791,15 +791,15 @@
                                "players":  3,
                                "playersInfo":  [
                                                    {
-                                                       "character":  "Valquiria",
-                                                       "aspect":  "ProtecciÃ³n"
+                                                       "character":  "Veneno",
+                                                       "aspect":  "Justicia"
                                                    },
                                                    {
-                                                       "character":  "Mercurio",
-                                                       "aspect":  "Agresividad"
+                                                       "character":  "Vision",
+                                                       "aspect":  "Justicia"
                                                    },
                                                    {
-                                                       "character":  "Bruja Escarlata",
+                                                       "character":  "Iron Man",
                                                        "aspect":  "Agresividad"
                                                    }
                                                ],
@@ -817,24 +817,24 @@
                                "players":  3,
                                "playersInfo":  [
                                                    {
-                                                       "character":  "Bruja Escarlata",
-                                                       "aspect":  "Justicia",
-                                                       "legacy":  "Rabia irradiada"
-                                                   },
-                                                   {
-                                                       "character":  "MÃ¡quina de Guerra",
-                                                       "aspect":  "Masacrismo",
-                                                       "legacy":  "Ronin"
-                                                   },
-                                                   {
-                                                       "character":  "Veneno",
+                                                       "character":  "Cable",
                                                        "aspect":  "ProtecciÃ³n",
-                                                       "legacy":  "Equipo de dos"
+                                                       "legacy":  "Guerreros arana"
+                                                   },
+                                                   {
+                                                       "character":  "Spider-Man (Miles Morales)",
+                                                       "aspect":  "Masacrismo",
+                                                       "legacy":  "Dama de la muerte"
+                                                   },
+                                                   {
+                                                       "character":  "Magneto",
+                                                       "aspect":  "Masacrismo",
+                                                       "legacy":  "Ninguno"
                                                    }
                                                ],
                                "code":  "DEMO0001",
-                               "victoryPoints":  0,
-                               "scenarioCleared":  false,
+                               "victoryPoints":  1,
+                               "scenarioCleared":  true,
                                "createdAt":  "2025-01-10T10:00:00Z"
                            },
                            {
@@ -846,28 +846,28 @@
                                "players":  4,
                                "playersInfo":  [
                                                    {
-                                                       "character":  "Gambito",
+                                                       "character":  "Mercurio",
                                                        "aspect":  "Masacrismo",
-                                                       "legacy":  "Mutante hibrido"
+                                                       "legacy":  "Ninguno"
                                                    },
                                                    {
-                                                       "character":  "Ms. Marvel",
-                                                       "aspect":  "Agresividad",
-                                                       "legacy":  "Equipo de dos"
-                                                   },
-                                                   {
-                                                       "character":  "Iron Man",
-                                                       "aspect":  "Agresividad",
-                                                       "legacy":  "Rabia irradiada"
-                                                   },
-                                                   {
-                                                       "character":  "Bishop",
+                                                       "character":  "Bruja Escarlata",
                                                        "aspect":  "Justicia",
                                                        "legacy":  "Solo ante el peligro"
+                                                   },
+                                                   {
+                                                       "character":  "Ghost-Spider",
+                                                       "aspect":  "Agresividad",
+                                                       "legacy":  "Guerreros arana"
+                                                   },
+                                                   {
+                                                       "character":  "HalcÃ³n",
+                                                       "aspect":  "ProtecciÃ³n",
+                                                       "legacy":  "Instruidas por Thanos"
                                                    }
                                                ],
                                "code":  "DEMO0002",
-                               "victoryPoints":  16,
+                               "victoryPoints":  1,
                                "scenarioCleared":  true,
                                "createdAt":  "2025-01-10T10:00:00Z"
                            },
@@ -880,19 +880,19 @@
                                "players":  2,
                                "playersInfo":  [
                                                    {
-                                                       "character":  "X-23",
-                                                       "aspect":  "Agresividad",
-                                                       "legacy":  "Mutante hibrido"
+                                                       "character":  "Viuda Negra",
+                                                       "aspect":  "ProtecciÃ³n",
+                                                       "legacy":  "Ronin"
                                                    },
                                                    {
-                                                       "character":  "Avispa",
-                                                       "aspect":  "Liderazgo",
-                                                       "legacy":  "Rabia irradiada"
+                                                       "character":  "Mariposa Mental",
+                                                       "aspect":  "Masacrismo",
+                                                       "legacy":  "Instruidas por Thanos"
                                                    }
                                                ],
                                "code":  "DEMO0003",
                                "victoryPoints":  0,
-                               "scenarioCleared":  false,
+                               "scenarioCleared":  true,
                                "createdAt":  "2025-01-10T10:00:00Z"
                            },
                            {
@@ -904,23 +904,23 @@
                                "players":  3,
                                "playersInfo":  [
                                                    {
+                                                       "character":  "Seda",
+                                                       "aspect":  "ProtecciÃ³n",
+                                                       "legacy":  "Ninguno"
+                                                   },
+                                                   {
                                                        "character":  "Magneto",
                                                        "aspect":  "ProtecciÃ³n",
-                                                       "legacy":  "Vastago de M"
+                                                       "legacy":  "Equipo de dos"
                                                    },
                                                    {
-                                                       "character":  "Hulk",
-                                                       "aspect":  "Masacrismo",
-                                                       "legacy":  "Rabia irradiada"
-                                                   },
-                                                   {
-                                                       "character":  "Tormenta",
-                                                       "aspect":  "Justicia",
-                                                       "legacy":  "Equipado para lo peor"
+                                                       "character":  "Spiderman (Peter Parker)",
+                                                       "aspect":  "Liderazgo",
+                                                       "legacy":  "Equipo de dos"
                                                    }
                                                ],
                                "code":  "DEMO0004",
-                               "victoryPoints":  9,
+                               "victoryPoints":  1,
                                "scenarioCleared":  true,
                                "createdAt":  "2025-01-10T10:00:00Z"
                            },
@@ -933,29 +933,29 @@
                                "players":  4,
                                "playersInfo":  [
                                                    {
-                                                       "character":  "Viuda Negra",
-                                                       "aspect":  "Masacrismo",
-                                                       "legacy":  "Ronin"
-                                                   },
-                                                   {
-                                                       "character":  "Pantera Negra (T\u0027Challa)",
-                                                       "aspect":  "ProtecciÃ³n",
-                                                       "legacy":  "Ninguno"
-                                                   },
-                                                   {
-                                                       "character":  "DominÃ³",
-                                                       "aspect":  "Agresividad",
-                                                       "legacy":  "Solo ante el peligro"
-                                                   },
-                                                   {
-                                                       "character":  "Spider-woman",
+                                                       "character":  "Gamora",
                                                        "aspect":  "Justicia",
+                                                       "legacy":  "Guerreros arana"
+                                                   },
+                                                   {
+                                                       "character":  "Gatasombra",
+                                                       "aspect":  "Justicia",
+                                                       "legacy":  "Instruidas por Thanos"
+                                                   },
+                                                   {
+                                                       "character":  "Nebula",
+                                                       "aspect":  "Justicia",
+                                                       "legacy":  "Equipado para lo peor"
+                                                   },
+                                                   {
+                                                       "character":  "Veneno",
+                                                       "aspect":  "Masacrismo",
                                                        "legacy":  "Instruidas por Thanos"
                                                    }
                                                ],
                                "code":  "DEMO0005",
                                "victoryPoints":  0,
-                               "scenarioCleared":  false,
+                               "scenarioCleared":  true,
                                "createdAt":  "2025-01-10T10:00:00Z"
                            },
                            {
@@ -967,18 +967,18 @@
                                "players":  2,
                                "playersInfo":  [
                                                    {
-                                                       "character":  "Adam Warlock",
-                                                       "aspect":  "ProtecciÃ³n",
-                                                       "legacy":  "Equipo de dos"
+                                                       "character":  "Star-Lord",
+                                                       "aspect":  "Justicia",
+                                                       "legacy":  "Instruidas por Thanos"
                                                    },
                                                    {
-                                                       "character":  "Hombre Hormiga",
-                                                       "aspect":  "Masacrismo",
-                                                       "legacy":  "Equipo de dos"
+                                                       "character":  "Masacre",
+                                                       "aspect":  "Agresividad",
+                                                       "legacy":  "Ninguno"
                                                    }
                                                ],
                                "code":  "DEMO0006",
-                               "victoryPoints":  6,
+                               "victoryPoints":  1,
                                "scenarioCleared":  true,
                                "createdAt":  "2025-01-10T10:00:00Z"
                            },
@@ -991,24 +991,24 @@
                                "players":  3,
                                "playersInfo":  [
                                                    {
-                                                       "character":  "Iron Man",
-                                                       "aspect":  "Justicia",
-                                                       "legacy":  "Mutante hibrido"
-                                                   },
-                                                   {
-                                                       "character":  "Hulk",
-                                                       "aspect":  "Agresividad",
-                                                       "legacy":  "Mutante hibrido"
-                                                   },
-                                                   {
-                                                       "character":  "Vision",
+                                                       "character":  "Masacre",
                                                        "aspect":  "Masacrismo",
-                                                       "legacy":  "Instruidas por Thanos"
+                                                       "legacy":  "Equipo de dos"
+                                                   },
+                                                   {
+                                                       "character":  "JÃºbilo",
+                                                       "aspect":  "Justicia",
+                                                       "legacy":  "Equipo de dos"
+                                                   },
+                                                   {
+                                                       "character":  "Mercurio",
+                                                       "aspect":  "Agresividad",
+                                                       "legacy":  "Rabia irradiada"
                                                    }
                                                ],
                                "code":  "DEMO0007",
-                               "victoryPoints":  0,
-                               "scenarioCleared":  false,
+                               "victoryPoints":  1,
+                               "scenarioCleared":  true,
                                "createdAt":  "2025-01-10T10:00:00Z"
                            },
                            {
@@ -1020,28 +1020,28 @@
                                "players":  4,
                                "playersInfo":  [
                                                    {
-                                                       "character":  "PÃ­cara",
-                                                       "aspect":  "Agresividad",
-                                                       "legacy":  "Ronin"
-                                                   },
-                                                   {
                                                        "character":  "Mariposa Mental",
                                                        "aspect":  "Agresividad",
-                                                       "legacy":  "Equipo de dos"
+                                                       "legacy":  "Los mas buscados"
                                                    },
                                                    {
-                                                       "character":  "Avispa",
-                                                       "aspect":  "Masacrismo",
-                                                       "legacy":  "Equipado para lo peor"
+                                                       "character":  "Spectrum",
+                                                       "aspect":  "ProtecciÃ³n",
+                                                       "legacy":  "Dama de la muerte"
                                                    },
                                                    {
-                                                       "character":  "Ms. Marvel",
+                                                       "character":  "Nebula",
+                                                       "aspect":  "ProtecciÃ³n",
+                                                       "legacy":  "Los mas buscados"
+                                                   },
+                                                   {
+                                                       "character":  "Veneno",
                                                        "aspect":  "Justicia",
-                                                       "legacy":  "Equipado para lo peor"
+                                                       "legacy":  "Ronin"
                                                    }
                                                ],
                                "code":  "DEMO0008",
-                               "victoryPoints":  16,
+                               "victoryPoints":  1,
                                "scenarioCleared":  true,
                                "createdAt":  "2025-01-10T10:00:00Z"
                            },
@@ -1054,19 +1054,19 @@
                                "players":  2,
                                "playersInfo":  [
                                                    {
-                                                       "character":  "Bruja Escarlata",
+                                                       "character":  "Ãngel",
                                                        "aspect":  "Liderazgo",
                                                        "legacy":  "Solo ante el peligro"
                                                    },
                                                    {
-                                                       "character":  "Adam Warlock",
-                                                       "aspect":  "Masacrismo",
-                                                       "legacy":  "Los mas buscados"
+                                                       "character":  "Ghost-Spider",
+                                                       "aspect":  "Agresividad",
+                                                       "legacy":  "Equipado para lo peor"
                                                    }
                                                ],
                                "code":  "DEMO0009",
-                               "victoryPoints":  0,
-                               "scenarioCleared":  false,
+                               "victoryPoints":  1,
+                               "scenarioCleared":  true,
                                "createdAt":  "2025-01-10T10:00:00Z"
                            },
                            {
@@ -1078,23 +1078,23 @@
                                "players":  3,
                                "playersInfo":  [
                                                    {
-                                                       "character":  "Bruja Escarlata",
-                                                       "aspect":  "ProtecciÃ³n",
-                                                       "legacy":  "Rabia irradiada"
+                                                       "character":  "Hulka",
+                                                       "aspect":  "Agresividad",
+                                                       "legacy":  "Los mas buscados"
                                                    },
                                                    {
-                                                       "character":  "Soldado de invierno",
-                                                       "aspect":  "Justicia",
-                                                       "legacy":  "Vastago de M"
+                                                       "character":  "JÃºbilo",
+                                                       "aspect":  "Agresividad",
+                                                       "legacy":  "Ninguno"
                                                    },
                                                    {
-                                                       "character":  "SP//dr",
-                                                       "aspect":  "ProtecciÃ³n",
-                                                       "legacy":  "Solo ante el peligro"
+                                                       "character":  "Vision",
+                                                       "aspect":  "Agresividad",
+                                                       "legacy":  "Dama de la muerte"
                                                    }
                                                ],
                                "code":  "DEMO0010",
-                               "victoryPoints":  16,
+                               "victoryPoints":  2,
                                "scenarioCleared":  true,
                                "createdAt":  "2025-01-10T10:00:00Z"
                            },
@@ -1107,29 +1107,29 @@
                                "players":  4,
                                "playersInfo":  [
                                                    {
-                                                       "character":  "Pantera Negra (Shuri)",
-                                                       "aspect":  "Agresividad",
+                                                       "character":  "Vision",
+                                                       "aspect":  "Justicia",
                                                        "legacy":  "Dama de la muerte"
                                                    },
                                                    {
-                                                       "character":  "MÃ¡quina de Guerra",
-                                                       "aspect":  "Liderazgo",
-                                                       "legacy":  "Solo ante el peligro"
+                                                       "character":  "Bishop",
+                                                       "aspect":  "Justicia",
+                                                       "legacy":  "Equipo de dos"
                                                    },
                                                    {
-                                                       "character":  "Masacre",
-                                                       "aspect":  "ProtecciÃ³n",
-                                                       "legacy":  "Dama de la muerte"
+                                                       "character":  "Gamora",
+                                                       "aspect":  "Masacrismo",
+                                                       "legacy":  "Equipado para lo peor"
                                                    },
                                                    {
-                                                       "character":  "CÃ­clope",
-                                                       "aspect":  "Agresividad",
-                                                       "legacy":  "Dama de la muerte"
+                                                       "character":  "Spectrum",
+                                                       "aspect":  "Masacrismo",
+                                                       "legacy":  "Equipo de dos"
                                                    }
                                                ],
                                "code":  "DEMO0011",
                                "victoryPoints":  0,
-                               "scenarioCleared":  false,
+                               "scenarioCleared":  true,
                                "createdAt":  "2025-01-10T10:00:00Z"
                            },
                            {
@@ -1141,18 +1141,18 @@
                                "players":  2,
                                "playersInfo":  [
                                                    {
-                                                       "character":  "Tormenta",
-                                                       "aspect":  "Agresividad",
-                                                       "legacy":  "Vastago de M"
+                                                       "character":  "Coloso",
+                                                       "aspect":  "Justicia",
+                                                       "legacy":  "Equipo de dos"
                                                    },
                                                    {
-                                                       "character":  "Soldado de invierno",
-                                                       "aspect":  "Masacrismo",
-                                                       "legacy":  "Rabia irradiada"
+                                                       "character":  "Veneno",
+                                                       "aspect":  "Justicia",
+                                                       "legacy":  "Ninguno"
                                                    }
                                                ],
                                "code":  "DEMO0012",
-                               "victoryPoints":  14,
+                               "victoryPoints":  2,
                                "scenarioCleared":  true,
                                "createdAt":  "2025-01-10T10:00:00Z"
                            },
@@ -1165,24 +1165,24 @@
                                "players":  3,
                                "playersInfo":  [
                                                    {
-                                                       "character":  "Avispa",
+                                                       "character":  "X-23",
                                                        "aspect":  "Masacrismo",
-                                                       "legacy":  "Guerreros arana"
+                                                       "legacy":  "Equipo de dos"
                                                    },
                                                    {
-                                                       "character":  "FÃ©nix",
-                                                       "aspect":  "Liderazgo",
-                                                       "legacy":  "Mutante hibrido"
+                                                       "character":  "Viuda Negra",
+                                                       "aspect":  "ProtecciÃ³n",
+                                                       "legacy":  "Ninguno"
                                                    },
                                                    {
                                                        "character":  "Veneno",
-                                                       "aspect":  "Justicia",
-                                                       "legacy":  "Instruidas por Thanos"
+                                                       "aspect":  "ProtecciÃ³n",
+                                                       "legacy":  "Dama de la muerte"
                                                    }
                                                ],
                                "code":  "DEMO0013",
                                "victoryPoints":  0,
-                               "scenarioCleared":  false,
+                               "scenarioCleared":  true,
                                "createdAt":  "2025-01-10T10:00:00Z"
                            },
                            {
@@ -1194,28 +1194,28 @@
                                "players":  4,
                                "playersInfo":  [
                                                    {
-                                                       "character":  "Star-Lord",
-                                                       "aspect":  "ProtecciÃ³n",
-                                                       "legacy":  "Mutante hibrido"
-                                                   },
-                                                   {
-                                                       "character":  "Viuda Negra",
+                                                       "character":  "Lobezno",
                                                        "aspect":  "Liderazgo",
-                                                       "legacy":  "Equipado para lo peor"
+                                                       "legacy":  "Equipo de dos"
                                                    },
                                                    {
-                                                       "character":  "JÃºbilo",
-                                                       "aspect":  "Masacrismo",
-                                                       "legacy":  "Ninguno"
+                                                       "character":  "SP//dr",
+                                                       "aspect":  "ProtecciÃ³n",
+                                                       "legacy":  "Guerreros arana"
                                                    },
                                                    {
-                                                       "character":  "MÃ¡quina de Guerra",
-                                                       "aspect":  "Masacrismo",
-                                                       "legacy":  "Equipado para lo peor"
+                                                       "character":  "Avispa",
+                                                       "aspect":  "ProtecciÃ³n",
+                                                       "legacy":  "Instruidas por Thanos"
+                                                   },
+                                                   {
+                                                       "character":  "Star-Lord",
+                                                       "aspect":  "Agresividad",
+                                                       "legacy":  "Mutante hibrido"
                                                    }
                                                ],
                                "code":  "DEMO0014",
-                               "victoryPoints":  6,
+                               "victoryPoints":  1,
                                "scenarioCleared":  true,
                                "createdAt":  "2025-01-10T10:00:00Z"
                            },
@@ -1228,19 +1228,19 @@
                                "players":  2,
                                "playersInfo":  [
                                                    {
-                                                       "character":  "Mariposa Mental",
-                                                       "aspect":  "ProtecciÃ³n",
-                                                       "legacy":  "Guerreros arana"
+                                                       "character":  "Adam Warlock",
+                                                       "aspect":  "Agresividad",
+                                                       "legacy":  "Los mas buscados"
                                                    },
                                                    {
-                                                       "character":  "Gatasombra",
-                                                       "aspect":  "ProtecciÃ³n",
-                                                       "legacy":  "Equipo de dos"
+                                                       "character":  "Thor",
+                                                       "aspect":  "Agresividad",
+                                                       "legacy":  "Vastago de M"
                                                    }
                                                ],
                                "code":  "DEMO0015",
                                "victoryPoints":  0,
-                               "scenarioCleared":  false,
+                               "scenarioCleared":  true,
                                "createdAt":  "2025-01-10T10:00:00Z"
                            },
                            {
@@ -1252,23 +1252,23 @@
                                "players":  3,
                                "playersInfo":  [
                                                    {
-                                                       "character":  "Star-Lord",
-                                                       "aspect":  "Liderazgo",
-                                                       "legacy":  "Equipado para lo peor"
-                                                   },
-                                                   {
-                                                       "character":  "Ghost-Spider",
-                                                       "aspect":  "Liderazgo",
+                                                       "character":  "Spiderman (Peter Parker)",
+                                                       "aspect":  "Justicia",
                                                        "legacy":  "Los mas buscados"
                                                    },
                                                    {
-                                                       "character":  "Iron Man",
-                                                       "aspect":  "Masacrismo",
-                                                       "legacy":  "Rabia irradiada"
+                                                       "character":  "Vision",
+                                                       "aspect":  "Agresividad",
+                                                       "legacy":  "Vastago de M"
+                                                   },
+                                                   {
+                                                       "character":  "Ms. Marvel",
+                                                       "aspect":  "Agresividad",
+                                                       "legacy":  "Solo ante el peligro"
                                                    }
                                                ],
                                "code":  "DEMO0016",
-                               "victoryPoints":  10,
+                               "victoryPoints":  2,
                                "scenarioCleared":  true,
                                "createdAt":  "2025-01-10T10:00:00Z"
                            },
@@ -1281,29 +1281,29 @@
                                "players":  4,
                                "playersInfo":  [
                                                    {
-                                                       "character":  "HalcÃ³n",
-                                                       "aspect":  "Liderazgo",
-                                                       "legacy":  "Solo ante el peligro"
+                                                       "character":  "SP//dr",
+                                                       "aspect":  "Agresividad",
+                                                       "legacy":  "Ronin"
                                                    },
                                                    {
-                                                       "character":  "Magik",
+                                                       "character":  "Magneto",
                                                        "aspect":  "Masacrismo",
-                                                       "legacy":  "Rabia irradiada"
+                                                       "legacy":  "Guerreros arana"
                                                    },
                                                    {
-                                                       "character":  "Valquiria",
-                                                       "aspect":  "Masacrismo",
-                                                       "legacy":  "Rabia irradiada"
+                                                       "character":  "Pantera Negra (Shuri)",
+                                                       "aspect":  "Justicia",
+                                                       "legacy":  "Los mas buscados"
                                                    },
                                                    {
-                                                       "character":  "Ironheart",
-                                                       "aspect":  "Masacrismo",
-                                                       "legacy":  "Mutante hibrido"
+                                                       "character":  "JÃºbilo",
+                                                       "aspect":  "Agresividad",
+                                                       "legacy":  "Equipado para lo peor"
                                                    }
                                                ],
                                "code":  "DEMO0017",
-                               "victoryPoints":  0,
-                               "scenarioCleared":  false,
+                               "victoryPoints":  2,
+                               "scenarioCleared":  true,
                                "createdAt":  "2025-01-10T10:00:00Z"
                            },
                            {
@@ -1315,18 +1315,18 @@
                                "players":  2,
                                "playersInfo":  [
                                                    {
-                                                       "character":  "X-23",
-                                                       "aspect":  "Masacrismo",
+                                                       "character":  "HalcÃ³n",
+                                                       "aspect":  "ProtecciÃ³n",
                                                        "legacy":  "Vastago de M"
                                                    },
                                                    {
-                                                       "character":  "Spider-woman",
+                                                       "character":  "Magik",
                                                        "aspect":  "Masacrismo",
-                                                       "legacy":  "Mutante hibrido"
+                                                       "legacy":  "Instruidas por Thanos"
                                                    }
                                                ],
                                "code":  "DEMO0018",
-                               "victoryPoints":  14,
+                               "victoryPoints":  0,
                                "scenarioCleared":  true,
                                "createdAt":  "2025-01-10T10:00:00Z"
                            },
@@ -1339,24 +1339,24 @@
                                "players":  3,
                                "playersInfo":  [
                                                    {
-                                                       "character":  "Nebula",
-                                                       "aspect":  "Liderazgo",
-                                                       "legacy":  "Equipo de dos"
+                                                       "character":  "Magneto",
+                                                       "aspect":  "Masacrismo",
+                                                       "legacy":  "Solo ante el peligro"
                                                    },
                                                    {
-                                                       "character":  "Adam Warlock",
-                                                       "aspect":  "ProtecciÃ³n",
-                                                       "legacy":  "Ronin"
+                                                       "character":  "Groot",
+                                                       "aspect":  "Justicia",
+                                                       "legacy":  "Solo ante el peligro"
                                                    },
                                                    {
-                                                       "character":  "Pantera Negra (T\u0027Challa)",
-                                                       "aspect":  "ProtecciÃ³n",
-                                                       "legacy":  "Ronin"
+                                                       "character":  "HalcÃ³n",
+                                                       "aspect":  "Masacrismo",
+                                                       "legacy":  "Solo ante el peligro"
                                                    }
                                                ],
                                "code":  "DEMO0019",
-                               "victoryPoints":  0,
-                               "scenarioCleared":  false,
+                               "victoryPoints":  2,
+                               "scenarioCleared":  true,
                                "createdAt":  "2025-01-10T10:00:00Z"
                            },
                            {
@@ -1368,28 +1368,28 @@
                                "players":  4,
                                "playersInfo":  [
                                                    {
-                                                       "character":  "X-23",
-                                                       "aspect":  "Justicia",
-                                                       "legacy":  "Guerreros arana"
-                                                   },
-                                                   {
                                                        "character":  "DominÃ³",
                                                        "aspect":  "Justicia",
-                                                       "legacy":  "Los mas buscados"
+                                                       "legacy":  "Mutante hibrido"
                                                    },
                                                    {
-                                                       "character":  "Seda",
-                                                       "aspect":  "Masacrismo",
-                                                       "legacy":  "Vastago de M"
-                                                   },
-                                                   {
-                                                       "character":  "FÃ©nix",
+                                                       "character":  "Magik",
                                                        "aspect":  "Liderazgo",
-                                                       "legacy":  "Guerreros arana"
+                                                       "legacy":  "Ronin"
+                                                   },
+                                                   {
+                                                       "character":  "HalcÃ³n",
+                                                       "aspect":  "Masacrismo",
+                                                       "legacy":  "Solo ante el peligro"
+                                                   },
+                                                   {
+                                                       "character":  "Hulk",
+                                                       "aspect":  "Masacrismo",
+                                                       "legacy":  "Equipo de dos"
                                                    }
                                                ],
                                "code":  "DEMO0020",
-                               "victoryPoints":  11,
+                               "victoryPoints":  1,
                                "scenarioCleared":  true,
                                "createdAt":  "2025-01-10T10:00:00Z"
                            },
@@ -1402,19 +1402,19 @@
                                "players":  2,
                                "playersInfo":  [
                                                    {
-                                                       "character":  "Hombre de Hielo",
-                                                       "aspect":  "ProtecciÃ³n",
-                                                       "legacy":  "Ninguno"
+                                                       "character":  "MÃ¡quina de Guerra",
+                                                       "aspect":  "Justicia",
+                                                       "legacy":  "Mutante hibrido"
                                                    },
                                                    {
-                                                       "character":  "Spider-woman",
-                                                       "aspect":  "Agresividad",
-                                                       "legacy":  "Solo ante el peligro"
+                                                       "character":  "Ironheart",
+                                                       "aspect":  "Masacrismo",
+                                                       "legacy":  "Mutante hibrido"
                                                    }
                                                ],
                                "code":  "DEMO0021",
                                "victoryPoints":  0,
-                               "scenarioCleared":  false,
+                               "scenarioCleared":  true,
                                "createdAt":  "2025-01-10T10:00:00Z"
                            },
                            {
@@ -1426,23 +1426,23 @@
                                "players":  3,
                                "playersInfo":  [
                                                    {
-                                                       "character":  "CapitÃ¡n AmÃ©rica",
-                                                       "aspect":  "Masacrismo",
-                                                       "legacy":  "Equipado para lo peor"
-                                                   },
-                                                   {
-                                                       "character":  "MÃ¡quina de Guerra",
+                                                       "character":  "Capitana Marvel",
                                                        "aspect":  "ProtecciÃ³n",
-                                                       "legacy":  "Solo ante el peligro"
+                                                       "legacy":  "Mutante hibrido"
                                                    },
                                                    {
                                                        "character":  "Mercurio",
                                                        "aspect":  "Justicia",
-                                                       "legacy":  "Los mas buscados"
+                                                       "legacy":  "Mutante hibrido"
+                                                   },
+                                                   {
+                                                       "character":  "Bishop",
+                                                       "aspect":  "Agresividad",
+                                                       "legacy":  "Equipado para lo peor"
                                                    }
                                                ],
                                "code":  "DEMO0022",
-                               "victoryPoints":  13,
+                               "victoryPoints":  2,
                                "scenarioCleared":  true,
                                "createdAt":  "2025-01-10T10:00:00Z"
                            },
@@ -1455,29 +1455,29 @@
                                "players":  4,
                                "playersInfo":  [
                                                    {
-                                                       "character":  "Adam Warlock",
-                                                       "aspect":  "Agresividad",
-                                                       "legacy":  "Solo ante el peligro"
-                                                   },
-                                                   {
-                                                       "character":  "Coloso",
-                                                       "aspect":  "Liderazgo",
-                                                       "legacy":  "Vastago de M"
-                                                   },
-                                                   {
-                                                       "character":  "Ojo de HalcÃ³n",
+                                                       "character":  "Magneto",
                                                        "aspect":  "ProtecciÃ³n",
-                                                       "legacy":  "Solo ante el peligro"
+                                                       "legacy":  "Equipo de dos"
                                                    },
                                                    {
-                                                       "character":  "Spectrum",
-                                                       "aspect":  "Agresividad",
-                                                       "legacy":  "Dama de la muerte"
+                                                       "character":  "Nebula",
+                                                       "aspect":  "Masacrismo",
+                                                       "legacy":  "Ronin"
+                                                   },
+                                                   {
+                                                       "character":  "Hombre Hormiga",
+                                                       "aspect":  "Liderazgo",
+                                                       "legacy":  "Los mas buscados"
+                                                   },
+                                                   {
+                                                       "character":  "Lobezno",
+                                                       "aspect":  "Liderazgo",
+                                                       "legacy":  "Los mas buscados"
                                                    }
                                                ],
                                "code":  "DEMO0023",
                                "victoryPoints":  0,
-                               "scenarioCleared":  false,
+                               "scenarioCleared":  true,
                                "createdAt":  "2025-01-10T10:00:00Z"
                            },
                            {
@@ -1489,18 +1489,18 @@
                                "players":  2,
                                "playersInfo":  [
                                                    {
-                                                       "character":  "Bishop",
+                                                       "character":  "MarÃ­a Hill",
                                                        "aspect":  "Liderazgo",
-                                                       "legacy":  "Solo ante el peligro"
+                                                       "legacy":  "Equipado para lo peor"
                                                    },
                                                    {
-                                                       "character":  "Soldado de invierno",
-                                                       "aspect":  "Agresividad",
-                                                       "legacy":  "Equipado para lo peor"
+                                                       "character":  "Avispa",
+                                                       "aspect":  "Masacrismo",
+                                                       "legacy":  "Mutante hibrido"
                                                    }
                                                ],
                                "code":  "DEMO0024",
-                               "victoryPoints":  9,
+                               "victoryPoints":  2,
                                "scenarioCleared":  true,
                                "createdAt":  "2025-01-10T10:00:00Z"
                            },
@@ -1513,24 +1513,24 @@
                                "players":  3,
                                "playersInfo":  [
                                                    {
-                                                       "character":  "Tormenta",
-                                                       "aspect":  "ProtecciÃ³n",
-                                                       "legacy":  "Instruidas por Thanos"
-                                                   },
-                                                   {
-                                                       "character":  "X-23",
+                                                       "character":  "Spider-Man (Miles Morales)",
                                                        "aspect":  "Agresividad",
-                                                       "legacy":  "Ninguno"
+                                                       "legacy":  "Solo ante el peligro"
                                                    },
                                                    {
-                                                       "character":  "Spider-woman",
+                                                       "character":  "Avispa",
+                                                       "aspect":  "ProtecciÃ³n",
+                                                       "legacy":  "Rabia irradiada"
+                                                   },
+                                                   {
+                                                       "character":  "Ironheart",
                                                        "aspect":  "Masacrismo",
-                                                       "legacy":  "Vastago de M"
+                                                       "legacy":  "Guerreros arana"
                                                    }
                                                ],
                                "code":  "DEMO0025",
-                               "victoryPoints":  0,
-                               "scenarioCleared":  false,
+                               "victoryPoints":  1,
+                               "scenarioCleared":  true,
                                "createdAt":  "2025-01-10T10:00:00Z"
                            },
                            {
@@ -1542,28 +1542,28 @@
                                "players":  4,
                                "playersInfo":  [
                                                    {
+                                                       "character":  "Hulka",
+                                                       "aspect":  "Justicia",
+                                                       "legacy":  "Ninguno"
+                                                   },
+                                                   {
                                                        "character":  "Hombre Hormiga",
-                                                       "aspect":  "Masacrismo",
+                                                       "aspect":  "Liderazgo",
                                                        "legacy":  "Vastago de M"
                                                    },
                                                    {
-                                                       "character":  "Ironheart",
-                                                       "aspect":  "Liderazgo",
-                                                       "legacy":  "Ronin"
-                                                   },
-                                                   {
-                                                       "character":  "Spider-Man (Miles Morales)",
+                                                       "character":  "Mapache Cohete",
                                                        "aspect":  "Masacrismo",
-                                                       "legacy":  "Guerreros arana"
+                                                       "legacy":  "Dama de la muerte"
                                                    },
                                                    {
-                                                       "character":  "JÃºbilo",
-                                                       "aspect":  "Justicia",
-                                                       "legacy":  "Equipo de dos"
+                                                       "character":  "Hulk",
+                                                       "aspect":  "Masacrismo",
+                                                       "legacy":  "Solo ante el peligro"
                                                    }
                                                ],
                                "code":  "DEMO0026",
-                               "victoryPoints":  18,
+                               "victoryPoints":  1,
                                "scenarioCleared":  true,
                                "createdAt":  "2025-01-10T10:00:00Z"
                            },
@@ -1576,19 +1576,19 @@
                                "players":  2,
                                "playersInfo":  [
                                                    {
-                                                       "character":  "Hulk",
-                                                       "aspect":  "Agresividad",
-                                                       "legacy":  "Ronin"
+                                                       "character":  "Gamora",
+                                                       "aspect":  "ProtecciÃ³n",
+                                                       "legacy":  "Mutante hibrido"
                                                    },
                                                    {
-                                                       "character":  "Ghost-Spider",
-                                                       "aspect":  "Justicia",
-                                                       "legacy":  "Solo ante el peligro"
+                                                       "character":  "Viuda Negra",
+                                                       "aspect":  "Liderazgo",
+                                                       "legacy":  "Guerreros arana"
                                                    }
                                                ],
                                "code":  "DEMO0027",
                                "victoryPoints":  0,
-                               "scenarioCleared":  false,
+                               "scenarioCleared":  true,
                                "createdAt":  "2025-01-10T10:00:00Z"
                            },
                            {
@@ -1600,23 +1600,23 @@
                                "players":  3,
                                "playersInfo":  [
                                                    {
-                                                       "character":  "Mapache Cohete",
-                                                       "aspect":  "Agresividad",
-                                                       "legacy":  "Equipado para lo peor"
-                                                   },
-                                                   {
-                                                       "character":  "Hombre Hormiga",
+                                                       "character":  "Spider-Man (Miles Morales)",
                                                        "aspect":  "Masacrismo",
-                                                       "legacy":  "Guerreros arana"
+                                                       "legacy":  "Los mas buscados"
                                                    },
                                                    {
-                                                       "character":  "Capitana Marvel",
+                                                       "character":  "Magik",
                                                        "aspect":  "Agresividad",
-                                                       "legacy":  "Equipo de dos"
+                                                       "legacy":  "Ninguno"
+                                                   },
+                                                   {
+                                                       "character":  "Mercurio",
+                                                       "aspect":  "Justicia",
+                                                       "legacy":  "Rabia irradiada"
                                                    }
                                                ],
                                "code":  "DEMO0028",
-                               "victoryPoints":  18,
+                               "victoryPoints":  3,
                                "scenarioCleared":  true,
                                "createdAt":  "2025-01-10T10:00:00Z"
                            },
@@ -1629,29 +1629,29 @@
                                "players":  4,
                                "playersInfo":  [
                                                    {
-                                                       "character":  "Spidercerdo",
-                                                       "aspect":  "Liderazgo",
-                                                       "legacy":  "Guerreros arana"
+                                                       "character":  "MarÃ­a Hill",
+                                                       "aspect":  "Agresividad",
+                                                       "legacy":  "Ronin"
                                                    },
                                                    {
-                                                       "character":  "Masacre",
-                                                       "aspect":  "Justicia",
-                                                       "legacy":  "Rabia irradiada"
-                                                   },
-                                                   {
-                                                       "character":  "Groot",
-                                                       "aspect":  "Liderazgo",
-                                                       "legacy":  "Rabia irradiada"
-                                                   },
-                                                   {
-                                                       "character":  "Drax",
+                                                       "character":  "Viuda Negra",
                                                        "aspect":  "ProtecciÃ³n",
                                                        "legacy":  "Ronin"
+                                                   },
+                                                   {
+                                                       "character":  "Spiderman (Peter Parker)",
+                                                       "aspect":  "Justicia",
+                                                       "legacy":  "Ninguno"
+                                                   },
+                                                   {
+                                                       "character":  "DominÃ³",
+                                                       "aspect":  "ProtecciÃ³n",
+                                                       "legacy":  "Instruidas por Thanos"
                                                    }
                                                ],
                                "code":  "DEMO0029",
-                               "victoryPoints":  0,
-                               "scenarioCleared":  false,
+                               "victoryPoints":  3,
+                               "scenarioCleared":  true,
                                "createdAt":  "2025-01-10T10:00:00Z"
                            },
                            {
@@ -1663,18 +1663,18 @@
                                "players":  2,
                                "playersInfo":  [
                                                    {
-                                                       "character":  "DominÃ³",
-                                                       "aspect":  "Justicia",
-                                                       "legacy":  "Los mas buscados"
+                                                       "character":  "Nebula",
+                                                       "aspect":  "Liderazgo",
+                                                       "legacy":  "Rabia irradiada"
                                                    },
                                                    {
-                                                       "character":  "Avispa",
-                                                       "aspect":  "Masacrismo",
-                                                       "legacy":  "Vastago de M"
+                                                       "character":  "SP//dr",
+                                                       "aspect":  "ProtecciÃ³n",
+                                                       "legacy":  "Mutante hibrido"
                                                    }
                                                ],
                                "code":  "DEMO0030",
-                               "victoryPoints":  15,
+                               "victoryPoints":  0,
                                "scenarioCleared":  true,
                                "createdAt":  "2025-01-10T10:00:00Z"
                            },
@@ -1687,24 +1687,24 @@
                                "players":  3,
                                "playersInfo":  [
                                                    {
-                                                       "character":  "Spiderman (Peter Parker)",
+                                                       "character":  "FÃ©nix",
                                                        "aspect":  "Agresividad",
-                                                       "legacy":  "Rabia irradiada"
+                                                       "legacy":  "Vastago de M"
                                                    },
                                                    {
-                                                       "character":  "Bruja Escarlata",
-                                                       "aspect":  "Agresividad",
+                                                       "character":  "Viuda Negra",
+                                                       "aspect":  "ProtecciÃ³n",
                                                        "legacy":  "Los mas buscados"
                                                    },
                                                    {
-                                                       "character":  "PÃ­cara",
-                                                       "aspect":  "Masacrismo",
-                                                       "legacy":  "Rabia irradiada"
+                                                       "character":  "Nebula",
+                                                       "aspect":  "Justicia",
+                                                       "legacy":  "Guerreros arana"
                                                    }
                                                ],
                                "code":  "DEMO0031",
                                "victoryPoints":  0,
-                               "scenarioCleared":  false,
+                               "scenarioCleared":  true,
                                "createdAt":  "2025-01-10T10:00:00Z"
                            },
                            {
@@ -1716,112 +1716,192 @@
                                "players":  4,
                                "playersInfo":  [
                                                    {
-                                                       "character":  "Masacre",
+                                                       "character":  "Nova",
+                                                       "aspect":  "Justicia",
+                                                       "legacy":  "Rabia irradiada"
+                                                   },
+                                                   {
+                                                       "character":  "Drax",
+                                                       "aspect":  "ProtecciÃ³n",
+                                                       "legacy":  "Ronin"
+                                                   },
+                                                   {
+                                                       "character":  "Ojo de HalcÃ³n",
                                                        "aspect":  "Justicia",
                                                        "legacy":  "Solo ante el peligro"
                                                    },
                                                    {
-                                                       "character":  "Mapache Cohete",
-                                                       "aspect":  "Agresividad",
-                                                       "legacy":  "Instruidas por Thanos"
-                                                   },
-                                                   {
-                                                       "character":  "Ghost-Spider",
-                                                       "aspect":  "Masacrismo",
-                                                       "legacy":  "Instruidas por Thanos"
-                                                   },
-                                                   {
-                                                       "character":  "Spiderman (Peter Parker)",
-                                                       "aspect":  "Agresividad",
-                                                       "legacy":  "Ninguno"
+                                                       "character":  "Vision",
+                                                       "aspect":  "Justicia",
+                                                       "legacy":  "Mutante hibrido"
                                                    }
                                                ],
                                "code":  "DEMO0032",
-                               "victoryPoints":  18,
+                               "victoryPoints":  2,
                                "scenarioCleared":  true,
                                "createdAt":  "2025-01-10T10:00:00Z"
                            }
                        ],
     "mesaTotals":  {
-                       "16":  {
-                                  "c1":  108,
-                                  "c2":  60,
-                                  "c3":  52
+                       "11":  {
+                                  "c1":  7,
+                                  "c2":  7,
+                                  "c3":  5
                               },
                        "3":  {
-                                 "c1":  69,
-                                 "c2":  55,
-                                 "c3":  41
+                                 "c1":  9,
+                                 "c2":  11,
+                                 "c3":  3
                              },
-                       "5":  {
-                                 "c1":  75,
-                                 "c2":  65,
-                                 "c3":  55
-                             },
+                       "20":  {
+                                  "c1":  7,
+                                  "c2":  6,
+                                  "c3":  1
+                              },
                        "12":  {
-                                  "c1":  96,
-                                  "c2":  40,
-                                  "c3":  24
+                                  "c1":  9,
+                                  "c2":  10,
+                                  "c3":  9
                               },
                        "10":  {
-                                  "c1":  90,
-                                  "c2":  90,
-                                  "c3":  50
+                                  "c1":  5,
+                                  "c2":  4,
+                                  "c3":  1
                               },
-                       "2":  {
-                                 "c1":  66,
-                                 "c2":  50,
-                                 "c3":  34
-                             },
-                       "8":  {
-                                 "c1":  84,
-                                 "c2":  80,
-                                 "c3":  36
-                             },
-                       "11":  {
-                                  "c1":  93,
-                                  "c2":  95,
-                                  "c3":  57
+                       "17":  {
+                                  "c1":  19,
+                                  "c2":  11,
+                                  "c3":  9
+                              },
+                       "13":  {
+                                  "c1":  11,
+                                  "c2":  13,
+                                  "c3":  3
+                              },
+                       "27":  {
+                                  "c1":  3,
+                                  "c2":  13,
+                                  "c3":  9
+                              },
+                       "30":  {
+                                  "c1":  9,
+                                  "c2":  8,
+                                  "c3":  1
+                              },
+                       "18":  {
+                                  "c1":  3,
+                                  "c2":  14,
+                                  "c3":  3
+                              },
+                       "29":  {
+                                  "c1":  7,
+                                  "c2":  5,
+                                  "c3":  7
+                              },
+                       "23":  {
+                                  "c1":  13,
+                                  "c2":  15,
+                                  "c3":  3
+                              },
+                       "19":  {
+                                  "c1":  5,
+                                  "c2":  3,
+                                  "c3":  7
                               },
                        "1":  {
-                                 "c1":  63,
-                                 "c2":  45,
-                                 "c3":  27
+                                 "c1":  5,
+                                 "c2":  5,
+                                 "c3":  5
                              },
-                       "9":  {
-                                 "c1":  87,
-                                 "c2":  85,
-                                 "c3":  43
-                             },
-                       "14":  {
-                                  "c1":  102,
-                                  "c2":  50,
-                                  "c3":  38
-                              },
-                       "7":  {
-                                 "c1":  81,
-                                 "c2":  75,
-                                 "c3":  29
-                             },
-                       "15":  {
-                                  "c1":  105,
-                                  "c2":  55,
-                                  "c3":  45
-                              },
-                       "6":  {
-                                 "c1":  78,
-                                 "c2":  70,
-                                 "c3":  22
+                       "5":  {
+                                 "c1":  13,
+                                 "c2":  3,
+                                 "c3":  1
                              },
                        "4":  {
-                                 "c1":  72,
-                                 "c2":  60,
-                                 "c3":  48
+                                 "c1":  11,
+                                 "c2":  14,
+                                 "c3":  7
                              },
-                       "13":  {
-                                  "c1":  99,
-                                  "c2":  45,
-                                  "c3":  31
+                       "8":  {
+                                 "c1":  19,
+                                 "c2":  12,
+                                 "c3":  3
+                             },
+                       "26":  {
+                                  "c1":  19,
+                                  "c2":  10,
+                                  "c3":  5
+                              },
+                       "14":  {
+                                  "c1":  13,
+                                  "c2":  2,
+                                  "c3":  7
+                              },
+                       "22":  {
+                                  "c1":  11,
+                                  "c2":  12,
+                                  "c3":  9
+                              },
+                       "28":  {
+                                  "c1":  5,
+                                  "c2":  2,
+                                  "c3":  3
+                              },
+                       "25":  {
+                                  "c1":  17,
+                                  "c2":  7,
+                                  "c3":  1
+                              },
+                       "9":  {
+                                 "c1":  3,
+                                 "c2":  15,
+                                 "c3":  7
+                             },
+                       "15":  {
+                                  "c1":  15,
+                                  "c2":  5,
+                                  "c3":  1
+                              },
+                       "21":  {
+                                  "c1":  9,
+                                  "c2":  9,
+                                  "c3":  5
+                              },
+                       "24":  {
+                                  "c1":  15,
+                                  "c2":  4,
+                                  "c3":  7
+                              },
+                       "16":  {
+                                  "c1":  17,
+                                  "c2":  8,
+                                  "c3":  5
+                              },
+                       "32":  {
+                                  "c1":  13,
+                                  "c2":  14,
+                                  "c3":  9
+                              },
+                       "7":  {
+                                 "c1":  17,
+                                 "c2":  9,
+                                 "c3":  9
+                             },
+                       "2":  {
+                                 "c1":  7,
+                                 "c2":  8,
+                                 "c3":  9
+                             },
+                       "6":  {
+                                 "c1":  15,
+                                 "c2":  6,
+                                 "c3":  5
+                             },
+                       "31":  {
+                                  "c1":  11,
+                                  "c2":  11,
+                                  "c3":  5
                               }
                    },
     "mesaEvents":  [
@@ -1829,5 +1909,5 @@
                    ],
     "qrEventEnabled":  false,
     "qrFreegameEnabled":  true,
-    "ts":  1762773118103
+    "ts":  1762773983478
 }

@@ -146,11 +146,6 @@ export default function ChallengesDisplay() {
                         </div>
                       </div>
                     </div>
-                    {overflow && (
-                      <p className="challenge-progress-overflow">
-                        * Progreso supera el objetivo previsto
-                      </p>
-                    )}
                   </div>
                 </article>
               );
