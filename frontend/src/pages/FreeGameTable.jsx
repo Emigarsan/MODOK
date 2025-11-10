@@ -10,12 +10,12 @@ export default function FreeGameTablePage() {
 
   const legacyOptions = useMemo(() => ([
     'Ninguno',
-    'VÃ¡stago de M',
-    'Mutante hÃ­brido',
+    'Vástago de M',
+    'Mutante hí­brido',
     'Equipo de dos',
-    'Los mÃ¡s buscados',
+    'Los más buscados',
     'Equipado para lo peor',
-    'Guerreros araÃ±a',
+    'Guerreros araña',
     'Instruidas por Thanos',
     'Rabia irradiada',
     'Ronin',

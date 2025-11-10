@@ -9,6 +9,7 @@ export default function FreeGameMesa() {
   const [error, setError] = useState('');
   const [vpInput, setVpInput] = useState('0');
   const [saved, setSaved] = useState(false);
+  const [scenarioCleared, setScenarioCleared] = useState('no');
 
   useEffect(() => {
     setLoading(true);
@@ -18,6 +19,7 @@ export default function FreeGameMesa() {
         setData(d);
         setVpInput(String(d?.victoryPoints ?? 0));
         setError('');
+        setScenarioCleared(d?.scenarioCleared ? 'si' : 'no');
       })
       .catch(() => setError('No se encontro la mesa'))
       .finally(() => setLoading(false));
@@ -35,9 +37,15 @@ export default function FreeGameMesa() {
   if (!data) return <div className="container overlay-card"><p>No hay datos</p></div>;
 
   const noChallenge = !data.inevitableChallenge || data.inevitableChallenge === '(Ninguno)';
-  const base = noChallenge ? 0 : (data.difficulty === 'Experto' ? 5 : 3);
-  const vp = noChallenge ? 0 : (parseInt(vpInput, 10) || 0);
-  const total = noChallenge ? 0 : base + legacyCount + vp;
+  const hasChallenge = !noChallenge;
+  const scenarioClearedBool = scenarioCleared === 'si';
+  const scoringActive = hasChallenge && scenarioClearedBool;
+  const basePoints = hasChallenge ? (data.difficulty === 'Experto' ? 5 : 3) : 0;
+  const base = scoringActive ? basePoints : 0;
+  const legacyContribution = scoringActive ? legacyCount : 0;
+  const vpValue = Math.max(0, parseInt(vpInput, 10) || 0);
+  const vp = scoringActive ? vpValue : 0;
+  const total = base + legacyContribution + vp;
 
   const saveVP = async () => {
     const n = Math.max(0, parseInt(vpInput, 10) || 0);
@@ -45,7 +53,11 @@ export default function FreeGameMesa() {
       const resp = await fetch('/api/tables/freegame/victory-points', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ id: data.id, victoryPoints: n })
+        body: JSON.stringify({
+          id: data.id,
+          victoryPoints: n,
+          scenarioCleared: hasChallenge && scenarioClearedBool
+        })
       });
       if (!resp.ok) throw new Error('Error al guardar');
       setSaved(true);
@@ -95,6 +107,31 @@ export default function FreeGameMesa() {
       </div>
 
       <div className="form" style={{ marginTop: 12, gap: '0.75rem', alignItems: 'flex-end' }}>
+        <div className="option-toggle-group">
+          <span className="field-label-title">Escenario superado</span>
+          <label className={`option-toggle${(!hasChallenge || saved) ? ' is-disabled' : ''}`}>
+            <input
+              type="radio"
+              name="scenario-cleared"
+              value="si"
+              checked={scenarioCleared === 'si'}
+              onChange={() => setScenarioCleared('si')}
+              disabled={!hasChallenge || saved}
+            />
+            Si
+          </label>
+          <label className="option-toggle">
+            <input
+              type="radio"
+              name="scenario-cleared"
+              value="no"
+              checked={scenarioCleared === 'no'}
+              onChange={() => setScenarioCleared('no')}
+              disabled={saved}
+            />
+            No
+          </label>
+        </div>
         <label className="field-label" style={{ maxWidth: '12rem' }}>
           <span className="field-label-title">Puntos de Victoria</span>
           <input
@@ -128,7 +165,7 @@ export default function FreeGameMesa() {
             <tr>
               <td>{data.difficulty || 'Normal'}</td>
               <td>{base}</td>
-              <td>{legacyCount}</td>
+              <td>{legacyContribution}</td>
               <td>{vp}</td>
               <td>{total}</td>
             </tr>
