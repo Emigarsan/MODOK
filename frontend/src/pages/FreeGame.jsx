@@ -277,7 +277,7 @@ export default function FreeGamePage() {
                 <option value="Hail H.Y.D.R.A.">Hail H.Y.D.R.A.</option>
                 <option value="La Sala Roja">La Sala Roja</option>
                 <option value="Thunder Force">Thunder Force</option>
-                <option value="Ultron Infinito">Ultron Infinito</option>
+                <option value="Ultrón Infinito">Ultrón Infinito</option>
               </select>
             </label>
             <label className="field-label">
