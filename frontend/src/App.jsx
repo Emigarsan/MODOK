@@ -54,6 +54,7 @@ export function EventView({ onAction } = {}) {
   const [secondaryLocked, setSecondaryLocked] = useState(false);
   const [tertiaryLocked, setTertiaryLocked] = useState(false);
   const [primaryRevealed, setPrimaryRevealed] = useState(false);
+  const scrollPosRef = useRef(0);
 
   const secondaryImages = useMemo(
     () => [celda1, celda2, celda3, celda4, celda5, celda6, celda7],
@@ -115,6 +116,26 @@ export function EventView({ onAction } = {}) {
   useEffect(() => {
     fetchState(true);
   }, [fetchState]);
+
+  // When a modal is shown, scroll to top and lock body; restore on close
+  useEffect(() => {
+    if (modalMessage) {
+      scrollPosRef.current = typeof window !== 'undefined' ? window.scrollY || 0 : 0;
+      if (typeof window !== 'undefined') {
+        window.scrollTo({ top: 0, behavior: 'auto' });
+      }
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+      if (typeof window !== 'undefined') {
+        window.scrollTo({ top: scrollPosRef.current, behavior: 'auto' });
+      }
+    }
+
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [modalMessage]);
 
   // Background refresh every 3s, paused when a modal is open
   useEffect(() => {
