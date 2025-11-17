@@ -1,4 +1,4 @@
-const CACHE_NAME = 'modok-pwa-v1';
+const CACHE_NAME = 'modok-pwa-v2';
 const PRE_CACHE = [
   '/',
   '/index.html',
@@ -6,6 +6,9 @@ const PRE_CACHE = [
   '/icon-192.png',
   '/icon-512.png'
 ];
+
+const STATIC_EXTENSIONS = ['.css', '.js', '.png', '.jpg', '.jpeg', '.svg', '.webp', '.woff2', '.woff', '.ttf'];
+const API_PREFIX = '/api/';
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
@@ -29,23 +32,33 @@ self.addEventListener('activate', (event) => {
 
 self.addEventListener('fetch', (event) => {
   const { request } = event;
+
   if (request.method !== 'GET') {
     return;
   }
 
-  // Serve SPA shell when offline navigation happens
-  if (request.mode === 'navigate') {
+  const url = new URL(request.url);
+  const isSameOrigin = url.origin === self.location.origin;
+  const isApi = isSameOrigin && url.pathname.startsWith(API_PREFIX);
+  const isNavigation = request.mode === 'navigate';
+  const isStaticAsset =
+    isSameOrigin && STATIC_EXTENSIONS.some((ext) => url.pathname.toLowerCase().endsWith(ext));
+
+  // Nunca cacheamos API ni intentamos servirlas offline
+  if (isApi) {
+    return;
+  }
+
+  // Navegación: red de preferencia; si falla, caemos al shell precacheado
+  if (isNavigation) {
     event.respondWith(
-      fetch(request)
-        .then((response) => {
-          const copy = response.clone();
-          caches.open(CACHE_NAME).then((cache) => cache.put('/', copy));
-          return response;
-        })
-        .catch(() =>
-          caches.match(request).then((cached) => cached || caches.match('/index.html') || caches.match('/'))
-        )
+      fetch(request).catch(() => caches.match('/index.html'))
     );
+    return;
+  }
+
+  // Solo cacheamos assets estáticos; para el resto delegamos a la red
+  if (!isStaticAsset) {
     return;
   }
 
@@ -53,13 +66,11 @@ self.addEventListener('fetch', (event) => {
     caches.match(request).then(
       (cached) =>
         cached ||
-        fetch(request)
-          .then((response) => {
-            const copy = response.clone();
-            caches.open(CACHE_NAME).then((cache) => cache.put(request, copy));
-            return response;
-          })
-          .catch(() => cached)
+        fetch(request).then((response) => {
+          const copy = response.clone();
+          caches.open(CACHE_NAME).then((cache) => cache.put(request, copy));
+          return response;
+        })
     )
   );
 });
