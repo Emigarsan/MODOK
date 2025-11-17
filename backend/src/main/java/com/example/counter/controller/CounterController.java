@@ -102,6 +102,22 @@ public class CounterController {
         return ResponseEntity.ok(counterService.setSecondaryImageIndex(index));
     }
 
+    @PostMapping("/modal/secondary")
+    public ResponseEntity<CounterState> allowCloseSecondary(@RequestBody Map<String, Boolean> payload,
+                                                            @org.springframework.web.bind.annotation.RequestHeader(value = "X-Admin-Secret", required = false) String secret) {
+        if (!isAdmin(secret)) return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        boolean allowed = Boolean.TRUE.equals(payload.getOrDefault("allowed", false));
+        return ResponseEntity.ok(counterService.setAllowCloseSecondary(allowed));
+    }
+
+    @PostMapping("/modal/tertiary")
+    public ResponseEntity<CounterState> allowCloseTertiary(@RequestBody Map<String, Boolean> payload,
+                                                           @org.springframework.web.bind.annotation.RequestHeader(value = "X-Admin-Secret", required = false) String secret) {
+        if (!isAdmin(secret)) return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        boolean allowed = Boolean.TRUE.equals(payload.getOrDefault("allowed", false));
+        return ResponseEntity.ok(counterService.setAllowCloseTertiary(allowed));
+    }
+
     private int sanitizeAmount(Map<String, Integer> payload) {
         return Math.max(0, payload.getOrDefault("amount", 1));
     }

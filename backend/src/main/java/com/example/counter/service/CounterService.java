@@ -14,6 +14,8 @@ public class CounterService {
     private int secondary = SECONDARY_DEFAULT_VALUE;
     private int tertiary = TERTIARY_DEFAULT_VALUE;
     private int secondaryImageIndex = 0;
+    private boolean allowCloseSecondary = false;
+    private boolean allowCloseTertiary = false;
 
     public synchronized CounterState getState() {
         return snapshot();
@@ -109,10 +111,28 @@ public class CounterService {
     }
 
     private CounterState snapshot() {
-        return new CounterState(primary, secondary, tertiary, secondaryImageIndex);
+        return new CounterState(
+                primary,
+                secondary,
+                tertiary,
+                secondaryImageIndex,
+                allowCloseSecondary,
+                allowCloseTertiary
+        );
     }
 
     private int sanitize(int amount) {
         return Math.max(0, amount);
+    }
+
+    // Modal flags setters
+    public synchronized CounterState setAllowCloseSecondary(boolean allowed) {
+        allowCloseSecondary = allowed;
+        return snapshot();
+    }
+
+    public synchronized CounterState setAllowCloseTertiary(boolean allowed) {
+        allowCloseTertiary = allowed;
+        return snapshot();
     }
 }

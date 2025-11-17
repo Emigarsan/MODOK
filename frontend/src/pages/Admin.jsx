@@ -140,7 +140,7 @@ export default function AdminPage() {
 
   const updateModalFlag = useCallback((type, allowed) => {
     if (!isAuthed) return;
-    const endpoint = `/api/admin/modal/${type === 'secondary' ? 'secondary' : 'tertiary'}`;
+    const endpoint = `${API_BASE}/modal/${type === 'secondary' ? 'secondary' : 'tertiary'}`;
     // Optimistic update
     setModalFlags((prev) => ({
       ...prev,
