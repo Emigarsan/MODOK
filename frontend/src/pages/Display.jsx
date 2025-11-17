@@ -86,9 +86,23 @@ export default function DisplayPage() {
     : (secondaryImages[state.secondaryImageIndex] ?? secondaryImages[initialState.secondaryImageIndex]);
   const secondaryTitle = secondaryLocked ? 'Accesorio M.Y.T.H.O.S.' : 'Celdas de Contención';
   const secondaryNumberLabel = `Celda ${state.secondaryImageIndex + 1}`;
+  const showSecondaryModal = secondaryLocked;
+  const showTertiaryModal = state.tertiary === 0;
 
   return (
     <div className="display-layout">
+      {(showSecondaryModal || showTertiaryModal) && (
+        <div className="modal-backdrop" role="dialog" aria-modal="true">
+          <div className="modal">
+            {showSecondaryModal && (
+              <p>Alto, habeis liberado a todos los reclusos, escucha las instrucciones de los coordinadores</p>
+            )}
+            {showTertiaryModal && (
+              <p>Alto, habeis derrotado el Plan Secundario, escucha las instrucciones de los coordinadores</p>
+            )}
+          </div>
+        </div>
+      )}
       <div className="dashboard">
       {error && <p className="error">{error}</p>}
 
