@@ -35,9 +35,13 @@ public class BackupAdminController {
         return adminSecret != null && !adminSecret.isEmpty() && adminSecret.equals(secret);
     }
 
+    private ResponseEntity<Map<String, Object>> forbidden() {
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(Map.of("ok", false, "error", "No autorizado"));
+    }
+
     @GetMapping("/list")
     public ResponseEntity<?> list(@RequestHeader(value = "X-Admin-Secret", required = false) String secret) throws IOException {
-        if (!isAdmin(secret)) return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        if (!isAdmin(secret)) return forbidden();
         Path dir = snapshotService.getBackupDirPath();
         if (dir == null || !Files.exists(dir)) {
             return ResponseEntity.ok(Map.of("dir", dir == null ? "" : dir.toString(), "files", List.of()));
@@ -63,7 +67,7 @@ public class BackupAdminController {
 
     @PostMapping("/snapshot-now")
     public ResponseEntity<?> snapshotNow(@RequestHeader(value = "X-Admin-Secret", required = false) String secret) {
-        if (!isAdmin(secret)) return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        if (!isAdmin(secret)) return forbidden();
         try {
             Path p = snapshotService.createSnapshotNow();
             return ResponseEntity.ok(Map.of(
@@ -101,7 +105,7 @@ public class BackupAdminController {
     @PostMapping("/restore/{name}")
     public ResponseEntity<?> restore(@PathVariable("name") String name,
                                      @RequestHeader(value = "X-Admin-Secret", required = false) String secret) {
-        if (!isAdmin(secret)) return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        if (!isAdmin(secret)) return forbidden();
         if (name == null || !name.startsWith("app-") || !name.endsWith(".json")) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("ok", false, "error", "Nombre inválido"));
         }
@@ -113,7 +117,7 @@ public class BackupAdminController {
     @DeleteMapping("/delete/{name}")
     public ResponseEntity<?> deleteOne(@PathVariable("name") String name,
                                        @RequestHeader(value = "X-Admin-Secret", required = false) String secret) throws IOException {
-        if (!isAdmin(secret)) return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        if (!isAdmin(secret)) return forbidden();
         if (name == null || !name.startsWith("app-") || !name.endsWith(".json")) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("ok", false, "error", "Nombre inválido"));
         }
@@ -134,7 +138,7 @@ public class BackupAdminController {
     @PostMapping("/purge-older-than")
     public ResponseEntity<?> purgeOlderThan(@RequestParam("minutes") long minutes,
                                             @RequestHeader(value = "X-Admin-Secret", required = false) String secret) throws IOException {
-        if (!isAdmin(secret)) return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        if (!isAdmin(secret)) return forbidden();
         if (minutes < 0) return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("ok", false, "error", "minutes >= 0"));
         Path dir = snapshotService.getBackupDirPath();
         if (dir == null || !Files.exists(dir)) return ResponseEntity.ok(Map.of("ok", true, "deleted", 0));
@@ -155,8 +159,9 @@ public class BackupAdminController {
 
     @PostMapping("/upload")
     public ResponseEntity<?> upload(@RequestParam("file") MultipartFile file,
+                                    @RequestParam(value = "restore", defaultValue = "true") boolean restore,
                                     @RequestHeader(value = "X-Admin-Secret", required = false) String secret) throws IOException {
-        if (!isAdmin(secret)) return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        if (!isAdmin(secret)) return forbidden();
         if (file == null || file.isEmpty()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("ok", false, "error", "Archivo vacio"));
         }
@@ -174,12 +179,15 @@ public class BackupAdminController {
         try (var in = file.getInputStream()) {
             Files.copy(in, target, StandardCopyOption.REPLACE_EXISTING);
         }
-        Map<String, Object> payload = Map.of(
-                "ok", true,
-                "name", sanitized,
-                "size", sizeSafe(target),
-                "modified", mtimeSafe(target)
-        );
+        boolean restored = restore && snapshotService.restoreFromFileName(sanitized);
+        Map<String, Object> payload = new LinkedHashMap<>();
+        payload.put("ok", true);
+        payload.put("name", sanitized);
+        payload.put("size", sizeSafe(target));
+        payload.put("modified", mtimeSafe(target));
+        if (restore) {
+            payload.put("restored", restored);
+        }
         return ResponseEntity.ok(payload);
     }
 
@@ -195,7 +203,7 @@ public class BackupAdminController {
     @PostMapping("/purge-keep-latest")
     public ResponseEntity<?> purgeKeepLatest(@RequestParam("keep") int keep,
                                              @RequestHeader(value = "X-Admin-Secret", required = false) String secret) throws IOException {
-        if (!isAdmin(secret)) return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        if (!isAdmin(secret)) return forbidden();
         if (keep < 0) return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("ok", false, "error", "keep >= 0"));
         Path dir = snapshotService.getBackupDirPath();
         if (dir == null || !Files.exists(dir)) return ResponseEntity.ok(Map.of("ok", true, "deleted", 0));

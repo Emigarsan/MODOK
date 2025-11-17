@@ -26,6 +26,22 @@ export default function AdminPage() {
   const [purgeKeep, setPurgeKeep] = useState('10');
   const backupFileInputRef = useRef(null);
 
+  const ensureOk = useCallback((r, fallback = 'No autorizado') =>
+    (r.ok
+      ? Promise.resolve()
+      : r.json()
+        .catch(() => ({}))
+        .then((d) => Promise.reject(new Error(d?.error || fallback))))
+    , []);
+
+  const parseJson = useCallback((r, fallback = 'No autorizado') =>
+    (r.ok
+      ? r.json()
+      : r.json()
+        .catch(() => ({}))
+        .then((d) => Promise.reject(new Error(d?.error || fallback))))
+    , []);
+
   // Campos de fijaci?n permanecen vacíos hasta que el usuario escriba.
   const parseTableNumber = (value) => {
     const num = Number(value);
@@ -48,7 +64,7 @@ export default function AdminPage() {
   const fetchTables = useCallback(() => {
     if (!isAuthed) return;
     fetch('/api/admin/tables', { headers: { 'X-Admin-Secret': adminKey } })
-      .then((r) => r.ok ? r.json() : Promise.reject(new Error('No autorizado')))
+      .then((r) => parseJson(r))
       .then((data) => {
         if (!data || typeof data !== 'object') {
           setTables({ register: [], freegame: [] });
@@ -66,7 +82,7 @@ export default function AdminPage() {
         }
       })
       .catch(() => { });
-  }, [adminKey, isAuthed]);
+  }, [adminKey, isAuthed, parseJson]);
 
   useEffect(() => { if (isAuthed) { fetchTables(); const id = setInterval(fetchTables, 3000); return () => clearInterval(id); } }, [isAuthed, fetchTables]);
 
@@ -84,11 +100,11 @@ export default function AdminPage() {
     if (!isAuthed) return;
     setBackupsLoading(true);
     fetch('/api/admin/backup/list', { headers: { 'X-Admin-Secret': adminKey } })
-      .then((r) => r.ok ? r.json() : Promise.reject(new Error('No autorizado')))
+      .then((r) => parseJson(r))
       .then((data) => setBackups({ dir: data.dir || '', files: Array.isArray(data.files) ? data.files : [] }))
       .catch(() => { })
       .finally(() => setBackupsLoading(false));
-  }, [adminKey, isAuthed]);
+  }, [adminKey, isAuthed, parseJson]);
 
   const updateQrFlag = useCallback((type, enabled) => {
     if (!isAuthed) return;
@@ -101,7 +117,7 @@ export default function AdminPage() {
       },
       body: JSON.stringify({ enabled })
     })
-      .then((r) => r.ok ? r.json() : Promise.reject(new Error('No autorizado')))
+      .then((r) => parseJson(r))
       .then((data) => {
         if (data && typeof data === 'object') {
           setQrFlags({
@@ -110,8 +126,8 @@ export default function AdminPage() {
           });
         }
       })
-      .catch(() => { });
-  }, [adminKey, isAuthed]);
+      .catch((e) => alert(e.message));
+  }, [adminKey, isAuthed, parseJson]);
 
   useEffect(() => {
     if (!isAuthed) return;
@@ -129,16 +145,19 @@ export default function AdminPage() {
     setUploadingBackup(true);
     const formData = new FormData();
     formData.append('file', file);
-    fetch('/api/admin/backup/upload', {
+    fetch('/api/admin/backup/upload?restore=true', {
       method: 'POST',
       headers: {
         'X-Admin-Secret': adminKey
       },
       body: formData
     })
-      .then((r) => (r.ok ? r.json() : r.json().then((d) => Promise.reject(new Error(d?.error || 'No autorizado')))))
-      .then(() => {
-        alert('Backup importado correctamente');
+      .then((r) => parseJson(r))
+      .then((data) => {
+        const restored = Boolean(data?.restored);
+        const name = data?.name || file.name;
+        const msg = restored ? `Backup "${name}" importado y restaurado` : `Backup "${name}" importado`;
+        alert(msg);
         fetchBackups();
       })
       .catch((e) => alert(e.message))
@@ -146,7 +165,7 @@ export default function AdminPage() {
         setUploadingBackup(false);
         if (event.target) event.target.value = '';
       });
-  }, [adminKey, fetchBackups, isAuthed]);
+  }, [adminKey, fetchBackups, isAuthed, parseJson]);
 
   const update = (segment, sign) => () => {
     const endpoint = sign > 0 ? 'increment' : 'decrement';
@@ -159,7 +178,10 @@ export default function AdminPage() {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ amount: amt })
-    }).then(fetchState);
+    })
+      .then((r) => ensureOk(r, 'No autorizado'))
+      .then(fetchState)
+      .catch((e) => alert(e.message));
   };
 
   const setExact = (segment, value) => () => {
@@ -168,7 +190,10 @@ export default function AdminPage() {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'X-Admin-Secret': adminKey },
       body: JSON.stringify({ value: n })
-    }).then(fetchState);
+    })
+      .then((r) => ensureOk(r))
+      .then(fetchState)
+      .catch((e) => alert(e.message));
   };
 
   const setImageIndex = () => {
@@ -178,7 +203,10 @@ export default function AdminPage() {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'X-Admin-Secret': adminKey },
       body: JSON.stringify({ index: index0 })
-    }).then(fetchState);
+    })
+      .then((r) => ensureOk(r))
+      .then(fetchState)
+      .catch((e) => alert(e.message));
   };
 
   const download = (path, filename) => {
@@ -335,7 +363,7 @@ export default function AdminPage() {
                 <div style={{ display: 'flex', gap: 8, alignItems: 'center', flexWrap: 'wrap' }}>
                   <button onClick={() => {
                     fetch('/api/admin/backup/snapshot-now', { method: 'POST', headers: { 'X-Admin-Secret': adminKey } })
-                      .then(r => r.ok ? r.json() : Promise.reject(new Error('No autorizado')))
+                      .then(r => parseJson(r))
                       .then(() => fetchBackups())
                       .catch((e) => alert(e.message));
                   }}>Crear snapshot ahora</button>
@@ -364,7 +392,7 @@ export default function AdminPage() {
                   <button onClick={() => {
                     const m = Math.max(0, parseInt(purgeMinutes, 10) || 0);
                     fetch(`/api/admin/backup/purge-older-than?minutes=${m}`, { method: 'POST', headers: { 'X-Admin-Secret': adminKey } })
-                      .then(r => r.ok ? r.json() : Promise.reject(new Error('No autorizado')))
+                      .then(r => parseJson(r))
                       .then(() => fetchBackups())
                       .catch((e) => alert(e.message));
                   }}>Purgar por antigüedad</button>
@@ -375,7 +403,7 @@ export default function AdminPage() {
                   <button onClick={() => {
                     const k = Math.max(0, parseInt(purgeKeep, 10) || 0);
                     fetch(`/api/admin/backup/purge-keep-latest?keep=${k}`, { method: 'POST', headers: { 'X-Admin-Secret': adminKey } })
-                      .then(r => r.ok ? r.json() : Promise.reject(new Error('No autorizado')))
+                      .then(r => parseJson(r))
                       .then(() => fetchBackups())
                       .catch((e) => alert(e.message));
                   }}>Purgar y conservar N</button>
@@ -406,14 +434,14 @@ export default function AdminPage() {
                             <button onClick={() => {
                               if (!confirm(`Restaurar desde ${name}? Esto sobreescribir? el estado en memoria.`)) return;
                               fetch(`/api/admin/backup/restore/${encodeURIComponent(name)}`, { method: 'POST', headers: { 'X-Admin-Secret': adminKey } })
-                                .then(r => r.ok ? r.json() : Promise.reject(new Error('No autorizado')))
+                                .then(r => parseJson(r))
                                 .then(() => alert('Restaurado'))
                                 .catch((e) => alert(e.message));
                             }}>Restaurar</button>
                             <button onClick={() => {
                               if (!confirm(`Eliminar ${name}?`)) return;
                               fetch(`/api/admin/backup/delete/${encodeURIComponent(name)}`, { method: 'DELETE', headers: { 'X-Admin-Secret': adminKey } })
-                                .then(r => r.ok ? r.json() : Promise.reject(new Error('No autorizado')))
+                                .then(r => parseJson(r))
                                 .then(() => fetchBackups())
                                 .catch((e) => alert(e.message));
                             }}>Eliminar</button>
