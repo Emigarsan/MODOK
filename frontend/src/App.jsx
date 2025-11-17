@@ -272,7 +272,7 @@ export function EventView({ onAction, mesaId } = {}) {
           <button type="button" onClick={closeModal} disabled={isBlocked}>
             Cerrar
           </button>
-          {isBlocked && <p className="counter-meta">Esperando autorizaci&oacute;n desde Admin.</p>}
+          {isBlocked}
         </div>
       </div>
     );

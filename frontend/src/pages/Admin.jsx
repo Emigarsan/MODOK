@@ -140,7 +140,12 @@ export default function AdminPage() {
 
   const updateModalFlag = useCallback((type, allowed) => {
     if (!isAuthed) return;
-    const endpoint = type === 'secondary' ? '/api/admin/modal/secondary' : '/api/admin/modal/tertiary';
+    const endpoint = `/api/admin/modal/${type === 'secondary' ? 'secondary' : 'tertiary'}`;
+    // Optimistic update
+    setModalFlags((prev) => ({
+      ...prev,
+      [type === 'secondary' ? 'secondary' : 'tertiary']: allowed
+    }));
     fetch(endpoint, {
       method: 'POST',
       headers: {
@@ -153,11 +158,18 @@ export default function AdminPage() {
       .then((data) => {
         setModalFlags({
           secondary: Boolean(data?.allowCloseSecondary ?? allowed),
-          tertiary: Boolean(data?.allowCloseTertiary ?? (type === 'tertiary' ? allowed : modalFlags.tertiary))
+          tertiary: Boolean(data?.allowCloseTertiary ?? allowed)
         });
       })
-      .catch((e) => alert(e.message));
-  }, [adminKey, isAuthed, modalFlags.tertiary, parseJson]);
+      .catch((e) => {
+        alert(e.message || 'No se pudo actualizar el flag');
+        // revert on error
+        setModalFlags((prev) => ({
+          ...prev,
+          [type === 'secondary' ? 'secondary' : 'tertiary']: !allowed
+        }));
+      });
+  }, [adminKey, isAuthed, parseJson]);
 
   useEffect(() => {
     if (!isAuthed) return;
