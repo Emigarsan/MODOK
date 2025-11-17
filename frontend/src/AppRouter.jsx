@@ -8,6 +8,7 @@ import QrDisplayPage from './pages/QrDisplay.jsx';
 import ChallengesDisplay from './pages/ChallengesDisplay.jsx';
 import AdminPage from './pages/Admin.jsx';
 import MesaPage from './pages/Mesa.jsx';
+import HomePage from './pages/Home.jsx';
 
 function PageWrapper({ children }) {
   const location = useLocation();
@@ -41,7 +42,7 @@ export default function AppRouter() {
       <PageWrapper>
         <SiteHeader />
         <Routes>
-          <Route path="/" element={<Navigate to="/register" replace />} />
+          <Route path="/" element={<HomePage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/freegame/:mesaId" element={<FreeGameMesa />} />
           <Route path="/freegame" element={<FreeGamePage />} />
@@ -51,7 +52,7 @@ export default function AppRouter() {
           <Route path="/display/challenges" element={<ChallengesDisplay />} />
           <Route path="/admin" element={<AdminPage />} />
           <Route path="/mesa/:mesaId" element={<MesaPage />} />
-          <Route path="*" element={<Navigate to="/register" replace />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </PageWrapper>
     </BrowserRouter>
