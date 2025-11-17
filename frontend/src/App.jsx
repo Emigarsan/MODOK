@@ -41,10 +41,12 @@ const initialState = {
   primary: 1792,
   secondary: 128,
   tertiary: 640,
-  secondaryImageIndex: 0
+  secondaryImageIndex: 0,
+  allowCloseSecondary: false,
+  allowCloseTertiary: false
 };
 
-export function EventView({ onAction } = {}) {
+export function EventView({ onAction, mesaId } = {}) {
   const [state, setState] = useState(initialState);
   const [loading, setLoading] = useState(false);
   const [initialLoading, setInitialLoading] = useState(true);
@@ -83,7 +85,9 @@ export function EventView({ onAction } = {}) {
         primary: sanitizeCounter(data.primary, initialState.primary),
         secondary: sanitizeCounter(data.secondary, initialState.secondary),
         tertiary: sanitizeCounter(data.tertiary, initialState.tertiary),
-        secondaryImageIndex: normalizedIndex
+        secondaryImageIndex: normalizedIndex,
+        allowCloseSecondary: Boolean(data.allowCloseSecondary),
+        allowCloseTertiary: Boolean(data.allowCloseTertiary)
       };
     },
     [secondaryImages]
@@ -193,7 +197,10 @@ export function EventView({ onAction } = {}) {
   const closeModal = useCallback(() => {
     setModalMessage(null);
     setModalSource(null);
-  }, [modalSource]);
+    if (mesaId) {
+      window.location.assign(`/mesa/${mesaId}`);
+    }
+  }, [mesaId]);
 
   const updateCounter = useCallback((segment, delta) => {
     if (delta === 0) {
@@ -254,6 +261,23 @@ export function EventView({ onAction } = {}) {
   const displayedSecondaryImage = secondaryLocked ? celda7Accesorio : currentSecondaryImage;
   const secondaryTitle = secondaryLocked ? 'Accesorio M.Y.T.H.O.S.' : 'Celdas de Contención';
 
+  if (modalMessage) {
+    const isBlocked =
+      (modalSource === 'secondaryFinal' && !state.allowCloseSecondary) ||
+      (modalSource === 'tertiaryZero' && !state.allowCloseTertiary);
+    return (
+      <div className="modal-backdrop" role="dialog" aria-modal="true">
+        <div className="modal">
+          <p>{modalMessage}</p>
+          <button type="button" onClick={closeModal} disabled={isBlocked}>
+            Cerrar
+          </button>
+          {isBlocked && <p className="counter-meta">Esperando autorizaci&oacute;n desde Admin.</p>}
+        </div>
+      </div>
+    );
+  }
+
   return (
     <>
       {error && <p className="error">{error}</p>}
@@ -284,19 +308,20 @@ export function EventView({ onAction } = {}) {
             className="counter-art"
           />
           {!secondaryLocked && <div className="counter-value">{state.secondary}</div>}
-          {!secondaryLocked && (<div className="button-grid">
-            {secondaryButtons.map(({ label, delta }) => (
-              <button
-                key={`secondary-${label}`}
-                onClick={() => updateCounter('secondary', delta)}
-                disabled={secondaryLocked}
-                aria-disabled={secondaryLocked}
-                title={secondaryLocked ? 'Bloqueado tras la s?ptima imagen' : undefined}
-              >
-                {label}
-              </button>
-            ))}
-          </div>
+          {!secondaryLocked && (
+            <div className="button-grid">
+              {secondaryButtons.map(({ label, delta }) => (
+                <button
+                  key={`secondary-${label}`}
+                  onClick={() => updateCounter('secondary', delta)}
+                  disabled={secondaryLocked}
+                  aria-disabled={secondaryLocked}
+                  title={secondaryLocked ? 'Bloqueado tras la séptima imagen' : undefined}
+                >
+                  {label}
+                </button>
+              ))}
+            </div>
           )}
         </section>
 
@@ -321,17 +346,6 @@ export function EventView({ onAction } = {}) {
           </section>
         )}
       </div>
-
-      {modalMessage && (
-        <div className="modal-backdrop" role="dialog" aria-modal="true">
-          <div className="modal">
-            <p>{modalMessage}</p>
-            <button type="button" onClick={closeModal}>
-              Cerrar
-            </button>
-          </div>
-        </div>
-      )}
     </>
   );
 }
@@ -355,7 +369,7 @@ export default function App() {
     } catch (_) { }
   };
 
-  return <EventView onAction={mesaId ? onAction : undefined} />;
+  return <EventView mesaId={mesaId} onAction={mesaId ? onAction : undefined} />;
 }
 
 

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+﻿import { useCallback, useEffect, useRef, useState } from 'react';
 
 const API_BASE = '/api/counter';
 
@@ -12,6 +12,7 @@ export default function AdminPage() {
   const [sVal, setSVal] = useState('');
   const [tVal, setTVal] = useState('');
   const [imgIdx, setImgIdx] = useState(''); // 1..7 for UI
+  const [modalFlags, setModalFlags] = useState({ secondary: false, tertiary: false });
   const [adminKey, setAdminKey] = useState('');
   const [isAuthed, setIsAuthed] = useState(false);
   const [tables, setTables] = useState({ register: [], freegame: [] });
@@ -42,7 +43,7 @@ export default function AdminPage() {
         .then((d) => Promise.reject(new Error(d?.error || fallback))))
     , []);
 
-  // Campos de fijaci?n permanecen vacíos hasta que el usuario escriba.
+  // Campos de fijaci?n permanecen vacÃ­os hasta que el usuario escriba.
   const parseTableNumber = (value) => {
     const num = Number(value);
     return Number.isFinite(num) ? num : Number.MAX_SAFE_INTEGER;
@@ -50,16 +51,24 @@ export default function AdminPage() {
 
   const syncFromState = () => { };
 
-  const fetchState = useCallback(() => {
+    const fetchState = useCallback(() => {
     fetch(API_BASE)
       .then((r) => r.ok ? r.json() : Promise.reject(new Error('Respuesta inválida')))
-      .then((data) => { setState(data); setError(null); syncFromState(data); })
+      .then((data) => {
+        setState(data);
+        setError(null);
+        syncFromState(data);
+        setModalFlags({
+          secondary: Boolean(data?.allowCloseSecondary),
+          tertiary: Boolean(data?.allowCloseTertiary)
+        });
+      })
       .catch((e) => setError(e.message));
-  }, []);
+  }, []);;
 
   useEffect(() => { fetchState(); const id = setInterval(fetchState, 3000); return () => clearInterval(id); }, [fetchState]);
 
-  // No auto-login: siempre pedimos contraseña hasta pulsar "Entrar".
+  // No auto-login: siempre pedimos contraseÃ±a hasta pulsar "Entrar".
 
   const fetchTables = useCallback(() => {
     if (!isAuthed) return;
@@ -128,6 +137,27 @@ export default function AdminPage() {
       })
       .catch((e) => alert(e.message));
   }, [adminKey, isAuthed, parseJson]);
+
+  const updateModalFlag = useCallback((type, allowed) => {
+    if (!isAuthed) return;
+    const endpoint = type === 'secondary' ? '/api/admin/modal/secondary' : '/api/admin/modal/tertiary';
+    fetch(endpoint, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Admin-Secret': adminKey
+      },
+      body: JSON.stringify({ allowed })
+    })
+      .then((r) => parseJson(r))
+      .then((data) => {
+        setModalFlags({
+          secondary: Boolean(data?.allowCloseSecondary ?? allowed),
+          tertiary: Boolean(data?.allowCloseTertiary ?? (type === 'tertiary' ? allowed : modalFlags.tertiary))
+        });
+      })
+      .catch((e) => alert(e.message));
+  }, [adminKey, isAuthed, modalFlags.tertiary, parseJson]);
 
   useEffect(() => {
     if (!isAuthed) return;
@@ -249,7 +279,7 @@ export default function AdminPage() {
         <h2>Admin</h2>
         <form className="form" onSubmit={tryAuth}>
           <label>
-            Contraseña
+            ContraseÃ±a
             <input type="password" value={adminKey} onChange={(e) => setAdminKey(e.target.value)} />
           </label>
           <button type="submit">Entrar</button>
@@ -263,7 +293,7 @@ export default function AdminPage() {
       <h2>Admin</h2>
       {isAuthed && (
         <div className="form" style={{ alignSelf: 'flex-end' }}>
-          <button onClick={logout}>Cerrar sesión</button>
+          <button onClick={logout}>Cerrar sesiÃ³n</button>
         </div>
       )}
       {error && <p className="error">{error}</p>}
@@ -307,7 +337,7 @@ export default function AdminPage() {
             </section>
 
             <section className="counter-card">
-              <h3>Celdas de Contención</h3>
+              <h3>Celdas de ContenciÃ³n</h3>
               <div className="counter-value">{state.secondary}</div>
               <div className="form">
                 <label>
@@ -329,15 +359,25 @@ export default function AdminPage() {
                   <input type="number" min={0} value={amountSecondary} onChange={(e) => setAmountSecondary(Number(e.target.value))} />
                 </label>
               </div>
-              <div className="button-grid">
-                <button onClick={update('secondary', +1)}>+</button>
-                <button onClick={update('secondary', -1)}>- </button>
-              </div>
-            </section>
+            <div className="button-grid">
+              <button onClick={update('secondary', +1)}>+</button>
+              <button onClick={update('secondary', -1)}>- </button>
+            </div>
+            <div className="form">
+              <label className="admin-toggle">
+                <input
+                  type="checkbox"
+                  checked={!!modalFlags.secondary}
+                  onChange={(e) => updateModalFlag('secondary', e.target.checked)}
+                />
+                <span>Permitir cerrar popup (contador 2)</span>
+              </label>
+            </div>
+          </section>
 
-            <section className="counter-card">
-              <h3>Entrenamiento especializado</h3>
-              <div className="counter-value">{state.tertiary}</div>
+          <section className="counter-card">
+            <h3>Entrenamiento especializado</h3>
+            <div className="counter-value">{state.tertiary}</div>
               <div className="form">
                 <label>
                   Fijar a
@@ -350,11 +390,21 @@ export default function AdminPage() {
                   <input type="number" min={0} value={amountTertiary} onChange={(e) => setAmountTertiary(Number(e.target.value))} />
                 </label>
               </div>
-              <div className="button-grid">
-                <button onClick={update('tertiary', +1)}>+</button>
-                <button onClick={update('tertiary', -1)}>-</button>
-              </div>
-            </section>
+            <div className="button-grid">
+              <button onClick={update('tertiary', +1)}>+</button>
+              <button onClick={update('tertiary', -1)}>-</button>
+            </div>
+            <div className="form">
+              <label className="admin-toggle">
+                <input
+                  type="checkbox"
+                  checked={!!modalFlags.tertiary}
+                  onChange={(e) => updateModalFlag('tertiary', e.target.checked)}
+                />
+                <span>Permitir cerrar popup (contador 3)</span>
+              </label>
+            </div>
+          </section>
           </div>
           {tab === 'backup' && (
             <div className="admin-grid" style={{ gridTemplateColumns: '1fr' }}>
@@ -395,9 +445,9 @@ export default function AdminPage() {
                       .then(r => parseJson(r))
                       .then(() => fetchBackups())
                       .catch((e) => alert(e.message));
-                  }}>Purgar por antigüedad</button>
+                  }}>Purgar por antigÃ¼edad</button>
                   <label>
-                    Conservar últimos
+                    Conservar Ãºltimos
                     <input type="number" min={0} value={purgeKeep} onChange={(e) => setPurgeKeep(e.target.value)} />
                   </label>
                   <button onClick={() => {
@@ -412,7 +462,7 @@ export default function AdminPage() {
                   <thead>
                     <tr>
                       <th>Archivo</th>
-                      <th>Tamaño</th>
+                      <th>TamaÃ±o</th>
                       <th>Modificado</th>
                       <th>Acciones</th>
                     </tr>
@@ -487,7 +537,7 @@ export default function AdminPage() {
                       <th>Dificultad</th>
                       <th>Jugadores</th>
                       <th>Detalle jugadores</th>
-                      <th>Código</th>
+                      <th>CÃ³digo</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -526,7 +576,7 @@ export default function AdminPage() {
               </section>
               <div className="form" style={{ marginTop: 8, gap: 8, display: tablesTab === 'freegame' ? 'flex' : 'none', flexWrap: 'wrap' }}>
                 <button onClick={() => download('/api/admin/export/freegame.csv', 'freegame.csv')}>Exportar CSV (Freegame)</button>
-                <button onClick={() => download('/api/admin/export/freegame_scores.csv', 'freegame_scores.csv')}>Exportar CSV (Puntuación Freegame)</button>
+                <button onClick={() => download('/api/admin/export/freegame_scores.csv', 'freegame_scores.csv')}>Exportar CSV (PuntuaciÃ³n Freegame)</button>
                 <label className="admin-toggle">
                   <input
                     type="checkbox"
@@ -564,7 +614,7 @@ export default function AdminPage() {
                 <table className="data-table" style={{ width: '100%' }}>
                   <thead>
                     <tr>
-                      <th>Mesa</th><th>Nombre</th><th>Reto inevitable</th><th>Jugadores</th><th>Detalle jugadores</th><th>Código</th>
+                      <th>Mesa</th><th>Nombre</th><th>Reto inevitable</th><th>Jugadores</th><th>Detalle jugadores</th><th>CÃ³digo</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -600,7 +650,7 @@ export default function AdminPage() {
                 </table>
               </section>
               <section className="counter-card" style={{ overflowX: 'auto', display: tablesTab === 'freegame' ? 'block' : 'none' }}>
-                <h3>Puntuación por mesa (desglose)</h3>
+                <h3>PuntuaciÃ³n por mesa (desglose)</h3>
                 <table className="data-table" style={{ width: '100%' }}>
                   <thead>
                     <tr>
@@ -644,6 +694,8 @@ export default function AdminPage() {
     </div>
   );
 }
+
+
 
 
 
