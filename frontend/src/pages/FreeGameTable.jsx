@@ -67,7 +67,7 @@ export default function FreeGameTablePage() {
       <div className="container overlay-card">
         <h2>Mesa Libre</h2>
         {error ? (<p className="error">{error}</p>) : (<p>Cargando mesa...</p>)}
-        <p><Link to="/freegame">Volver</Link></p>
+        <p><Link to="/">Volver a Inicio</Link></p>
       </div>
     );
   }
@@ -188,7 +188,7 @@ export default function FreeGameTablePage() {
       </div>
 
       <div className="form" style={{ marginTop: 16 }}>
-        <Link to="/freegame"><button>Volver a Freegame</button></Link>
+        <Link to="/"><button>Volver a Inicio</button></Link>
       </div>
     </div>
   );

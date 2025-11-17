@@ -571,10 +571,12 @@ header p {
 }
 
 .counter-art {
-  width: min(80vw, 280px);
-  max-width: 320px;
-  aspect-ratio: 1;
+  width: min(80vw, 320px);
+  max-width: 340px;
+  height: auto;
   object-fit: contain;
+  display: block;
+  margin: 0 auto;
   /* drop-shadow removed to avoid non-palette colors */
 }
 
@@ -656,11 +658,13 @@ button[aria-disabled="true"] {
 .modal-backdrop {
   position: fixed;
   inset: 0;
+  width: 100vw;
+  height: 100vh;
   background: var(--color-background);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: grid;
+  place-items: center;
   padding: 1.5rem;
+  box-sizing: border-box;
   z-index: 20;
 }
 

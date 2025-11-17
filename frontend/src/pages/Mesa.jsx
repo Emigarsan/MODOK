@@ -19,7 +19,7 @@ export default function MesaPage() {
 
   return (
     <><div className="form" style={{ marginBottom: 12 }}>
-      <button onClick={() => navigate('/register')}>Volver</button>
+      <button onClick={() => navigate('/')}>Volver a Inicio</button>
     </div><div className="container overlay-card">
         <h3>Mesa {mesaId}</h3>
         <EventView onAction={logMesaEvent} />

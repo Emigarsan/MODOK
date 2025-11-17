@@ -80,7 +80,7 @@ export default function FreeGameMesa() {
   return (
     <div className="container overlay-card">
       <div className="form" style={{ marginBottom: 12 }}>
-        <button type="button" onClick={() => navigate('/freegame')}>Volver</button>
+        <button type="button" onClick={() => navigate('/')}>Volver a Inicio</button>
       </div>
 
       <h2>Freegame - Mesa {data.tableNumber}</h2>
