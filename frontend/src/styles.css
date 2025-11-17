@@ -707,8 +707,6 @@ button[aria-disabled="true"] {
   max-width: clamp(280px, 32vw, 380px);
   padding: 1.75rem 1.4rem;
   gap: 1.35rem;
-  align-items: stretch;
-  justify-content: space-between; /* fija arte y contador a la misma altura */
 }
 
 .display-layout .counter-card h2 {
@@ -717,21 +715,18 @@ button[aria-disabled="true"] {
 
 .display-layout .counter-art {
   width: 100%;
-  max-width: clamp(240px, 30vw, 360px);
-  height: clamp(200px, 28vh, 320px);
-  max-height: clamp(200px, 28vh, 320px);
+  max-width: clamp(240px, 30vw, 420px);
+  height: auto;
+  max-height: none;
   object-fit: contain;
   display: block;
   margin: 0 auto;
-  align-self: center;
 }
 
 .display-layout .counter-value {
   font-size: clamp(3.6rem, 6vw, 5.4rem);
   padding: 0.85rem 1.9rem;
   min-width: 0;
-  align-self: center;
-  margin-top: auto; /* obliga a que los dos contadores queden a la misma altura */
 }
 
 @media (min-width: 1100px) and (orientation: landscape) {
@@ -746,9 +741,7 @@ button[aria-disabled="true"] {
   }
 
   .display-layout .counter-art {
-    max-width: clamp(280px, 24vw, 420px);
-    height: clamp(220px, 26vh, 340px);
-    max-height: clamp(220px, 26vh, 340px);
+    max-width: clamp(280px, 24vw, 460px);
   }
 
   .display-layout .counter-value {

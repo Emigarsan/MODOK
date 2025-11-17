@@ -141,15 +141,13 @@ export function EventView({ onAction, mesaId } = {}) {
     };
   }, [modalMessage]);
 
-  // Background refresh every 3s, paused when a modal is open
+  // Background refresh every 3s, even if a modal is open (to catch admin toggles)
   useEffect(() => {
     const id = setInterval(() => {
-      if (!modalMessage) {
-        fetchState();
-      }
+      fetchState();
     }, 3000);
     return () => clearInterval(id);
-  }, [fetchState, modalMessage]);
+  }, [fetchState]);
 
   const previousSecondaryIndex = useRef(initialState.secondaryImageIndex);
   const previousSecondaryValue = useRef(initialState.secondary);
