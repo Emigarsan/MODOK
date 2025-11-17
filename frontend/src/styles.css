@@ -677,6 +677,13 @@ button[aria-disabled="true"] {
   /* shadow removed to avoid non-palette colors */
 }
 
+.modal.modal-display {
+  max-width: min(96vw, 780px);
+  padding: 2.5rem 3rem;
+  font-size: 1.2rem;
+  gap: 2rem;
+}
+
 .modal p {
   margin: 0;
   font-size: 1.15rem;

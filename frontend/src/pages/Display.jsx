@@ -16,7 +16,9 @@ const initialState = {
   primary: 1792,
   secondary: 128,
   tertiary: 640,
-  secondaryImageIndex: 0
+  secondaryImageIndex: 0,
+  allowCloseSecondary: false,
+  allowCloseTertiary: false
 };
 
 export default function DisplayPage() {
@@ -47,7 +49,9 @@ export default function DisplayPage() {
         primary: sanitizeCounter(data.primary, initialState.primary),
         secondary: sanitizeCounter(data.secondary, initialState.secondary),
         tertiary: sanitizeCounter(data.tertiary, initialState.tertiary),
-        secondaryImageIndex: normalizedIndex
+        secondaryImageIndex: normalizedIndex,
+        allowCloseSecondary: Boolean(data.allowCloseSecondary),
+        allowCloseTertiary: Boolean(data.allowCloseTertiary)
       };
     },
     [secondaryImages]
@@ -86,14 +90,14 @@ export default function DisplayPage() {
     : (secondaryImages[state.secondaryImageIndex] ?? secondaryImages[initialState.secondaryImageIndex]);
   const secondaryTitle = secondaryLocked ? 'Accesorio M.Y.T.H.O.S.' : 'Celdas de Contención';
   const secondaryNumberLabel = `Celda ${state.secondaryImageIndex + 1}`;
-  const showSecondaryModal = secondaryLocked;
-  const showTertiaryModal = state.tertiary === 0;
+  const showSecondaryModal = secondaryLocked && !state.allowCloseSecondary;
+  const showTertiaryModal = state.tertiary === 0 && !state.allowCloseTertiary;
 
   return (
     <div className="display-layout">
       {(showSecondaryModal || showTertiaryModal) && (
         <div className="modal-backdrop" role="dialog" aria-modal="true">
-          <div className="modal">
+          <div className="modal modal-display">
             {showSecondaryModal && (
               <p>Alto, habeis liberado a todos los reclusos, escucha las instrucciones de los coordinadores</p>
             )}
