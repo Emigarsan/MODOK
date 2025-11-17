@@ -571,12 +571,10 @@ header p {
 }
 
 .counter-art {
-  width: min(80vw, 320px);
-  max-width: 340px;
-  height: auto;
+  width: min(80vw, 280px);
+  max-width: 320px;
+  aspect-ratio: 1;
   object-fit: contain;
-  display: block;
-  margin: 0 auto;
   /* drop-shadow removed to avoid non-palette colors */
 }
 
@@ -709,7 +707,6 @@ button[aria-disabled="true"] {
   max-width: clamp(280px, 32vw, 380px);
   padding: 1.75rem 1.4rem;
   gap: 1.35rem;
-  align-items: center;
 }
 
 .display-layout .counter-card h2 {
@@ -718,9 +715,9 @@ button[aria-disabled="true"] {
 
 .display-layout .counter-art {
   width: 100%;
-  max-width: clamp(240px, 30vw, 360px);
+  max-width: clamp(240px, 30vw, 420px);
   height: auto;
-  max-height: clamp(200px, 28vh, 320px);
+  max-height: none;
   object-fit: contain;
   display: block;
   margin: 0 auto;
@@ -744,8 +741,7 @@ button[aria-disabled="true"] {
   }
 
   .display-layout .counter-art {
-    max-width: clamp(280px, 24vw, 420px);
-    max-height: clamp(220px, 26vh, 340px);
+    max-width: clamp(280px, 24vw, 460px);
   }
 
   .display-layout .counter-value {
@@ -909,7 +905,7 @@ button[aria-disabled="true"] {
   align-items: center;
 }
 
-.challenge-board-card > * {
+.challenge-board-card>* {
   width: 100%;
 }
 
