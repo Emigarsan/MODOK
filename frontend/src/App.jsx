@@ -133,10 +133,13 @@ export function EventView({ onAction, mesaId } = {}) {
   }, [showModal]);
 
   const closeModal = useCallback(() => {
+    if (showSecondaryModal || showTertiaryModal) {
+      return; // botón bloqueado si no hay permiso
+    }
     if (mesaId) {
       window.location.assign(`/mesa/${mesaId}`);
     }
-  }, [mesaId]);
+  }, [mesaId, showSecondaryModal, showTertiaryModal]);
 
   const updateCounter = useCallback(
     (segment, delta) => {
@@ -189,7 +192,7 @@ export function EventView({ onAction, mesaId } = {}) {
           <button type="button" onClick={closeModal} disabled={isBlocked}>
             Cerrar
           </button>
-          {isBlocked && <p className="counter-meta">Esperando autorización desde Admin.</p>}
+          {isBlocked}
         </div>
       </div>
     );
