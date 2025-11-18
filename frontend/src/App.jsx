@@ -181,18 +181,18 @@ export function EventView({ onAction, mesaId } = {}) {
           <div className="modal-stop-sign">🛑 STOP</div>
           {showSecondaryModal && (
             <p className="modal-stop-text">
-              Hab\u00e9is liberado a todos los reclusos de sus celdas. Seguid las instrucciones de los organizadores.
+              Habéis liberado a todos los reclusos de sus celdas. Seguid las instrucciones de los organizadores.
             </p>
           )}
           {showTertiaryModal && (
             <p className="modal-stop-text">
-              Hab\u00e9is derrotado el Plan Secundario Entrenamiento especializado. Seguid las instrucciones de los organizadores.
+              Habéis derrotado el Plan Secundario Entrenamiento especializado. Seguid las instrucciones de los organizadores.
             </p>
           )}
           <button type="button" onClick={closeModal} disabled={isBlocked}>
             Cerrar
           </button>
-          {isBlocked && <p className="counter-meta">Esperando autorizaci\u00f3n desde Admin.</p>}
+          {isBlocked}
         </div>
       </div>
     );

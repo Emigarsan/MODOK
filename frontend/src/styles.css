@@ -759,7 +759,7 @@ button[aria-disabled="true"] {
 }
 
 .display-layout .counter-card h2 {
-  font-size: clamp(1.8rem, 3.4vw, 2.4rem);
+  font-size: clamp(1.7rem, 3.2vw, 2.2rem);
 }
 
 .display-layout .counter-art {

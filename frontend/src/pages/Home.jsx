@@ -62,14 +62,12 @@ export default function HomePage() {
       key: 'freegame',
       title: 'Retos Inevitables (Mañana)',
       activeText: 'Disponible para registrar mesa',
-      inactiveText: 'Pendiente de activar desde Admin > Ver Mesas > Freegame',
       to: '/freegame'
     },
     {
       key: 'event',
       title: 'Evento (Tarde)',
       activeText: 'Disponible para registrar mesa',
-      inactiveText: 'Pendiente de activar desde Admin > Ver Mesas > Event',
       to: '/register'
     }
   ];
