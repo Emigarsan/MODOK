@@ -61,14 +61,14 @@ export default function QrDisplayPage() {
           <h2>Retos Inevitables (Mañana)</h2>
           <img src={qrMorning} alt="Codigo QR Retos Inevitables por la ma\u00f1ana" />
           <p className="qr-status">
-            {flags.freegame ? 'Disponible para escanear' : 'Pendiente de activar desde Admin > Ver Mesas > Freegame'}
+            {flags.freegame ? 'Disponible para escanear' : 'Todavía no puedes acceder a los Retos Inevitables'}
           </p>
         </section>
         <section className={`qr-card ${flags.event ? 'active' : 'inactive'}`}>
           <h2>Evento (Tarde)</h2>
           <img src={qrAfternoon} alt="Codigo QR Evento por la tarde" />
           <p className="qr-status">
-            {flags.event ? 'Disponible para escanear' : 'Pendiente de activar desde Admin > Ver Mesas > Event'}
+            {flags.event ? 'Disponible para escanear' : 'Todavía no puedes acceder al Evento'}
           </p>
         </section>
       </div>
