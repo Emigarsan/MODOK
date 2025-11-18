@@ -106,6 +106,7 @@ body::before {
 .page-display>header h1 {
   width: 100%;
   text-align: center;
+  font-size: clamp(2.8rem, 6vw, 4rem);
 }
 
 header {
@@ -737,9 +738,9 @@ button[aria-disabled="true"] {
   width: 100%;
   justify-content: center;
   align-items: stretch;
-  gap: clamp(2rem, 3vw, 2.5rem);
+  gap: clamp(1.25rem, 2.5vw, 2.25rem);
   flex-wrap: wrap;
-  padding-top: clamp(1.5rem, 2.5vw, 2rem);
+  padding-top: clamp(0.75rem, 2vw, 1.5rem);
 }
 
 .display-layout .counter-card {
@@ -758,7 +759,7 @@ button[aria-disabled="true"] {
 }
 
 .display-layout .counter-card h2 {
-  font-size: clamp(2.5rem, 4vw, 3rem);
+  font-size: clamp(1.8rem, 3.4vw, 2.4rem);
 }
 
 .display-layout .counter-art {
