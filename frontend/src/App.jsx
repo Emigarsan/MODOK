@@ -47,21 +47,22 @@ const initialState = {
 };
 
 const flipImageMap = {
-  1: '/flip/5B.jpg',
-  2: '/flip/6B.jpg',
-  3: '/flip/7B.jpg',
-  4: '/flip/8B.jpg',
-  5: '/flip/9B.jpg',
-  6: '/flip/10B.jpg'
+  0: '/flip/5B.jpg',
+  1: '/flip/6B.jpg',
+  2: '/flip/7B.jpg',
+  3: '/flip/8B.jpg',
+  4: '/flip/9B.jpg',
+  5: '/flip/10B.jpg'
 };
 
 export function EventView({ onAction, mesaId } = {}) {
   const [state, setState] = useState(initialState);
   const [initialLoading, setInitialLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [modalSource, setModalSource] = useState(null); // 'secondaryFinal' | 'tertiaryZero' | 'flip' | null
-  const [modalMessage, setModalMessage] = useState(null);
+  const [flipModal, setFlipModal] = useState(false);
   const [flipImage, setFlipImage] = useState(null);
+  const [secondaryDismissed, setSecondaryDismissed] = useState(false);
+  const [tertiaryDismissed, setTertiaryDismissed] = useState(false);
   const scrollPosRef = useRef(0);
   const prevSecondaryIndexRef = useRef(initialState.secondaryImageIndex);
 
@@ -125,10 +126,25 @@ export function EventView({ onAction, mesaId } = {}) {
   const displayedSecondaryImage = secondaryLocked ? celda7Accesorio : currentSecondaryImage;
   const secondaryTitle = secondaryLocked ? 'Accesorio M.Y.T.H.O.S.' : 'Celdas de Contención';
 
-  const showSecondaryModal = modalSource === 'secondaryFinal';
-  const showTertiaryModal = modalSource === 'tertiaryZero';
-  const showFlipModal = modalSource === 'flip';
+  const showSecondaryModal = secondaryLocked && !secondaryDismissed;
+  const showTertiaryModal = tertiaryLocked && !tertiaryDismissed;
+  const showFlipModal = flipModal && !showSecondaryModal && !showTertiaryModal;
   const showModal = showSecondaryModal || showTertiaryModal || showFlipModal;
+
+  useEffect(() => {
+    if (secondaryLocked) setSecondaryDismissed(false);
+  }, [secondaryLocked]);
+
+  useEffect(() => {
+    if (tertiaryLocked) setTertiaryDismissed(false);
+  }, [tertiaryLocked]);
+
+  useEffect(() => {
+    if (secondaryLocked || tertiaryLocked) {
+      setFlipModal(false);
+      setFlipImage(null);
+    }
+  }, [secondaryLocked, tertiaryLocked]);
 
   // Scroll lock for modal
   useEffect(() => {
@@ -145,26 +161,6 @@ export function EventView({ onAction, mesaId } = {}) {
     };
   }, [showModal]);
 
-  // Trigger STOP for secondary lock
-  useEffect(() => {
-    if (secondaryLocked && !state.allowCloseSecondary && modalSource !== 'secondaryFinal') {
-      setModalSource('secondaryFinal');
-      setModalMessage(
-        'Habéis liberado a todos los reclusos de sus celdas. Seguid las instrucciones de los organizadores.'
-      );
-    }
-  }, [secondaryLocked, modalSource, state.allowCloseSecondary]);
-
-  // Trigger STOP for tertiary lock
-  useEffect(() => {
-    if (tertiaryLocked && !state.allowCloseTertiary && modalSource !== 'tertiaryZero') {
-      setModalSource('tertiaryZero');
-      setModalMessage(
-        'Habéis derrotado el Plan Secundario. Seguid las instrucciones de los organizadores.'
-      );
-    }
-  }, [tertiaryLocked, modalSource, state.allowCloseTertiary]);
-
   // Flip popup when changing cell (except last)
   useEffect(() => {
     if (initialLoading) {
@@ -174,22 +170,24 @@ export function EventView({ onAction, mesaId } = {}) {
     const prevIdx = prevSecondaryIndexRef.current;
     const currIdx = state.secondaryImageIndex;
     const lastIdx = secondaryImages.length - 1;
-    if (currIdx !== prevIdx && currIdx < lastIdx && !secondaryLocked) {
-      const img = flipImageMap[currIdx] || displayedSecondaryImage;
+    if (currIdx !== prevIdx && prevIdx < lastIdx && !secondaryLocked && !tertiaryLocked) {
+      const img = flipImageMap[prevIdx] || displayedSecondaryImage;
       setFlipImage(img);
-      setModalSource('flip');
-      setModalMessage('Dale la vuelta a la celda y muestra la siguiente carta');
+      setFlipModal(true);
     }
     prevSecondaryIndexRef.current = currIdx;
-  }, [state.secondaryImageIndex, secondaryImages.length, secondaryLocked, displayedSecondaryImage, initialLoading]);
+  }, [state.secondaryImageIndex, secondaryImages.length, displayedSecondaryImage, initialLoading, secondaryLocked, tertiaryLocked]);
 
   const closeModal = useCallback(() => {
-    if (showSecondaryModal && !state.allowCloseSecondary) return;
-    if (showTertiaryModal && !state.allowCloseTertiary) return;
-    setModalSource(null);
-    setModalMessage(null);
+    const blockedSecondary = showSecondaryModal && !state.allowCloseSecondary;
+    const blockedTertiary = showTertiaryModal && !state.allowCloseTertiary;
+    if (blockedSecondary || blockedTertiary) return;
+
+    if (showSecondaryModal) setSecondaryDismissed(true);
+    if (showTertiaryModal) setTertiaryDismissed(true);
+    if (showFlipModal) setFlipModal(false);
     setFlipImage(null);
-  }, [showSecondaryModal, showTertiaryModal, state.allowCloseSecondary, state.allowCloseTertiary]);
+  }, [showSecondaryModal, showTertiaryModal, showFlipModal, state.allowCloseSecondary, state.allowCloseTertiary]);
 
   const updateCounter = useCallback(
     (segment, delta) => {
@@ -217,7 +215,8 @@ export function EventView({ onAction, mesaId } = {}) {
   );
 
   if (showModal) {
-    const isBlocked = (showSecondaryModal && !state.allowCloseSecondary) || (showTertiaryModal && !state.allowCloseTertiary);
+    const isBlocked =
+      (showSecondaryModal && !state.allowCloseSecondary) || (showTertiaryModal && !state.allowCloseTertiary);
     const isFlip = showFlipModal && !isBlocked;
     return (
       <div className="modal-backdrop" role="dialog" aria-modal="true">
