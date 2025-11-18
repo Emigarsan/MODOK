@@ -1,4 +1,4 @@
-﻿import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { useLocation } from 'react-router-dom';
 import centralImage from './assets/50103a.png';
@@ -121,57 +121,16 @@ export function EventView({ onAction, mesaId } = {}) {
     fetchState(true);
   }, [fetchState]);
 
-// When a modal is shown, scroll to top and lock body; restore on close
+  // When a modal is shown, scroll to top and lock body; restore on close
   useEffect(() => {
-    if (modalMessage) {
-      scrollPosRef.current = typeof window !== 'undefined' ? window.scrollY || 0 : 0;
-      if (typeof window !== 'undefined') {
-        window.scrollTo({ top: 0, behavior: 'auto' });
-      }
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-      if (typeof window !== 'undefined') {
-        window.scrollTo({ top: scrollPosRef.current, behavior: 'auto' });
-      }
-    }
-    return () => {
-      document.body.style.overflow = '';
-    };
-  }, [modalMessage]);
- 
-  // Auto-close modal if state reverts or admin authorizes
-  useEffect(() => {
-    if (!modalMessage) return;
-    if (modalSource === 'secondaryFinal') {
-      const resolved = (!secondaryLocked && state.secondary > 0) || state.allowCloseSecondary;
-      if (resolved) {
-        setModalMessage(null);
-        setModalSource(null);
-      }
-    }
-    if (modalSource === 'tertiaryZero') {
-      const resolved = state.tertiary > 0 || state.allowCloseTertiary;
-      if (resolved) {
-        setModalMessage(null);
-        setModalSource(null);
-      }
-    }
-  }, [modalMessage, modalSource, secondaryLocked, state.secondary, state.allowCloseSecondary, state.tertiary, state.allowCloseTertiary]);
- 
-  const currentSecondaryImage =
-    secondaryImages[state.secondaryImageIndex] ?? secondaryImages[initialState.secondaryImageIndex];
-  const displayedSecondaryImage = secondaryLocked ? celda7Accesorio : currentSecondaryImage;
-  const secondaryTitle = secondaryLocked ? 'Accesorio M.Y.T.H.O.S.' : 'Celdas de Contención';
- 
-  if (modalMessage) {
+      if (modalMessage) {
     const isBlocked =
-      (modalSource === 'secondaryFinal' && !state.allowCloseSecondary) ||
-      (modalSource === 'tertiaryZero' && !state.allowCloseTertiary);
+      (modalSource === "secondaryFinal" && !state.allowCloseSecondary) ||
+      (modalSource === "tertiaryZero" && !state.allowCloseTertiary);
     return (
       <div className="modal-backdrop" role="dialog" aria-modal="true">
         <div className="modal modal-stop">
-          <div className="modal-stop-sign">🛑 STOP</div>
+          <div className="modal-stop-sign">?? STOP</div>
           <p className="modal-stop-text">{modalMessage}</p>
           <button type="button" onClick={closeModal} disabled={isBlocked}>
             Cerrar
@@ -181,6 +140,7 @@ export function EventView({ onAction, mesaId } = {}) {
       </div>
     );
   }
+
   return (
     <>
       {error && <p className="error">{error}</p>}
@@ -219,7 +179,7 @@ export function EventView({ onAction, mesaId } = {}) {
                   onClick={() => updateCounter('secondary', delta)}
                   disabled={secondaryLocked}
                   aria-disabled={secondaryLocked}
-                  title={secondaryLocked ? 'Bloqueado tras la sÃ©ptima imagen' : undefined}
+                  title={secondaryLocked ? 'Bloqueado tras la séptima imagen' : undefined}
                 >
                   {label}
                 </button>
@@ -274,8 +234,6 @@ export default function App() {
 
   return <EventView mesaId={mesaId} onAction={mesaId ? onAction : undefined} />;
 }
-
-
 
 
 
