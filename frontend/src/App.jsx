@@ -47,12 +47,12 @@ const initialState = {
 };
 
 const flipImageMap = {
-  0: '/flip/5B.jpg',
-  1: '/flip/6B.jpg',
-  2: '/flip/7B.jpg',
-  3: '/flip/8B.jpg',
-  4: '/flip/9B.jpg',
-  5: '/flip/10B.jpg'
+  1: '/flip/5B.jpg',
+  2: '/flip/6B.jpg',
+  3: '/flip/7B.jpg',
+  4: '/flip/8B.jpg',
+  5: '/flip/9B.jpg',
+  6: '/flip/10B.jpg'
 };
 
 export function EventView({ onAction, mesaId } = {}) {
@@ -147,23 +147,23 @@ export function EventView({ onAction, mesaId } = {}) {
 
   // Trigger STOP for secondary lock
   useEffect(() => {
-    if (secondaryLocked && modalSource !== 'secondaryFinal') {
+    if (secondaryLocked && !state.allowCloseSecondary && modalSource !== 'secondaryFinal') {
       setModalSource('secondaryFinal');
       setModalMessage(
         'Habéis liberado a todos los reclusos de sus celdas. Seguid las instrucciones de los organizadores.'
       );
     }
-  }, [secondaryLocked, modalSource]);
+  }, [secondaryLocked, modalSource, state.allowCloseSecondary]);
 
   // Trigger STOP for tertiary lock
   useEffect(() => {
-    if (tertiaryLocked && modalSource !== 'tertiaryZero') {
+    if (tertiaryLocked && !state.allowCloseTertiary && modalSource !== 'tertiaryZero') {
       setModalSource('tertiaryZero');
       setModalMessage(
         'Habéis derrotado el Plan Secundario. Seguid las instrucciones de los organizadores.'
       );
     }
-  }, [tertiaryLocked, modalSource]);
+  }, [tertiaryLocked, modalSource, state.allowCloseTertiary]);
 
   // Flip popup when changing cell (except last)
   useEffect(() => {
