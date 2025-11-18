@@ -1,6 +1,6 @@
-﻿import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+
 import centralImage from './assets/50103a.png';
 import celda1 from './assets/secondary/5A Entorno Celda 1.jpg';
 import celda2 from './assets/secondary/6A Entorno Celda 2.jpg';
@@ -48,14 +48,8 @@ const initialState = {
 
 export function EventView({ onAction, mesaId } = {}) {
   const [state, setState] = useState(initialState);
-  const [loading, setLoading] = useState(false);
   const [initialLoading, setInitialLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [modalMessage, setModalMessage] = useState(null);
-  const [modalSource, setModalSource] = useState(null); // 'secondaryFinal' | 'tertiaryZero' | null
-  const [secondaryLocked, setSecondaryLocked] = useState(false);
-  const [tertiaryLocked, setTertiaryLocked] = useState(false);
-  const [primaryRevealed, setPrimaryRevealed] = useState(false);
   const scrollPosRef = useRef(0);
 
   const secondaryImages = useMemo(
@@ -68,14 +62,9 @@ export function EventView({ onAction, mesaId } = {}) {
       if (!data || typeof data !== 'object') {
         return { ...initialState };
       }
-
       const withFallback = (value, fallback) =>
         typeof value === 'number' && Number.isFinite(value) ? value : fallback;
-
-      const sanitizeCounter = (value, fallback) => {
-        const normalized = withFallback(value, fallback);
-        return Math.max(0, Math.trunc(normalized));
-      };
+      const sanitizeCounter = (value, fallback) => Math.max(0, Math.trunc(withFallback(value, fallback)));
 
       const rawIndex = withFallback(data.secondaryImageIndex, initialState.secondaryImageIndex);
       const normalizedIndex =
@@ -93,37 +82,40 @@ export function EventView({ onAction, mesaId } = {}) {
     [secondaryImages]
   );
 
-  const fetchState = useCallback((isInitial = false) => {
-    fetch(API_BASE)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error('Respuesta inv?lida del servidor');
-        }
-        return response.json();
-      })
-      .then((data) => {
-        setState(normalizeState(data));
-        setError(null);
-      })
-      .catch((err) => {
-        console.error(err);
-        setError('No se pudo cargar el estado de los contadores.');
-      })
-      .finally(() => {
-        if (isInitial) {
-          setInitialLoading(false);
-        }
-      });
-  }, [normalizeState]);
+  const fetchState = useCallback(
+    (isInitial = false) => {
+      fetch(API_BASE)
+        .then((response) => (response.ok ? response.json() : Promise.reject(new Error('Estado inválido'))))
+        .then((data) => {
+          setState(normalizeState(data));
+          setError(null);
+        })
+        .catch(() => setError('No se pudo cargar el estado de los contadores.'))
+        .finally(() => {
+          if (isInitial) setInitialLoading(false);
+        });
+    },
+    [normalizeState]
+  );
 
-  // Initial load only once
   useEffect(() => {
     fetchState(true);
+    const id = setInterval(() => fetchState(), 3000);
+    return () => clearInterval(id);
   }, [fetchState]);
 
-// When a modal is shown, scroll to top and lock body; restore on close
+  const onLastImage = state.secondaryImageIndex === secondaryImages.length - 1;
+  const secondaryLocked = onLastImage && state.secondary === 0;
+  const tertiaryLocked = state.tertiary === 0;
+  const primaryRevealed = secondaryLocked;
+
+  const showSecondaryModal = secondaryLocked && !state.allowCloseSecondary;
+  const showTertiaryModal = tertiaryLocked && !state.allowCloseTertiary;
+  const showModal = showSecondaryModal || showTertiaryModal;
+
+  // Scroll lock for modal
   useEffect(() => {
-    if (modalMessage) {
+    if (showModal) {
       scrollPosRef.current = typeof window !== 'undefined' ? window.scrollY || 0 : 0;
       if (typeof window !== 'undefined') {
         window.scrollTo({ top: 0, behavior: 'auto' });
@@ -138,49 +130,74 @@ export function EventView({ onAction, mesaId } = {}) {
     return () => {
       document.body.style.overflow = '';
     };
-  }, [modalMessage]);
- 
-  // Auto-close modal if state reverts or admin authorizes
-  useEffect(() => {
-    if (!modalMessage) return;
-    if (modalSource === 'secondaryFinal') {
-      const resolved = (!secondaryLocked && state.secondary > 0) || state.allowCloseSecondary;
-      if (resolved) {
-        setModalMessage(null);
-        setModalSource(null);
-      }
+  }, [showModal]);
+
+  const closeModal = useCallback(() => {
+    if (showSecondaryModal || showTertiaryModal) {
+      return; // botón bloqueado si no hay permiso
     }
-    if (modalSource === 'tertiaryZero') {
-      const resolved = state.tertiary > 0 || state.allowCloseTertiary;
-      if (resolved) {
-        setModalMessage(null);
-        setModalSource(null);
-      }
+    if (mesaId) {
+      window.location.assign(`/mesa/${mesaId}`);
     }
-  }, [modalMessage, modalSource, secondaryLocked, state.secondary, state.allowCloseSecondary, state.tertiary, state.allowCloseTertiary]);
- 
+  }, [mesaId, showSecondaryModal, showTertiaryModal]);
+
+  const updateCounter = useCallback(
+    (segment, delta) => {
+      if (!delta) return;
+      if ((segment === 'secondary' && secondaryLocked) || (segment === 'tertiary' && tertiaryLocked)) {
+        return;
+      }
+      const endpoint = delta > 0 ? 'increment' : 'decrement';
+      const amount = Math.abs(delta);
+      fetch(`${API_BASE}/${segment}/${endpoint}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ amount })
+      })
+        .then((r) => (r.ok ? r.json() : Promise.reject(new Error('No se pudo actualizar'))))
+        .then((data) => {
+          setState(normalizeState(data));
+          setError(null);
+          if (onAction) {
+            const idx = segment === 'primary' ? 1 : segment === 'secondary' ? 2 : 3;
+            onAction({ segment, contador: idx, delta });
+          }
+        })
+        .catch(() => setError('No se pudo actualizar el contador.'));
+    },
+    [normalizeState, onAction, secondaryLocked, tertiaryLocked]
+  );
+
   const currentSecondaryImage =
     secondaryImages[state.secondaryImageIndex] ?? secondaryImages[initialState.secondaryImageIndex];
   const displayedSecondaryImage = secondaryLocked ? celda7Accesorio : currentSecondaryImage;
   const secondaryTitle = secondaryLocked ? 'Accesorio M.Y.T.H.O.S.' : 'Celdas de Contención';
- 
-  if (modalMessage) {
-    const isBlocked =
-      (modalSource === 'secondaryFinal' && !state.allowCloseSecondary) ||
-      (modalSource === 'tertiaryZero' && !state.allowCloseTertiary);
+
+  if (showModal) {
+    const isBlocked = showSecondaryModal || showTertiaryModal;
     return (
       <div className="modal-backdrop" role="dialog" aria-modal="true">
-        <div className="modal modal-stop">
+        <div className="modal modal-display">
           <div className="modal-stop-sign">🛑 STOP</div>
-          <p className="modal-stop-text">{modalMessage}</p>
+          {showSecondaryModal && (
+            <p className="modal-stop-text">
+              Habéis liberado a todos los reclusos de sus celdas. Seguid las instrucciones de los organizadores.
+            </p>
+          )}
+          {showTertiaryModal && (
+            <p className="modal-stop-text">
+              Habéis derrotado el Plan Secundario. Seguid las instrucciones de los coordinadores.
+            </p>
+          )}
           <button type="button" onClick={closeModal} disabled={isBlocked}>
             Cerrar
           </button>
-          {isBlocked && <p className="counter-meta">Esperando autorizaci&oacute;n desde Admin.</p>}
+          {isBlocked && <p className="counter-meta">Esperando autorización desde Admin.</p>}
         </div>
       </div>
     );
   }
+
   return (
     <>
       {error && <p className="error">{error}</p>}
@@ -202,25 +219,13 @@ export function EventView({ onAction, mesaId } = {}) {
 
         <section className="counter-card">
           <h2>{secondaryTitle}</h2>
-          {!secondaryLocked && (
-            <p className="cell-tracker">Celda {state.secondaryImageIndex + 1}</p>
-          )}
-          <img
-            src={displayedSecondaryImage}
-            alt={`Celda ${state.secondaryImageIndex + 1}`}
-            className="counter-art"
-          />
+          {!secondaryLocked && <p className="cell-tracker">Celda {state.secondaryImageIndex + 1}</p>}
+          <img src={displayedSecondaryImage} alt={`Celda ${state.secondaryImageIndex + 1}`} className="counter-art" />
           {!secondaryLocked && <div className="counter-value">{state.secondary}</div>}
           {!secondaryLocked && (
             <div className="button-grid">
               {secondaryButtons.map(({ label, delta }) => (
-                <button
-                  key={`secondary-${label}`}
-                  onClick={() => updateCounter('secondary', delta)}
-                  disabled={secondaryLocked}
-                  aria-disabled={secondaryLocked}
-                  title={secondaryLocked ? 'Bloqueado tras la sÃ©ptima imagen' : undefined}
-                >
+                <button key={`secondary-${label}`} onClick={() => updateCounter('secondary', delta)}>
                   {label}
                 </button>
               ))}
@@ -235,13 +240,7 @@ export function EventView({ onAction, mesaId } = {}) {
             <div className="counter-value">{state.tertiary}</div>
             <div className="button-grid">
               {tertiaryButtons.map(({ label, delta }) => (
-                <button
-                  key={`tertiary-${label}`}
-                  onClick={() => updateCounter('tertiary', delta)}
-                  disabled={tertiaryLocked}
-                  aria-disabled={tertiaryLocked}
-                  title={tertiaryLocked ? 'Bloqueado al alcanzar 0' : undefined}
-                >
+                <button key={`tertiary-${label}`} onClick={() => updateCounter('tertiary', delta)}>
                   {label}
                 </button>
               ))}
@@ -249,10 +248,17 @@ export function EventView({ onAction, mesaId } = {}) {
           </section>
         )}
       </div>
+
+      {initialLoading && (
+        <div className="modal-overlay">
+          <div className="modal">
+            <p>Cargando estado...</p>
+          </div>
+        </div>
+      )}
     </>
   );
 }
-
 
 export default function App() {
   const location = useLocation();
@@ -269,16 +275,10 @@ export default function App() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
       });
-    } catch (_) { }
+    } catch (_) {
+      // ignore
+    }
   };
 
   return <EventView mesaId={mesaId} onAction={mesaId ? onAction : undefined} />;
 }
-
-
-
-
-
-
-
-
