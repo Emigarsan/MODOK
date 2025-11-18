@@ -101,12 +101,14 @@ body::before {
 .page-display>header {
   max-width: none;
   width: 100%;
+  padding-top: clamp(0.3rem, 1vw, 0.8rem);
 }
 
 .page-display>header h1 {
   width: 100%;
   text-align: center;
   font-size: clamp(2.8rem, 6vw, 4rem);
+  margin-top: clamp(0.4rem, 1.5vw, 1rem);
 }
 
 header {
