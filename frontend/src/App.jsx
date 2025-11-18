@@ -1,4 +1,4 @@
-﻿import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
 import centralImage from './assets/50103a.png';
@@ -85,7 +85,7 @@ export function EventView({ onAction, mesaId } = {}) {
   const fetchState = useCallback(
     (isInitial = false) => {
       fetch(API_BASE)
-        .then((response) => (response.ok ? response.json() : Promise.reject(new Error('Estado inválido'))))
+        .then((response) => (response.ok ? response.json() : Promise.reject(new Error('Estado inv\u00e1lido'))))
         .then((data) => {
           setState(normalizeState(data));
           setError(null);
@@ -134,7 +134,7 @@ export function EventView({ onAction, mesaId } = {}) {
 
   const closeModal = useCallback(() => {
     if (showSecondaryModal || showTertiaryModal) {
-      return; // botón bloqueado si no hay permiso
+      return; // keep blocked until admin toggles flags if needed
     }
     if (mesaId) {
       window.location.assign(`/mesa/${mesaId}`);
@@ -171,7 +171,7 @@ export function EventView({ onAction, mesaId } = {}) {
   const currentSecondaryImage =
     secondaryImages[state.secondaryImageIndex] ?? secondaryImages[initialState.secondaryImageIndex];
   const displayedSecondaryImage = secondaryLocked ? celda7Accesorio : currentSecondaryImage;
-  const secondaryTitle = secondaryLocked ? 'Accesorio M.Y.T.H.O.S.' : 'Celdas de Contención';
+  const secondaryTitle = secondaryLocked ? 'Accesorio M.Y.T.H.O.S.' : 'Celdas de Contenci\u00f3n';
 
   if (showModal) {
     const isBlocked = showSecondaryModal || showTertiaryModal;
@@ -181,18 +181,18 @@ export function EventView({ onAction, mesaId } = {}) {
           <div className="modal-stop-sign">🛑 STOP</div>
           {showSecondaryModal && (
             <p className="modal-stop-text">
-              Habéis liberado a todos los reclusos de sus celdas. Seguid las instrucciones de los organizadores.
+              Hab\u00e9is liberado a todos los reclusos de sus celdas. Seguid las instrucciones de los organizadores.
             </p>
           )}
           {showTertiaryModal && (
             <p className="modal-stop-text">
-              Habéis derrotado el Plan Secundario Entrenamiento especializado. Seguid las instrucciones de los organizadores.
+              Hab\u00e9is derrotado el Plan Secundario Entrenamiento especializado. Seguid las instrucciones de los organizadores.
             </p>
           )}
           <button type="button" onClick={closeModal} disabled={isBlocked}>
             Cerrar
           </button>
-          {isBlocked}
+          {isBlocked && <p className="counter-meta">Esperando autorizaci\u00f3n desde Admin.</p>}
         </div>
       </div>
     );
