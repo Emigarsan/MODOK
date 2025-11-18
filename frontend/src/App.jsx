@@ -46,11 +46,24 @@ const initialState = {
   allowCloseTertiary: false
 };
 
+const flipImageMap = {
+  0: '/flip/5B.jpg',
+  1: '/flip/6B.jpg',
+  2: '/flip/7B.jpg',
+  3: '/flip/8B.jpg',
+  4: '/flip/9B.jpg',
+  5: '/flip/10B.jpg'
+};
+
 export function EventView({ onAction, mesaId } = {}) {
   const [state, setState] = useState(initialState);
   const [initialLoading, setInitialLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [modalSource, setModalSource] = useState(null); // 'secondaryFinal' | 'tertiaryZero' | 'flip' | null
+  const [modalMessage, setModalMessage] = useState(null);
+  const [flipImage, setFlipImage] = useState(null);
   const scrollPosRef = useRef(0);
+  const prevSecondaryIndexRef = useRef(initialState.secondaryImageIndex);
 
   const secondaryImages = useMemo(
     () => [celda1, celda2, celda3, celda4, celda5, celda6, celda7],
@@ -59,9 +72,7 @@ export function EventView({ onAction, mesaId } = {}) {
 
   const normalizeState = useCallback(
     (data) => {
-      if (!data || typeof data !== 'object') {
-        return { ...initialState };
-      }
+      if (!data || typeof data !== 'object') return { ...initialState };
       const withFallback = (value, fallback) =>
         typeof value === 'number' && Number.isFinite(value) ? value : fallback;
       const sanitizeCounter = (value, fallback) => Math.max(0, Math.trunc(withFallback(value, fallback)));
@@ -85,7 +96,7 @@ export function EventView({ onAction, mesaId } = {}) {
   const fetchState = useCallback(
     (isInitial = false) => {
       fetch(API_BASE)
-        .then((response) => (response.ok ? response.json() : Promise.reject(new Error('Estado inv\u00e1lido'))))
+        .then((r) => (r.ok ? r.json() : Promise.reject(new Error('Estado inválido'))))
         .then((data) => {
           setState(normalizeState(data));
           setError(null);
@@ -109,44 +120,81 @@ export function EventView({ onAction, mesaId } = {}) {
   const tertiaryLocked = state.tertiary === 0;
   const primaryRevealed = secondaryLocked;
 
-  const showSecondaryModal = secondaryLocked && !state.allowCloseSecondary;
-  const showTertiaryModal = tertiaryLocked && !state.allowCloseTertiary;
-  const showModal = showSecondaryModal || showTertiaryModal;
+  const currentSecondaryImage =
+    secondaryImages[state.secondaryImageIndex] ?? secondaryImages[initialState.secondaryImageIndex];
+  const displayedSecondaryImage = secondaryLocked ? celda7Accesorio : currentSecondaryImage;
+  const secondaryTitle = secondaryLocked ? 'Accesorio M.Y.T.H.O.S.' : 'Celdas de Contención';
+
+  const showSecondaryModal = modalSource === 'secondaryFinal';
+  const showTertiaryModal = modalSource === 'tertiaryZero';
+  const showFlipModal = modalSource === 'flip';
+  const showModal = showSecondaryModal || showTertiaryModal || showFlipModal;
 
   // Scroll lock for modal
   useEffect(() => {
     if (showModal) {
       scrollPosRef.current = typeof window !== 'undefined' ? window.scrollY || 0 : 0;
-      if (typeof window !== 'undefined') {
-        window.scrollTo({ top: 0, behavior: 'auto' });
-      }
+      if (typeof window !== 'undefined') window.scrollTo({ top: 0, behavior: 'auto' });
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = '';
-      if (typeof window !== 'undefined') {
-        window.scrollTo({ top: scrollPosRef.current, behavior: 'auto' });
-      }
+      if (typeof window !== 'undefined') window.scrollTo({ top: scrollPosRef.current, behavior: 'auto' });
     }
     return () => {
       document.body.style.overflow = '';
     };
   }, [showModal]);
 
+  // Trigger STOP for secondary lock
+  useEffect(() => {
+    if (secondaryLocked && modalSource !== 'secondaryFinal') {
+      setModalSource('secondaryFinal');
+      setModalMessage(
+        'Habéis liberado a todos los reclusos de sus celdas. Seguid las instrucciones de los organizadores.'
+      );
+    }
+  }, [secondaryLocked, modalSource]);
+
+  // Trigger STOP for tertiary lock
+  useEffect(() => {
+    if (tertiaryLocked && modalSource !== 'tertiaryZero') {
+      setModalSource('tertiaryZero');
+      setModalMessage(
+        'Habéis derrotado el Plan Secundario. Seguid las instrucciones de los organizadores.'
+      );
+    }
+  }, [tertiaryLocked, modalSource]);
+
+  // Flip popup when changing cell (except last)
+  useEffect(() => {
+    if (initialLoading) {
+      prevSecondaryIndexRef.current = state.secondaryImageIndex;
+      return;
+    }
+    const prevIdx = prevSecondaryIndexRef.current;
+    const currIdx = state.secondaryImageIndex;
+    const lastIdx = secondaryImages.length - 1;
+    if (currIdx !== prevIdx && currIdx < lastIdx && !secondaryLocked) {
+      const img = flipImageMap[currIdx] || displayedSecondaryImage;
+      setFlipImage(img);
+      setModalSource('flip');
+      setModalMessage('Dale la vuelta a la celda y muestra la siguiente carta');
+    }
+    prevSecondaryIndexRef.current = currIdx;
+  }, [state.secondaryImageIndex, secondaryImages.length, secondaryLocked, displayedSecondaryImage, initialLoading]);
+
   const closeModal = useCallback(() => {
-    if (showSecondaryModal || showTertiaryModal) {
-      return; // keep blocked until admin toggles flags if needed
-    }
-    if (mesaId) {
-      window.location.assign(`/mesa/${mesaId}`);
-    }
-  }, [mesaId, showSecondaryModal, showTertiaryModal]);
+    if (showSecondaryModal && !state.allowCloseSecondary) return;
+    if (showTertiaryModal && !state.allowCloseTertiary) return;
+    setModalSource(null);
+    setModalMessage(null);
+    setFlipImage(null);
+  }, [showSecondaryModal, showTertiaryModal, state.allowCloseSecondary, state.allowCloseTertiary]);
 
   const updateCounter = useCallback(
     (segment, delta) => {
       if (!delta) return;
-      if ((segment === 'secondary' && secondaryLocked) || (segment === 'tertiary' && tertiaryLocked)) {
-        return;
-      }
+      if ((segment === 'secondary' && secondaryLocked) || (segment === 'tertiary' && tertiaryLocked)) return;
       const endpoint = delta > 0 ? 'increment' : 'decrement';
       const amount = Math.abs(delta);
       fetch(`${API_BASE}/${segment}/${endpoint}`, {
@@ -168,31 +216,36 @@ export function EventView({ onAction, mesaId } = {}) {
     [normalizeState, onAction, secondaryLocked, tertiaryLocked]
   );
 
-  const currentSecondaryImage =
-    secondaryImages[state.secondaryImageIndex] ?? secondaryImages[initialState.secondaryImageIndex];
-  const displayedSecondaryImage = secondaryLocked ? celda7Accesorio : currentSecondaryImage;
-  const secondaryTitle = secondaryLocked ? 'Accesorio M.Y.T.H.O.S.' : 'Celdas de Contenci\u00f3n';
-
   if (showModal) {
-    const isBlocked = showSecondaryModal || showTertiaryModal;
+    const isBlocked = (showSecondaryModal && !state.allowCloseSecondary) || (showTertiaryModal && !state.allowCloseTertiary);
+    const isFlip = showFlipModal && !isBlocked;
     return (
       <div className="modal-backdrop" role="dialog" aria-modal="true">
-        <div className="modal modal-display">
-          <div className="modal-stop-sign">🛑 STOP</div>
-          {showSecondaryModal && (
-            <p className="modal-stop-text">
-              Habéis liberado a todos los reclusos de sus celdas. Seguid las instrucciones de los organizadores.
-            </p>
+        <div className={`modal ${isFlip ? 'modal-flip' : 'modal-display'}`}>
+          {isFlip ? (
+            <>
+              {flipImage && <img src={flipImage} alt="Siguiente celda" className="modal-flip-image" />}
+              <p className="modal-stop-text">Dale la vuelta a la celda y muestra la siguiente carta</p>
+            </>
+          ) : (
+            <>
+              <div className="modal-stop-sign">🛑 STOP</div>
+              {showSecondaryModal && (
+                <p className="modal-stop-text">
+                  Habéis liberado a todos los reclusos de sus celdas. Seguid las instrucciones de los organizadores.
+                </p>
+              )}
+              {showTertiaryModal && (
+                <p className="modal-stop-text">
+                  Habéis derrotado el Plan Secundario. Seguid las instrucciones de los organizadores.
+                </p>
+              )}
+            </>
           )}
-          {showTertiaryModal && (
-            <p className="modal-stop-text">
-              Habéis derrotado el Plan Secundario Entrenamiento especializado. Seguid las instrucciones de los organizadores.
-            </p>
-          )}
-          <button type="button" onClick={closeModal} disabled={isBlocked}>
+          <button type="button" onClick={closeModal} disabled={isBlocked && !isFlip}>
             Cerrar
           </button>
-          {isBlocked}
+          {isBlocked && !isFlip && <p className="counter-meta">Esperando autorización desde Admin.</p>}
         </div>
       </div>
     );
