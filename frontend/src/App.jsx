@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+﻿import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
 import centralImage from './assets/50103a.png';
@@ -133,13 +133,10 @@ export function EventView({ onAction, mesaId } = {}) {
   }, [showModal]);
 
   const closeModal = useCallback(() => {
-    if (showSecondaryModal || showTertiaryModal) {
-      return; // botón bloqueado si no hay permiso
-    }
     if (mesaId) {
       window.location.assign(`/mesa/${mesaId}`);
     }
-  }, [mesaId, showSecondaryModal, showTertiaryModal]);
+  }, [mesaId]);
 
   const updateCounter = useCallback(
     (segment, delta) => {
@@ -186,7 +183,7 @@ export function EventView({ onAction, mesaId } = {}) {
           )}
           {showTertiaryModal && (
             <p className="modal-stop-text">
-              Habéis derrotado el Plan Secundario. Seguid las instrucciones de los coordinadores.
+              Habéis derrotado el Plan Secundario Entrenamiento especializado. Seguid las instrucciones de los organizadores.
             </p>
           )}
           <button type="button" onClick={closeModal} disabled={isBlocked}>

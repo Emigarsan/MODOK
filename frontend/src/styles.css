@@ -704,12 +704,14 @@ button[aria-disabled="true"] {
   border: 2px solid #ff4d4f;
   border-radius: 16px;
   padding: 0.8rem 1.4rem;
+  margin: 0;
 }
 
 .modal-stop-text {
   font-size: clamp(1.4rem, 3vw, 2rem);
   line-height: 1.6;
   font-weight: 700;
+  margin: 0;
 }
 
 .modal.modal-stop {
