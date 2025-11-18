@@ -679,15 +679,29 @@ button[aria-disabled="true"] {
 
 .modal.modal-display {
   max-width: min(96vw, 780px);
-  padding: 2.5rem 3rem;
-  font-size: 1.2rem;
-  gap: 2rem;
+  padding: 2.8rem 3.6rem;
+  font-size: 1.4rem;
+  gap: 2.4rem;
 }
 
 .modal p {
   margin: 0;
   font-size: 1.15rem;
   line-height: 1.4;
+}
+
+.modal-stop-sign {
+  font-size: clamp(3rem, 8vw, 6rem);
+  font-weight: 900;
+  letter-spacing: 0.3rem;
+  color: #ff4d4f;
+  text-transform: uppercase;
+}
+
+.modal-stop-text {
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  line-height: 1.6;
+  font-weight: 700;
 }
 
 .modal button {

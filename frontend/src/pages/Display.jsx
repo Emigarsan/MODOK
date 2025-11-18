@@ -98,52 +98,53 @@ export default function DisplayPage() {
       {(showSecondaryModal || showTertiaryModal) && (
         <div className="modal-backdrop" role="dialog" aria-modal="true">
           <div className="modal modal-display">
+            <div className="modal-stop-sign">STOP</div>
             {showSecondaryModal && (
-              <p>Alto, habeis liberado a todos los reclusos, escucha las instrucciones de los coordinadores</p>
+              <p className="modal-stop-text">Habéis liberado a todos los reclusos de sus celdas. Seguid las instrucciones de los organizadores.</p>
             )}
             {showTertiaryModal && (
-              <p>Alto, habeis derrotado el Plan Secundario, escucha las instrucciones de los coordinadores</p>
+              <p className="modal-stop-text">Habéis derrotado el Plan Secundario Entrenamiento especializado. Seguid las instrucciones de los organizadores.</p>
             )}
           </div>
         </div>
       )}
       <div className="dashboard">
-      {error && <p className="error">{error}</p>}
+        {error && <p className="error">{error}</p>}
 
-      {primaryRevealed && (
+        {primaryRevealed && (
+          <section className="counter-card">
+            <h2>Vida M.O.D.O.K.</h2>
+            <img src={centralImage} alt="M.O.D.O.K" className="counter-art" />
+            <div className="counter-value">{state.primary}</div>
+          </section>
+        )}
+
         <section className="counter-card">
-          <h2>Vida M.O.D.O.K.</h2>
-          <img src={centralImage} alt="M.O.D.O.K" className="counter-art" />
-          <div className="counter-value">{state.primary}</div>
+          <h2>{secondaryTitle}</h2>
+          {!secondaryLocked && <div className="counter-subtitle">{secondaryNumberLabel}</div>}
+          <img
+            src={displayedSecondaryImage}
+            alt={`Celda ${state.secondaryImageIndex + 1}`}
+            className="counter-art"
+          />
+          {!secondaryLocked && <div className="counter-value">{state.secondary}</div>}
         </section>
-      )}
 
-      <section className="counter-card">
-        <h2>{secondaryTitle}</h2>
-        <div className="counter-subtitle">{secondaryNumberLabel}</div>
-        <img
-          src={displayedSecondaryImage}
-          alt={`Celda ${state.secondaryImageIndex + 1}`}
-          className="counter-art"
-        />
-        {!secondaryLocked && <div className="counter-value">{state.secondary}</div>}
-      </section>
+        {state.tertiary > 0 && (
+          <section className="counter-card">
+            <h2>Entrenamiento especializado</h2>
+            <img src={tertiaryCore} alt="Entrenamiento Especializado" className="counter-art" />
+            <div className="counter-value">{state.tertiary}</div>
+          </section>
+        )}
 
-      {state.tertiary > 0 && (
-        <section className="counter-card">
-          <h2>Entrenamiento especializado</h2>
-          <img src={tertiaryCore} alt="Entrenamiento Especializado" className="counter-art" />
-          <div className="counter-value">{state.tertiary}</div>
-        </section>
-      )}
-
-      {initialLoading && (
-        <div className="modal-overlay">
-          <div className="modal">
-            <p>Cargando estado...</p>
+        {initialLoading && (
+          <div className="modal-overlay">
+            <div className="modal">
+              <p>Cargando estado...</p>
+            </div>
           </div>
-        </div>
-      )}
+        )}
       </div>
     </div>
   );
