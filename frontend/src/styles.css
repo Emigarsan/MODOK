@@ -696,12 +696,26 @@ button[aria-disabled="true"] {
   letter-spacing: 0.3rem;
   color: #ff4d4f;
   text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  background: rgba(255, 77, 79, 0.12);
+  border: 2px solid #ff4d4f;
+  border-radius: 16px;
+  padding: 0.8rem 1.4rem;
 }
 
 .modal-stop-text {
   font-size: clamp(1.4rem, 3vw, 2rem);
   line-height: 1.6;
   font-weight: 700;
+}
+
+.modal.modal-stop {
+  max-width: min(92vw, 620px);
+  padding: 2.4rem 3rem;
+  gap: 1.8rem;
 }
 
 .modal button {
@@ -730,6 +744,11 @@ button[aria-disabled="true"] {
   gap: 1.35rem;
   align-items: stretch;
   justify-content: space-between; /* alinea arte y contador a la misma altura */
+}
+
+.display-layout .counter-card.counter-card--locked {
+  justify-content: center;
+  gap: 1.25rem;
 }
 
 .display-layout .counter-card h2 {

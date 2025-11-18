@@ -98,7 +98,7 @@ export default function DisplayPage() {
       {(showSecondaryModal || showTertiaryModal) && (
         <div className="modal-backdrop" role="dialog" aria-modal="true">
           <div className="modal modal-display">
-            <div className="modal-stop-sign">STOP</div>
+            <div className="modal-stop-sign">🛑 STOP</div>
             {showSecondaryModal && (
               <p className="modal-stop-text">Habéis liberado a todos los reclusos de sus celdas. Seguid las instrucciones de los organizadores.</p>
             )}
@@ -111,20 +111,20 @@ export default function DisplayPage() {
       <div className="dashboard">
         {error && <p className="error">{error}</p>}
 
-        {primaryRevealed && (
-          <section className="counter-card">
+      {primaryRevealed && (
+        <section className="counter-card">
             <h2>Vida M.O.D.O.K.</h2>
             <img src={centralImage} alt="M.O.D.O.K" className="counter-art" />
             <div className="counter-value">{state.primary}</div>
           </section>
         )}
 
-        <section className="counter-card">
-          <h2>{secondaryTitle}</h2>
-          {!secondaryLocked && <div className="counter-subtitle">{secondaryNumberLabel}</div>}
-          <img
-            src={displayedSecondaryImage}
-            alt={`Celda ${state.secondaryImageIndex + 1}`}
+      <section className={`counter-card ${secondaryLocked ? 'counter-card--locked' : ''}`}>
+        <h2>{secondaryTitle}</h2>
+        {!secondaryLocked && <div className="counter-subtitle">{secondaryNumberLabel}</div>}
+        <img
+          src={displayedSecondaryImage}
+          alt={`Celda ${state.secondaryImageIndex + 1}`}
             className="counter-art"
           />
           {!secondaryLocked && <div className="counter-value">{state.secondary}</div>}

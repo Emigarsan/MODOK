@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+﻿import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { useLocation } from 'react-router-dom';
 import centralImage from './assets/50103a.png';
@@ -123,154 +123,19 @@ export function EventView({ onAction, mesaId } = {}) {
 
   // When a modal is shown, scroll to top and lock body; restore on close
   useEffect(() => {
-    if (modalMessage) {
-      scrollPosRef.current = typeof window !== 'undefined' ? window.scrollY || 0 : 0;
-      if (typeof window !== 'undefined') {
-        window.scrollTo({ top: 0, behavior: 'auto' });
-      }
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-      if (typeof window !== 'undefined') {
-        window.scrollTo({ top: scrollPosRef.current, behavior: 'auto' });
-      }
-    }
-
-    return () => {
-      document.body.style.overflow = '';
-    };
-  }, [modalMessage]);
-
-  // Background refresh every 3s, even if a modal is open (to catch admin toggles)
-  useEffect(() => {
-    const id = setInterval(() => {
-      fetchState();
-    }, 3000);
-    return () => clearInterval(id);
-  }, [fetchState]);
-
-  const previousSecondaryIndex = useRef(initialState.secondaryImageIndex);
-  const previousSecondaryValue = useRef(initialState.secondary);
-  const previousTertiary = useRef(initialState.tertiary);
-
-  // Track image index changes without triggering modal here; modal will trigger
-  // when on last image AND the secondary value reaches 0 (next effect).
-  useEffect(() => {
-    if (previousSecondaryIndex.current !== state.secondaryImageIndex) {
-      previousSecondaryIndex.current = state.secondaryImageIndex;
-    }
-  }, [state.secondaryImageIndex]);
-
-  // When already on the last image (7�) and secondary transitions to 0, show modal
-  useEffect(() => {
-    if (previousSecondaryValue.current !== state.secondary) {
-      const reachedZeroNow = state.secondary === 0 && previousSecondaryValue.current > 0;
-      if (
-        reachedZeroNow &&
-        state.secondaryImageIndex === secondaryImages.length - 1 &&
-        !secondaryLocked
-      ) {
-        // Lock immediately when opening the modal on the final image
-        setSecondaryLocked(true);
-        setPrimaryRevealed(true);
-        setModalMessage('Alto, habeis liberado a todos los reclusos, escucha las instrucciones de los coordinadores');
-        setModalSource('secondaryFinal');
-      }
-      previousSecondaryValue.current = state.secondary;
-    }
-  }, [state.secondary, state.secondaryImageIndex, secondaryImages.length, secondaryLocked]);
-
-  useEffect(() => {
-    if (previousTertiary.current !== state.tertiary) {
-      if (state.tertiary === 0) {
-        // Lock tertiary immediately when it reaches 0 and open modal
-        setTertiaryLocked(true);
-        setModalMessage('Alto, habeis derrotado el Plan Secundario, escucha las instrucciones de los coordinadores');
-        setModalSource('tertiaryZero');
-      }
-      previousTertiary.current = state.tertiary;
-    }
-  }, [state.tertiary]);
-
-  const closeModal = useCallback(() => {
-    setModalMessage(null);
-    setModalSource(null);
-    if (mesaId) {
-      window.location.assign(`/mesa/${mesaId}`);
-    }
-  }, [mesaId]);
-
-  const updateCounter = useCallback((segment, delta) => {
-    if (delta === 0) {
-      return;
-    }
-    // Prevent modifications to secondary when locked
-    if (segment === 'secondary' && secondaryLocked) {
-      return;
-    }
-    // Prevent modifications to tertiary when locked
-    if (segment === 'tertiary' && tertiaryLocked) {
-      return;
-    }
-    const endpoint = delta > 0 ? 'increment' : 'decrement';
-    // Ensure secondary never overshoots below 0: cap decrement to current value
-    let effectiveAmount = Math.abs(delta);
-    if (segment === 'secondary' && delta < 0) {
-      const available = state.secondary;
-      effectiveAmount = Math.min(effectiveAmount, available);
-      if (effectiveAmount === 0) {
-        // Already at 0 ? no-op; modal will already have been handled previously
-        return;
-      }
-    }
-    fetch(`${API_BASE}/${segment}/${endpoint}`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ amount: effectiveAmount })
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error('No se pudo actualizar el contador.');
-        }
-        return response.json();
-      })
-      .then((data) => {
-        setState(normalizeState(data));
-        setError(null);
-        try {
-          if (typeof onAction === 'function') {
-            const idx = segment === 'primary' ? 1 : (segment === 'secondary' ? 2 : 3);
-            const signed = delta < 0 ? -Math.abs(effectiveAmount) : Math.abs(effectiveAmount);
-            onAction({ segment, contador: idx, delta: signed });
-          }
-        } catch (_) { }
-      })
-      .catch((err) => {
-        console.error(err);
-        setError('No se pudo actualizar el contador.');
-      })
-      .finally(() => {
-        // Do not toggle global loading indicator on counter updates.
-      });
-  }, [normalizeState, secondaryLocked, tertiaryLocked, state.secondary]);
-
-  const currentSecondaryImage =
-    secondaryImages[state.secondaryImageIndex] ?? secondaryImages[initialState.secondaryImageIndex];
-  const displayedSecondaryImage = secondaryLocked ? celda7Accesorio : currentSecondaryImage;
-  const secondaryTitle = secondaryLocked ? 'Accesorio M.Y.T.H.O.S.' : 'Celdas de Contención';
-
-  if (modalMessage) {
+      if (modalMessage) {
     const isBlocked =
-      (modalSource === 'secondaryFinal' && !state.allowCloseSecondary) ||
-      (modalSource === 'tertiaryZero' && !state.allowCloseTertiary);
+      (modalSource === "secondaryFinal" && !state.allowCloseSecondary) ||
+      (modalSource === "tertiaryZero" && !state.allowCloseTertiary);
     return (
       <div className="modal-backdrop" role="dialog" aria-modal="true">
-        <div className="modal">
-          <p>{modalMessage}</p>
+        <div className="modal modal-stop">
+          <div className="modal-stop-sign">🛑 STOP</div>
+          <p className="modal-stop-text">{modalMessage}</p>
           <button type="button" onClick={closeModal} disabled={isBlocked}>
             Cerrar
           </button>
-          {isBlocked}
+          {isBlocked && <p className="counter-meta">Esperando autorizaci&oacute;n desde Admin.</p>}
         </div>
       </div>
     );
@@ -314,7 +179,7 @@ export function EventView({ onAction, mesaId } = {}) {
                   onClick={() => updateCounter('secondary', delta)}
                   disabled={secondaryLocked}
                   aria-disabled={secondaryLocked}
-                  title={secondaryLocked ? 'Bloqueado tras la séptima imagen' : undefined}
+                  title={secondaryLocked ? 'Bloqueado tras la sÃ©ptima imagen' : undefined}
                 >
                   {label}
                 </button>
@@ -369,6 +234,9 @@ export default function App() {
 
   return <EventView mesaId={mesaId} onAction={mesaId ? onAction : undefined} />;
 }
+
+
+
 
 
 
