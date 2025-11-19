@@ -16,6 +16,8 @@ public class CounterService {
     private int secondaryImageIndex = 0;
     private boolean allowCloseSecondary = false;
     private boolean allowCloseTertiary = false;
+    private boolean flipModalActive = false;
+    private int flipImageIndex = -1;
 
     public synchronized CounterState getState() {
         return snapshot();
@@ -50,13 +52,15 @@ public class CounterService {
             }
 
             if (secondary == 0) {
-                // If we are not on the last image, advance and reset.
                 if (secondaryImageIndex < SECONDARY_IMAGE_COUNT - 1) {
+                    int previousIndex = secondaryImageIndex;
+                    triggerFlipModal(previousIndex);
                     advanceSecondaryImage();
                     secondary = SECONDARY_DEFAULT_VALUE;
                 } else {
                     // On the last image (7th), stay at 0 and do not advance/reset.
                     // This allows the frontend to lock and display the alert.
+                    clearFlipModalInternal();
                 }
                 break;
             }
@@ -103,6 +107,7 @@ public class CounterService {
     public synchronized CounterState setSecondaryImageIndex(int index) {
         int normalized = ((index % SECONDARY_IMAGE_COUNT) + SECONDARY_IMAGE_COUNT) % SECONDARY_IMAGE_COUNT;
         secondaryImageIndex = normalized;
+        clearFlipModalInternal();
         return snapshot();
     }
 
@@ -117,7 +122,9 @@ public class CounterService {
                 tertiary,
                 secondaryImageIndex,
                 allowCloseSecondary,
-                allowCloseTertiary
+                allowCloseTertiary,
+                flipModalActive,
+                flipImageIndex
         );
     }
 
@@ -134,5 +141,20 @@ public class CounterService {
     public synchronized CounterState setAllowCloseTertiary(boolean allowed) {
         allowCloseTertiary = allowed;
         return snapshot();
+    }
+
+    public synchronized CounterState clearFlipModal() {
+        clearFlipModalInternal();
+        return snapshot();
+    }
+
+    private void triggerFlipModal(int index) {
+        flipModalActive = true;
+        flipImageIndex = Math.max(0, Math.min(index, SECONDARY_IMAGE_COUNT - 2));
+    }
+
+    private void clearFlipModalInternal() {
+        flipModalActive = false;
+        flipImageIndex = -1;
     }
 }

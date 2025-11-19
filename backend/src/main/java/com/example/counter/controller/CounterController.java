@@ -118,6 +118,12 @@ public class CounterController {
         return ResponseEntity.ok(counterService.setAllowCloseTertiary(allowed));
     }
 
+    @PostMapping("/modal/flip/clear")
+    public ResponseEntity<CounterState> clearFlipModal(@org.springframework.web.bind.annotation.RequestHeader(value = "X-Admin-Secret", required = false) String secret) {
+        if (!isAdmin(secret)) return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        return ResponseEntity.ok(counterService.clearFlipModal());
+    }
+
     private int sanitizeAmount(Map<String, Integer> payload) {
         return Math.max(0, payload.getOrDefault("amount", 1));
     }

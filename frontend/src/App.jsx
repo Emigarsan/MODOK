@@ -43,7 +43,9 @@ const initialState = {
   tertiary: 640,
   secondaryImageIndex: 0,
   allowCloseSecondary: false,
-  allowCloseTertiary: false
+  allowCloseTertiary: false,
+  showFlipModal: false,
+  flipImageIndex: -1
 };
 
 const flipImageMap = {
@@ -55,16 +57,15 @@ const flipImageMap = {
   5: '/flip/10B.jpg'
 };
 
+const MAX_FLIP_INDEX = Math.max(...Object.keys(flipImageMap).map((key) => Number(key)));
+
 export function EventView({ onAction, mesaId } = {}) {
   const [state, setState] = useState(initialState);
   const [initialLoading, setInitialLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [flipModal, setFlipModal] = useState(false);
-  const [flipImage, setFlipImage] = useState(null);
   const [secondaryDismissed, setSecondaryDismissed] = useState(false);
   const [tertiaryDismissed, setTertiaryDismissed] = useState(false);
   const scrollPosRef = useRef(0);
-  const prevSecondaryIndexRef = useRef(initialState.secondaryImageIndex);
 
   const secondaryImages = useMemo(
     () => [celda1, celda2, celda3, celda4, celda5, celda6, celda7],
@@ -82,13 +83,18 @@ export function EventView({ onAction, mesaId } = {}) {
       const normalizedIndex =
         ((Math.trunc(rawIndex) % secondaryImages.length) + secondaryImages.length) % secondaryImages.length;
 
+      const rawFlipIndex = withFallback(data.flipImageIndex, -1);
+      const clampedFlipIndex = Math.max(-1, Math.min(Math.trunc(rawFlipIndex), MAX_FLIP_INDEX));
+
       return {
         primary: sanitizeCounter(data.primary, initialState.primary),
         secondary: sanitizeCounter(data.secondary, initialState.secondary),
         tertiary: sanitizeCounter(data.tertiary, initialState.tertiary),
         secondaryImageIndex: normalizedIndex,
         allowCloseSecondary: Boolean(data.allowCloseSecondary),
-        allowCloseTertiary: Boolean(data.allowCloseTertiary)
+        allowCloseTertiary: Boolean(data.allowCloseTertiary),
+        showFlipModal: Boolean(data.showFlipModal),
+        flipImageIndex: clampedFlipIndex
       };
     },
     [secondaryImages]
@@ -128,7 +134,8 @@ export function EventView({ onAction, mesaId } = {}) {
 
   const showSecondaryModal = secondaryLocked && !secondaryDismissed;
   const showTertiaryModal = tertiaryLocked && !tertiaryDismissed;
-  const showFlipModal = flipModal && !showSecondaryModal && !showTertiaryModal;
+  const flipImageSrc = flipImageMap[state.flipImageIndex] ?? null;
+  const showFlipModal = state.showFlipModal && !!flipImageSrc && !showSecondaryModal && !showTertiaryModal;
   const showModal = showSecondaryModal || showTertiaryModal || showFlipModal;
 
   useEffect(() => {
@@ -161,23 +168,6 @@ export function EventView({ onAction, mesaId } = {}) {
     };
   }, [showModal]);
 
-  // Flip popup when changing cell (except last)
-  useEffect(() => {
-    if (initialLoading) {
-      prevSecondaryIndexRef.current = state.secondaryImageIndex;
-      return;
-    }
-    const prevIdx = prevSecondaryIndexRef.current;
-    const currIdx = state.secondaryImageIndex;
-    const lastIdx = secondaryImages.length - 1;
-    if (currIdx !== prevIdx && prevIdx < lastIdx && !secondaryLocked && !tertiaryLocked) {
-      const img = flipImageMap[prevIdx] || displayedSecondaryImage;
-      setFlipImage(img);
-      setFlipModal(true);
-    }
-    prevSecondaryIndexRef.current = currIdx;
-  }, [state.secondaryImageIndex, secondaryImages.length, displayedSecondaryImage, initialLoading, secondaryLocked, tertiaryLocked]);
-
   const closeModal = useCallback(() => {
     const blockedSecondary = showSecondaryModal && !state.allowCloseSecondary;
     const blockedTertiary = showTertiaryModal && !state.allowCloseTertiary;
@@ -185,9 +175,7 @@ export function EventView({ onAction, mesaId } = {}) {
 
     if (showSecondaryModal) setSecondaryDismissed(true);
     if (showTertiaryModal) setTertiaryDismissed(true);
-    if (showFlipModal) setFlipModal(false);
-    setFlipImage(null);
-  }, [showSecondaryModal, showTertiaryModal, showFlipModal, state.allowCloseSecondary, state.allowCloseTertiary]);
+  }, [showSecondaryModal, showTertiaryModal, state.allowCloseSecondary, state.allowCloseTertiary]);
 
   const updateCounter = useCallback(
     (segment, delta) => {
@@ -223,8 +211,9 @@ export function EventView({ onAction, mesaId } = {}) {
         <div className={`modal ${isFlip ? 'modal-flip' : 'modal-display'}`}>
           {isFlip ? (
             <>
-              {flipImage && <img src={flipImage} alt="Siguiente celda" className="modal-flip-image" />}
+              {flipImageSrc && <img src={flipImageSrc} alt="Siguiente celda" className="modal-flip-image" />}
               <p className="modal-stop-text">Dale la vuelta a la celda y muestra la siguiente carta</p>
+              <p className="counter-meta">El equipo de Admin cerrará este mensaje en todos los dispositivos.</p>
             </>
           ) : (
             <>
@@ -239,12 +228,12 @@ export function EventView({ onAction, mesaId } = {}) {
                   Habéis derrotado el Plan Secundario. Seguid las instrucciones de los organizadores.
                 </p>
               )}
+              <button type="button" onClick={closeModal} disabled={isBlocked}>
+                Cerrar
+              </button>
+              {isBlocked && <p className="counter-meta">Esperando autorización desde Admin.</p>}
             </>
           )}
-          <button type="button" onClick={closeModal} disabled={isBlocked && !isFlip}>
-            Cerrar
-          </button>
-          {isBlocked && !isFlip && <p className="counter-meta">Esperando autorización desde Admin.</p>}
         </div>
       </div>
     );

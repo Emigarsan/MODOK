@@ -18,8 +18,21 @@ const initialState = {
   tertiary: 640,
   secondaryImageIndex: 0,
   allowCloseSecondary: false,
-  allowCloseTertiary: false
+  allowCloseTertiary: false,
+  showFlipModal: false,
+  flipImageIndex: -1
 };
+
+const flipImageMap = {
+  0: '/flip/5B.jpg',
+  1: '/flip/6B.jpg',
+  2: '/flip/7B.jpg',
+  3: '/flip/8B.jpg',
+  4: '/flip/9B.jpg',
+  5: '/flip/10B.jpg'
+};
+
+const MAX_FLIP_INDEX = Math.max(...Object.keys(flipImageMap).map((key) => Number(key)));
 
 export default function DisplayPage() {
   const [state, setState] = useState(initialState);
@@ -45,13 +58,18 @@ export default function DisplayPage() {
       const rawIndex = withFallback(data.secondaryImageIndex, initialState.secondaryImageIndex);
       const normalizedIndex =
         ((Math.trunc(rawIndex) % secondaryImages.length) + secondaryImages.length) % secondaryImages.length;
+      const flipIndexRaw = typeof data.flipImageIndex === 'number' ? Math.trunc(data.flipImageIndex) : -1;
+      const flipIndex = Math.max(-1, Math.min(flipIndexRaw, MAX_FLIP_INDEX));
+
       return {
         primary: sanitizeCounter(data.primary, initialState.primary),
         secondary: sanitizeCounter(data.secondary, initialState.secondary),
         tertiary: sanitizeCounter(data.tertiary, initialState.tertiary),
         secondaryImageIndex: normalizedIndex,
         allowCloseSecondary: Boolean(data.allowCloseSecondary),
-        allowCloseTertiary: Boolean(data.allowCloseTertiary)
+        allowCloseTertiary: Boolean(data.allowCloseTertiary),
+        showFlipModal: Boolean(data.showFlipModal),
+        flipImageIndex: flipIndex
       };
     },
     [secondaryImages]
@@ -92,18 +110,35 @@ export default function DisplayPage() {
   const secondaryNumberLabel = `Celda ${state.secondaryImageIndex + 1}`;
   const showSecondaryModal = secondaryLocked && !state.allowCloseSecondary;
   const showTertiaryModal = state.tertiary === 0 && !state.allowCloseTertiary;
+  const flipImageSrc = flipImageMap[state.flipImageIndex] ?? null;
+  const showFlipModal = state.showFlipModal && !!flipImageSrc && !showSecondaryModal && !showTertiaryModal;
+  const showModal = showSecondaryModal || showTertiaryModal || showFlipModal;
 
   return (
     <div className="display-layout">
-      {(showSecondaryModal || showTertiaryModal) && (
+      {showModal && (
         <div className="modal-backdrop" role="dialog" aria-modal="true">
-          <div className="modal modal-display">
-            <div className="modal-stop-sign">🛑 STOP</div>
-            {showSecondaryModal && (
-              <p className="modal-stop-text">Habéis liberado a todos los reclusos de sus celdas. Seguid las instrucciones de los organizadores.</p>
-            )}
-            {showTertiaryModal && (
-              <p className="modal-stop-text">Habéis derrotado el Plan Secundario Entrenamiento especializado. Seguid las instrucciones de los organizadores.</p>
+          <div className={`modal ${showFlipModal ? 'modal-flip' : 'modal-display'}`}>
+            {showFlipModal ? (
+              <>
+                {flipImageSrc && <img src={flipImageSrc} alt="Siguiente celda" className="modal-flip-image" />}
+                <p className="modal-stop-text">Dale la vuelta a la celda y muestra la siguiente carta</p>
+                <p className="counter-meta">El equipo de Admin cerrará este mensaje en todos los dispositivos.</p>
+              </>
+            ) : (
+              <>
+                <div className="modal-stop-sign">🛑 STOP</div>
+                {showSecondaryModal && (
+                  <p className="modal-stop-text">
+                    Habéis liberado a todos los reclusos de sus celdas. Seguid las instrucciones de los organizadores.
+                  </p>
+                )}
+                {showTertiaryModal && (
+                  <p className="modal-stop-text">
+                    Habéis derrotado el Plan Secundario Entrenamiento especializado. Seguid las instrucciones de los organizadores.
+                  </p>
+                )}
+              </>
             )}
           </div>
         </div>
@@ -149,3 +184,4 @@ export default function DisplayPage() {
     </div>
   );
 }
+

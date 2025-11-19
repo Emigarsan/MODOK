@@ -6,6 +6,8 @@ public record CounterState(
         int tertiary,
         int secondaryImageIndex,
         boolean allowCloseSecondary,
-        boolean allowCloseTertiary
+        boolean allowCloseTertiary,
+        boolean showFlipModal,
+        int flipImageIndex
 ) {
 }

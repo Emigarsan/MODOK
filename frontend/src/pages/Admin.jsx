@@ -28,19 +28,19 @@ export default function AdminPage() {
   const backupFileInputRef = useRef(null);
 
   const ensureOk = useCallback((r, fallback = 'No autorizado') =>
-    (r.ok
-      ? Promise.resolve()
-      : r.json()
-        .catch(() => ({}))
-        .then((d) => Promise.reject(new Error(d?.error || fallback))))
+  (r.ok
+    ? Promise.resolve()
+    : r.json()
+      .catch(() => ({}))
+      .then((d) => Promise.reject(new Error(d?.error || fallback))))
     , []);
 
   const parseJson = useCallback((r, fallback = 'No autorizado') =>
-    (r.ok
-      ? r.json()
-      : r.json()
-        .catch(() => ({}))
-        .then((d) => Promise.reject(new Error(d?.error || fallback))))
+  (r.ok
+    ? r.json()
+    : r.json()
+      .catch(() => ({}))
+      .then((d) => Promise.reject(new Error(d?.error || fallback))))
     , []);
 
   // Campos de fijaci?n permanecen vacÃ­os hasta que el usuario escriba.
@@ -51,7 +51,7 @@ export default function AdminPage() {
 
   const syncFromState = () => { };
 
-    const fetchState = useCallback(() => {
+  const fetchState = useCallback(() => {
     fetch(API_BASE)
       .then((r) => r.ok ? r.json() : Promise.reject(new Error('Respuesta inválida')))
       .then((data) => {
@@ -68,7 +68,7 @@ export default function AdminPage() {
 
   useEffect(() => { fetchState(); const id = setInterval(fetchState, 3000); return () => clearInterval(id); }, [fetchState]);
 
-  // No auto-login: siempre pedimos contraseÃ±a hasta pulsar "Entrar".
+  // No auto-login: siempre pedimos contraseña hasta pulsar "Entrar".
 
   const fetchTables = useCallback(() => {
     if (!isAuthed) return;
@@ -169,6 +169,25 @@ export default function AdminPage() {
           [type === 'secondary' ? 'secondary' : 'tertiary']: !allowed
         }));
       });
+  }, [adminKey, isAuthed, parseJson]);
+
+  const closeActivePopups = useCallback(() => {
+    if (!isAuthed) return;
+    fetch(`${API_BASE}/modal/flip/clear`, {
+      method: 'POST',
+      headers: {
+        'X-Admin-Secret': adminKey
+      }
+    })
+      .then((r) => parseJson(r))
+      .then((data) => {
+        setState(data);
+        setModalFlags({
+          secondary: Boolean(data?.allowCloseSecondary),
+          tertiary: Boolean(data?.allowCloseTertiary)
+        });
+      })
+      .catch((e) => alert(e.message || 'No se pudieron cerrar los popups'));
   }, [adminKey, isAuthed, parseJson]);
 
   useEffect(() => {
@@ -291,7 +310,7 @@ export default function AdminPage() {
         <h2>Admin</h2>
         <form className="form" onSubmit={tryAuth}>
           <label>
-            ContraseÃ±a
+            Contraseña
             <input type="password" value={adminKey} onChange={(e) => setAdminKey(e.target.value)} />
           </label>
           <button type="submit">Entrar</button>
@@ -305,7 +324,7 @@ export default function AdminPage() {
       <h2>Admin</h2>
       {isAuthed && (
         <div className="form" style={{ alignSelf: 'flex-end' }}>
-          <button onClick={logout}>Cerrar sesiÃ³n</button>
+          <button onClick={logout}>Cerrar sesión</button>
         </div>
       )}
       {error && <p className="error">{error}</p>}
@@ -349,7 +368,7 @@ export default function AdminPage() {
             </section>
 
             <section className="counter-card">
-              <h3>Celdas de ContenciÃ³n</h3>
+              <h3>Celdas de Contención</h3>
               <div className="counter-value">{state.secondary}</div>
               <div className="form">
                 <label>
@@ -371,25 +390,25 @@ export default function AdminPage() {
                   <input type="number" min={0} value={amountSecondary} onChange={(e) => setAmountSecondary(Number(e.target.value))} />
                 </label>
               </div>
-            <div className="button-grid">
-              <button onClick={update('secondary', +1)}>+</button>
-              <button onClick={update('secondary', -1)}>- </button>
-            </div>
-            <div className="form">
-              <label className="admin-toggle">
-                <input
-                  type="checkbox"
-                  checked={!!modalFlags.secondary}
-                  onChange={(e) => updateModalFlag('secondary', e.target.checked)}
-                />
-                <span>Permitir cerrar popup (contador 2)</span>
-              </label>
-            </div>
-          </section>
+              <div className="button-grid">
+                <button onClick={update('secondary', +1)}>+</button>
+                <button onClick={update('secondary', -1)}>- </button>
+              </div>
+              <div className="form">
+                <label className="admin-toggle">
+                  <input
+                    type="checkbox"
+                    checked={!!modalFlags.secondary}
+                    onChange={(e) => updateModalFlag('secondary', e.target.checked)}
+                  />
+                  <span>Permitir cerrar popup (contador 2)</span>
+                </label>
+              </div>
+            </section>
 
-          <section className="counter-card">
-            <h3>Entrenamiento especializado</h3>
-            <div className="counter-value">{state.tertiary}</div>
+            <section className="counter-card">
+              <h3>Entrenamiento especializado</h3>
+              <div className="counter-value">{state.tertiary}</div>
               <div className="form">
                 <label>
                   Fijar a
@@ -402,21 +421,26 @@ export default function AdminPage() {
                   <input type="number" min={0} value={amountTertiary} onChange={(e) => setAmountTertiary(Number(e.target.value))} />
                 </label>
               </div>
-            <div className="button-grid">
-              <button onClick={update('tertiary', +1)}>+</button>
-              <button onClick={update('tertiary', -1)}>-</button>
-            </div>
-            <div className="form">
-              <label className="admin-toggle">
-                <input
-                  type="checkbox"
-                  checked={!!modalFlags.tertiary}
-                  onChange={(e) => updateModalFlag('tertiary', e.target.checked)}
-                />
-                <span>Permitir cerrar popup (contador 3)</span>
-              </label>
-            </div>
-          </section>
+              <div className="button-grid">
+                <button onClick={update('tertiary', +1)}>+</button>
+                <button onClick={update('tertiary', -1)}>-</button>
+              </div>
+              <div className="form">
+                <label className="admin-toggle">
+                  <input
+                    type="checkbox"
+                    checked={!!modalFlags.tertiary}
+                    onChange={(e) => updateModalFlag('tertiary', e.target.checked)}
+                  />
+                  <span>Permitir cerrar popup (contador 3)</span>
+                </label>
+              </div>
+            </section>
+            <section className="counter-card" style={{ gridColumn: '1 / -1' }}>
+              <h3>Controles de POPUP</h3>
+              <p className="counter-meta">Usa este botón para cerrar cualquier popup de giro que siga abierto.</p>
+              <button onClick={closeActivePopups}>Cerrar popups activos</button>
+            </section>
           </div>
           {tab === 'backup' && (
             <div className="admin-grid" style={{ gridTemplateColumns: '1fr' }}>
@@ -457,9 +481,9 @@ export default function AdminPage() {
                       .then(r => parseJson(r))
                       .then(() => fetchBackups())
                       .catch((e) => alert(e.message));
-                  }}>Purgar por antigÃ¼edad</button>
+                  }}>Purgar por antigüedad</button>
                   <label>
-                    Conservar Ãºltimos
+                    Conservar Últimos
                     <input type="number" min={0} value={purgeKeep} onChange={(e) => setPurgeKeep(e.target.value)} />
                   </label>
                   <button onClick={() => {
@@ -474,7 +498,7 @@ export default function AdminPage() {
                   <thead>
                     <tr>
                       <th>Archivo</th>
-                      <th>TamaÃ±o</th>
+                      <th>Tamaño</th>
                       <th>Modificado</th>
                       <th>Acciones</th>
                     </tr>
@@ -549,7 +573,7 @@ export default function AdminPage() {
                       <th>Dificultad</th>
                       <th>Jugadores</th>
                       <th>Detalle jugadores</th>
-                      <th>CÃ³digo</th>
+                      <th>Código</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -588,7 +612,7 @@ export default function AdminPage() {
               </section>
               <div className="form" style={{ marginTop: 8, gap: 8, display: tablesTab === 'freegame' ? 'flex' : 'none', flexWrap: 'wrap' }}>
                 <button onClick={() => download('/api/admin/export/freegame.csv', 'freegame.csv')}>Exportar CSV (Freegame)</button>
-                <button onClick={() => download('/api/admin/export/freegame_scores.csv', 'freegame_scores.csv')}>Exportar CSV (PuntuaciÃ³n Freegame)</button>
+                <button onClick={() => download('/api/admin/export/freegame_scores.csv', 'freegame_scores.csv')}>Exportar CSV (Puntuación Freegame)</button>
                 <label className="admin-toggle">
                   <input
                     type="checkbox"
@@ -626,7 +650,7 @@ export default function AdminPage() {
                 <table className="data-table" style={{ width: '100%' }}>
                   <thead>
                     <tr>
-                      <th>Mesa</th><th>Nombre</th><th>Reto inevitable</th><th>Jugadores</th><th>Detalle jugadores</th><th>CÃ³digo</th>
+                      <th>Mesa</th><th>Nombre</th><th>Reto inevitable</th><th>Jugadores</th><th>Detalle jugadores</th><th>Código</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -662,7 +686,7 @@ export default function AdminPage() {
                 </table>
               </section>
               <section className="counter-card" style={{ overflowX: 'auto', display: tablesTab === 'freegame' ? 'block' : 'none' }}>
-                <h3>PuntuaciÃ³n por mesa (desglose)</h3>
+                <h3>Puntuación por mesa (desglose)</h3>
                 <table className="data-table" style={{ width: '100%' }}>
                   <thead>
                     <tr>
@@ -676,26 +700,26 @@ export default function AdminPage() {
                     </tr>
                   </thead>
                   <tbody>
-                  {(tables.freegame || [])
-                    .slice()
-                    .sort((a, b) => parseTableNumber(a?.tableNumber) - parseTableNumber(b?.tableNumber))
-                    .map((t) => {
-                      const noCh = !t?.inevitableChallenge || t.inevitableChallenge === '(Ninguno)'; const base = noCh ? 0 : (t?.difficulty === 'Experto' ? 5 : 3);
-                      const legacyCount = noCh ? 0 : (Array.isArray(t?.playersInfo) ? t.playersInfo.filter(p => p.legacy && String(p.legacy) !== 'Ninguno').length : 0);
-                      const vp = noCh ? 0 : (typeof t?.victoryPoints === 'number' ? t.victoryPoints : 0);
-                      const total = noCh ? 0 : (base + legacyCount + vp);
-                      return (
-                        <tr key={t.id + '-score'}>
-                          <td>{t.tableNumber}</td>
-                          <td>{t.difficulty || 'Normal'}</td>
-                          <td>{t.inevitableChallenge || '(Ninguno)'}</td>
-                          <td>{base}</td>
-                          <td>{legacyCount}</td>
-                          <td>{vp}</td>
-                          <td>{total}</td>
-                        </tr>
-                      );
-                    })}
+                    {(tables.freegame || [])
+                      .slice()
+                      .sort((a, b) => parseTableNumber(a?.tableNumber) - parseTableNumber(b?.tableNumber))
+                      .map((t) => {
+                        const noCh = !t?.inevitableChallenge || t.inevitableChallenge === '(Ninguno)'; const base = noCh ? 0 : (t?.difficulty === 'Experto' ? 5 : 3);
+                        const legacyCount = noCh ? 0 : (Array.isArray(t?.playersInfo) ? t.playersInfo.filter(p => p.legacy && String(p.legacy) !== 'Ninguno').length : 0);
+                        const vp = noCh ? 0 : (typeof t?.victoryPoints === 'number' ? t.victoryPoints : 0);
+                        const total = noCh ? 0 : (base + legacyCount + vp);
+                        return (
+                          <tr key={t.id + '-score'}>
+                            <td>{t.tableNumber}</td>
+                            <td>{t.difficulty || 'Normal'}</td>
+                            <td>{t.inevitableChallenge || '(Ninguno)'}</td>
+                            <td>{base}</td>
+                            <td>{legacyCount}</td>
+                            <td>{vp}</td>
+                            <td>{total}</td>
+                          </tr>
+                        );
+                      })}
                   </tbody>
                 </table>
               </section>
