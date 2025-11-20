@@ -4,12 +4,12 @@ import CharacterSelector from '../components/CharacterSelector.jsx';
 
 const LEGACY_OPTIONS = [
   'Ninguno',
-  'Vastago de M',
-  'Mutante hibrido',
+  'Vástago de M',
+  'Mutante híbrido',
   'Equipo de dos',
-  'Los mas buscados',
+  'Los más buscados',
   'Equipado para lo peor',
-  'Guerreros arana',
+  'Guerreros araña',
   'Instruidas por Thanos',
   'Rabia irradiada',
   'Ronin',
@@ -21,12 +21,12 @@ const HELP = {
   mesaNumber: 'Número único e identificativo de tu mesa, estará indicado físicamente en la misma',
   mesaName: 'Nombre del grupo de jugadores, es opcional.',
   difficulty: 'Dificultad en la que se va a jugar la partida. Supone 3 puntos si es Normal y 5 puntos si es Experto.',
-  challenge: 'Reto seleccionado para la partida de la mañana. Si se elige Ninguno, la puntuacion total sera 0.',
+  challenge: 'Reto seleccionado para la partida de la mañana. Si se elige Ninguno, la puntuación total será 0.',
   players: 'Entre 1 y 4 jugadores. Aparecerán tantas fichas como jugadores seleccionados.',
   playerCharacter: 'Nombre del personaje. Escribe parte del nombre y selecciona la sugerencia normalizada.',
   playerAspect: 'Lista de aspectos. Para Adam Warlock queda bloqueado.',
   playerLegacy: 'Legado seleccionado para este héroe. Cada legado distinto de "Ninguno" suma 1 punto adicional.',
-  joinCode: 'Selecciona la mesa creada con anterioridad para gestionarla o ver su puntuacion. Puedes entrar de nuevo para modificar los puntos de Victoria.'
+  joinCode: 'Selecciona la mesa creada con anterioridad para gestionarla o ver su puntuación. Puedes entrar de nuevo para modificar los puntos de Victoria.'
 };
 
 function Help({ text }) {
@@ -38,7 +38,7 @@ function Help({ text }) {
       <button
         type="button"
         className="help-icon"
-        aria-label="Mas informacion"
+        aria-label="Más información"
         onClick={(e) => {
           e.preventDefault();
           setOpen((prev) => !prev);
@@ -142,23 +142,23 @@ export default function FreeGamePage() {
     try {
       if (mode === 'create') {
         if (!mesaNumber) {
-          alert('Indica un numero de mesa');
+          alert('Indica un número de mesa');
           return;
         }
         const num = parseInt(mesaNumber, 10) || 0;
         const used = (existingFree || []).some((t) => Number(t.tableNumber) === num);
         if (used) {
-          alert(`El numero de mesa ${num} ya existe. Elige otro.`);
+          alert(`El número de mesa ${num} ya existe. Elige otro.`);
           return;
         }
         const parsedPlayers = parseInt(players, 10);
         const totalPlayers = Number.isNaN(parsedPlayers) ? 0 : parsedPlayers;
         if (totalPlayers <= 0) {
-          alert('Indica numero de jugadores');
+          alert('Indica número de jugadores');
           return;
         }
         if (totalPlayers > 4) {
-          alert('Maximo 4 jugadores');
+          alert('Máximo 4 jugadores');
           return;
         }
         const res = await fetch('/api/tables/freegame/create', {
@@ -200,7 +200,7 @@ export default function FreeGamePage() {
             navigate('/freegame');
           }
         } else {
-          alert('Codigo no encontrado');
+          alert('Código no encontrado');
         }
       }
     } catch (err) {
@@ -396,7 +396,7 @@ export default function FreeGamePage() {
                         t.name && String(t.name).trim().length > 0
                           ? `${base} - ${t.name}`
                           : base;
-                      return `${name} - Codigo: ${t.code}`;
+                      return `${name} - Código: ${t.code}`;
                     })()}
                   </option>
                 ))}

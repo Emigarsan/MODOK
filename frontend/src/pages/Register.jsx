@@ -21,7 +21,7 @@ function Help({ text }) {
       <button
         type="button"
         className="help-icon"
-        aria-label="Mas informacion"
+        aria-label="Más información"
         onClick={(e) => {
           e.preventDefault();
           setOpen((prev) => !prev);
@@ -124,7 +124,7 @@ export default function RegisterPage() {
     try {
       if (mode === 'create') {
         if (!mesaNumber || !difficulty || !playersCount) {
-          alert('Completa numero de mesa, dificultad y jugadores');
+          alert('Completa número de mesa, dificultad y jugadores');
           return;
         }
         const num = parseInt(mesaNumber, 10) || 0;
@@ -135,7 +135,7 @@ export default function RegisterPage() {
         const parsedPlayers = parseInt(playersCount, 10);
         const total = Number.isNaN(parsedPlayers) ? 0 : parsedPlayers;
         if (total > 4) {
-          alert('Maximo 4 jugadores');
+          alert('Máximo 4 jugadores');
           return;
         }
         const body = {
@@ -154,7 +154,7 @@ export default function RegisterPage() {
           body: JSON.stringify(body)
         });
         if (res.status === 409) {
-          alert(`El numero de mesa ${num} ya existe. Elige otro.`);
+          alert(`El número de mesa ${num} ya existe. Elige otro.`);
           return;
         }
         if (!res.ok) throw new Error('No se pudo crear la mesa');
@@ -173,7 +173,7 @@ export default function RegisterPage() {
           if (mesa !== '') navigate(`/mesa/${mesa}`);
           else navigate('/register');
         } else {
-          alert('Codigo no encontrado');
+          alert('Código no encontrado');
         }
       }
     } catch (err) {
@@ -300,23 +300,23 @@ export default function RegisterPage() {
                     value={p.aspect}
                     disabled={isAdam}
                     onChange={(e) => {
-                        const value = e.target.value;
-                        setPlayers((prev) =>
-                          prev.map((row, i) => (i === idx ? { ...row, aspect: value } : row))
-                        );
-                      }}
-                    >
-                      <option value="" disabled>
-                        {isAdam ? 'No aplica' : 'Selecciona aspecto'}
+                      const value = e.target.value;
+                      setPlayers((prev) =>
+                        prev.map((row, i) => (i === idx ? { ...row, aspect: value } : row))
+                      );
+                    }}
+                  >
+                    <option value="" disabled>
+                      {isAdam ? 'No aplica' : 'Selecciona aspecto'}
+                    </option>
+                    {options.map((a) => (
+                      <option key={a} value={a}>
+                        {a}
                       </option>
-                      {options.map((a) => (
-                        <option key={a} value={a}>
-                          {a}
-                        </option>
-                      ))}
-                    </select>
-                  );
-                })()}
+                    ))}
+                  </select>
+                );
+              })()}
             </label>
           </div>
         ))}
@@ -346,7 +346,7 @@ export default function RegisterPage() {
                     t.tableName && String(t.tableName).trim().length > 0
                       ? `${base} - ${t.tableName}`
                       : base;
-                  return `${named} - Codigo: ${t.code}`;
+                  return `${named} - Código: ${t.code}`;
                 })()}
               </option>
             ))}

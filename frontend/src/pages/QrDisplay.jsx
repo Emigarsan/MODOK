@@ -26,7 +26,7 @@ export default function QrDisplayPage() {
       fetch('/api/display/qr')
         .then((response) => {
           if (!response.ok) {
-            throw new Error('Respuesta no valida');
+            throw new Error('Respuesta no válida');
           }
           return response.json();
         })
@@ -59,21 +59,21 @@ export default function QrDisplayPage() {
       <div className="qr-grid">
         <section className={`qr-card ${flags.freegame ? 'active' : 'inactive'}`}>
           <h2>Retos Inevitables (Mañana)</h2>
-          <img src={qrMorning} alt="Codigo QR Retos Inevitables por la ma\u00f1ana" />
+          <img src={qrMorning} alt="Código QR Retos Inevitables por la mañana" />
           <p className="qr-status">
             {flags.freegame ? 'Disponible para escanear' : 'Todavía no puedes acceder a los Retos Inevitables'}
           </p>
         </section>
         <section className={`qr-card ${flags.event ? 'active' : 'inactive'}`}>
           <h2>Evento (Tarde)</h2>
-          <img src={qrAfternoon} alt="Codigo QR Evento por la tarde" />
+          <img src={qrAfternoon} alt="Código QR Evento por la tarde" />
           <p className="qr-status">
             {flags.event ? 'Disponible para escanear' : 'Todavía no puedes acceder al Evento'}
           </p>
         </section>
       </div>
       {!error && (
-        <p className="status-banner">Esta pantalla se actualiza automaticamente cada {Math.round(POLL_INTERVAL_MS / 1000)} segundos.</p>
+        <p className="status-banner">Esta pantalla se actualiza automáticamente cada {Math.round(POLL_INTERVAL_MS / 1000)} segundos.</p>
       )}
       {loading && (
         <div className="modal-overlay">

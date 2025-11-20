@@ -21,7 +21,7 @@ export default function FreeGameMesa() {
         setError('');
         setScenarioCleared(d?.scenarioCleared ? 'si' : 'no');
       })
-      .catch(() => setError('No se encontro la mesa'))
+      .catch(() => setError('No se encontró la mesa'))
       .finally(() => setLoading(false));
   }, [mesaId]);
 
@@ -68,13 +68,13 @@ export default function FreeGameMesa() {
 
   const detalleJugadores = Array.isArray(data.playersInfo)
     ? data.playersInfo.map((p) => {
-        if (!p) return '';
-        const parts = [];
-        if (p.character) parts.push(p.character);
-        if (p.aspect) parts.push(`(${p.aspect})`);
-        if (p.legacy && p.legacy !== 'Ninguno') parts.push(`[${p.legacy}]`);
-        return parts.join(' ').trim();
-      })
+      if (!p) return '';
+      const parts = [];
+      if (p.character) parts.push(p.character);
+      if (p.aspect) parts.push(`(${p.aspect})`);
+      if (p.legacy && p.legacy !== 'Ninguno') parts.push(`[${p.legacy}]`);
+      return parts.join(' ').trim();
+    })
     : [];
 
   return (
@@ -118,7 +118,7 @@ export default function FreeGameMesa() {
               onChange={() => setScenarioCleared('si')}
               disabled={!hasChallenge || saved}
             />
-            Si
+            Sí
           </label>
           <label className="option-toggle">
             <input
@@ -144,12 +144,12 @@ export default function FreeGameMesa() {
           />
         </label>
         <button type="button" disabled={noChallenge || saved} onClick={saveVP}>
-          Enviar puntuacion
+          Enviar puntuación
         </button>
         {saved && <span style={{ marginLeft: 8 }}>Guardado como definitivo</span>}
       </div>
 
-      <h3 style={{ marginTop: 16 }}>Puntuacion por mesa (desglose)</h3>
+      <h3 style={{ marginTop: 16 }}>Puntuación por mesa (desglose)</h3>
       <div className="table-scroll">
         <table className="data-table data-table--compact">
           <thead>

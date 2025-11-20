@@ -43,7 +43,7 @@ export default function AdminPage() {
       .then((d) => Promise.reject(new Error(d?.error || fallback))))
     , []);
 
-  // Campos de fijaci?n permanecen vacÃ­os hasta que el usuario escriba.
+  // Campos de fijación permanecen vacíos hasta que el usuario escriba.
   const parseTableNumber = (value) => {
     const num = Number(value);
     return Number.isFinite(num) ? num : Number.MAX_SAFE_INTEGER;

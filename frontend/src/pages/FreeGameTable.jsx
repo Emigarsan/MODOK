@@ -11,7 +11,7 @@ export default function FreeGameTablePage() {
   const legacyOptions = useMemo(() => ([
     'Ninguno',
     'Vástago de M',
-    'Mutante hí­brido',
+    'Mutante híbrido',
     'Equipo de dos',
     'Los más buscados',
     'Equipado para lo peor',
@@ -118,12 +118,12 @@ export default function FreeGameTablePage() {
           </div>
         </div>
         <div>
-          <strong>CÃ³digo:</strong> {table.code}
+          <strong>Código:</strong> {table.code}
         </div>
       </div>
 
       <div className="counter-card" style={{ marginTop: 16 }}>
-        <h3>Puntuacion de la mesa</h3>
+        <h3>Puntuación de la mesa</h3>
         <div className="option-toggle-group" style={{ justifyContent: 'center', marginBottom: '0.75rem' }}>
           <span className="challenge-stat-label" style={{ letterSpacing: '0.08em', textTransform: 'uppercase' }}>Escenario superado</span>
           <label className={`option-toggle${!hasChallenge ? ' is-disabled' : ''}`}>
@@ -139,7 +139,7 @@ export default function FreeGameTablePage() {
               }}
               disabled={!hasChallenge}
             />
-            Si
+            Sí
           </label>
           <label className="option-toggle">
             <input
@@ -184,7 +184,7 @@ export default function FreeGameTablePage() {
             </tbody>
           </table>
         </div>
-        <p className="counter-meta">Si no hay reto inevitable, la puntuaciÃ³n serÃ¡ 0.</p>
+        <p className="counter-meta">Si no hay reto inevitable, la puntuación será 0.</p>
       </div>
 
       <div className="form" style={{ marginTop: 16 }}>
