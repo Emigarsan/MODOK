@@ -62,12 +62,14 @@ export default function HomePage() {
       key: 'freegame',
       title: 'Retos Inevitables (Mañana)',
       activeText: 'Disponible para registrar mesa',
+      inactiveText: 'No disponible por ahora',
       to: '/freegame'
     },
     {
       key: 'event',
       title: 'Evento (Tarde)',
       activeText: 'Disponible para registrar mesa',
+      inactiveText: 'No disponible por ahora',
       to: '/register'
     }
   ];
@@ -75,18 +77,25 @@ export default function HomePage() {
   return (
     <div className="home-page">
       <div className="home-grid">
-        {cards.map((card) => {
+        {cards.map((card, idx) => {
           const isOpen = flags[card.key];
           return (
-            <section key={card.key} className={`home-card ${isOpen ? 'active' : 'inactive'}`}>
-              <h2>{card.title}</h2>
+            <section
+              key={card.key}
+              className={`home-card ${isOpen ? 'active' : 'inactive'}`}
+              style={{ animationDelay: `${idx * 80}ms` }}
+              role="article"
+              aria-labelledby={`card-${card.key}-title`}
+            >
+              <h2 id={`card-${card.key}-title`}>{card.title}</h2>
               <p className="status-text">{isOpen ? card.activeText : card.inactiveText}</p>
               <button
                 type="button"
                 onClick={() => handleNavigate(card.to)}
                 disabled={!isOpen || loading}
+                aria-disabled={!isOpen || loading}
               >
-                Registrar Mesa
+                Registrar mesa
               </button>
             </section>
           );
