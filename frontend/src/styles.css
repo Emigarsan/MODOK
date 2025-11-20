@@ -427,6 +427,66 @@ header p {
   width: 100%;
 }
 
+/* Mobile-specific tweaks for Home page and touch devices */
+@media (max-width: 600px) {
+  .home-grid {
+    gap: 0.9rem;
+    grid-template-columns: 1fr;
+    padding: 0 0.5rem;
+  }
+
+  .home-card {
+    padding: 1rem;
+    border-radius: 1rem;
+    transform: none !important;
+    opacity: 1 !important;
+    box-shadow: 0 10px 26px rgba(0, 0, 0, 0.36);
+  }
+
+  .home-card:hover {
+    transform: none;
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.42);
+  }
+
+  .home-card h2 {
+    font-size: 1.05rem;
+    line-height: 1.2;
+  }
+
+  .home-card .status-text {
+    font-size: 0.95rem;
+    color: var(--color-text-secondary);
+  }
+
+  .home-card button {
+    width: 100%;
+    padding: 0.85rem 1rem;
+    font-size: 1rem;
+    border-radius: 0.9rem;
+    align-self: stretch;
+  }
+
+  /* Reduce background prominence on small screens */
+  body::before {
+    opacity: 0.22;
+    background-position: top center;
+    background-size: cover;
+  }
+
+  .status-banner {
+    font-size: 0.9rem;
+    padding: 0 1rem;
+    text-align: center;
+  }
+
+  /* Improve touch hit targets for help icon */
+  .help-icon {
+    width: 1.4rem;
+    height: 1.4rem;
+    font-size: 0.75rem;
+  }
+}
+
 .character-selector input {
   width: 100%;
 }
