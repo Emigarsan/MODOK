@@ -123,7 +123,6 @@ export default function DisplayPage() {
               <>
                 {flipImageSrc && <img src={flipImageSrc} alt="Siguiente celda" className="modal-flip-image" />}
                 <p className="modal-stop-text">Dale la vuelta a la celda y muestra la siguiente carta</p>
-                <p className="counter-meta">El equipo de Admin cerrará este mensaje en todos los dispositivos.</p>
               </>
             ) : (
               <>
@@ -146,20 +145,20 @@ export default function DisplayPage() {
       <div className="dashboard">
         {error && <p className="error">{error}</p>}
 
-      {primaryRevealed && (
-        <section className="counter-card">
+        {primaryRevealed && (
+          <section className="counter-card">
             <h2>Vida M.O.D.O.K.</h2>
             <img src={centralImage} alt="M.O.D.O.K" className="counter-art" />
             <div className="counter-value">{state.primary}</div>
           </section>
         )}
 
-      <section className={`counter-card ${secondaryLocked ? 'counter-card--locked' : ''}`}>
-        <h2>{secondaryTitle}</h2>
-        {!secondaryLocked && <div className="counter-subtitle">{secondaryNumberLabel}</div>}
-        <img
-          src={displayedSecondaryImage}
-          alt={`Celda ${state.secondaryImageIndex + 1}`}
+        <section className={`counter-card ${secondaryLocked ? 'counter-card--locked' : ''}`}>
+          <h2>{secondaryTitle}</h2>
+          {!secondaryLocked && <div className="counter-subtitle">{secondaryNumberLabel}</div>}
+          <img
+            src={displayedSecondaryImage}
+            alt={`Celda ${state.secondaryImageIndex + 1}`}
             className="counter-art"
           />
           {!secondaryLocked && <div className="counter-value">{state.secondary}</div>}

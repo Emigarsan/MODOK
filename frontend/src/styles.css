@@ -346,8 +346,6 @@ header p {
   border-color: rgba(17, 16, 24, 0.92) transparent transparent transparent;
 }
 
-.help-wrapper:hover .help-tooltip,
-.help-wrapper:focus-within .help-tooltip,
 .help-wrapper.is-open .help-tooltip {
   opacity: 1;
   visibility: visible;

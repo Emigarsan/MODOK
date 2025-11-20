@@ -213,7 +213,6 @@ export function EventView({ onAction, mesaId } = {}) {
             <>
               {flipImageSrc && <img src={flipImageSrc} alt="Siguiente celda" className="modal-flip-image" />}
               <p className="modal-stop-text">Dale la vuelta a la celda y muestra la siguiente carta</p>
-              <p className="counter-meta">El equipo de Admin cerrará este mensaje en todos los dispositivos.</p>
             </>
           ) : (
             <>
