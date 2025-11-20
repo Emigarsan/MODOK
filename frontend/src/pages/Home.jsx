@@ -76,6 +76,9 @@ export default function HomePage() {
 
   return (
     <div className="home-page">
+      <div className="home-hero">
+        <img src="/icon-512.png" alt="MODOK" className="home-hero-logo" />
+      </div>
       <div className="home-grid">
         {cards.map((card, idx) => {
           const isOpen = flags[card.key];

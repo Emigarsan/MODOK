@@ -141,6 +141,29 @@ header h1 {
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
 }
 
+/* Logo / hero above the home grid */
+.home-hero {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 0.5rem;
+}
+
+.home-hero-logo {
+  width: 7.25rem;
+  height: auto;
+  display: block;
+  filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.45));
+  border-radius: 0.75rem;
+}
+
+@media (max-width: 600px) {
+  .home-hero-logo {
+    width: 5.25rem;
+  }
+}
+
 .home-card {
   background: var(--color-surface);
   border: 1px solid var(--color-divider);
