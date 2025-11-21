@@ -40,7 +40,6 @@ export default function DisplayPage() {
   const [initialLoading, setInitialLoading] = useState(true);
   const [error, setError] = useState(null);
   const [stopDismissed, setStopDismissed] = useState(false);
-  const [flipDismissed, setFlipDismissed] = useState(false);
   const resetRef = useRef(initialState.modalResetVersion);
 
   const secondaryImages = useMemo(
@@ -118,13 +117,12 @@ export default function DisplayPage() {
   const showSecondaryModal = secondaryLocked && !stopDismissed;
   const showTertiaryModal = state.tertiary === 0 && !stopDismissed;
   const flipImageSrc = flipImageMap[state.flipImageIndex] ?? null;
-  const showFlipModal = state.showFlipModal && !!flipImageSrc && !flipDismissed && !showSecondaryModal && !showTertiaryModal;
+  const showFlipModal = state.showFlipModal && !!flipImageSrc && !showSecondaryModal && !showTertiaryModal;
   const showModal = showSecondaryModal || showTertiaryModal || showFlipModal;
 
   useEffect(() => {
     if (state.modalResetVersion !== resetRef.current) {
       setStopDismissed(true);
-      setFlipDismissed(true);
       resetRef.current = state.modalResetVersion;
     }
   }, [state.modalResetVersion]);
@@ -136,10 +134,10 @@ export default function DisplayPage() {
   }, [secondaryLocked, state.tertiary]);
 
   useEffect(() => {
-    if (!state.showFlipModal) {
-      setFlipDismissed(false);
+    if (!secondaryLocked && state.tertiary > 0) {
+      setStopDismissed(false);
     }
-  }, [state.showFlipModal]);
+  }, [secondaryLocked, state.tertiary]);
 
   return (
     <div className="display-layout">
