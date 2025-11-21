@@ -169,13 +169,9 @@ export function EventView({ onAction, mesaId } = {}) {
   }, [showModal]);
 
   const closeModal = useCallback(() => {
-    const blockedSecondary = showSecondaryModal && !state.allowCloseSecondary;
-    const blockedTertiary = showTertiaryModal && !state.allowCloseTertiary;
-    if (blockedSecondary || blockedTertiary) return;
-
     if (showSecondaryModal) setSecondaryDismissed(true);
     if (showTertiaryModal) setTertiaryDismissed(true);
-  }, [showSecondaryModal, showTertiaryModal, state.allowCloseSecondary, state.allowCloseTertiary]);
+  }, [showSecondaryModal, showTertiaryModal]);
 
   const updateCounter = useCallback(
     (segment, delta) => {
@@ -203,9 +199,7 @@ export function EventView({ onAction, mesaId } = {}) {
   );
 
   if (showModal) {
-    const isBlocked =
-      (showSecondaryModal && !state.allowCloseSecondary) || (showTertiaryModal && !state.allowCloseTertiary);
-    const isFlip = showFlipModal && !isBlocked;
+    const isFlip = showFlipModal;
     return (
       <div className="modal-backdrop" role="dialog" aria-modal="true">
         <div className={`modal ${isFlip ? 'modal-flip' : 'modal-display'}`}>
@@ -227,10 +221,9 @@ export function EventView({ onAction, mesaId } = {}) {
                   Habéis derrotado el Plan Secundario. Seguid las instrucciones de los organizadores.
                 </p>
               )}
-              <button type="button" onClick={closeModal} disabled={isBlocked}>
+              <button type="button" onClick={closeModal}>
                 Cerrar
               </button>
-              {isBlocked && <p className="counter-meta">Esperando autorización desde Admin.</p>}
             </>
           )}
         </div>
@@ -322,3 +315,4 @@ export default function App() {
 
   return <EventView mesaId={mesaId} onAction={mesaId ? onAction : undefined} />;
 }
+

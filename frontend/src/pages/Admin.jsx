@@ -12,7 +12,6 @@ export default function AdminPage() {
   const [sVal, setSVal] = useState('');
   const [tVal, setTVal] = useState('');
   const [imgIdx, setImgIdx] = useState(''); // 1..7 for UI
-  const [modalFlags, setModalFlags] = useState({ secondary: false, tertiary: false });
   const [adminKey, setAdminKey] = useState('');
   const [isAuthed, setIsAuthed] = useState(false);
   const [tables, setTables] = useState({ register: [], freegame: [] });
@@ -58,10 +57,6 @@ export default function AdminPage() {
         setState(data);
         setError(null);
         syncFromState(data);
-        setModalFlags({
-          secondary: Boolean(data?.allowCloseSecondary),
-          tertiary: Boolean(data?.allowCloseTertiary)
-        });
       })
       .catch((e) => setError(e.message));
   }, []);;
@@ -138,39 +133,6 @@ export default function AdminPage() {
       .catch((e) => alert(e.message));
   }, [adminKey, isAuthed, parseJson]);
 
-  const updateModalFlag = useCallback((type, allowed) => {
-    if (!isAuthed) return;
-    const endpoint = `${API_BASE}/modal/${type === 'secondary' ? 'secondary' : 'tertiary'}`;
-    // Optimistic update
-    setModalFlags((prev) => ({
-      ...prev,
-      [type === 'secondary' ? 'secondary' : 'tertiary']: allowed
-    }));
-    fetch(endpoint, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-Admin-Secret': adminKey
-      },
-      body: JSON.stringify({ allowed })
-    })
-      .then((r) => parseJson(r))
-      .then((data) => {
-        setModalFlags({
-          secondary: Boolean(data?.allowCloseSecondary ?? allowed),
-          tertiary: Boolean(data?.allowCloseTertiary ?? allowed)
-        });
-      })
-      .catch((e) => {
-        alert(e.message || 'No se pudo actualizar el flag');
-        // revert on error
-        setModalFlags((prev) => ({
-          ...prev,
-          [type === 'secondary' ? 'secondary' : 'tertiary']: !allowed
-        }));
-      });
-  }, [adminKey, isAuthed, parseJson]);
-
   const closeActivePopups = useCallback(() => {
     if (!isAuthed) return;
     fetch(`${API_BASE}/modal/flip/clear`, {
@@ -182,10 +144,6 @@ export default function AdminPage() {
       .then((r) => parseJson(r))
       .then((data) => {
         setState(data);
-        setModalFlags({
-          secondary: Boolean(data?.allowCloseSecondary),
-          tertiary: Boolean(data?.allowCloseTertiary)
-        });
       })
       .catch((e) => alert(e.message || 'No se pudieron cerrar los popups'));
   }, [adminKey, isAuthed, parseJson]);
@@ -394,16 +352,6 @@ export default function AdminPage() {
                 <button onClick={update('secondary', +1)}>+</button>
                 <button onClick={update('secondary', -1)}>- </button>
               </div>
-              <div className="form">
-                <label className="admin-toggle">
-                  <input
-                    type="checkbox"
-                    checked={!!modalFlags.secondary}
-                    onChange={(e) => updateModalFlag('secondary', e.target.checked)}
-                  />
-                  <span>Permitir cerrar popup (contador 2)</span>
-                </label>
-              </div>
             </section>
 
             <section className="counter-card">
@@ -425,17 +373,7 @@ export default function AdminPage() {
                 <button onClick={update('tertiary', +1)}>+</button>
                 <button onClick={update('tertiary', -1)}>-</button>
               </div>
-              <div className="form">
-                <label className="admin-toggle">
-                  <input
-                    type="checkbox"
-                    checked={!!modalFlags.tertiary}
-                    onChange={(e) => updateModalFlag('tertiary', e.target.checked)}
-                  />
-                  <span>Permitir cerrar popup (contador 3)</span>
-                </label>
-              </div>
-            </section>
+          </section>
             <section className="counter-card" style={{ gridColumn: '1 / -1' }}>
               <h3>Controles de POPUP</h3>
               <p className="counter-meta">Usa este botón para cerrar cualquier popup de giro que siga abierto.</p>
