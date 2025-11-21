@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import centralImage from '../assets/50103a.png';
 import celda1 from '../assets/secondary/5A Entorno Celda 1.jpg';
 import celda2 from '../assets/secondary/6A Entorno Celda 2.jpg';
