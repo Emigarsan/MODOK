@@ -1,6 +1,7 @@
 package com.example.counter.service;
 
 import com.example.counter.service.model.FreeGameTable;
+import com.example.counter.service.model.FreeGamePlayerInfo;
 import com.example.counter.service.model.PlayerInfo;
 import com.example.counter.service.model.RegisterTable;
 import org.springframework.stereotype.Service;
@@ -195,6 +196,8 @@ public class TablesService {
                 String tableName = t.tableName();
                 String difficulty = t.difficulty();
                 int players = t.players();
+                List<PlayerInfo> playersInfo = t.playersInfo() != null ? new ArrayList<>(t.playersInfo())
+                        : new ArrayList<>();
 
                 if (payload != null) {
                     Object tn = payload.get("tableNumber");
@@ -222,10 +225,28 @@ public class TablesService {
                             players = Math.max(0, Integer.parseInt((String) pl));
                         } catch (Exception ignored) {
                         }
+
+                    // Update playersInfo from payload
+                    Object pi = payload.get("playersInfo");
+                    if (pi instanceof List) {
+                        playersInfo.clear();
+                        for (Object pObj : (List<?>) pi) {
+                            if (pObj instanceof java.util.Map) {
+                                java.util.Map<?, ?> pMap = (java.util.Map<?, ?>) pObj;
+                                String character = (String) pMap.get("character");
+                                if (character == null)
+                                    character = "";
+                                String aspect = (String) pMap.get("aspect");
+                                if (aspect == null)
+                                    aspect = "";
+                                playersInfo.add(new PlayerInfo(character, aspect));
+                            }
+                        }
+                    }
                 }
 
                 registerTables.set(i, new RegisterTable(t.id(), tableNumber, tableName, difficulty, players,
-                        t.playersInfo(), t.code(), t.createdAt()));
+                        playersInfo, t.code(), t.createdAt()));
                 return true;
             }
         }
@@ -243,6 +264,8 @@ public class TablesService {
                 int players = t.players();
                 int victoryPoints = t.victoryPoints();
                 boolean scenarioCleared = t.scenarioCleared();
+                List<FreeGamePlayerInfo> playersInfo = t.playersInfo() != null ? new ArrayList<>(t.playersInfo())
+                        : new ArrayList<>();
 
                 if (payload != null) {
                     Object tn = payload.get("tableNumber");
@@ -289,10 +312,31 @@ public class TablesService {
                         scenarioCleared = (Boolean) sc;
                     else if (sc instanceof String)
                         scenarioCleared = Boolean.parseBoolean((String) sc);
+
+                    // Update playersInfo from payload
+                    Object pi = payload.get("playersInfo");
+                    if (pi instanceof List) {
+                        playersInfo.clear();
+                        for (Object pObj : (List<?>) pi) {
+                            if (pObj instanceof java.util.Map) {
+                                java.util.Map<?, ?> pMap = (java.util.Map<?, ?>) pObj;
+                                String character = (String) pMap.get("character");
+                                if (character == null)
+                                    character = "";
+                                String aspect = (String) pMap.get("aspect");
+                                if (aspect == null)
+                                    aspect = "";
+                                String legacy = (String) pMap.get("legacy");
+                                if (legacy == null)
+                                    legacy = "Ninguno";
+                                playersInfo.add(new FreeGamePlayerInfo(character, aspect, legacy));
+                            }
+                        }
+                    }
                 }
 
                 freeGameTables.set(i, new FreeGameTable(t.id(), tableNumber, name, difficulty, inevitable, players,
-                        t.playersInfo(), t.code(), Math.max(0, victoryPoints), scenarioCleared, t.createdAt()));
+                        playersInfo, t.code(), Math.max(0, victoryPoints), scenarioCleared, t.createdAt()));
                 return true;
             }
         }

@@ -27,10 +27,12 @@ export default function AdminEditPage() {
     const [aspects, setAspects] = useState([]);
     const [swAspects, setSwAspects] = useState([]);
     const adminKey = localStorage.getItem('adminKey') || '';
+    const [formError, setFormError] = useState(null);
+    const [success, setSuccess] = useState(null);
 
     useEffect(() => {
         if (!adminKey) {
-            alert('No autenticado como admin');
+            setError('No autenticado como admin');
             navigate('/admin');
             return;
         }
@@ -101,6 +103,43 @@ export default function AdminEditPage() {
 
     const handleSave = useCallback(async () => {
         if (!form) return;
+        // client-side validation
+        setFormError(null);
+        setSuccess(null);
+
+        if (type === 'register') {
+            if (!form.tableName || !String(form.tableName).trim()) {
+                setFormError('El nombre de la mesa no puede estar vacío.');
+                return;
+            }
+        } else {
+            if (!form.name || !String(form.name).trim()) {
+                setFormError('El nombre de la mesa no puede estar vacío.');
+                return;
+            }
+        }
+
+        if ((form.players || 0) !== (form.playersInfo || []).length) {
+            setFormError('El número de jugadores no coincide con las filas de jugadores. Ajusta el contador o las filas.');
+            return;
+        }
+
+        for (let i = 0; i < (form.playersInfo || []).length; i++) {
+            const p = form.playersInfo[i];
+            if (!p.character || !String(p.character).trim()) {
+                setFormError(`Jugador ${i + 1}: selecciona un personaje.`);
+                return;
+            }
+            if (p.character !== 'Adam Warlock' && (!p.aspect || !String(p.aspect).trim())) {
+                setFormError(`Jugador ${i + 1}: selecciona un aspecto válido.`);
+                return;
+            }
+            if (type !== 'register' && (!p.legacy || !String(p.legacy).trim())) {
+                setFormError(`Jugador ${i + 1}: selecciona un legado.`);
+                return;
+            }
+        }
+
         try {
             const endpoint = `/api/admin/tables/${encodeURIComponent(type)}/${encodeURIComponent(id)}`;
             const payload = {};
@@ -123,10 +162,13 @@ export default function AdminEditPage() {
                 const j = await res.json().catch(() => ({}));
                 throw new Error(j?.error || 'Error al actualizar');
             }
-            alert('Actualizado');
-            navigate('/admin');
+            setFormError(null);
+            setSuccess('Actualizado');
+            // navigate back after short delay so user sees the success message
+            setTimeout(() => navigate('/admin'), 900);
         } catch (e) {
-            alert(e.message || 'No se pudo guardar');
+            setFormError(e.message || 'No se pudo guardar');
+            setSuccess(null);
         }
     }, [adminKey, form, id, navigate, type]);
 
@@ -138,6 +180,8 @@ export default function AdminEditPage() {
         <div className="container overlay-card">
             <h2>Editar mesa ({type === 'register' ? 'Evento' : 'Freegame'})</h2>
             <div className="form">
+                {formError && <div className="inline-error">{formError}</div>}
+                {success && <div className="success-text">{success}</div>}
                 <label className="field-label">
                     <span className="field-label-title">Numero de mesa (no editable)</span>
                     <input value={form.tableNumber} disabled />
@@ -225,7 +269,7 @@ export default function AdminEditPage() {
                             </label>
                         )}
                         <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
-                            <button type="button" onClick={() => removePlayer(idx)}>Eliminar jugador</button>
+                            <button type="button" className="small-action-button" onClick={() => removePlayer(idx)}>Eliminar</button>
                         </div>
                     </div>
                 ))}
@@ -233,7 +277,6 @@ export default function AdminEditPage() {
                 <div style={{ display: 'flex', gap: 8 }}>
                     <button onClick={handleSave}>Guardar</button>
                     <button onClick={() => navigate('/admin')}>Cancelar</button>
-                    <button onClick={addPlayer} type="button">Añadir jugador</button>
                 </div>
             </div>
         </div>

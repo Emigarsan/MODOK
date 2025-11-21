@@ -660,6 +660,50 @@ header p {
   -moz-appearance: textfield;
 }
 
+/* Inline form messages for AdminEdit */
+.inline-error {
+  color: var(--color-warning);
+  background: rgba(239, 116, 109, 0.06);
+  padding: 0.6rem 0.8rem;
+  border-radius: 0.8rem;
+  border: 1px solid rgba(239, 116, 109, 0.12);
+  font-weight: 600;
+}
+
+.success-text {
+  color: #c8f7d0;
+  background: rgba(39, 160, 72, 0.06);
+  padding: 0.6rem 0.8rem;
+  border-radius: 0.8rem;
+  border: 1px solid rgba(39, 160, 72, 0.12);
+  font-weight: 600;
+}
+
+/* Tighter player-row buttons */
+.form .player-row button,
+.form button[type="button"] {
+  padding: 0.45rem 0.6rem;
+  border-radius: 0.6rem;
+  font-size: 0.9rem;
+}
+
+/* Small primary variant for inline actions */
+button.small {
+  padding: 0.45rem 0.8rem;
+  font-size: 0.92rem;
+  border-radius: 0.8rem;
+}
+
+.small-action-button {
+  padding: 0.35rem 0.5rem;
+  font-size: 0.8rem;
+  border-radius: 0.6rem;
+  min-width: auto;
+  background: var(--color-warning);
+  color: #fff;
+  border: none;
+}
+
 .vp-input::-webkit-outer-spin-button,
 .vp-input::-webkit-inner-spin-button {
   margin: 0;
