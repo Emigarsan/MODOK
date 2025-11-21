@@ -7,6 +7,7 @@ import DisplayPage from './pages/Display.jsx';
 import QrDisplayPage from './pages/QrDisplay.jsx';
 import ChallengesDisplay from './pages/ChallengesDisplay.jsx';
 import AdminPage from './pages/Admin.jsx';
+import AdminEditPage from './pages/AdminEdit.jsx';
 import MesaPage from './pages/Mesa.jsx';
 import HomePage from './pages/Home.jsx';
 
@@ -51,6 +52,7 @@ export default function AppRouter() {
           <Route path="/display/qr" element={<QrDisplayPage />} />
           <Route path="/display/challenges" element={<ChallengesDisplay />} />
           <Route path="/admin" element={<AdminPage />} />
+          <Route path="/admin/edit/:type/:id" element={<AdminEditPage />} />
           <Route path="/mesa/:mesaId" element={<MesaPage />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>

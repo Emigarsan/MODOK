@@ -1,4 +1,5 @@
 ﻿import { useCallback, useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { createPortal } from 'react-dom';
 
 const API_BASE = '/api/counter';
@@ -13,8 +14,9 @@ export default function AdminPage() {
   const [sVal, setSVal] = useState('');
   const [tVal, setTVal] = useState('');
   const [imgIdx, setImgIdx] = useState(''); // 1..7 for UI
-  const [adminKey, setAdminKey] = useState('');
-  const [isAuthed, setIsAuthed] = useState(false);
+  const [adminKey, setAdminKey] = useState(() => localStorage.getItem('adminKey') || '');
+  const [isAuthed, setIsAuthed] = useState(Boolean(localStorage.getItem('adminKey')));
+  const navigate = useNavigate();
   const [tables, setTables] = useState({ register: [], freegame: [] });
   const [qrFlags, setQrFlags] = useState({ event: false, freegame: false });
   const [mesaSummary, setMesaSummary] = useState({});
@@ -83,20 +85,8 @@ export default function AdminPage() {
 
   const editTable = useCallback((type, table) => {
     if (!isAuthed) return;
-    setEditModalType(type);
-    setEditModalTable(table);
-    setEditForm({
-      tableNumber: table.tableNumber ?? '',
-      tableName: table.tableName ?? table.name ?? '',
-      name: table.name ?? table.tableName ?? '',
-      difficulty: table.difficulty ?? '',
-      inevitableChallenge: table.inevitableChallenge ?? '',
-      players: table.players ?? 0,
-      victoryPoints: table.victoryPoints ?? 0,
-      scenarioCleared: !!table.scenarioCleared
-    });
-    setEditModalOpen(true);
-  }, [isAuthed]);
+    navigate(`/admin/edit/${encodeURIComponent(type)}/${encodeURIComponent(table.id)}`);
+  }, [isAuthed, navigate]);
 
   // Campos de fijación permanecen vacíos hasta que el usuario escriba.
   const parseTableNumber = (value) => {
@@ -320,6 +310,7 @@ export default function AdminPage() {
       .then((r) => {
         if (r.ok) {
           setIsAuthed(true);
+          localStorage.setItem('adminKey', adminKey);
         } else {
           alert('Clave incorrecta');
         }
@@ -331,6 +322,7 @@ export default function AdminPage() {
     setIsAuthed(false);
     setAdminKey('');
     setTables({ register: [], freegame: [] });
+    localStorage.removeItem('adminKey');
   };
 
   if (!isAuthed) {
