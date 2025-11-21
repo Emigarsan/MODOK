@@ -88,6 +88,41 @@ export default function AdminPage() {
       .catch(() => { });
   }, [adminKey, isAuthed, parseJson]);
 
+  const deleteTable = useCallback(async (type, id) => {
+    if (!isAuthed) return;
+    if (!confirm('¿Eliminar mesa? Esta acción no se puede deshacer.')) return;
+    try {
+      const endpoint = `/api/admin/tables/${encodeURIComponent(type)}/${encodeURIComponent(id)}`;
+      const res = await fetch(endpoint, { method: 'DELETE', headers: { 'X-Admin-Secret': adminKey } });
+      await parseJson(res);
+      fetchTables();
+      alert('Mesa eliminada');
+    } catch (e) {
+      alert(e.message || 'No se pudo eliminar la mesa');
+    }
+  }, [adminKey, isAuthed, fetchTables, parseJson]);
+
+  const editTable = useCallback(async (type, table) => {
+    if (!isAuthed) return;
+    // For simplicity, allow editing table name and players via prompts
+    try {
+      const newName = prompt('Nombre de mesa (vacío para dejar igual):', table.tableName ?? table.name ?? '');
+      if (newName === null) return; // cancelled
+      const newPlayers = prompt('Número de jugadores (vacío para dejar igual):', String(table.players ?? ''));
+      if (newPlayers === null) return;
+      const body = {};
+      if (newName !== '') body.tableName = newName;
+      if (newPlayers !== '') body.players = Math.max(0, parseInt(newPlayers, 10) || 0);
+      const endpoint = `/api/admin/tables/${encodeURIComponent(type)}/${encodeURIComponent(table.id)}`;
+      const res = await fetch(endpoint, { method: 'PUT', headers: { 'Content-Type': 'application/json', 'X-Admin-Secret': adminKey }, body: JSON.stringify(body) });
+      await parseJson(res);
+      fetchTables();
+      alert('Mesa actualizada');
+    } catch (e) {
+      alert(e.message || 'No se pudo editar la mesa');
+    }
+  }, [adminKey, isAuthed, fetchTables, parseJson]);
+
   useEffect(() => { if (isAuthed) { fetchTables(); const id = setInterval(fetchTables, 3000); return () => clearInterval(id); } }, [isAuthed, fetchTables]);
 
   useEffect(() => {
@@ -373,7 +408,7 @@ export default function AdminPage() {
                 <button onClick={update('tertiary', +1)}>+</button>
                 <button onClick={update('tertiary', -1)}>-</button>
               </div>
-          </section>
+            </section>
             <section className="counter-card" style={{ gridColumn: '1 / -1' }}>
               <h3>Controles de POPUP</h3>
               <p className="counter-meta">Usa este botón para cerrar cualquier popup de giro que siga abierto.</p>
@@ -542,6 +577,10 @@ export default function AdminPage() {
                               </div>
                             </td>
                             <td>{t.code}</td>
+                            <td style={{ whiteSpace: 'nowrap' }}>
+                              <button onClick={() => editTable('register', t)}>Editar</button>
+                              <button onClick={() => deleteTable('register', t.id)}>Eliminar</button>
+                            </td>
                           </tr>
                         );
                       })}
@@ -617,6 +656,10 @@ export default function AdminPage() {
                               </div>
                             </td>
                             <td>{t.code}</td>
+                            <td style={{ whiteSpace: 'nowrap' }}>
+                              <button onClick={() => editTable('freegame', t)}>Editar</button>
+                              <button onClick={() => deleteTable('freegame', t.id)}>Eliminar</button>
+                            </td>
                           </tr>
                         );
                       })}
