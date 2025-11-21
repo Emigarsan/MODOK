@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { useLocation } from 'react-router-dom';
 
 import centralImage from './assets/50103a.png';
@@ -204,7 +205,7 @@ export function EventView({ onAction, mesaId } = {}) {
     [normalizeState, onAction, secondaryLocked, tertiaryLocked]
   );
 
-  if (showModal) {
+  const renderModalContent = () => {
     const isFlip = showFlipModal;
     return (
       <div className="modal-backdrop" role="dialog" aria-modal="true">
@@ -232,6 +233,10 @@ export function EventView({ onAction, mesaId } = {}) {
         </div>
       </div>
     );
+  };
+
+  if (showModal && typeof document !== 'undefined') {
+    return createPortal(renderModalContent(), document.body);
   }
 
   return (
