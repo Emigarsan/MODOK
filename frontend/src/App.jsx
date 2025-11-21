@@ -146,13 +146,6 @@ export function EventView({ onAction, mesaId } = {}) {
     if (tertiaryLocked) setTertiaryDismissed(false);
   }, [tertiaryLocked]);
 
-  useEffect(() => {
-    if (secondaryLocked || tertiaryLocked) {
-      setFlipModal(false);
-      setFlipImage(null);
-    }
-  }, [secondaryLocked, tertiaryLocked]);
-
   // Scroll lock for modal
   useEffect(() => {
     if (showModal) {
@@ -315,4 +308,5 @@ export default function App() {
 
   return <EventView mesaId={mesaId} onAction={mesaId ? onAction : undefined} />;
 }
+
 
