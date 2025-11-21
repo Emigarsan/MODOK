@@ -179,6 +179,126 @@ public class TablesService {
         return Collections.unmodifiableList(new ArrayList<>(freeGameTables));
     }
 
+    public synchronized boolean deleteRegisterById(String id) {
+        return registerTables.removeIf(t -> t.id().equals(id));
+    }
+
+    public synchronized boolean deleteFreeGameById(String id) {
+        return freeGameTables.removeIf(t -> t.id().equals(id));
+    }
+
+    public synchronized boolean updateRegisterFromMap(String id, java.util.Map<String, Object> payload) {
+        for (int i = 0; i < registerTables.size(); i++) {
+            var t = registerTables.get(i);
+            if (t.id().equals(id)) {
+                int tableNumber = t.tableNumber();
+                String tableName = t.tableName();
+                String difficulty = t.difficulty();
+                int players = t.players();
+
+                if (payload != null) {
+                    Object tn = payload.get("tableNumber");
+                    if (tn instanceof Number)
+                        tableNumber = Math.max(0, ((Number) tn).intValue());
+                    else if (tn instanceof String)
+                        try {
+                            tableNumber = Math.max(0, Integer.parseInt((String) tn));
+                        } catch (Exception ignored) {
+                        }
+
+                    Object nm = payload.get("tableName");
+                    if (nm instanceof String)
+                        tableName = (String) nm;
+
+                    Object df = payload.get("difficulty");
+                    if (df instanceof String)
+                        difficulty = (String) df;
+
+                    Object pl = payload.get("players");
+                    if (pl instanceof Number)
+                        players = Math.max(0, ((Number) pl).intValue());
+                    else if (pl instanceof String)
+                        try {
+                            players = Math.max(0, Integer.parseInt((String) pl));
+                        } catch (Exception ignored) {
+                        }
+                }
+
+                registerTables.set(i, new RegisterTable(t.id(), tableNumber, tableName, difficulty, players,
+                        t.playersInfo(), t.code(), t.createdAt()));
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public synchronized boolean updateFreeGameFromMap(String id, java.util.Map<String, Object> payload) {
+        for (int i = 0; i < freeGameTables.size(); i++) {
+            var t = freeGameTables.get(i);
+            if (t.id().equals(id)) {
+                int tableNumber = t.tableNumber();
+                String name = t.name();
+                String difficulty = t.difficulty();
+                String inevitable = t.inevitableChallenge();
+                int players = t.players();
+                int victoryPoints = t.victoryPoints();
+                boolean scenarioCleared = t.scenarioCleared();
+
+                if (payload != null) {
+                    Object tn = payload.get("tableNumber");
+                    if (tn instanceof Number)
+                        tableNumber = Math.max(0, ((Number) tn).intValue());
+                    else if (tn instanceof String)
+                        try {
+                            tableNumber = Math.max(0, Integer.parseInt((String) tn));
+                        } catch (Exception ignored) {
+                        }
+
+                    Object nm = payload.get("name");
+                    if (nm instanceof String)
+                        name = (String) nm;
+
+                    Object df = payload.get("difficulty");
+                    if (df instanceof String)
+                        difficulty = (String) df;
+
+                    Object iv = payload.get("inevitableChallenge");
+                    if (iv instanceof String)
+                        inevitable = (String) iv;
+
+                    Object pl = payload.get("players");
+                    if (pl instanceof Number)
+                        players = Math.max(0, ((Number) pl).intValue());
+                    else if (pl instanceof String)
+                        try {
+                            players = Math.max(0, Integer.parseInt((String) pl));
+                        } catch (Exception ignored) {
+                        }
+
+                    Object vp = payload.get("victoryPoints");
+                    if (vp instanceof Number)
+                        victoryPoints = Math.max(0, ((Number) vp).intValue());
+                    else if (vp instanceof String)
+                        try {
+                            victoryPoints = Math.max(0, Integer.parseInt((String) vp));
+                        } catch (Exception ignored) {
+                        }
+
+                    Object sc = payload.get("scenarioCleared");
+                    if (sc instanceof Boolean)
+                        scenarioCleared = (Boolean) sc;
+                    else if (sc instanceof String)
+                        scenarioCleared = Boolean.parseBoolean((String) sc);
+                }
+
+                freeGameTables.set(i, new FreeGameTable(t.id(), tableNumber, name, difficulty, inevitable, players,
+                        t.playersInfo(), t.code(), Math.max(0, victoryPoints), scenarioCleared, t.createdAt()));
+                return true;
+            }
+        }
+        return false;
+    }
+
     public synchronized FreeGameTable findFreeGameByNumber(int tableNumber) {
         int tn = Math.max(0, tableNumber);
         for (FreeGameTable t : freeGameTables) {

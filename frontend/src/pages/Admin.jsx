@@ -1,4 +1,5 @@
 ﻿import { useCallback, useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 
 const API_BASE = '/api/counter';
 
@@ -22,6 +23,10 @@ export default function AdminPage() {
   const [backups, setBackups] = useState({ dir: '', files: [] });
   const [backupsLoading, setBackupsLoading] = useState(false);
   const [uploadingBackup, setUploadingBackup] = useState(false);
+  const [editModalOpen, setEditModalOpen] = useState(false);
+  const [editModalType, setEditModalType] = useState(null);
+  const [editModalTable, setEditModalTable] = useState(null);
+  const [editForm, setEditForm] = useState({});
   const [purgeMinutes, setPurgeMinutes] = useState('1440');
   const [purgeKeep, setPurgeKeep] = useState('10');
   const backupFileInputRef = useRef(null);
@@ -42,29 +47,6 @@ export default function AdminPage() {
       .then((d) => Promise.reject(new Error(d?.error || fallback))))
     , []);
 
-  // Campos de fijación permanecen vacíos hasta que el usuario escriba.
-  const parseTableNumber = (value) => {
-    const num = Number(value);
-    return Number.isFinite(num) ? num : Number.MAX_SAFE_INTEGER;
-  };
-
-  const syncFromState = () => { };
-
-  const fetchState = useCallback(() => {
-    fetch(API_BASE)
-      .then((r) => r.ok ? r.json() : Promise.reject(new Error('Respuesta inválida')))
-      .then((data) => {
-        setState(data);
-        setError(null);
-        syncFromState(data);
-      })
-      .catch((e) => setError(e.message));
-  }, []);;
-
-  useEffect(() => { fetchState(); const id = setInterval(fetchState, 3000); return () => clearInterval(id); }, [fetchState]);
-
-  // No auto-login: siempre pedimos contraseña hasta pulsar "Entrar".
-
   const fetchTables = useCallback(() => {
     if (!isAuthed) return;
     fetch('/api/admin/tables', { headers: { 'X-Admin-Secret': adminKey } })
@@ -79,10 +61,7 @@ export default function AdminPage() {
         setTables({ register, freegame });
         const flags = data.qrFlags;
         if (flags && typeof flags === 'object') {
-          setQrFlags({
-            event: Boolean(flags.event),
-            freegame: Boolean(flags.freegame)
-          });
+          setQrFlags({ event: Boolean(flags.event), freegame: Boolean(flags.freegame) });
         }
       })
       .catch(() => { });
@@ -102,26 +81,41 @@ export default function AdminPage() {
     }
   }, [adminKey, isAuthed, fetchTables, parseJson]);
 
-  const editTable = useCallback(async (type, table) => {
+  const editTable = useCallback((type, table) => {
     if (!isAuthed) return;
-    // For simplicity, allow editing table name and players via prompts
-    try {
-      const newName = prompt('Nombre de mesa (vacío para dejar igual):', table.tableName ?? table.name ?? '');
-      if (newName === null) return; // cancelled
-      const newPlayers = prompt('Número de jugadores (vacío para dejar igual):', String(table.players ?? ''));
-      if (newPlayers === null) return;
-      const body = {};
-      if (newName !== '') body.tableName = newName;
-      if (newPlayers !== '') body.players = Math.max(0, parseInt(newPlayers, 10) || 0);
-      const endpoint = `/api/admin/tables/${encodeURIComponent(type)}/${encodeURIComponent(table.id)}`;
-      const res = await fetch(endpoint, { method: 'PUT', headers: { 'Content-Type': 'application/json', 'X-Admin-Secret': adminKey }, body: JSON.stringify(body) });
-      await parseJson(res);
-      fetchTables();
-      alert('Mesa actualizada');
-    } catch (e) {
-      alert(e.message || 'No se pudo editar la mesa');
-    }
-  }, [adminKey, isAuthed, fetchTables, parseJson]);
+    setEditModalType(type);
+    setEditModalTable(table);
+    setEditForm({
+      tableNumber: table.tableNumber ?? '',
+      tableName: table.tableName ?? table.name ?? '',
+      name: table.name ?? table.tableName ?? '',
+      difficulty: table.difficulty ?? '',
+      inevitableChallenge: table.inevitableChallenge ?? '',
+      players: table.players ?? 0,
+      victoryPoints: table.victoryPoints ?? 0,
+      scenarioCleared: !!table.scenarioCleared
+    });
+    setEditModalOpen(true);
+  }, [isAuthed]);
+
+  // Campos de fijación permanecen vacíos hasta que el usuario escriba.
+  const parseTableNumber = (value) => {
+    const num = Number(value);
+    return Number.isFinite(num) ? num : Number.MAX_SAFE_INTEGER;
+  };
+
+  const syncFromState = () => { };
+
+  const fetchState = useCallback(() => {
+    fetch(API_BASE)
+      .then((r) => r.ok ? r.json() : Promise.reject(new Error('Respuesta inválida')))
+      .then((data) => {
+        setState(data);
+        setError(null);
+        syncFromState(data);
+      })
+      .catch((e) => setError(e.message));
+  }, []);
 
   useEffect(() => { if (isAuthed) { fetchTables(); const id = setInterval(fetchTables, 3000); return () => clearInterval(id); } }, [isAuthed, fetchTables]);
 
@@ -220,6 +214,41 @@ export default function AdminPage() {
         if (event.target) event.target.value = '';
       });
   }, [adminKey, fetchBackups, isAuthed, parseJson]);
+
+  const closeEditModal = useCallback(() => {
+    setEditModalOpen(false);
+    setEditModalTable(null);
+    setEditModalType(null);
+    setEditForm({});
+  }, []);
+
+  const submitEdit = useCallback(async () => {
+    if (!isAuthed || !editModalTable || !editModalType) return;
+    try {
+      const body = {};
+      // map form fields to payload (backend accepts different names)
+      if (editModalType === 'register') {
+        if (typeof editForm.tableName === 'string') body.tableName = editForm.tableName;
+        if (typeof editForm.players !== 'undefined') body.players = Number(editForm.players) || 0;
+        if (typeof editForm.difficulty === 'string') body.difficulty = editForm.difficulty;
+      } else if (editModalType === 'freegame') {
+        if (typeof editForm.name === 'string') body.name = editForm.name;
+        if (typeof editForm.players !== 'undefined') body.players = Number(editForm.players) || 0;
+        if (typeof editForm.difficulty === 'string') body.difficulty = editForm.difficulty;
+        if (typeof editForm.inevitableChallenge === 'string') body.inevitableChallenge = editForm.inevitableChallenge;
+        if (typeof editForm.victoryPoints !== 'undefined') body.victoryPoints = Number(editForm.victoryPoints) || 0;
+        if (typeof editForm.scenarioCleared !== 'undefined') body.scenarioCleared = !!editForm.scenarioCleared;
+      }
+      const endpoint = `/api/admin/tables/${encodeURIComponent(editModalType)}/${encodeURIComponent(editModalTable.id)}`;
+      const res = await fetch(endpoint, { method: 'PUT', headers: { 'Content-Type': 'application/json', 'X-Admin-Secret': adminKey }, body: JSON.stringify(body) });
+      await parseJson(res);
+      fetchTables();
+      closeEditModal();
+      alert('Mesa actualizada');
+    } catch (e) {
+      alert(e.message || 'No se pudo editar la mesa');
+    }
+  }, [adminKey, editForm, editModalTable, editModalType, isAuthed, fetchTables, parseJson, closeEditModal]);
 
   const update = (segment, sign) => () => {
     const endpoint = sign > 0 ? 'increment' : 'decrement';
@@ -578,8 +607,8 @@ export default function AdminPage() {
                             </td>
                             <td>{t.code}</td>
                             <td style={{ whiteSpace: 'nowrap' }}>
-                              <button onClick={() => editTable('register', t)}>Editar</button>
-                              <button onClick={() => deleteTable('register', t.id)}>Eliminar</button>
+                              <button className="admin-action edit" onClick={() => editTable('register', t)}>Editar</button>
+                              <button className="admin-action delete" onClick={() => deleteTable('register', t.id)}>Eliminar</button>
                             </td>
                           </tr>
                         );
@@ -657,8 +686,8 @@ export default function AdminPage() {
                             </td>
                             <td>{t.code}</td>
                             <td style={{ whiteSpace: 'nowrap' }}>
-                              <button onClick={() => editTable('freegame', t)}>Editar</button>
-                              <button onClick={() => deleteTable('freegame', t.id)}>Eliminar</button>
+                              <button className="admin-action edit" onClick={() => editTable('freegame', t)}>Editar</button>
+                              <button className="admin-action delete" onClick={() => deleteTable('freegame', t.id)}>Eliminar</button>
                             </td>
                           </tr>
                         );
@@ -708,6 +737,60 @@ export default function AdminPage() {
           </>)}
         </>
       )}
+      {editModalOpen && createPortal(
+        <div className="modal-backdrop" onClick={closeEditModal}>
+          <div className="modal" onClick={(e) => e.stopPropagation()}>
+            <h3>Editar mesa</h3>
+            {editModalType === 'register' ? (
+              <div className="form">
+                <label>
+                  Nombre de mesa
+                  <input value={editForm.tableName || ''} onChange={(e) => setEditForm({ ...editForm, tableName: e.target.value })} />
+                </label>
+                <label>
+                  Jugadores
+                  <input type="number" value={editForm.players ?? 0} onChange={(e) => setEditForm({ ...editForm, players: Number(e.target.value) })} />
+                </label>
+                <label>
+                  Dificultad
+                  <input value={editForm.difficulty || ''} onChange={(e) => setEditForm({ ...editForm, difficulty: e.target.value })} />
+                </label>
+              </div>
+            ) : (
+              <div className="form">
+                <label>
+                  Nombre
+                  <input value={editForm.name || ''} onChange={(e) => setEditForm({ ...editForm, name: e.target.value })} />
+                </label>
+                <label>
+                  Jugadores
+                  <input type="number" value={editForm.players ?? 0} onChange={(e) => setEditForm({ ...editForm, players: Number(e.target.value) })} />
+                </label>
+                <label>
+                  Dificultad
+                  <input value={editForm.difficulty || ''} onChange={(e) => setEditForm({ ...editForm, difficulty: e.target.value })} />
+                </label>
+                <label>
+                  Reto inevitable
+                  <input value={editForm.inevitableChallenge || ''} onChange={(e) => setEditForm({ ...editForm, inevitableChallenge: e.target.value })} />
+                </label>
+                <label>
+                  Puntos Victoria
+                  <input type="number" value={editForm.victoryPoints ?? 0} onChange={(e) => setEditForm({ ...editForm, victoryPoints: Number(e.target.value) })} />
+                </label>
+                <label style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                  <input type="checkbox" checked={!!editForm.scenarioCleared} onChange={(e) => setEditForm({ ...editForm, scenarioCleared: e.target.checked })} />
+                  <span>Escenario completado</span>
+                </label>
+              </div>
+            )}
+            <div style={{ display: 'flex', gap: 8, justifyContent: 'center' }}>
+              <button onClick={submitEdit}>Guardar</button>
+              <button onClick={closeEditModal}>Cancelar</button>
+            </div>
+          </div>
+        </div>, document.body)
+      }
     </div>
   );
 }

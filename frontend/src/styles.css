@@ -630,6 +630,28 @@ header p {
   padding: 0.4rem 0.5rem;
 }
 
+/* Small action buttons for admin rows */
+.admin-action {
+  padding: 0.35rem 0.6rem;
+  font-size: 0.85rem;
+  border-radius: 0.6rem;
+  min-width: auto;
+  display: inline-block;
+  background: transparent;
+  color: var(--color-text-primary);
+  border: 1px solid var(--color-divider);
+}
+
+.admin-action.edit {
+  background: var(--color-surface-2);
+}
+
+.admin-action.delete {
+  background: var(--color-warning);
+  color: #fff;
+  border-color: transparent;
+}
+
 .vp-input {
   width: 4.5rem;
   padding: 0.25rem 0.4rem;
