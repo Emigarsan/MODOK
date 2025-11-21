@@ -18,6 +18,7 @@ public class CounterService {
     private boolean allowCloseTertiary = false;
     private boolean flipModalActive = false;
     private int flipImageIndex = -1;
+    private int modalResetVersion = 0;
 
     public synchronized CounterState getState() {
         return snapshot();
@@ -124,7 +125,8 @@ public class CounterService {
                 allowCloseSecondary,
                 allowCloseTertiary,
                 flipModalActive,
-                flipImageIndex
+                flipImageIndex,
+                modalResetVersion
         );
     }
 
@@ -156,5 +158,6 @@ public class CounterService {
     private void clearFlipModalInternal() {
         flipModalActive = false;
         flipImageIndex = -1;
+        modalResetVersion++;
     }
 }

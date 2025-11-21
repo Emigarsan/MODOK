@@ -45,7 +45,8 @@ const initialState = {
   allowCloseSecondary: false,
   allowCloseTertiary: false,
   showFlipModal: false,
-  flipImageIndex: -1
+  flipImageIndex: -1,
+  modalResetVersion: 0
 };
 
 const flipImageMap = {
@@ -94,7 +95,10 @@ export function EventView({ onAction, mesaId } = {}) {
         allowCloseSecondary: Boolean(data.allowCloseSecondary),
         allowCloseTertiary: Boolean(data.allowCloseTertiary),
         showFlipModal: Boolean(data.showFlipModal),
-        flipImageIndex: clampedFlipIndex
+        flipImageIndex: clampedFlipIndex,
+        modalResetVersion: Number.isFinite(data.modalResetVersion)
+          ? Math.max(0, Math.trunc(data.modalResetVersion))
+          : 0
       };
     },
     [secondaryImages]
@@ -145,6 +149,15 @@ export function EventView({ onAction, mesaId } = {}) {
   useEffect(() => {
     if (tertiaryLocked) setTertiaryDismissed(false);
   }, [tertiaryLocked]);
+
+  const lastResetRef = useRef(state.modalResetVersion);
+  useEffect(() => {
+    if (state.modalResetVersion !== lastResetRef.current) {
+      setSecondaryDismissed(true);
+      setTertiaryDismissed(true);
+      lastResetRef.current = state.modalResetVersion;
+    }
+  }, [state.modalResetVersion]);
 
   // Scroll lock for modal
   useEffect(() => {
@@ -214,9 +227,6 @@ export function EventView({ onAction, mesaId } = {}) {
                   Habéis derrotado el Plan Secundario. Seguid las instrucciones de los organizadores.
                 </p>
               )}
-              <button type="button" onClick={closeModal}>
-                Cerrar
-              </button>
             </>
           )}
         </div>
@@ -308,5 +318,4 @@ export default function App() {
 
   return <EventView mesaId={mesaId} onAction={mesaId ? onAction : undefined} />;
 }
-
 

@@ -8,6 +8,7 @@ public record CounterState(
         boolean allowCloseSecondary,
         boolean allowCloseTertiary,
         boolean showFlipModal,
-        int flipImageIndex
+        int flipImageIndex,
+        int modalResetVersion
 ) {
 }

@@ -20,7 +20,8 @@ const initialState = {
   allowCloseSecondary: false,
   allowCloseTertiary: false,
   showFlipModal: false,
-  flipImageIndex: -1
+  flipImageIndex: -1,
+  modalResetVersion: 0
 };
 
 const flipImageMap = {
@@ -38,6 +39,9 @@ export default function DisplayPage() {
   const [state, setState] = useState(initialState);
   const [initialLoading, setInitialLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [stopDismissed, setStopDismissed] = useState(false);
+  const [flipDismissed, setFlipDismissed] = useState(false);
+  const resetRef = useRef(initialState.modalResetVersion);
 
   const secondaryImages = useMemo(
     () => [celda1, celda2, celda3, celda4, celda5, celda6, celda7],
@@ -69,7 +73,10 @@ export default function DisplayPage() {
         allowCloseSecondary: Boolean(data.allowCloseSecondary),
         allowCloseTertiary: Boolean(data.allowCloseTertiary),
         showFlipModal: Boolean(data.showFlipModal),
-        flipImageIndex: flipIndex
+        flipImageIndex: flipIndex,
+        modalResetVersion: Number.isFinite(data.modalResetVersion)
+          ? Math.max(0, Math.trunc(data.modalResetVersion))
+          : 0
       };
     },
     [secondaryImages]
@@ -108,11 +115,31 @@ export default function DisplayPage() {
     : (secondaryImages[state.secondaryImageIndex] ?? secondaryImages[initialState.secondaryImageIndex]);
   const secondaryTitle = secondaryLocked ? 'Accesorio M.Y.T.H.O.S.' : 'Celdas de Contención';
   const secondaryNumberLabel = `Celda ${state.secondaryImageIndex + 1}`;
-  const showSecondaryModal = secondaryLocked && !state.allowCloseSecondary;
-  const showTertiaryModal = state.tertiary === 0 && !state.allowCloseTertiary;
+  const showSecondaryModal = secondaryLocked && !stopDismissed;
+  const showTertiaryModal = state.tertiary === 0 && !stopDismissed;
   const flipImageSrc = flipImageMap[state.flipImageIndex] ?? null;
-  const showFlipModal = state.showFlipModal && !!flipImageSrc && !showSecondaryModal && !showTertiaryModal;
+  const showFlipModal = state.showFlipModal && !!flipImageSrc && !flipDismissed && !showSecondaryModal && !showTertiaryModal;
   const showModal = showSecondaryModal || showTertiaryModal || showFlipModal;
+
+  useEffect(() => {
+    if (state.modalResetVersion !== resetRef.current) {
+      setStopDismissed(true);
+      setFlipDismissed(true);
+      resetRef.current = state.modalResetVersion;
+    }
+  }, [state.modalResetVersion]);
+
+  useEffect(() => {
+    if (!secondaryLocked && state.tertiary > 0) {
+      setStopDismissed(false);
+    }
+  }, [secondaryLocked, state.tertiary]);
+
+  useEffect(() => {
+    if (!state.showFlipModal) {
+      setFlipDismissed(false);
+    }
+  }, [state.showFlipModal]);
 
   return (
     <div className="display-layout">
