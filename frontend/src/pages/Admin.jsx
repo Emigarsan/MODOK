@@ -117,6 +117,13 @@ export default function AdminPage() {
       .catch((e) => setError(e.message));
   }, []);
 
+  // Ensure we load the public counter state so the admin UI can render
+  useEffect(() => {
+    fetchState();
+    const id = setInterval(fetchState, 3000);
+    return () => clearInterval(id);
+  }, [fetchState]);
+
   useEffect(() => { if (isAuthed) { fetchTables(); const id = setInterval(fetchTables, 3000); return () => clearInterval(id); } }, [isAuthed, fetchTables]);
 
   useEffect(() => {
