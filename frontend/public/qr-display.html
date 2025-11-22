@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Display</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #1A0A0E;
+            color: #F1E9E5;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        .container {
+            text-align: center;
+            max-width: 600px;
+        }
+        h1 {
+            font-size: clamp(1.6rem, 4vw, 2.6rem);
+            margin-bottom: 2rem;
+            letter-spacing: 0.1em;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            width: min(80vw, 500px);
+            display: block;
+            margin: 0 auto;
+            border-radius: 0.5rem;
+        }
+        .info {
+            margin-top: 2rem;
+            font-size: 0.95rem;
+            color: #CDBBB5;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 id="title">QR Especial</h1>
+        <img id="qrImage" src="/qr-special.png" alt="Código QR">
+        <div class="info">
+            <p id="info">Escanea el código QR con tu dispositivo móvil</p>
+        </div>
+    </div>
+
+    <script>
+        // Detectar parámetros de URL
+        const params = new URLSearchParams(window.location.search);
+        const type = params.get('type') || 'special';
+        const title = params.get('title') || 'QR Especial';
+        
+        // Configurar título
+        document.getElementById('title').textContent = title;
+        
+        // Configurar imagen según tipo
+        let imageSrc = '/qr-special.png';
+        if (type === 'freegame' || type === 'morning') {
+            imageSrc = '/qr-morning.svg';
+            document.getElementById('title').textContent = 'Retos Inevitables';
+        } else if (type === 'event' || type === 'afternoon') {
+            imageSrc = '/qr-afternoon.svg';
+            document.getElementById('title').textContent = 'Evento';
+        }
+        
+        document.getElementById('qrImage').src = imageSrc;
+    </script>
+</body>
+</html>
