@@ -79,7 +79,7 @@ export default function FreeGameTablePage() {
   const scoringActive = hasChallenge && scenarioClearedBool;
   const basePoints = hasChallenge ? ((table.difficulty === 'Experto') ? 5 : 3) : 0;
   const legacyCountRaw = hasChallenge ? playersInfo.filter(p => (p && p.legacy && String(p.legacy) !== 'Ninguno')).length : 0;
-  const vpValue = Math.max(0, parseInt(vpInput, 10) || 0);
+  const vpValue = parseInt(vpInput, 10) || 0;
   const base = scoringActive ? basePoints : 0;
   const legacyCount = scoringActive ? legacyCountRaw : 0;
   const vp = scoringActive ? vpValue : 0;

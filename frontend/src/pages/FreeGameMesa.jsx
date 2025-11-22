@@ -43,7 +43,7 @@ export default function FreeGameMesa() {
   const basePoints = hasChallenge ? (data.difficulty === 'Experto' ? 5 : 3) : 0;
   const base = scoringActive ? basePoints : 0;
   const legacyContribution = scoringActive ? legacyCount : 0;
-  const vpValue = Math.max(0, parseInt(vpInput, 10) || 0);
+  const vpValue = parseInt(vpInput, 10) || 0;
   const vp = scoringActive ? vpValue : 0;
   const total = base + legacyContribution + vp;
 
