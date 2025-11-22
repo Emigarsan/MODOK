@@ -112,7 +112,7 @@ public class AdminController {
                 }
             }
             boolean scenarioCleared = t.scenarioCleared();
-            int vp = (noCh || !scenarioCleared) ? 0 : Math.max(0, t.victoryPoints());
+            int vp = (noCh || !scenarioCleared) ? 0 : t.victoryPoints();
             int total = (noCh || !scenarioCleared) ? 0 : (base + legacyCount + vp);
             sj.add(String.join(",",
                     String.valueOf(t.tableNumber()),

@@ -165,7 +165,7 @@ public class TablesService {
                 boolean normalizedScenario = hasChallenge && cleared;
                 freeGameTables.set(i, new com.example.counter.service.model.FreeGameTable(
                         t.id(), t.tableNumber(), t.name(), t.difficulty(), t.inevitableChallenge(), t.players(),
-                        t.playersInfo(), t.code(), Math.max(0, victoryPoints), normalizedScenario, t.createdAt()));
+                        t.playersInfo(), t.code(), victoryPoints, normalizedScenario, t.createdAt()));
                 return true;
             }
         }
@@ -300,10 +300,10 @@ public class TablesService {
 
                     Object vp = payload.get("victoryPoints");
                     if (vp instanceof Number)
-                        victoryPoints = Math.max(0, ((Number) vp).intValue());
+                        victoryPoints = ((Number) vp).intValue();
                     else if (vp instanceof String)
                         try {
-                            victoryPoints = Math.max(0, Integer.parseInt((String) vp));
+                            victoryPoints = Integer.parseInt((String) vp);
                         } catch (Exception ignored) {
                         }
 
