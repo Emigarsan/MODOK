@@ -50,8 +50,8 @@ export default function AppRouter() {
           <Route path="/freegame" element={<FreeGamePage />} />
           <Route path="/freegame/:id" element={<FreeGameTablePage />} />
           <Route path="/display" element={<DisplayPage />} />
-          <Route path="/display/qr" element={<QrDisplayPage />} />
           <Route path="/display/qr/:type/simple" element={<SimpleQrPage />} />
+          <Route path="/display/qr" element={<QrDisplayPage />} />
           <Route path="/display/challenges" element={<ChallengesDisplay />} />
           <Route path="/admin" element={<AdminPage />} />
           <Route path="/admin/edit/:type/:id" element={<AdminEditPage />} />
